@@ -1,4 +1,3 @@
-/* eslint-disable no-use-before-define */
 import React from 'react';
 import { StyleSheet, StatusBar } from 'react-native';
 import { Provider } from 'react-redux';
@@ -6,9 +5,9 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { AppLoading, Asset, Font, Icon, Permissions } from 'expo';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { ThemeProvider } from 'styled-components';
-
 import { MessageProvider } from './contexts';
 import store, { persistor } from './store';
+
 import AppNavigator from './navigations/AppNavigator.js';
 import font from './assets/fonts/Pacifico-Regular.ttf';
 import SpaceMono from './assets/fonts/SpaceMono-Regular.ttf';
@@ -23,8 +22,6 @@ import AvenirNextBold from './assets/fonts/AvenirNextLTPro-Bold.otf';
 import NotoSans from './assets/fonts/NotoSans-Regular.ttf';
 import theme from './constants/theme';
 
-import Login from './screens/Login';
-
 export default class App extends React.Component {
   state = {
     isLoadingComplete: false,
@@ -37,10 +34,7 @@ export default class App extends React.Component {
   _loadResourcesAsync = async () =>
     Promise.all([
       Font.loadAsync({
-        // This is the font that we are using for our tab bar
         ...Icon.Ionicons.font,
-        // We include SpaceMono because we use it in HomeScreen.js. Feel free
-        // to remove this if you are not using it in your app
         pacifico: font,
         'space-mono': SpaceMono,
         cardo: Cardo,
@@ -56,8 +50,6 @@ export default class App extends React.Component {
     ]);
 
   _handleLoadingError = error => {
-    // In this case, you might want to report the error to your error
-    // reporting service, for example Sentry
     console.warn(error);
   };
 
@@ -82,11 +74,8 @@ export default class App extends React.Component {
         <PersistGate loading={null} persistor={persistor}>
           <MessageProvider>
             <PaperProvider theme={theme}>
-              {/* <ThemeProvider theme={theme}> */}
               <StatusBar hidden />
               <AppNavigator />
-              {/* <Login /> */}
-              {/* </ThemeProvider> */}
             </PaperProvider>
           </MessageProvider>
         </PersistGate>

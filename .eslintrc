@@ -1,8 +1,8 @@
 {
-  "extends": [
-    "wesbos"
-  ],
+  "extends": ["equimper"],
   "rules": {
-    "react/prop-types": "off"
+    "no-console": "off",
+    "eqeqeq": "off",
+    "no-multiple-empty-lines": ["error", { "max": 3 }]
   }
 }

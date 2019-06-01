@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import axios from 'axios';
 import { query } from '../services/api';
 import { ENDPOINTS, METHODS } from '../constants/api';

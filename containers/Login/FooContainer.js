@@ -1,7 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
 import styled from 'styled-components/native';
-import background from '../../assets/login_bg.jpg';
 
 export default FooContainer = styled.View`
     position: absolute;

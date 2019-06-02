@@ -6,10 +6,10 @@ import background from '../../assets/login_bg.jpg';
 export default AmazingCircle = styled.View`
     position: absolute;
     background-color: ${props => props.backgroundColor};
-    height: 80px;
-    width: 80px;
-    border-radius: 40px;
-    bottom: 13px;
+    height: 90px;
+    width: 90px;
+    border-radius: 45px;
+    bottom: 8px;
 
     display: flex;
     justify-content: center;

@@ -26,7 +26,7 @@ export default {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    primary: '#ffcc00',
+    primary: '#E25141',
     accent: '#F1EAE2',
     text: '#4A4944',
     whiteText: '#fff',

@@ -43,6 +43,10 @@ class Login extends React.Component {
     );
   };
 
+  handleForgetPassword = () => {};
+
+  handleSignup = () => {};
+
   render() {
     const { username, password, visible } = this.state;
     const { theme, info } = this.props;

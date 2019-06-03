@@ -16,6 +16,7 @@ export default class AuthLoadingScreen extends React.Component {
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
     navigation.navigate(info ? 'TabNavigator' : 'Login');
+    // navigation.navigate('TabNavigator');
   };
 
   // Render any loading content that you like here

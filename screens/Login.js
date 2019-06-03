@@ -1,7 +1,7 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import { connect } from 'react-redux';
-import { withTheme, Snackbar, Button } from 'react-native-paper';
+import { withTheme, HelperText, Button } from 'react-native-paper';
 import { Text, View, ScrollView, KeyboardAvoidingView } from 'react-native';
 
 import { login } from '../actions';
@@ -17,8 +17,8 @@ import {
 
 class Login extends React.Component {
   state = {
-    username: '',
-    password: '',
+    username: 'staff',
+    password: '123456',
     visible: false,
   };
 
@@ -64,7 +64,7 @@ class Login extends React.Component {
               <AmazingCircle backgroundColor={theme.colors.primary}>
                 <Text
                   style={{
-                    color: theme.colors.whiteText,
+                    color: theme.colors.white,
                     fontSize: 22,
                     fontWeight: 'bold',
                   }}
@@ -85,17 +85,23 @@ class Login extends React.Component {
                 <TextInputWrapper
                   label="Username"
                   autoCompleteType="username"
+                  autoCapitalize="none"
                   value={username}
                   style={{ width: '100%' }}
-                  onChangeText={username => this.setState({ username })}
+                  onChangeText={text => this.setState({ username: text })}
                 />
                 <TextInputWrapper
                   label="Password"
                   autoCompleteType="password"
+                  autoCapitalize="none"
                   value={password}
                   secureTextEntry
-                  onChangeText={password => this.setState({ password })}
+                  onChangeText={text => this.setState({ password: text })}
                 />
+
+                <HelperText type="error" visible={visible}>
+                  Tên đăng nhập hoặc mật khẩu không hợp lệ
+                </HelperText>
 
                 <Button
                   mode="contained"
@@ -118,17 +124,6 @@ class Login extends React.Component {
             </View>
 
             <View style={{ backgroundColor: 'white', height: '100%' }} />
-
-            <Snackbar
-              visible={visible}
-              onDismiss={() => this.setState({ visible: false })}
-              style={{
-                backgroundColor: theme.colors.primary,
-                color: theme.colors.whiteText,
-              }}
-            >
-              Tên đăng nhập hoặc mật khẩu không hợp lệ
-            </Snackbar>
           </KeyboardAvoidingView>
         </ScrollView>
       </LoginBackground>

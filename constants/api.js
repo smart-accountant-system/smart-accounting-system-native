@@ -8,5 +8,5 @@ export const METHODS = {
 };
 
 export const ENDPOINTS = {
-  login: '/user/login',
+  login: '/employees/login',
 };

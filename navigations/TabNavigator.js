@@ -7,10 +7,9 @@ import { Localization } from 'expo';
 import i18n from 'i18n-js';
 
 import Home from '../screens/Home';
-import Report from '../screens/Report';
 import Invoice from '../screens/Invoice';
-import Expanse from '../screens/Expanse';
-import TabBarIcon from '../components/TabBarIcon';
+import Profile from '../screens/Profile';
+import FeatherIcon from '../components/FeatherIcon';
 import { en, vi } from '../constants/localization';
 import theme from '../constants/theme';
 
@@ -20,6 +19,7 @@ i18n.locale = Localization.locale;
 export const HomeStack = createStackNavigator(
   {
     Home,
+    Profile,
   },
   {
     headerMode: 'none',
@@ -35,38 +35,22 @@ const InvoiceStack = createStackNavigator(
   }
 );
 
-const ExpanseStack = createStackNavigator(
-  {
-    Expanse,
-  },
-  {
-    headerMode: 'none',
-  }
-);
-
 HomeStack.navigationOptions = {
-  tabBarLabel: i18n.t('dashboard'),
-  tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-pie" />,
-};
-
-InvoiceStack.navigationOptions = {
-  tabBarLabel: i18n.t('invoice'),
+  tabBarLabel: i18n.t('dashboard', { locale: 'en' }),
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name="md-wallet" />
+    <FeatherIcon focused={focused} name="bar-chart-2" />
   ),
 };
 
-ExpanseStack.navigationOptions = {
-  tabBarLabel: i18n.t('invoice'),
-  tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-pizza" />,
+InvoiceStack.navigationOptions = {
+  tabBarLabel: i18n.t('invoice', { locale: 'en' }),
+  tabBarIcon: ({ focused }) => <FeatherIcon focused={focused} name="feather" />,
 };
 
 const TabNavigator = createBottomTabNavigator(
   {
     HomeStack,
     InvoiceStack,
-    ExpanseStack,
-    Report,
   },
   {
     tabBarOptions: {

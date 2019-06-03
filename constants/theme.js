@@ -29,7 +29,8 @@ export default {
     primary: '#E25141',
     accent: '#F1EAE2',
     text: '#4A4944',
-    whiteText: '#fff',
+    white: '#fff',
+    grey: '#888',
   },
   // fonts,
 };

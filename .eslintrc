@@ -1,10 +1,5 @@
 {
   "extends": ["wesbos"],
-  // "rules": {
-  //   "no-console": "off",
-  //   "eqeqeq": "off",
-  //   "no-multiple-empty-lines": ["error", { "max": 3 }]
-  // }
   "rules": {
     "react/prop-types": "off",
     "import/no-cycle": "off"

@@ -70,16 +70,16 @@ export default class App extends React.Component {
       );
     }
     return (
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <MessageProvider>
-            <PaperProvider theme={theme}>
+      <ThemeProvider theme={theme}>
+        <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+            <MessageProvider>
               <StatusBar hidden />
               <AppNavigator />
-            </PaperProvider>
-          </MessageProvider>
-        </PersistGate>
-      </Provider>
+            </MessageProvider>
+          </PersistGate>
+        </Provider>
+      </ThemeProvider>
     );
   }
 }

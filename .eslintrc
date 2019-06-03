@@ -6,6 +6,7 @@
   //   "no-multiple-empty-lines": ["error", { "max": 3 }]
   // }
   "rules": {
-    "react/prop-types": "off"
+    "react/prop-types": "off",
+    "import/no-cycle": "off"
   }
 }

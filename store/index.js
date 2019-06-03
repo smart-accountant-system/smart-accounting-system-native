@@ -7,7 +7,7 @@ import thunk from 'redux-thunk';
 import reducers from '../reducers';
 
 const persistConfig = {
-  key: 'time8',
+  key: 'sas1',
   storage: AsyncStorage,
   whitelist: ['user'],
 };

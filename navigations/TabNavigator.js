@@ -11,7 +11,6 @@ import Report from '../screens/Report';
 import Invoice from '../screens/Invoice';
 import Expanse from '../screens/Expanse';
 import TabBarIcon from '../components/TabBarIcon';
-import AntDesignIcon from '../components/AntDesignIcon';
 import { en, vi } from '../constants/localization';
 import theme from '../constants/theme';
 

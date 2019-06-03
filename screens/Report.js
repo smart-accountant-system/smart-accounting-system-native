@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Text, View } from 'react-native';
 
 class Report extends React.Component {

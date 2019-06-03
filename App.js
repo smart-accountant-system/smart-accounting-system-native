@@ -74,8 +74,10 @@ export default class App extends React.Component {
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
             <MessageProvider>
-              <StatusBar hidden />
-              <AppNavigator />
+              <PaperProvider theme={theme}>
+                <StatusBar hidden />
+                <AppNavigator />
+              </PaperProvider>
             </MessageProvider>
           </PersistGate>
         </Provider>

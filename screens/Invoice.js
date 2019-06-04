@@ -1,42 +1,32 @@
 import React from 'react';
-import { Text, View } from 'react-native';
-import styled from 'styled-components/native';
-
-import { Localization } from 'expo';
 import i18n from 'i18n-js';
+import { Localization } from 'expo';
+import { View, StatusBar, TouchableOpacity } from 'react-native';
+import { HeaderWrapper, Header, Typography } from '../containers/Home';
+import FeatherIcon from '../components/FeatherIcon';
 import { en, vi } from '../constants/localization';
-
-import AntDesignIcon from '../components/AntDesignIcon';
+import theme from '../constants/theme';
 
 i18n.fallbacks = true;
 i18n.translations = { en, vi };
 i18n.locale = Localization.locale;
-const ScreenContainer = styled.View`
-  width: 100%;
-  height: 100%;
-`;
-
-const HeaderWrapper = styled.View`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  height: 70px;
-  background-color: ${({ theme }) => theme.colors.primary};
-  padding: 20px 10px 0px 10px;
-  justify-content: space-between;
-`;
-
-const HeaderText = styled.Text`
-  font-size: 18px;
-`;
 
 class Invoice extends React.Component {
   render() {
+    const { navigation } = this.props;
     return (
-      <ScreenContainer>
-        <HeaderWrapper />
-      </ScreenContainer>
+      <View style={{ display: 'flex', flex: 1 }}>
+        <HeaderWrapper>
+          <StatusBar barStyle="light-content" />
+          <Header>
+            <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+              <FeatherIcon color={theme.colors.white} name="user" />
+            </TouchableOpacity>
+            <Typography>{i18n.t('invoice')}</Typography>
+            <FeatherIcon color={theme.colors.primary} name="user" />
+          </Header>
+        </HeaderWrapper>
+      </View>
     );
   }
 }

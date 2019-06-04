@@ -26,12 +26,6 @@ import theme from '../constants/theme';
 import ProfileInfo from '../components/ProfileInfo';
 import { logout } from '../actions';
 
-import { en, vi } from '../constants/localization';
-
-i18n.fallbacks = true;
-i18n.translations = { en, vi };
-i18n.locale = Localization.locale;
-
 class Profile extends React.Component {
   handleLogout = () => {
     const { navigation } = this.props;
@@ -53,7 +47,7 @@ class Profile extends React.Component {
             <TouchableOpacity onPress={() => navigation.navigate('Home')}>
               <FeatherIcon color={theme.colors.white} name="x" />
             </TouchableOpacity>
-            <Typography>{i18n.t('profile', { locale: 'en' })}</Typography>
+            <Typography>{i18n.t('profile')}</Typography>
             <FeatherIcon color={theme.colors.primary} name="user" />
           </Header>
         </HeaderWrapper>

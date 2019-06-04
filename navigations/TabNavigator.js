@@ -3,19 +3,14 @@ import {
   createBottomTabNavigator,
   createStackNavigator,
 } from 'react-navigation';
-import { Localization } from 'expo';
 import i18n from 'i18n-js';
 
 import Home from '../screens/Home';
 import Invoice from '../screens/Invoice';
 import Profile from '../screens/Profile';
 import FeatherIcon from '../components/FeatherIcon';
-import { en, vi } from '../constants/localization';
 import theme from '../constants/theme';
 
-i18n.fallbacks = true;
-i18n.translations = { en, vi };
-i18n.locale = Localization.locale;
 export const HomeStack = createStackNavigator(
   {
     Home,
@@ -36,14 +31,14 @@ const InvoiceStack = createStackNavigator(
 );
 
 HomeStack.navigationOptions = {
-  tabBarLabel: i18n.t('dashboard', { locale: 'en' }),
+  tabBarLabel: i18n.t('dashboard'),
   tabBarIcon: ({ focused }) => (
     <FeatherIcon focused={focused} name="bar-chart-2" />
   ),
 };
 
 InvoiceStack.navigationOptions = {
-  tabBarLabel: i18n.t('invoice', { locale: 'en' }),
+  tabBarLabel: i18n.t('invoice'),
   tabBarIcon: ({ focused }) => <FeatherIcon focused={focused} name="feather" />,
 };
 

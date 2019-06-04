@@ -2,9 +2,10 @@ import React from 'react';
 import { StyleSheet, StatusBar } from 'react-native';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import { AppLoading, Asset, Font, Icon, Permissions } from 'expo';
+import { AppLoading, Asset, Font, Icon, Permissions, Localization } from 'expo';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { ThemeProvider } from 'styled-components';
+import i18n from 'i18n-js';
 import { MessageProvider } from './contexts';
 import store, { persistor } from './store';
 
@@ -21,6 +22,11 @@ import AvenirNext from './assets/fonts/AvenirNextLTPro-Regular.otf';
 import AvenirNextBold from './assets/fonts/AvenirNextLTPro-Bold.otf';
 import NotoSans from './assets/fonts/NotoSans-Regular.ttf';
 import theme from './constants/theme';
+import { en, vi } from './constants/localization';
+
+i18n.fallbacks = true;
+i18n.translations = { en, vi };
+i18n.locale = Localization.locale;
 
 export default class App extends React.Component {
   state = {

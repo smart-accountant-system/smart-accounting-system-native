@@ -4,12 +4,18 @@ import {
   createStackNavigator,
 } from 'react-navigation';
 import i18n from 'i18n-js';
+import { Localization } from 'expo';
 
 import Home from '../screens/Home';
 import Invoice from '../screens/Invoice';
 import Profile from '../screens/Profile';
 import FeatherIcon from '../components/FeatherIcon';
 import theme from '../constants/theme';
+import { en, vi } from '../constants/localization';
+
+i18n.fallbacks = true;
+i18n.translations = { en, vi };
+i18n.locale = Localization.locale;
 
 export const HomeStack = createStackNavigator(
   {

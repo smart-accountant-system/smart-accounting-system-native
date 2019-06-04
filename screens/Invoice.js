@@ -7,11 +7,6 @@ import { TextInput } from 'react-native-paper';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
 import FeatherIcon from '../components/FeatherIcon';
 import theme from '../constants/theme';
-import { en, vi } from '../constants/localization';
-
-i18n.fallbacks = true;
-i18n.translations = { en, vi };
-i18n.locale = Localization.locale;
 
 class Invoice extends React.Component {
   state = {

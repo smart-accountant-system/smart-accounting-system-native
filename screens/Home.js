@@ -1,13 +1,29 @@
 import React from 'react';
-import { Text, View, StatusBar, TouchableOpacity } from 'react-native';
+import {
+  Text,
+  View,
+  StatusBar,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-paper';
 
 import i18n from 'i18n-js';
-import { HeaderWrapper, Header, Typography } from '../containers/Home';
+import {
+  HeaderWrapper,
+  Header,
+  Typography,
+  HomeBodyWrapper,
+  FeatureText,
+  FeatureHeaderWrapper,
+  FeatureContent,
+  InforWrapper,
+} from '../containers/Home';
 import FeatherIcon from '../components/FeatherIcon';
 import theme from '../constants/theme';
 import { logout } from '../actions';
+import ProfileInfo from '../components/ProfileInfo';
 
 class Home extends React.Component {
   render() {
@@ -24,6 +40,21 @@ class Home extends React.Component {
             <FeatherIcon color={theme.colors.primary} name="user" />
           </Header>
         </HeaderWrapper>
+        <HomeBodyWrapper>
+          <ScrollView>
+            <FeatureHeaderWrapper>
+              <FeatureText>{i18n.t('menu')}</FeatureText>
+            </FeatureHeaderWrapper>
+            <FeatureContent>
+              <ProfileInfo
+                name="shopping-cart"
+                info={i18n.t('paymentMethod')}
+              />
+              <ProfileInfo name="briefcase" info={i18n.t('employeeList')} />
+              <ProfileInfo name="users" info={i18n.t('customerList')} />
+            </FeatureContent>
+          </ScrollView>
+        </HomeBodyWrapper>
       </View>
     );
   }

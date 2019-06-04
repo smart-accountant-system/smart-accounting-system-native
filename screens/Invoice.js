@@ -35,11 +35,7 @@ class Invoice extends React.Component {
   render() {
     return (
       <ScreenContainer>
-        <HeaderWrapper>
-          <AntDesignIcon name="checkcircle" />
-          <HeaderText>{i18n.t('invoice', { locale: 'en' })}</HeaderText>
-          <AntDesignIcon name="pluscircle" />
-        </HeaderWrapper>
+        <HeaderWrapper />
       </ScreenContainer>
     );
   }

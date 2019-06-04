@@ -15,7 +15,9 @@ export const Header = styled.View`
   justify-content: space-between;
   align-items: center;
   background-color: ${({ theme }) => theme.colors.primary};
-  padding: 20px;
+  padding: 10px;
+  padding-bottom: 15px;
+  padding-top: 10px;
 `;
 
 export const Typography = styled.Text`

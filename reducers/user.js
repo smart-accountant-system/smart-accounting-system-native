@@ -12,6 +12,15 @@ const INITIAL_STATE = {
   info: null,
 };
 
+function getRandomColor() {
+  const letters = '0123456789ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; ++i) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case LOGIN_REQUEST:
@@ -26,7 +35,7 @@ export default (state = INITIAL_STATE, action) => {
         isLogged: true,
         isLogging: false,
         error: null,
-        info: action.payload,
+        info: { ...action.payload, color: getRandomColor() },
       };
     case LOGIN_FAILURE:
       return {

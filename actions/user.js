@@ -40,3 +40,10 @@ export function login(data, callback) {
     }
   };
 }
+
+export function logout(callback) {
+  callback.success();
+  return {
+    type: LOGOUT,
+  };
+}

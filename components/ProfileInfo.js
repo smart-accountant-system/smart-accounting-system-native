@@ -6,9 +6,9 @@ import theme from '../constants/theme';
 
 export default class ProfileInfo extends React.Component {
   render() {
-    const { name, info } = this.props;
+    const { name, info, onPress } = this.props;
     return (
-      <TouchableOpacity>
+      <TouchableOpacity onPress={onPress}>
         <View style={{ display: 'flex', flexDirection: 'row' }}>
           <View style={{ margin: 20 }}>
             <FeatherIcon color={theme.colors.grey} name={name} size={30} />
@@ -23,7 +23,7 @@ export default class ProfileInfo extends React.Component {
               width: '80%',
             }}
           >
-            <Text style={{ fontSize: 20 }}>{info}</Text>
+            <Text style={{ fontSize: 16 }}>{info}</Text>
           </View>
         </View>
       </TouchableOpacity>

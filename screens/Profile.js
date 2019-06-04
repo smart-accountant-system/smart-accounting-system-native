@@ -1,5 +1,14 @@
+/* eslint-disable react/destructuring-assignment */
 import React from 'react';
-import { Text, View, StatusBar, TouchableOpacity } from 'react-native';
+import {
+  Text,
+  View,
+  StatusBar,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
+import { connect } from 'react-redux';
+import { withTheme } from 'react-native-paper';
 
 import { Localization } from 'expo';
 import i18n from 'i18n-js';
@@ -15,6 +24,7 @@ import {
 import FeatherIcon from '../components/FeatherIcon';
 import theme from '../constants/theme';
 import ProfileInfo from '../components/ProfileInfo';
+import { logout } from '../actions';
 
 import { en, vi } from '../constants/localization';
 
@@ -23,8 +33,18 @@ i18n.translations = { en, vi };
 i18n.locale = Localization.locale;
 
 class Profile extends React.Component {
-  render() {
+  handleLogout = () => {
     const { navigation } = this.props;
+    this.props.logout({
+      success: () => {
+        navigation.navigate('Login');
+      },
+    });
+  };
+
+  render() {
+    const { navigation, info } = this.props;
+    console.log(info);
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
@@ -37,18 +57,43 @@ class Profile extends React.Component {
             <FeatherIcon color={theme.colors.primary} name="user" />
           </Header>
         </HeaderWrapper>
-        <ContentWrapper>
-          <Avatar />
-          <AvatarTypography>Nhat Quang</AvatarTypography>
-          <InforWrapper>
-            <ProfileInfo name="target" info="nhatquang" />
-            <ProfileInfo name="target" info="nhatquang" />
-            <ProfileInfo name="upload" info="Logout" />
-          </InforWrapper>
-        </ContentWrapper>
+        <ScrollView>
+          <ContentWrapper>
+            <Avatar color={info.color}>
+              <AvatarTypography color={info.color}>
+                {info.fullname.substring(0, 1)}
+              </AvatarTypography>
+            </Avatar>
+            <AvatarTypography color={info.color}>
+              {info.fullname}
+            </AvatarTypography>
+            <InforWrapper>
+              <ProfileInfo name="user" info={info.username} />
+              <ProfileInfo name="inbox" info={info.email} />
+              <ProfileInfo name="phone" info={info.phone} />
+              <ProfileInfo
+                onPress={this.handleLogout}
+                name="log-out"
+                info="Logout"
+              />
+            </InforWrapper>
+          </ContentWrapper>
+        </ScrollView>
       </View>
     );
   }
 }
 
-export default Profile;
+const mapStateToProps = state => ({
+  info: state.user.info,
+});
+const mapDispatchToProps = {
+  logout,
+};
+
+export default withTheme(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Profile)
+);

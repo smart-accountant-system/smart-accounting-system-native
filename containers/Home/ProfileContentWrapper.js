@@ -23,7 +23,7 @@ export const Avatar = styled.View`
 
 export const AvatarTypography = styled.Text`
   color: ${props => props.color || '#000'};
-  font-size: 30px;
+  font-size: ${props => props.size || '50px'};
 `;
 
 export const InforWrapper = styled.View`

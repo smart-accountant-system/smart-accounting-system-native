@@ -61,10 +61,10 @@ class Profile extends React.Component {
           <ContentWrapper>
             <Avatar color={info.color}>
               <AvatarTypography color={info.color}>
-                {info.fullname.substring(0, 1)}
+                {info.fullname.substring(0, 1).toUpperCase()}
               </AvatarTypography>
             </Avatar>
-            <AvatarTypography color={info.color}>
+            <AvatarTypography size="30" color={info.color}>
               {info.fullname}
             </AvatarTypography>
             <InforWrapper>

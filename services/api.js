@@ -7,7 +7,7 @@ import store from '../store';
 export const query = async ({
   method = 'GET',
   endpoint = '/',
-  data = {},
+  data = null,
   headers = {},
   params = {},
 }) =>

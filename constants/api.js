@@ -1,4 +1,5 @@
 export const API_URL = 'https://smart-accountant-system.herokuapp.com';
+// export const API_URL = 'http://localhost:7777';
 
 export const METHODS = {
   get: 'GET',
@@ -9,4 +10,5 @@ export const METHODS = {
 
 export const ENDPOINTS = {
   login: '/employees/login',
+  getReceipts: '/receipts',
 };

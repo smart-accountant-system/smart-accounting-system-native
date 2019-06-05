@@ -9,6 +9,7 @@ import { Localization } from 'expo';
 import Home from '../screens/Home';
 import Invoice from '../screens/Invoice';
 import Profile from '../screens/Profile';
+import Receipt from '../screens/Receipt';
 import FeatherIcon from '../components/FeatherIcon';
 import theme from '../constants/theme';
 import { en, vi } from '../constants/localization';
@@ -36,6 +37,15 @@ const InvoiceStack = createStackNavigator(
   }
 );
 
+const ReceiptStack = createStackNavigator(
+  {
+    Receipt,
+  },
+  {
+    headerMode: 'none',
+  }
+);
+
 HomeStack.navigationOptions = {
   tabBarLabel: i18n.t('dashboard'),
   tabBarIcon: ({ focused }) => (
@@ -48,10 +58,18 @@ InvoiceStack.navigationOptions = {
   tabBarIcon: ({ focused }) => <FeatherIcon focused={focused} name="feather" />,
 };
 
+ReceiptStack.navigationOptions = {
+  tabBarLabel: i18n.t('receipt'),
+  tabBarIcon: ({ focused }) => (
+    <FeatherIcon focused={focused} name="clipboard" />
+  ),
+};
+
 const TabNavigator = createBottomTabNavigator(
   {
     HomeStack,
     InvoiceStack,
+    ReceiptStack,
   },
   {
     tabBarOptions: {

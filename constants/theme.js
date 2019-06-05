@@ -31,6 +31,8 @@ export default {
     text: '#4A4944',
     white: '#fff',
     grey: '#888',
+    receive: '#3AAC74',
+    pay: '#7C2064',
   },
   // fonts,
 };

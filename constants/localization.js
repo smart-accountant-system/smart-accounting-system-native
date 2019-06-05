@@ -9,6 +9,7 @@ export const en = {
   employeeList: 'Employee list',
   customerList: 'Customer list',
   menu: 'Menu',
+  receipt: 'Receipt',
 };
 
 export const vi = {
@@ -22,4 +23,5 @@ export const vi = {
   employeeList: 'Danh sách nhân viên',
   customerList: 'Danh sách khách hàng',
   menu: 'Danh mục',
+  receipt: 'Biên lai',
 };

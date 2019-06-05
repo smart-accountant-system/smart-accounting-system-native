@@ -38,7 +38,6 @@ class Profile extends React.Component {
 
   render() {
     const { navigation, info } = this.props;
-    console.log(info);
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>

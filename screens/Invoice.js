@@ -1,9 +1,8 @@
 import React from 'react';
 import i18n from 'i18n-js';
-import { Localization } from 'expo';
 import { Text, View, StatusBar, TouchableOpacity } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
-import { TextInput } from 'react-native-paper';
+
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
 import FeatherIcon from '../components/FeatherIcon';
 import theme from '../constants/theme';
@@ -44,20 +43,43 @@ class Invoice extends React.Component {
         </HeaderWrapper>
         <View>
           <View style={{ display: 'flex', flexDirection: 'row' }}>
-            <TouchableOpacity
-              style={{ width: '50%' }}
-              onPress={this.showDateTimePicker}
-            >
-              <TextInput
-                label="From"
-                mode="outlined"
-                disabled
-                value={fromDate}
-                onPress={this.showDateTimePicker}
-              />
-            </TouchableOpacity>
-            <View style={{ width: '50%' }}>
-              <TextInput label="To" value={toDate} />
+            <View style={{ width: '50%', padding: 5 }}>
+              <Text>From</Text>
+              <TouchableOpacity onPress={this.showDateTimePicker}>
+                <View
+                  style={{
+                    borderWidth: 1,
+                    borderColor: '#ccc',
+                    padding: 10,
+                    marginTop: 5,
+                    borderRadius: 5,
+                  }}
+                >
+                  <Text>{fromDate}</Text>
+                  <Text style={{ position: 'absolute', right: 5, top: 3 }}>
+                    <FeatherIcon name="chevron-down" />
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+            <View style={{ width: '50%', padding: 5 }}>
+              <Text>To</Text>
+              <TouchableOpacity onPress={this.showDateTimePicker}>
+                <View
+                  style={{
+                    borderWidth: 1,
+                    borderColor: '#ccc',
+                    padding: 10,
+                    marginTop: 5,
+                    borderRadius: 5,
+                  }}
+                >
+                  <Text>{toDate}</Text>
+                  <Text style={{ position: 'absolute', right: 5, top: 3 }}>
+                    <FeatherIcon name="chevron-down" />
+                  </Text>
+                </View>
+              </TouchableOpacity>
             </View>
           </View>
           <Text onPress={this.showDateTimePicker}>TIMEEEEEEE</Text>

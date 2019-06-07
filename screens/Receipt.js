@@ -1,11 +1,6 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
-import {
-  View,
-  TouchableOpacity,
-  ScrollView,
-  ActivityIndicator,
-} from 'react-native';
+import { View, TouchableOpacity, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-paper';
 import moment from 'moment';
@@ -21,8 +16,8 @@ import {
 } from '../containers/Home';
 import theme from '../constants/theme';
 import FeatherIcon from '../components/FeatherIcon';
-import { DateFilterWrapper } from '../containers/Receipt';
 import ReceiptItem from '../components/ReceiptItem';
+import Loading from '../components/Loading';
 
 class Receipt extends React.Component {
   componentDidMount = () => {
@@ -38,7 +33,7 @@ class Receipt extends React.Component {
   };
 
   render() {
-    const { navigation, receipts } = this.props;
+    const { receipts } = this.props;
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
@@ -68,16 +63,7 @@ class Receipt extends React.Component {
             </ScrollView>
           </HomeBodyWrapper>
         ) : (
-          <View
-            style={{
-              display: 'flex',
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <ActivityIndicator size="large" color={theme.colors.grey} />
-          </View>
+          <Loading />
         )}
       </View>
     );

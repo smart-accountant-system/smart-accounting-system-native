@@ -1,8 +1,15 @@
 import React from 'react';
 import i18n from 'i18n-js';
-import { Text, View, StatusBar, TouchableOpacity } from 'react-native';
+import {
+  Text,
+  View,
+  StatusBar,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
+import { List } from 'react-native-paper';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
 import FeatherIcon from '../components/FeatherIcon';
 import theme from '../constants/theme';
@@ -40,6 +47,24 @@ class Invoice extends React.Component {
   render() {
     const { navigation } = this.props;
     const { isVisible, fromDate, toDate, activating } = this.state;
+    const invoice = {
+      _id: `123`,
+      detail: [],
+      type: 0,
+      totalCost: 10000,
+      createdBy: {
+        _id: '123',
+        fullname: 'Duke Thor',
+      },
+      status: 0,
+      createAt: new Date(),
+    };
+
+    const list = [
+      invoice,
+      { ...invoice, _id: '321', status: 1, totalCost: 31232 },
+    ];
+
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
@@ -100,6 +125,19 @@ class Invoice extends React.Component {
             onCancel={this.hideDateTimePicker}
           />
         </View>
+
+        <ScrollView>
+          {list.map(invoice => (
+            <List.Item
+              key={invoice._id}
+              title={`${new Date(invoice.createAt).toLocaleDateString(
+                'vi-VN'
+              )} - ${invoice.totalCost}đ`}
+              description={`${invoice.status === 0 ? 'Not yet' : 'Done'}`}
+              left={props => <List.Icon {...props} icon="folder" />}
+            />
+          ))}
+        </ScrollView>
       </View>
     );
   }

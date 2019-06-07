@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,

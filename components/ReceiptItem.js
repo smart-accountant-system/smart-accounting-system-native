@@ -11,7 +11,7 @@ const ReceiptContentWrapper = styled.View`
 
 export default class ReceiptItem extends React.Component {
   render() {
-    const { customer, id, type, date, price } = this.props;
+    const { customer, type, date, price, item } = this.props;
     return (
       // <TouchableOpacity>
       <View
@@ -24,12 +24,13 @@ export default class ReceiptItem extends React.Component {
           padding: 20,
           borderBottomColor: theme.colors.grey,
           borderBottomWidth: 0.5,
+          borderTopColor: theme.colors.grey,
+          borderTopWidth: 0.5,
         }}
       >
         <ReceiptContentWrapper>
           <View>
             <Text style={{ fontSize: 18 }}>{customer}</Text>
-            <Text style={{ fontSize: 12, color: theme.colors.grey }}>{id}</Text>
           </View>
           <Text
             style={{

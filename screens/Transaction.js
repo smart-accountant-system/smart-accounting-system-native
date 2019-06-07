@@ -17,6 +17,12 @@ import TransactionItem from '../components/TransactionItem';
 class Transaction extends React.Component {
   render() {
     const { navigation } = this.props;
+    const transaction = {
+      debitAccount: 'Cash',
+      creditAccount: 'Revenue',
+      price: 'đ7,000,000',
+      date: 'May 1, 2019',
+    };
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
@@ -29,7 +35,9 @@ class Transaction extends React.Component {
         <HomeBodyWrapper>
           <ScrollView>
             <TouchableOpacity
-              onPress={() => navigation.navigate('TransactionDetail')}
+              onPress={() =>
+                navigation.navigate('TransactionDetail', { transaction })
+              }
             >
               <TransactionItem
                 fromAccount="Cash"

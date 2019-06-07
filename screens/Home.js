@@ -22,7 +22,7 @@ import {
 } from '../containers/Home';
 import FeatherIcon from '../components/FeatherIcon';
 import theme from '../constants/theme';
-import { logout } from '../actions';
+import { logout } from '../redux/actions';
 import ProfileInfo from '../components/ProfileInfo';
 
 class Home extends React.Component {

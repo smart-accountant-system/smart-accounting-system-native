@@ -3,9 +3,10 @@ import React from 'react';
 import { View, TouchableOpacity, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-paper';
+import moment from 'moment';
 
 import i18n from 'i18n-js';
-import { getReceipts } from '../actions';
+import { getReceipts } from '../redux/actions';
 
 import {
   HeaderWrapper,
@@ -40,15 +41,19 @@ class Receipt extends React.Component {
         </HeaderWrapper>
         <HomeBodyWrapper>
           <ScrollView>
-            <TouchableOpacity onPress={this.handle}>
-              <ReceiptItem
-                customer="FPT"
-                id="#0000001"
-                type={1}
-                date="May 24, 2019"
-                price="đ7,000,000"
-              />
-            </TouchableOpacity>
+            {receipts
+              ? receipts.receipts.map(item => (
+                  <TouchableOpacity onPress={this.handle} key={item._id}>
+                    <ReceiptItem
+                      customer="Nhat Quang"
+                      type={item.type}
+                      date={moment(item.createdAt).format('MMM DD, YYYY')}
+                      item={item}
+                      price="đ7,000,000"
+                    />
+                  </TouchableOpacity>
+                ))
+              : null}
           </ScrollView>
         </HomeBodyWrapper>
       </View>
@@ -57,7 +62,7 @@ class Receipt extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  receipts: state.receipt,
+  receipts: state.receipt.receipts,
 });
 const mapDispatchToProps = {
   getReceipts,

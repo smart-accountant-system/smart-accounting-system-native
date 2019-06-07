@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { API_URL } from '../constants/api';
 // eslint-disable-next-line import/no-cycle
-import store from '../store';
+import store from '../redux/store';
 
 export const query = async ({
   method = 'GET',

@@ -1,6 +1,6 @@
 /* eslint-disable import/no-cycle */
-import { query } from '../services/api';
-import { ENDPOINTS, METHODS } from '../constants/api';
+import { query } from '../../services/api';
+import { ENDPOINTS, METHODS } from '../../constants/api';
 
 export const LOGIN_REQUEST = 'login-request';
 export const LOGIN_SUCCESS = 'login-success';

@@ -1,6 +1,6 @@
 /* eslint-disable import/no-cycle */
-import { query } from '../services/api';
-import { ENDPOINTS, METHODS } from '../constants/api';
+import { query } from '../../services/api';
+import { ENDPOINTS, METHODS } from '../../constants/api';
 
 export const GET_RECEIPTS_REQUEST = 'get-receipts-request';
 export const GET_RECEIPTS_SUCCESS = 'get-receipts-success';

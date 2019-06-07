@@ -7,7 +7,7 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import { ThemeProvider } from 'styled-components';
 import i18n from 'i18n-js';
 import { MessageProvider } from './contexts';
-import store, { persistor } from './store';
+import store, { persistor } from './redux/store';
 
 import AppNavigator from './navigations/AppNavigator.js';
 import font from './assets/fonts/Pacifico-Regular.ttf';

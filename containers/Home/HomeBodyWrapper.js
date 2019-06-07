@@ -11,8 +11,8 @@ export const FeatureHeaderWrapper = styled.View`
 `;
 
 export const FeatureText = styled.Text`
-  color: ${({ theme }) => theme.colors.grey || '#888'}
-  font-size: 14;
+  color: ${({ theme }) => theme.colors.grey || '#888'};
+  font-size: 14px;
 `;
 
 export const FeatureContent = styled.View`

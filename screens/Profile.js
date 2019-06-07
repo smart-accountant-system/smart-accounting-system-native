@@ -24,7 +24,7 @@ import {
 import FeatherIcon from '../components/FeatherIcon';
 import theme from '../constants/theme';
 import ProfileInfo from '../components/ProfileInfo';
-import { logout } from '../actions';
+import { logout } from '../redux/actions';
 
 class Profile extends React.Component {
   handleLogout = () => {

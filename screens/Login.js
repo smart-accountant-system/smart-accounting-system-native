@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withTheme, HelperText, Button } from 'react-native-paper';
 import { Text, View, ScrollView, KeyboardAvoidingView } from 'react-native';
 
-import { login } from '../actions';
+import { login } from '../redux/actions';
 import Layout from '../constants/Layout';
 import {
   LoginContainer,

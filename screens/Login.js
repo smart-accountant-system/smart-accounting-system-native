@@ -110,7 +110,13 @@ class Login extends React.Component {
                   onPress={this.handleLogin}
                   loading={info.isLogging}
                 >
-                  <Text style={{ fontSize: 16, fontWeight: 'bold' }}>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      fontWeight: 'bold',
+                      color: theme.colors.white,
+                    }}
+                  >
                     LOGIN
                   </Text>
                 </Button>

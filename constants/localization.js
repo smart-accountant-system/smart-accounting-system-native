@@ -10,6 +10,9 @@ export const en = {
   customerList: 'Customer list',
   menu: 'Menu',
   receipt: 'Receipt',
+  transaction: 'Transaction',
+  transactionDetail: 'Transaction detail',
+  account: 'Account',
 };
 
 export const vi = {
@@ -24,4 +27,7 @@ export const vi = {
   customerList: 'Danh sách khách hàng',
   menu: 'Danh mục',
   receipt: 'Biên lai',
+  transaction: 'Giao dịch',
+  transactionDetail: 'Chi tiết giao dịch',
+  account: 'Tài khoản',
 };

@@ -11,6 +11,9 @@ import Invoice from '../screens/Invoice';
 import Profile from '../screens/Profile';
 import Receipt from '../screens/Receipt';
 import FeatherIcon from '../components/FeatherIcon';
+import Transaction from '../screens/Transaction';
+import TransactionDetail from '../screens/TransactionDetail';
+import Account from '../screens/Account';
 import theme from '../constants/theme';
 import { en, vi } from '../constants/localization';
 
@@ -46,6 +49,25 @@ const ReceiptStack = createStackNavigator(
   }
 );
 
+const TransactionStack = createStackNavigator(
+  {
+    Transaction,
+    TransactionDetail,
+  },
+  {
+    headerMode: 'none',
+  }
+);
+
+const AccountStack = createStackNavigator(
+  {
+    Account,
+  },
+  {
+    headerMode: 'none',
+  }
+);
+
 HomeStack.navigationOptions = {
   tabBarLabel: i18n.t('dashboard'),
   tabBarIcon: ({ focused }) => (
@@ -65,11 +87,23 @@ ReceiptStack.navigationOptions = {
   ),
 };
 
+TransactionStack.navigationOptions = {
+  tabBarLabel: i18n.t('transaction'),
+  tabBarIcon: ({ focused }) => <FeatherIcon focused={focused} name="link" />,
+};
+
+AccountStack.navigationOptions = {
+  tabBarLabel: i18n.t('account'),
+  tabBarIcon: ({ focused }) => <FeatherIcon focused={focused} name="book" />,
+};
+
 const TabNavigator = createBottomTabNavigator(
   {
     HomeStack,
+    AccountStack,
     InvoiceStack,
     ReceiptStack,
+    TransactionStack,
   },
   {
     tabBarOptions: {

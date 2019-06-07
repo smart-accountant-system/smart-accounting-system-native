@@ -10,12 +10,13 @@ import theme from '../constants/theme';
 class Invoice extends React.Component {
   state = {
     isVisible: false,
-    fromDate: '20/11/2019',
-    toDate: '20/11/2020',
+    activating: undefined,
+    fromDate: new Date(),
+    toDate: new Date(),
   };
 
-  showDateTimePicker = () => {
-    this.setState({ isVisible: true });
+  showDateTimePicker = activating => {
+    this.setState({ isVisible: true, activating });
   };
 
   hideDateTimePicker = () => {
@@ -23,12 +24,22 @@ class Invoice extends React.Component {
   };
 
   handleDatePicked = date => {
+    const { activating } = this.state;
+    if (activating === 'from') {
+      this.setState({
+        fromDate: new Date(date),
+      });
+    } else {
+      this.setState({
+        toDate: new Date(date),
+      });
+    }
     this.hideDateTimePicker();
   };
 
   render() {
     const { navigation } = this.props;
-    const { isVisible, fromDate, toDate } = this.state;
+    const { isVisible, fromDate, toDate, activating } = this.state;
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
@@ -45,7 +56,7 @@ class Invoice extends React.Component {
           <View style={{ display: 'flex', flexDirection: 'row' }}>
             <View style={{ width: '50%', padding: 5 }}>
               <Text>From</Text>
-              <TouchableOpacity onPress={this.showDateTimePicker}>
+              <TouchableOpacity onPress={() => this.showDateTimePicker('from')}>
                 <View
                   style={{
                     borderWidth: 1,
@@ -55,7 +66,7 @@ class Invoice extends React.Component {
                     borderRadius: 5,
                   }}
                 >
-                  <Text>{fromDate}</Text>
+                  <Text>{fromDate.toLocaleDateString('vi-VN')}</Text>
                   <Text style={{ position: 'absolute', right: 5, top: 3 }}>
                     <FeatherIcon name="chevron-down" />
                   </Text>
@@ -64,7 +75,7 @@ class Invoice extends React.Component {
             </View>
             <View style={{ width: '50%', padding: 5 }}>
               <Text>To</Text>
-              <TouchableOpacity onPress={this.showDateTimePicker}>
+              <TouchableOpacity onPress={() => this.showDateTimePicker('to')}>
                 <View
                   style={{
                     borderWidth: 1,
@@ -74,7 +85,7 @@ class Invoice extends React.Component {
                     borderRadius: 5,
                   }}
                 >
-                  <Text>{toDate}</Text>
+                  <Text>{toDate.toLocaleDateString('vi-VN')}</Text>
                   <Text style={{ position: 'absolute', right: 5, top: 3 }}>
                     <FeatherIcon name="chevron-down" />
                   </Text>
@@ -82,9 +93,9 @@ class Invoice extends React.Component {
               </TouchableOpacity>
             </View>
           </View>
-          <Text onPress={this.showDateTimePicker}>TIMEEEEEEE</Text>
           <DateTimePicker
             isVisible={isVisible}
+            date={activating === 'from' ? fromDate : toDate}
             onConfirm={this.handleDatePicked}
             onCancel={this.hideDateTimePicker}
           />

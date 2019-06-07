@@ -45,11 +45,11 @@ class Receipt extends React.Component {
               ? receipts.receipts.map(item => (
                   <TouchableOpacity onPress={this.handle} key={item._id}>
                     <ReceiptItem
-                      customer="Nhat Quang"
+                      customer={item.customer.name}
                       type={item.type}
                       date={moment(item.createdAt).format('MMM DD, YYYY')}
                       item={item}
-                      price="đ7,000,000"
+                      price={item.payment.amountMoney}
                     />
                   </TouchableOpacity>
                 ))

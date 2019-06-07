@@ -14,6 +14,7 @@ export const en = {
   transactionDetail: 'Transaction detail',
   account: 'Account',
   balance: 'Balance',
+  payment: 'Payment',
 };
 
 export const vi = {
@@ -32,4 +33,5 @@ export const vi = {
   transactionDetail: 'Chi tiết giao dịch',
   account: 'Tài khoản',
   balance: 'Bảng cân đối',
+  payment: 'Thanh toán',
 };

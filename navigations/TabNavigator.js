@@ -10,6 +10,7 @@ import Home from '../screens/Home';
 import Invoice from '../screens/Invoice';
 import Profile from '../screens/Profile';
 import Receipt from '../screens/Receipt';
+import ReceiptDetail from '../screens/ReceiptDetail';
 import FeatherIcon from '../components/FeatherIcon';
 import Transaction from '../screens/Transaction';
 import TransactionDetail from '../screens/TransactionDetail';
@@ -43,6 +44,7 @@ const InvoiceStack = createStackNavigator(
 const ReceiptStack = createStackNavigator(
   {
     Receipt,
+    ReceiptDetail,
   },
   {
     headerMode: 'none',

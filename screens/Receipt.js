@@ -1,6 +1,11 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
-import { View, TouchableOpacity, ScrollView } from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  ScrollView,
+  ActivityIndicator,
+} from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-paper';
 import moment from 'moment';
@@ -27,9 +32,13 @@ class Receipt extends React.Component {
     });
   };
 
+  receiptDetail = item => {
+    const { navigation } = this.props;
+    navigation.navigate('ReceiptDetail', { item });
+  };
+
   render() {
     const { navigation, receipts } = this.props;
-    console.log(receipts);
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
@@ -39,23 +48,37 @@ class Receipt extends React.Component {
             <FeatherIcon color={theme.colors.primary} name="user" />
           </Header>
         </HeaderWrapper>
-        <HomeBodyWrapper>
-          <ScrollView>
-            {receipts
-              ? receipts.receipts.map(item => (
-                  <TouchableOpacity onPress={this.handle} key={item._id}>
-                    <ReceiptItem
-                      customer={item.customer.name}
-                      type={item.type}
-                      date={moment(item.createdAt).format('MMM DD, YYYY')}
-                      item={item}
-                      price={item.payment.amountMoney}
-                    />
-                  </TouchableOpacity>
-                ))
-              : null}
-          </ScrollView>
-        </HomeBodyWrapper>
+        {receipts ? (
+          <HomeBodyWrapper>
+            <ScrollView>
+              {receipts.receipts.map(item => (
+                <TouchableOpacity
+                  onPress={() => this.receiptDetail(item)}
+                  key={item._id}
+                >
+                  <ReceiptItem
+                    customer={item.customer.name}
+                    type={item.type}
+                    date={moment(item.createdAt).format('MMM DD, YYYY')}
+                    item={item}
+                    price={item.payment.amountMoney}
+                  />
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </HomeBodyWrapper>
+        ) : (
+          <View
+            style={{
+              display: 'flex',
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <ActivityIndicator size="large" color={theme.colors.grey} />
+          </View>
+        )}
       </View>
     );
   }

@@ -6,7 +6,8 @@
     "ios": "expo start --ios",
     "eject": "expo eject",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "postinstall": "node ./scripts/stfu.js"
   },
   "dependencies": {
     "axios": "^0.18.0",

@@ -4,6 +4,7 @@ import moment from 'moment';
 
 import i18n from 'i18n-js';
 import { getReceipts } from '../redux/actions';
+import CustomerInfoWrapper from '../components/CustomerInfoItem';
 
 import {
   HeaderWrapper,
@@ -15,12 +16,12 @@ import {
 } from '../containers/Home';
 import theme from '../constants/theme';
 import FeatherIcon from '../components/FeatherIcon';
+import PaymentItem from '../components/PaymentItem';
 
 export default class ReceiptDetail extends React.Component {
   render() {
     const { navigation } = this.props;
     const item = navigation.getParam('item', '');
-    console.log(item);
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
@@ -37,6 +38,11 @@ export default class ReceiptDetail extends React.Component {
             <FeatureHeaderWrapper>
               <FeatureText>{i18n.t('payment')}</FeatureText>
             </FeatureHeaderWrapper>
+            <PaymentItem payment={item.payment} />
+            <FeatureHeaderWrapper>
+              <FeatureText>{i18n.t('customer')}</FeatureText>
+            </FeatureHeaderWrapper>
+            <CustomerInfoWrapper customer={item.customer} />
           </ScrollView>
         </HomeBodyWrapper>
       </View>

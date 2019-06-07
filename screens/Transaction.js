@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
@@ -13,10 +14,19 @@ import {
 import theme from '../constants/theme';
 import FeatherIcon from '../components/FeatherIcon';
 import TransactionItem from '../components/TransactionItem';
+import { getTransactions } from '../redux/actions';
 
 class Transaction extends React.Component {
+  componentDidMount = () => {
+    this.props.getTransactions({
+      success: () => {},
+      failure: () => {},
+    });
+  };
+
   render() {
-    const { navigation } = this.props;
+    const { navigation, transactions } = this.props;
+    console.log(transactions);
     const transaction = {
       debitAccount: 'Cash',
       creditAccount: 'Revenue',
@@ -46,22 +56,6 @@ class Transaction extends React.Component {
                 date="May 1, 2019"
               />
             </TouchableOpacity>
-            <TouchableOpacity>
-              <TransactionItem
-                fromAccount="Cash"
-                toAccount="Revenue"
-                price="đ7,000,000"
-                date="May 1, 2019"
-              />
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <TransactionItem
-                fromAccount="Cash"
-                toAccount="Revenue"
-                price="đ7,000,000"
-                date="May 1, 2019"
-              />
-            </TouchableOpacity>
           </ScrollView>
         </HomeBodyWrapper>
       </View>
@@ -69,8 +63,10 @@ class Transaction extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({});
-const mapDispatchToProps = {};
+const mapStateToProps = state => ({
+  transactions: state.transaction,
+});
+const mapDispatchToProps = { getTransactions };
 
 export default withTheme(
   connect(

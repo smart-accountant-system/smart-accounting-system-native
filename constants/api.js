@@ -11,4 +11,5 @@ export const METHODS = {
 export const ENDPOINTS = {
   login: '/employees/login',
   getReceipts: '/receipts',
+  getTransactions: '/transactions',
 };

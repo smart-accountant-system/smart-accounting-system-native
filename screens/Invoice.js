@@ -7,6 +7,7 @@ import {
   StatusBar,
   TouchableOpacity,
   ScrollView,
+  Animated,
 } from 'react-native';
 import { connect } from 'react-redux';
 import DateTimePicker from 'react-native-modal-datetime-picker';
@@ -20,8 +21,12 @@ import Loading from '../components/Loading';
 
 class Invoice extends React.Component {
   state = {
-    isVisible: false,
-    activating: undefined,
+    isDatePickerVisible: false,
+    activatingDate: undefined,
+
+    expandFilter: false,
+    height: new Animated.Value(0),
+
     fromDate: new Date(),
     toDate: new Date(),
   };
@@ -33,17 +38,17 @@ class Invoice extends React.Component {
     });
   };
 
-  showDateTimePicker = activating => {
-    this.setState({ isVisible: true, activating });
+  showDateTimePicker = activatingDate => {
+    this.setState({ isDatePickerVisible: true, activatingDate });
   };
 
   hideDateTimePicker = () => {
-    this.setState({ isVisible: false });
+    this.setState({ isDatePickerVisible: false });
   };
 
   handleDatePicked = date => {
-    const { activating } = this.state;
-    if (activating === 'from') {
+    const { activatingDate } = this.state;
+    if (activatingDate === 'from') {
       this.setState({
         fromDate: new Date(date),
       });
@@ -55,9 +60,32 @@ class Invoice extends React.Component {
     this.hideDateTimePicker();
   };
 
+  handlePress = () => {
+    const { expandFilter } = this.state;
+
+    if (!expandFilter) {
+      Animated.spring(this.state.height, {
+        toValue: 85,
+      }).start();
+    } else {
+      Animated.timing(this.state.height, {
+        toValue: 0,
+      }).start();
+    }
+
+    this.setState({
+      expandFilter: !expandFilter,
+    });
+  };
+
   render() {
     const { navigation, invoices } = this.props;
-    const { isVisible, fromDate, toDate, activating } = this.state;
+    const {
+      isDatePickerVisible,
+      fromDate,
+      toDate,
+      activatingDate,
+    } = this.state;
 
     return (
       <View style={{ display: 'flex', flex: 1 }}>
@@ -72,66 +100,78 @@ class Invoice extends React.Component {
           </Header>
         </HeaderWrapper>
         <View>
-          <List.Accordion
-            title="Filter"
-            left={props => (
-              <FeatherIcon color={theme.colors.primary} name="filter" />
-            )}
+          <TouchableOpacity
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              width: '100%',
+              padding: 15,
+              borderBottomColor: '#f1f1f1',
+              borderBottomWidth: 8,
+            }}
+            onPress={this.handlePress}
           >
-            <View
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                marginLeft: -40,
-                marginBottom: 5,
-                backgroundColor: '#f1f1f1',
-              }}
-            >
-              <View style={{ width: '50%', padding: 10 }}>
-                <Text>From</Text>
-                <TouchableOpacity
-                  onPress={() => this.showDateTimePicker('from')}
-                >
-                  <View
-                    style={{
-                      borderWidth: 1,
-                      borderColor: '#ccc',
-                      padding: 10,
-                      marginTop: 5,
-                      borderRadius: 5,
-                    }}
-                  >
-                    <Text>{fromDate.toLocaleDateString('vi-VN')}</Text>
-                    <Text style={{ position: 'absolute', right: 5, top: 3 }}>
-                      <FeatherIcon name="chevron-down" />
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
-              <View style={{ width: '50%', padding: 10 }}>
-                <Text>To</Text>
-                <TouchableOpacity onPress={() => this.showDateTimePicker('to')}>
-                  <View
-                    style={{
-                      borderWidth: 1,
-                      borderColor: '#ccc',
-                      padding: 10,
-                      marginTop: 5,
-                      borderRadius: 5,
-                    }}
-                  >
-                    <Text>{toDate.toLocaleDateString('vi-VN')}</Text>
-                    <Text style={{ position: 'absolute', right: 5, top: 3 }}>
-                      <FeatherIcon name="chevron-down" />
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
+            <View style={{ display: 'flex', flexDirection: 'row' }}>
+              <FeatherIcon color={theme.colors.primary} name="filter" />
+              <Text style={{ fontSize: 16, paddingLeft: 20 }}>Filter...</Text>
             </View>
-          </List.Accordion>
+            <FeatherIcon color={theme.colors.primary} name="chevron-down" />
+          </TouchableOpacity>
+
+          <Animated.View
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              marginBottom: 5,
+              backgroundColor: '#f1f1f1',
+
+              height: this.state.height,
+              overflow: 'hidden',
+            }}
+          >
+            <View style={{ width: '50%', padding: 10, paddingTop: 5 }}>
+              <Text>From</Text>
+              <TouchableOpacity onPress={() => this.showDateTimePicker('from')}>
+                <View
+                  style={{
+                    borderWidth: 1,
+                    borderColor: '#ccc',
+                    padding: 10,
+                    marginTop: 5,
+                    borderRadius: 5,
+                  }}
+                >
+                  <Text>{fromDate.toLocaleDateString('vi-VN')}</Text>
+                  <Text style={{ position: 'absolute', right: 5, top: 3 }}>
+                    <FeatherIcon name="chevron-down" />
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+            <View style={{ width: '50%', padding: 10, paddingTop: 5 }}>
+              <Text>To</Text>
+              <TouchableOpacity onPress={() => this.showDateTimePicker('to')}>
+                <View
+                  style={{
+                    borderWidth: 1,
+                    borderColor: '#aaa',
+                    padding: 10,
+                    marginTop: 5,
+                    borderRadius: 5,
+                  }}
+                >
+                  <Text>{toDate.toLocaleDateString('vi-VN')}</Text>
+                  <Text style={{ position: 'absolute', right: 5, top: 3 }}>
+                    <FeatherIcon name="chevron-down" />
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          </Animated.View>
           <DateTimePicker
-            isVisible={isVisible}
-            date={activating === 'from' ? fromDate : toDate}
+            isDatePickerVisible={isDatePickerVisible}
+            date={activatingDate === 'from' ? fromDate : toDate}
             onConfirm={this.handleDatePicked}
             onCancel={this.hideDateTimePicker}
           />

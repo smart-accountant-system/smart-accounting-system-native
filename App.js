@@ -27,6 +27,7 @@ import { en, vi } from './constants/localization';
 i18n.fallbacks = true;
 i18n.translations = { en, vi };
 i18n.locale = Localization.locale;
+// i18n.locale = 'vi';
 
 export default class App extends React.Component {
   state = {

@@ -15,6 +15,8 @@ export const en = {
   account: 'Account',
   balance: 'Balance',
   payment: 'Payment',
+  customer: 'Customer',
+  phone: 'Phone',
 };
 
 export const vi = {
@@ -34,4 +36,6 @@ export const vi = {
   account: 'Tài khoản',
   balance: 'Bảng cân đối',
   payment: 'Thanh toán',
+  customer: 'Khách hàng',
+  phone: 'Số điện thoại',
 };

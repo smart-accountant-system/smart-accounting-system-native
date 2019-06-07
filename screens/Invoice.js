@@ -127,13 +127,13 @@ class Invoice extends React.Component {
         </View>
 
         <ScrollView>
-          {list.map(invoice => (
+          {list.map(item => (
             <List.Item
-              key={invoice._id}
-              title={`${new Date(invoice.createAt).toLocaleDateString(
+              key={item._id}
+              title={`${new Date(item.createAt).toLocaleDateString(
                 'vi-VN'
-              )} - ${invoice.totalCost}đ`}
-              description={`${invoice.status === 0 ? 'Not yet' : 'Done'}`}
+              )} - ${item.totalCost}đ`}
+              description={`${item.status === 0 ? 'Not yet' : 'Done'}`}
               left={props => <List.Icon {...props} icon="folder" />}
             />
           ))}

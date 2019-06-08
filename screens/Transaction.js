@@ -16,9 +16,9 @@ import i18n from 'i18n-js';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
 import theme from '../constants/theme';
 import FeatherIcon from '../components/FeatherIcon';
-import TransactionItem from '../components/TransactionItem';
 import { getTransactions } from '../redux/actions';
 import Loading from '../components/Loading';
+import { TransactionContent } from '../containers/Transaction';
 import {
   FilterHeader,
   FilterBody,
@@ -117,8 +117,13 @@ class Transaction extends React.Component {
     });
   };
 
+  transactionDetail = transaction => {
+    const { navigation } = this.props;
+    navigation.navigate('TransactionDetail', { transaction });
+  };
+
   render() {
-    const { navigation, transactions } = this.props;
+    const { transactions } = this.props;
     const {
       isDatePickerVisible,
       fromDate,
@@ -185,15 +190,21 @@ class Transaction extends React.Component {
             {transactions.transactions.map(transaction => (
               <TouchableOpacity
                 key={transaction._id}
-                onPress={() =>
-                  navigation.navigate('TransactionDetail', { transaction })
-                }
+                onPress={() => this.transactionDetail(transaction)}
               >
-                <TransactionItem
+                <TransactionContent
+                  id={transaction._id}
+                  checkedBy={transaction.checkedBy.fullname}
+                  fromColor={
+                    transaction.fromAccount.type === 0 ? '#438763' : '#ad6b8d'
+                  }
+                  toColor={
+                    transaction.toAccount.type === 0 ? '#438763' : '#ad6b8d'
+                  }
                   fromAccount={transaction.fromAccount.id.name}
                   toAccount={transaction.toAccount.id.name}
-                  price={transaction.amount}
-                  date={new Date(transaction.createdAt).toLocaleDateString(
+                  cost={transaction.amount}
+                  time={new Date(transaction.createdAt).toLocaleDateString(
                     'vi-VN'
                   )}
                 />

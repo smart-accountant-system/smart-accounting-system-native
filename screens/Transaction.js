@@ -169,8 +169,8 @@ class Transaction extends React.Component {
                 }
               >
                 <TransactionItem
-                  fromAccount={transaction.fromAccount.id}
-                  toAccount={transaction.toAccount.id}
+                  fromAccount={transaction.fromAccount.id.name}
+                  toAccount={transaction.toAccount.id.name}
                   price={transaction.amount}
                   date={new Date(transaction.createdAt).toLocaleDateString(
                     'vi-VN'

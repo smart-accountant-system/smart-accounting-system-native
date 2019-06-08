@@ -4,12 +4,14 @@ import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme, Searchbar } from 'react-native-paper';
 import i18n from 'i18n-js';
+import NumberFormat from 'react-number-format';
 
 import { getAccounts } from '../redux/actions';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
 import theme from '../constants/theme';
 import FeatherIcon from '../components/FeatherIcon';
 import Loading from '../components/Loading';
+import { AccountItem, AccountContent } from '../containers/Account';
 
 class Account extends React.Component {
   state = {
@@ -62,23 +64,39 @@ class Account extends React.Component {
           value={searchText}
           placeholder="Search"
           onChangeText={this.handleSearch}
+          style={{
+            shadowOffset: { width: 0, height: 0 },
+            shadowOpacity: 0,
+          }}
         />
 
         {accounts ? (
           <ScrollView>
             {accounts.accounts.map(account => (
-              <TouchableOpacity
-                onPress={() => this.accountDetail(account)}
+              <AccountItem
                 key={account._id}
-                style={{
-                  width: '100%',
-                  height: 30,
-                  borderBottomColor: '#444',
-                  borderBottomWidth: 1,
-                }}
+                account={account}
+                accountDetail={this.accountDetail}
               >
-                <Text>{JSON.stringify(account.name)}</Text>
-              </TouchableOpacity>
+                <AccountContent
+                  name={account.name}
+                  description={account.description}
+                  color={account.debit > account.credit ? '#438763' : '#ad6b8d'}
+                  balance={Math.abs(account.debit - account.credit)}
+                  balanceType={
+                    account.debit > account.credit
+                      ? 'Debit balance'
+                      : 'Credit balance'
+                  }
+                  time={new Date(account.createdAt).toLocaleDateString(
+                    'vi-VN',
+                    {
+                      day: 'numeric',
+                      month: 'long',
+                    }
+                  )}
+                />
+              </AccountItem>
             ))}
           </ScrollView>
         ) : (

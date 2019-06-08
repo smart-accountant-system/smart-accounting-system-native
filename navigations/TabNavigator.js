@@ -8,6 +8,7 @@ import { Localization } from 'expo';
 
 import Home from '../screens/Home';
 import Invoice from '../screens/Invoice';
+import InvoiceDetail from '../screens/InvoiceDetail';
 import Profile from '../screens/Profile';
 import Receipt from '../screens/Receipt';
 import ReceiptDetail from '../screens/ReceiptDetail';
@@ -36,6 +37,7 @@ export const HomeStack = createStackNavigator(
 const InvoiceStack = createStackNavigator(
   {
     Invoice,
+    InvoiceDetail,
   },
   {
     headerMode: 'none',

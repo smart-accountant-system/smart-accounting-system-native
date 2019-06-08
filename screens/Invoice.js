@@ -25,6 +25,7 @@ import {
   FilterField,
   FilterTime,
 } from '../components/Filter';
+import { InvoiceItem, InvoiceContent } from '../containers/Invoice';
 
 class Invoice extends React.Component {
   state = {
@@ -117,6 +118,11 @@ class Invoice extends React.Component {
     });
   };
 
+  invoiceDetail = invoice => {
+    const { navigation } = this.props;
+    navigation.navigate('InvoiceDetail', { invoice });
+  };
+
   render() {
     const { navigation, invoices } = this.props;
     const {
@@ -187,14 +193,25 @@ class Invoice extends React.Component {
             }
           >
             {invoices.invoices.map(invoice => (
-              <List.Item
+              <InvoiceItem
                 key={invoice._id}
-                title={`${new Date(invoice.createdAt).toLocaleDateString(
-                  'vi-VN'
-                )} - ${invoice.totalCost}đ`}
-                description={`${invoice.status ? 'Done' : 'Not yet'}`}
-                left={props => <List.Icon {...props} icon="folder" />}
-              />
+                invoice={invoice}
+                invoiceDetail={this.invoiceDetail}
+              >
+                <InvoiceContent
+                  name={invoice.type === 0 ? 'Purchased' : 'Selled'}
+                  color={invoice.status ? '#438763' : '#ad6b8d'}
+                  status={invoice.status ? 'Paid' : 'Unpaid'}
+                  cost={invoice.totalCost}
+                  time={new Date(invoice.createdAt).toLocaleDateString(
+                    'vi-VN',
+                    {
+                      day: 'numeric',
+                      month: 'long',
+                    }
+                  )}
+                />
+              </InvoiceItem>
             ))}
           </ScrollView>
         ) : (

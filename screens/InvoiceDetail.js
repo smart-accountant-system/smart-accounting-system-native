@@ -10,36 +10,23 @@ import {
 import theme from '../constants/theme';
 import FeatherIcon from '../components/FeatherIcon';
 
-export default class AccountDetail extends React.Component {
+export default class InvoiceDetail extends React.Component {
   render() {
     const { navigation } = this.props;
-    const account = navigation.getParam('account', '');
-    const color = account.debit > account.credit ? '#438763' : '#ad6b8d';
-    // I have no idea for this
+    const invoice = navigation.getParam('invoice', '');
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
           <Header>
-            <TouchableOpacity onPress={() => navigation.navigate('Account')}>
+            <TouchableOpacity onPress={() => navigation.navigate('Invoice')}>
               <FeatherIcon color={theme.colors.white} name="chevron-left" />
             </TouchableOpacity>
-            <Typography>{i18n.t('account')}</Typography>
+            <Typography>{i18n.t('invoice')}</Typography>
             <FeatherIcon color={theme.colors.primary} name="user" />
           </Header>
         </HeaderWrapper>
         <HomeBodyWrapper>
-          <Text
-            style={{
-              fontSize: 20,
-              color,
-            }}
-          >
-            {account.name}
-          </Text>
-          <Text>{account.description}</Text>
-          <Text>{account.debit}</Text>
-          <Text>{account.credit}</Text>
-          <Text>{account.createdAt}</Text>
+          <Text>{JSON.stringify(invoice)}</Text>
         </HomeBodyWrapper>
       </View>
     );

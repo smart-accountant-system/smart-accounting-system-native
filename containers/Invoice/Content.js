@@ -3,32 +3,32 @@ import { View } from 'react-native';
 import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
 
-const AccountContentContainer = styled.View`
+const InvoiceContentContainer = styled.View`
   margin-left: 8px;
   background-color: #fff;
   padding: 10px;
   width: 100%;
-  border-top-color: #dfdfdf;
-  border-top-width: 2px;
+  border-bottom-color: #dfdfdf;
+  border-bottom-width: 2px;
 
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 `;
 
-const AccountTyporaphy = styled.Text`
+const InvoiceTyporaphy = styled.Text`
   font-size: 20;
   color: #111;
 `;
 
-const AccountDetail = styled.Text`
+const InvoiceDetail = styled.Text`
   margin-top: ${props => (props.first ? 16 : 0)}px;
   margin-bottom: ${props => (props.first ? 4 : 0)}px;
   color: ${props => props.color || '#333'};
   ${props => (props.fontSize ? `font-size: ${props.fontSize}px` : '')}
 `;
 
-const InforBalanceContainer = styled.View`
+const InforCostContainer = styled.View`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -36,26 +36,27 @@ const InforBalanceContainer = styled.View`
   padding-right: 5;
 `;
 
-export default ({ name, description, color, time, balanceType, balance }) => (
-  <AccountContentContainer>
+export default ({ name, color, status, time, cost }) => (
+  <InvoiceContentContainer>
     <View>
-      <AccountTyporaphy>{name}</AccountTyporaphy>
-      <AccountDetail first>{description}</AccountDetail>
-      <AccountDetail color={color}>{balanceType}</AccountDetail>
+      <InvoiceTyporaphy>{name}</InvoiceTyporaphy>
+      <InvoiceDetail first color={color}>
+        {status}
+      </InvoiceDetail>
     </View>
-    <InforBalanceContainer>
-      <AccountDetail>{time}</AccountDetail>
+    <InforCostContainer>
+      <InvoiceDetail>{time}</InvoiceDetail>
       <NumberFormat
-        value={balance}
+        value={cost}
         displayType="text"
         thousandSeparator
         prefix="₫"
         renderText={value => (
-          <AccountDetail fontSize={18} color={color}>
+          <InvoiceDetail fontSize={18} color={color}>
             {value}
-          </AccountDetail>
+          </InvoiceDetail>
         )}
       />
-    </InforBalanceContainer>
-  </AccountContentContainer>
+    </InforCostContainer>
+  </InvoiceContentContainer>
 );

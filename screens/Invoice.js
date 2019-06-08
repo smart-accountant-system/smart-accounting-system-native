@@ -65,21 +65,42 @@ class Invoice extends React.Component {
     this.hideDateTimePicker();
   };
 
-  handlePress = () => {
-    const { isExpandingFilter } = this.state;
+  handlePressFilter = () => {
+    const { isExpandingFilter, filterHeight } = this.state;
 
     if (!isExpandingFilter) {
-      Animated.spring(this.state.filterHeight, {
+      Animated.spring(filterHeight, {
         toValue: 135,
       }).start();
     } else {
-      Animated.timing(this.state.filterHeight, {
+      Animated.timing(filterHeight, {
         toValue: 0,
       }).start();
     }
 
     this.setState({
       isExpandingFilter: !isExpandingFilter,
+    });
+  };
+
+  doFilter = () => {
+    const { filterHeight, fromDate, toDate } = this.state;
+
+    Animated.timing(filterHeight, {
+      toValue: 0,
+    }).start();
+
+    this.setState({
+      isExpandingFilter: false,
+    });
+
+    this.props.getInvoices({
+      params: {
+        startDate: new Date(fromDate.toDateString()),
+        endDate: new Date(toDate.toDateString()),
+      },
+      success: () => {},
+      failure: () => {},
     });
   };
 
@@ -108,7 +129,7 @@ class Invoice extends React.Component {
         <FilterHeader
           title="Advance filter"
           isExpand={this.state.isExpandingFilter}
-          onPress={this.handlePress}
+          onPress={this.handlePressFilter}
         />
 
         <FilterBody height={this.state.filterHeight}>
@@ -129,7 +150,7 @@ class Invoice extends React.Component {
 
           <FilterField height="52">
             <FeatherIcon color="#f1f1f1" name="user" />
-            <Button mode="contained">
+            <Button mode="contained" onPress={this.doFilter}>
               <Text style={{ color: theme.colors.white }}>Filter</Text>
             </Button>
           </FilterField>

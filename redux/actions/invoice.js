@@ -6,7 +6,7 @@ export const GET_INVOICES_REQUEST = 'get-invoices-request';
 export const GET_INVOICES_SUCCESS = 'get-invoices-success';
 export const GET_INVOICES_FAILURE = 'get-invoices-failure';
 
-export function getInvoices(callback) {
+export function getInvoices({ params, success, failure }) {
   return async dispatch => {
     try {
       dispatch({ type: GET_INVOICES_REQUEST });
@@ -14,23 +14,24 @@ export function getInvoices(callback) {
 
       const result = await query({
         endpoint,
+        params,
         method: METHODS.get,
       });
 
       if (result.status === 200) {
-        callback.success();
+        success();
         dispatch({
           type: GET_INVOICES_SUCCESS,
           payload: result.data,
         });
       } else {
-        callback.failure();
+        failure();
         dispatch({
           type: GET_INVOICES_FAILURE,
         });
       }
     } catch (error) {
-      callback.failure();
+      failure();
       dispatch({
         type: GET_INVOICES_FAILURE,
         payload: error,

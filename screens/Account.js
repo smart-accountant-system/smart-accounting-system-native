@@ -4,8 +4,6 @@ import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme, Searchbar } from 'react-native-paper';
 import i18n from 'i18n-js';
-import NumberFormat from 'react-number-format';
-
 import { getAccounts } from '../redux/actions';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
 import theme from '../constants/theme';

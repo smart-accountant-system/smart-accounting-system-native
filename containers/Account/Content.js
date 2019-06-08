@@ -8,7 +8,7 @@ const AccountContentContainer = styled.View`
   background-color: #fff;
   padding: 10px;
   width: 100%;
-  border-top-color: #dfdfdf;
+  border-top-color: #f1f1f1;
   border-top-width: 2px;
 
   display: flex;

@@ -19,8 +19,8 @@ import { getReceipts } from '../redux/actions';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
 import theme from '../constants/theme';
 import FeatherIcon from '../components/FeatherIcon';
-import ReceiptItem from '../components/ReceiptItem';
 import Loading from '../components/Loading';
+import { ReceiptItem, ReceiptContent } from '../containers/Receipt';
 
 import {
   FilterHeader,
@@ -134,6 +134,7 @@ class Receipt extends React.Component {
       activatingDate,
       refreshing,
     } = this.state;
+
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
@@ -190,19 +191,37 @@ class Receipt extends React.Component {
               />
             }
           >
-            {receipts.receipts.map(item => (
-              <TouchableOpacity
-                onPress={() => this.receiptDetail(item)}
-                key={item._id}
+            {receipts.receipts.map(receipt => (
+              <ReceiptItem
+                receipt={receipt}
+                receiptDetail={this.receiptDetail}
+                key={receipt._id}
               >
-                <ReceiptItem
-                  customer={item.customer.name}
-                  type={item.type}
-                  date={moment(item.createdAt).format('MMM DD, YYYY')}
-                  item={item}
-                  price={item.payment.amountMoney}
+                <ReceiptContent
+                  id={receipt._id}
+                  customer={receipt.customer.name}
+                  payment={receipt.payment.category.name}
+                  type={
+                    receipt.payment.type === 0
+                      ? 'Receipt voucher' // phieu thu
+                      : 'Payment voucher' // phieu chi
+                  }
+                  color={receipt.status ? '#438763' : '#ad6b8d'}
+                  status={
+                    receipt.status
+                      ? 'Recorded as a transaction'
+                      : 'Not record as a transaction yet'
+                  }
+                  cost={receipt.payment.amountMoney}
+                  time={new Date(receipt.createdAt).toLocaleDateString(
+                    'vi-VN',
+                    {
+                      day: 'numeric',
+                      month: 'long',
+                    }
+                  )}
                 />
-              </TouchableOpacity>
+              </ReceiptItem>
             ))}
           </ScrollView>
         ) : (

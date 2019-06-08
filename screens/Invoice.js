@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Animated,
+  RefreshControl,
 } from 'react-native';
 import { connect } from 'react-redux';
 import DateTimePicker from 'react-native-modal-datetime-picker';
@@ -34,11 +35,23 @@ class Invoice extends React.Component {
 
     isExpandingFilter: false,
     filterHeight: new Animated.Value(0),
+
+    refreshing: false,
   };
 
   componentDidMount = () => {
     this.props.getInvoices({
       success: () => {},
+      failure: () => {},
+    });
+  };
+
+  _onRefresh = () => {
+    this.setState({ refreshing: true });
+    this.props.getInvoices({
+      success: () => {
+        this.setState({ refreshing: false });
+      },
       failure: () => {},
     });
   };
@@ -111,6 +124,7 @@ class Invoice extends React.Component {
       fromDate,
       toDate,
       activatingDate,
+      refreshing,
     } = this.state;
 
     return (
@@ -164,7 +178,14 @@ class Invoice extends React.Component {
         />
 
         {invoices ? (
-          <ScrollView>
+          <ScrollView
+            refreshControl={
+              <RefreshControl
+                onRefresh={this._onRefresh}
+                refreshing={refreshing}
+              />
+            }
+          >
             {invoices.invoices.map(invoice => (
               <List.Item
                 key={invoice._id}

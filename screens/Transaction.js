@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Animated,
+  RefreshControl,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme, Button } from 'react-native-paper';
@@ -34,11 +35,23 @@ class Transaction extends React.Component {
 
     isExpandingFilter: false,
     filterHeight: new Animated.Value(0),
+
+    refreshing: false,
   };
 
   componentDidMount = () => {
     this.props.getTransactions({
       success: () => {},
+      failure: () => {},
+    });
+  };
+
+  _onRefresh = () => {
+    this.setState({ refreshing: true });
+    this.props.getTransactions({
+      success: () => {
+        this.setState({ refreshing: false });
+      },
       failure: () => {},
     });
   };
@@ -111,6 +124,7 @@ class Transaction extends React.Component {
       fromDate,
       toDate,
       activatingDate,
+      refreshing,
     } = this.state;
 
     return (
@@ -160,7 +174,14 @@ class Transaction extends React.Component {
           onCancel={this.hideDateTimePicker}
         />
         {transactions ? (
-          <ScrollView>
+          <ScrollView
+            refreshControl={
+              <RefreshControl
+                onRefresh={this._onRefresh}
+                refreshing={refreshing}
+              />
+            }
+          >
             {transactions.transactions.map(transaction => (
               <TouchableOpacity
                 key={transaction._id}

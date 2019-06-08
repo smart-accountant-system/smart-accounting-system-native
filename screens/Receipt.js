@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Animated,
+  RefreshControl,
 } from 'react-native';
 import { connect } from 'react-redux';
 import DateTimePicker from 'react-native-modal-datetime-picker';
@@ -37,11 +38,23 @@ class Receipt extends React.Component {
 
     isExpandingFilter: false,
     filterHeight: new Animated.Value(0),
+
+    refreshing: false,
   };
 
   componentDidMount = () => {
     this.props.getReceipts({
       success: () => {},
+      failure: () => {},
+    });
+  };
+
+  _onRefresh = () => {
+    this.setState({ refreshing: true });
+    this.props.getReceipts({
+      success: () => {
+        this.setState({ refreshing: false });
+      },
       failure: () => {},
     });
   };
@@ -119,6 +132,7 @@ class Receipt extends React.Component {
       fromDate,
       toDate,
       activatingDate,
+      refreshing,
     } = this.state;
     return (
       <View style={{ display: 'flex', flex: 1 }}>
@@ -168,7 +182,14 @@ class Receipt extends React.Component {
         />
 
         {receipts ? (
-          <ScrollView>
+          <ScrollView
+            refreshControl={
+              <RefreshControl
+                onRefresh={this._onRefresh}
+                refreshing={refreshing}
+              />
+            }
+          >
             {receipts.receipts.map(item => (
               <TouchableOpacity
                 onPress={() => this.receiptDetail(item)}

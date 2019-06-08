@@ -1,6 +1,6 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { View, ScrollView, RefreshControl } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme, Searchbar } from 'react-native-paper';
 import i18n from 'i18n-js';
@@ -15,11 +15,22 @@ class Account extends React.Component {
   state = {
     searchText: '',
     timer: undefined,
+    refreshing: false,
   };
 
   componentDidMount = () => {
     this.props.getAccounts({
       success: () => {},
+      failure: () => {},
+    });
+  };
+
+  _onRefresh = () => {
+    this.setState({ refreshing: true, searchText: '' });
+    this.props.getAccounts({
+      success: () => {
+        this.setState({ refreshing: false });
+      },
       failure: () => {},
     });
   };
@@ -42,13 +53,13 @@ class Account extends React.Component {
           success: () => {},
           failure: () => {},
         });
-      }, 1000),
+      }, 300),
     });
   };
 
   render() {
     const { accounts } = this.props;
-    const { searchText } = this.state;
+    const { searchText, refreshing } = this.state;
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
@@ -69,7 +80,14 @@ class Account extends React.Component {
         />
 
         {accounts ? (
-          <ScrollView>
+          <ScrollView
+            refreshControl={
+              <RefreshControl
+                onRefresh={this._onRefresh}
+                refreshing={refreshing}
+              />
+            }
+          >
             {accounts.accounts.map(account => (
               <AccountItem
                 key={account._id}

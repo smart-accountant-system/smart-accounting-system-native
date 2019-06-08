@@ -14,7 +14,6 @@ export default (state = INITIAL_STATE, action) => {
     case GET_INVOICES_REQUEST:
       return {
         ...state,
-        invoices: null,
         error: null,
       };
     case GET_INVOICES_SUCCESS:

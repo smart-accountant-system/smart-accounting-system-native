@@ -14,7 +14,6 @@ export default (state = INITIAL_STATE, action) => {
     case GET_TRANSACTIONS_REQUEST:
       return {
         ...state,
-        transactions: null,
         error: null,
       };
     case GET_TRANSACTIONS_SUCCESS:

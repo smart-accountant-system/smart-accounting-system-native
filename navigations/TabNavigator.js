@@ -15,6 +15,7 @@ import FeatherIcon from '../components/FeatherIcon';
 import Transaction from '../screens/Transaction';
 import TransactionDetail from '../screens/TransactionDetail';
 import Account from '../screens/Account';
+import AccountDetail from '../screens/AccountDetail';
 import theme from '../constants/theme';
 import { en, vi } from '../constants/localization';
 
@@ -64,6 +65,7 @@ const TransactionStack = createStackNavigator(
 const AccountStack = createStackNavigator(
   {
     Account,
+    AccountDetail,
   },
   {
     headerMode: 'none',

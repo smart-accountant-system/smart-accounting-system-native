@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
 
@@ -16,7 +16,7 @@ const InvoiceContentContainer = styled.View`
   justify-content: space-between;
 `;
 
-const InvoiceTyporaphy = styled.Text`
+const InvoiceName = styled.Text`
   font-size: 20;
   color: #111;
 `;
@@ -26,6 +26,7 @@ const InvoiceDetail = styled.Text`
   margin-bottom: ${props => (props.first ? 4 : 0)}px;
   color: ${props => props.color || '#333'};
   ${props => (props.fontSize ? `font-size: ${props.fontSize}px` : '')}
+  ${props => (props.italic ? 'font-style: italic;' : '')}
 `;
 
 const InforCostContainer = styled.View`
@@ -33,13 +34,33 @@ const InforCostContainer = styled.View`
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-end;
-  padding-right: 5;
+  padding-right: 5px;
 `;
 
-export default ({ name, color, status, time, cost }) => (
+const InvoiceCodeField = styled.Text`
+  width: 20px;
+  height: 20px;
+  font-size: 5px;
+  flex-wrap: wrap-reverse;
+  background-color: #ddd;
+  border-width: 1px;
+  border-color: #111;
+  margin-right: 8px;
+`;
+
+const InvoiceTyporaphy = styled.View`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+export default ({ id, name, color, status, time, cost }) => (
   <InvoiceContentContainer>
     <View>
-      <InvoiceTyporaphy>{name}</InvoiceTyporaphy>
+      <InvoiceTyporaphy>
+        <InvoiceCodeField>{id}</InvoiceCodeField>
+        <InvoiceName>{name}</InvoiceName>
+      </InvoiceTyporaphy>
       <InvoiceDetail first color={color}>
         {status}
       </InvoiceDetail>

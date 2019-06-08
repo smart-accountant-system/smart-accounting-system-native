@@ -199,6 +199,7 @@ class Invoice extends React.Component {
                 invoiceDetail={this.invoiceDetail}
               >
                 <InvoiceContent
+                  id={invoice._id}
                   name={invoice.type === 0 ? 'Purchased' : 'Selled'}
                   color={invoice.status ? '#438763' : '#ad6b8d'}
                   status={invoice.status ? 'Paid' : 'Unpaid'}

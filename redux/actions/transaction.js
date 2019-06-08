@@ -6,7 +6,7 @@ export const GET_TRANSACTIONS_REQUEST = 'get-transactions-request';
 export const GET_TRANSACTIONS_SUCCESS = 'get-transactions-success';
 export const GET_TRANSACTIONS_FAILURE = 'get-transactions-failure';
 
-export function getTransactions(callback) {
+export function getTransactions({ params, success, failure }) {
   return async dispatch => {
     try {
       dispatch({ type: GET_TRANSACTIONS_REQUEST });
@@ -14,23 +14,24 @@ export function getTransactions(callback) {
 
       const result = await query({
         endpoint,
+        params,
         method: METHODS.get,
       });
 
       if (result.status === 200) {
-        callback.success();
+        success();
         dispatch({
           type: GET_TRANSACTIONS_SUCCESS,
           payload: result.data,
         });
       } else {
-        callback.failure();
+        failure();
         dispatch({
           type: GET_TRANSACTIONS_FAILURE,
         });
       }
     } catch (error) {
-      callback.failure();
+      failure();
       dispatch({
         type: GET_TRANSACTIONS_FAILURE,
         payload: error,

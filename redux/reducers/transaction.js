@@ -14,13 +14,13 @@ export default (state = INITIAL_STATE, action) => {
     case GET_TRANSACTIONS_REQUEST:
       return {
         ...state,
-        receipts: null,
+        transactions: null,
         error: null,
       };
     case GET_TRANSACTIONS_SUCCESS:
       return {
         ...state,
-        receipts: action.payload,
+        transactions: action.payload,
         error: null,
       };
     case GET_TRANSACTIONS_FAILURE:

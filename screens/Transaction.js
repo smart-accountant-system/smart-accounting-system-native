@@ -1,22 +1,41 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  Animated,
+} from 'react-native';
 import { connect } from 'react-redux';
-import { withTheme } from 'react-native-paper';
+import { withTheme, Button } from 'react-native-paper';
+import DateTimePicker from 'react-native-modal-datetime-picker';
 import i18n from 'i18n-js';
 
-import {
-  HeaderWrapper,
-  Header,
-  Typography,
-  HomeBodyWrapper,
-} from '../containers/Home';
+import { HeaderWrapper, Header, Typography } from '../containers/Home';
 import theme from '../constants/theme';
 import FeatherIcon from '../components/FeatherIcon';
 import TransactionItem from '../components/TransactionItem';
 import { getTransactions } from '../redux/actions';
+import Loading from '../components/Loading';
+import {
+  FilterHeader,
+  FilterBody,
+  FilterField,
+  FilterTime,
+} from '../components/Filter';
 
 class Transaction extends React.Component {
+  state = {
+    isDatePickerVisible: false,
+    activatingDate: undefined,
+    fromDate: new Date(),
+    toDate: new Date(),
+
+    isExpandingFilter: false,
+    filterHeight: new Animated.Value(0),
+  };
+
   componentDidMount = () => {
     this.props.getTransactions({
       success: () => {},
@@ -24,15 +43,76 @@ class Transaction extends React.Component {
     });
   };
 
+  showDateTimePicker = activatingDate => {
+    this.setState({ isDatePickerVisible: true, activatingDate });
+  };
+
+  hideDateTimePicker = () => {
+    this.setState({ isDatePickerVisible: false });
+  };
+
+  handleDatePicked = date => {
+    const { activatingDate } = this.state;
+    if (activatingDate === 'From') {
+      this.setState({
+        fromDate: new Date(date),
+      });
+    } else {
+      this.setState({
+        toDate: new Date(date),
+      });
+    }
+    this.hideDateTimePicker();
+  };
+
+  handlePressFilter = () => {
+    const { isExpandingFilter, filterHeight } = this.state;
+
+    if (!isExpandingFilter) {
+      Animated.spring(filterHeight, {
+        toValue: 135,
+      }).start();
+    } else {
+      Animated.timing(filterHeight, {
+        toValue: 0,
+      }).start();
+    }
+
+    this.setState({
+      isExpandingFilter: !isExpandingFilter,
+    });
+  };
+
+  doFilter = () => {
+    const { filterHeight, fromDate, toDate } = this.state;
+
+    Animated.timing(filterHeight, {
+      toValue: 0,
+    }).start();
+
+    this.setState({
+      isExpandingFilter: false,
+    });
+
+    this.props.getTransactions({
+      params: {
+        startDate: new Date(fromDate.toDateString()),
+        endDate: new Date(toDate.toDateString()),
+      },
+      success: () => {},
+      failure: () => {},
+    });
+  };
+
   render() {
     const { navigation, transactions } = this.props;
-    console.log(transactions);
-    const transaction = {
-      debitAccount: 'Cash',
-      creditAccount: 'Revenue',
-      price: 'đ7,000,000',
-      date: 'May 1, 2019',
-    };
+    const {
+      isDatePickerVisible,
+      fromDate,
+      toDate,
+      activatingDate,
+    } = this.state;
+
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
@@ -42,29 +122,73 @@ class Transaction extends React.Component {
             <FeatherIcon color={theme.colors.primary} name="user" />
           </Header>
         </HeaderWrapper>
-        <HomeBodyWrapper>
+
+        <FilterHeader
+          title="Advance filter"
+          isExpand={this.state.isExpandingFilter}
+          onPress={this.handlePressFilter}
+        />
+
+        <FilterBody height={this.state.filterHeight}>
+          <FilterField first>
+            <FilterTime
+              title="From"
+              first
+              date={fromDate.toLocaleDateString('vi-VN')}
+              showDateTimePicker={this.showDateTimePicker}
+            />
+            <FilterTime
+              title="To"
+              second
+              date={toDate.toLocaleDateString('vi-VN')}
+              showDateTimePicker={this.showDateTimePicker}
+            />
+          </FilterField>
+
+          <FilterField height="52">
+            <FeatherIcon color="#f1f1f1" name="user" />
+            <Button mode="contained" onPress={this.doFilter}>
+              <Text style={{ color: theme.colors.white }}>Filter</Text>
+            </Button>
+          </FilterField>
+        </FilterBody>
+
+        <DateTimePicker
+          isVisible={isDatePickerVisible}
+          date={activatingDate === 'from' ? fromDate : toDate}
+          onConfirm={this.handleDatePicked}
+          onCancel={this.hideDateTimePicker}
+        />
+        {transactions ? (
           <ScrollView>
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate('TransactionDetail', { transaction })
-              }
-            >
-              <TransactionItem
-                fromAccount="Cash"
-                toAccount="Revenue"
-                price="đ7,000,000"
-                date="May 1, 2019"
-              />
-            </TouchableOpacity>
+            {transactions.transactions.map(transaction => (
+              <TouchableOpacity
+                key={transaction._id}
+                onPress={() =>
+                  navigation.navigate('TransactionDetail', { transaction })
+                }
+              >
+                <TransactionItem
+                  fromAccount={transaction.fromAccount.id}
+                  toAccount={transaction.toAccount.id}
+                  price={transaction.amount}
+                  date={new Date(transaction.createdAt).toLocaleDateString(
+                    'vi-VN'
+                  )}
+                />
+              </TouchableOpacity>
+            ))}
           </ScrollView>
-        </HomeBodyWrapper>
+        ) : (
+          <Loading />
+        )}
       </View>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  transactions: state.transaction,
+  transactions: state.transaction.transactions,
 });
 const mapDispatchToProps = { getTransactions };
 

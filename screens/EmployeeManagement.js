@@ -1,21 +1,20 @@
-// WORKING...
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
+import i18n from 'i18n-js';
 import {
   View,
   ScrollView,
   RefreshControl,
   TouchableOpacity,
+  Text,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { withTheme, Searchbar } from 'react-native-paper';
-import i18n from 'i18n-js';
-import { getCategories } from '../redux/actions';
-import { HeaderWrapper, Header, Typography } from '../containers/Home';
+import { withTheme } from 'react-native-paper';
+import { getEmployees } from '../redux/actions';
+
 import theme from '../constants/theme';
-import FeatherIcon from '../components/FeatherIcon';
-import Loading from '../components/Loading';
-import { ItemCategory } from '../containers/PaymentMethod';
+import { FeatherIcon, Loading, Searchbar } from '../components';
+import { HeaderWrapper, Header, Typography } from '../containers/Home';
 
 class EmployeeManagement extends React.Component {
   state = {
@@ -25,7 +24,7 @@ class EmployeeManagement extends React.Component {
   };
 
   componentDidMount = () => {
-    this.props.getCategories({
+    this.props.getEmployees({
       success: () => {},
       failure: () => {},
     });
@@ -33,7 +32,7 @@ class EmployeeManagement extends React.Component {
 
   _onRefresh = () => {
     this.setState({ refreshing: true, searchText: '' });
-    this.props.getCategories({
+    this.props.getEmployees({
       success: () => {
         this.setState({ refreshing: false });
       },
@@ -47,7 +46,7 @@ class EmployeeManagement extends React.Component {
     this.setState({
       searchText: query,
       timer: setTimeout(() => {
-        this.props.getCategories({
+        this.props.getEmployees({
           params: {
             search: query,
           },
@@ -59,7 +58,7 @@ class EmployeeManagement extends React.Component {
   };
 
   render() {
-    const { navigation, categories } = this.props;
+    const { navigation, employees } = this.props;
     const { searchText, refreshing } = this.state;
     return (
       <View style={{ display: 'flex', flex: 1 }}>
@@ -68,7 +67,7 @@ class EmployeeManagement extends React.Component {
             <TouchableOpacity onPress={() => navigation.navigate('Home')}>
               <FeatherIcon color={theme.colors.white} name="chevron-left" />
             </TouchableOpacity>
-            <Typography>{i18n.t('category')}</Typography>
+            <Typography>{i18n.t('employee')}</Typography>
             <FeatherIcon color={theme.colors.primary} name="user" />
           </Header>
         </HeaderWrapper>
@@ -76,15 +75,9 @@ class EmployeeManagement extends React.Component {
           value={searchText}
           placeholder="Search"
           onChangeText={this.handleSearch}
-          style={{
-            shadowOffset: { width: 0, height: 0 },
-            shadowOpacity: 0,
-            borderBottomWidth: 2,
-            borderBottomColor: '#f1f1f1',
-          }}
         />
 
-        {categories ? (
+        {employees ? (
           <ScrollView
             refreshControl={
               <RefreshControl
@@ -93,23 +86,8 @@ class EmployeeManagement extends React.Component {
               />
             }
           >
-            {categories.categories.map(category => (
-              <ItemCategory
-                key={category._id}
-                id={category._id}
-                name={category.name}
-                detail={category.detail}
-                time={
-                  category.createdAt
-                    ? new Date(category.createdAt).toLocaleDateString('vi-VN', {
-                        day: 'numeric',
-                        month: 'long',
-                      })
-                    : '7 thang 6'
-                }
-              >
-                {JSON.stringify(category)}
-              </ItemCategory>
+            {employees.employees.map(employee => (
+              <Text key={employee._id}>{JSON.stringify(employee)}</Text>
             ))}
           </ScrollView>
         ) : (
@@ -121,10 +99,10 @@ class EmployeeManagement extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  categories: state.category.categories,
+  employees: state.employee.employees,
 });
 const mapDispatchToProps = {
-  getCategories,
+  getEmployees,
 };
 
 export default withTheme(

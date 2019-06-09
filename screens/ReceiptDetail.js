@@ -1,22 +1,18 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
-import moment from 'moment';
-
 import i18n from 'i18n-js';
-import { getReceipts } from '../redux/actions';
-import CustomerInfoWrapper from '../components/CustomerInfoItem';
+import { View, TouchableOpacity, ScrollView } from 'react-native';
 
 import {
-  HeaderWrapper,
   Header,
   Typography,
-  HomeBodyWrapper,
   FeatureText,
+  HeaderWrapper,
+  HomeBodyWrapper,
   FeatureHeaderWrapper,
 } from '../containers/Home';
 import theme from '../constants/theme';
-import FeatherIcon from '../components/FeatherIcon';
-import PaymentItem from '../components/PaymentItem';
+import { FeatherIcon, PaymentItem } from '../components';
+import CustomerInfoWrapper from '../components/CustomerInfoItem';
 
 export default class ReceiptDetail extends React.Component {
   render() {

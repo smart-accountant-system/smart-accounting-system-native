@@ -1,5 +1,6 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
+import i18n from 'i18n-js';
 import {
   View,
   Text,
@@ -11,20 +12,18 @@ import {
 import { connect } from 'react-redux';
 import { withTheme, Button } from 'react-native-paper';
 import DateTimePicker from 'react-native-modal-datetime-picker';
-import i18n from 'i18n-js';
 
-import { HeaderWrapper, Header, Typography } from '../containers/Home';
-import theme from '../constants/theme';
-import FeatherIcon from '../components/FeatherIcon';
-import { getTransactions } from '../redux/actions';
-import Loading from '../components/Loading';
-import { TransactionContent } from '../containers/Transaction';
 import {
   FilterHeader,
   FilterBody,
   FilterField,
   FilterTime,
 } from '../components/Filter';
+import theme from '../constants/theme';
+import { getTransactions } from '../redux/actions';
+import { FeatherIcon, Loading } from '../components';
+import { TransactionContent } from '../containers/Transaction';
+import { HeaderWrapper, Header, Typography } from '../containers/Home';
 
 class Transaction extends React.Component {
   state = {

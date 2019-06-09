@@ -1,15 +1,9 @@
 import React from 'react';
-import {
-  Text,
-  View,
-  StatusBar,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
+import i18n from 'i18n-js';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-paper';
+import { View, StatusBar, TouchableOpacity, ScrollView } from 'react-native';
 
-import i18n from 'i18n-js';
 import {
   HeaderWrapper,
   Header,
@@ -19,9 +13,9 @@ import {
   FieldContainer,
   StyledField,
 } from '../containers/Home';
-import FeatherIcon from '../components/FeatherIcon';
 import theme from '../constants/theme';
 import { logout } from '../redux/actions';
+import { FeatherIcon } from '../components';
 
 class Home extends React.Component {
   render() {

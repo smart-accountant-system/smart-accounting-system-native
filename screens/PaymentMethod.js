@@ -1,5 +1,6 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
+import i18n from 'i18n-js';
 import {
   View,
   ScrollView,
@@ -7,14 +8,13 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { withTheme, Searchbar } from 'react-native-paper';
-import i18n from 'i18n-js';
-import { getCategories } from '../redux/actions';
-import { HeaderWrapper, Header, Typography } from '../containers/Home';
+import { withTheme } from 'react-native-paper';
+
 import theme from '../constants/theme';
-import FeatherIcon from '../components/FeatherIcon';
-import Loading from '../components/Loading';
+import { getCategories } from '../redux/actions';
 import { ItemCategory } from '../containers/PaymentMethod';
+import { FeatherIcon, Loading, Searchbar } from '../components';
+import { HeaderWrapper, Header, Typography } from '../containers/Home';
 
 class PaymentMethod extends React.Component {
   state = {
@@ -75,12 +75,6 @@ class PaymentMethod extends React.Component {
           value={searchText}
           placeholder="Search"
           onChangeText={this.handleSearch}
-          style={{
-            shadowOffset: { width: 0, height: 0 },
-            shadowOpacity: 0,
-            borderBottomWidth: 2,
-            borderBottomColor: '#f1f1f1',
-          }}
         />
 
         {categories ? (

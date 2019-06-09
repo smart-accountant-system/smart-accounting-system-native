@@ -11,21 +11,20 @@ import {
   RefreshControl,
 } from 'react-native';
 import { connect } from 'react-redux';
+import { Button } from 'react-native-paper';
 import DateTimePicker from 'react-native-modal-datetime-picker';
-import { Button, List } from 'react-native-paper';
 
-import { getInvoices } from '../redux/actions';
-import { HeaderWrapper, Header, Typography } from '../containers/Home';
-import FeatherIcon from '../components/FeatherIcon';
-import theme from '../constants/theme';
-import Loading from '../components/Loading';
 import {
   FilterHeader,
   FilterBody,
   FilterField,
   FilterTime,
 } from '../components/Filter';
+import theme from '../constants/theme';
+import { getInvoices } from '../redux/actions';
+import { FeatherIcon, Loading } from '../components';
 import { InvoiceItem, InvoiceContent } from '../containers/Invoice';
+import { HeaderWrapper, Header, Typography } from '../containers/Home';
 
 class Invoice extends React.Component {
   state = {

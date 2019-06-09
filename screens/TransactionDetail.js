@@ -1,18 +1,17 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import i18n from 'i18n-js';
+import { View, TouchableOpacity, ScrollView } from 'react-native';
 
 import {
-  HeaderWrapper,
   Header,
   Typography,
-  HomeBodyWrapper,
   FeatureText,
+  HeaderWrapper,
+  HomeBodyWrapper,
   FeatureHeaderWrapper,
 } from '../containers/Home';
 import theme from '../constants/theme';
-import FeatherIcon from '../components/FeatherIcon';
-import ReceiptItem from '../components/ReceiptItem';
+import { FeatherIcon, ReceiptItem } from '../components';
 
 export default class TransactionDetail extends React.Component {
   render() {

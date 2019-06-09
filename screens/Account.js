@@ -1,15 +1,15 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
-import { View, ScrollView, RefreshControl } from 'react-native';
-import { connect } from 'react-redux';
-import { withTheme, Searchbar } from 'react-native-paper';
 import i18n from 'i18n-js';
-import { getAccounts } from '../redux/actions';
-import { HeaderWrapper, Header, Typography } from '../containers/Home';
+import { connect } from 'react-redux';
+import { withTheme } from 'react-native-paper';
+import { View, ScrollView, RefreshControl } from 'react-native';
+
 import theme from '../constants/theme';
-import FeatherIcon from '../components/FeatherIcon';
-import Loading from '../components/Loading';
+import { getAccounts } from '../redux/actions';
+import { FeatherIcon, Loading, Searchbar } from '../components';
 import { AccountItem, AccountContent } from '../containers/Account';
+import { HeaderWrapper, Header, Typography } from '../containers/Home';
 
 class Account extends React.Component {
   state = {
@@ -73,12 +73,6 @@ class Account extends React.Component {
           value={searchText}
           placeholder="Search"
           onChangeText={this.handleSearch}
-          style={{
-            shadowOffset: { width: 0, height: 0 },
-            shadowOpacity: 0,
-            borderBottomWidth: 2,
-            borderBottomColor: '#f1f1f1',
-          }}
         />
 
         {accounts ? (

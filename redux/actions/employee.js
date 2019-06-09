@@ -6,7 +6,7 @@ export const GET_EMPLOYEES_REQUEST = 'get-employees-request';
 export const GET_EMPLOYEES_SUCCESS = 'get-employees-success';
 export const GET_EMPLOYEES_FAILURE = 'get-employees-failure';
 
-export function getInvoices({ params, success, failure }) {
+export function getEmployees({ params, success, failure }) {
   return async dispatch => {
     try {
       dispatch({ type: GET_EMPLOYEES_REQUEST });

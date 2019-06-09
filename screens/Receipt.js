@@ -1,26 +1,10 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  ScrollView,
-  Animated,
-  RefreshControl,
-} from 'react-native';
-import { connect } from 'react-redux';
-import DateTimePicker from 'react-native-modal-datetime-picker';
-import { Button, withTheme } from 'react-native-paper';
-import moment from 'moment';
-
 import i18n from 'i18n-js';
-import { getReceipts } from '../redux/actions';
-
-import { HeaderWrapper, Header, Typography } from '../containers/Home';
-import theme from '../constants/theme';
-import FeatherIcon from '../components/FeatherIcon';
-import Loading from '../components/Loading';
-import { ReceiptItem, ReceiptContent } from '../containers/Receipt';
+import { connect } from 'react-redux';
+import { Button, withTheme } from 'react-native-paper';
+import DateTimePicker from 'react-native-modal-datetime-picker';
+import { Text, View, ScrollView, Animated, RefreshControl } from 'react-native';
 
 import {
   FilterHeader,
@@ -28,6 +12,11 @@ import {
   FilterField,
   FilterTime,
 } from '../components/Filter';
+import theme from '../constants/theme';
+import { getReceipts } from '../redux/actions';
+import { FeatherIcon, Loading } from '../components';
+import { ReceiptItem, ReceiptContent } from '../containers/Receipt';
+import { HeaderWrapper, Header, Typography } from '../containers/Home';
 
 class Receipt extends React.Component {
   state = {

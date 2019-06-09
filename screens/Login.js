@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import { withTheme, HelperText, Button } from 'react-native-paper';
 import { Text, View, ScrollView, KeyboardAvoidingView } from 'react-native';
 
-import { login } from '../redux/actions';
-import Layout from '../constants/Layout';
 import {
   LoginContainer,
   LoginBackground,
@@ -14,6 +12,8 @@ import {
   AmazingCircle,
   LoginFooter,
 } from '../containers/Login';
+import { login } from '../redux/actions';
+import Layout from '../constants/Layout';
 
 class Login extends React.Component {
   state = {

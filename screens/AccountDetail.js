@@ -8,7 +8,7 @@ import {
   HomeBodyWrapper,
 } from '../containers/Home';
 import theme from '../constants/theme';
-import FeatherIcon from '../components/FeatherIcon';
+import { FeatherIcon } from '../components';
 
 export default class AccountDetail extends React.Component {
   render() {

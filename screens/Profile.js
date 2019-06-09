@@ -1,17 +1,10 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
-import {
-  Text,
-  View,
-  StatusBar,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
+import i18n from 'i18n-js';
+import { View, StatusBar, TouchableOpacity, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-paper';
 
-import { Localization } from 'expo';
-import i18n from 'i18n-js';
 import {
   HeaderWrapper,
   Header,
@@ -21,10 +14,9 @@ import {
   AvatarTypography,
   InforWrapper,
 } from '../containers/Home';
-import FeatherIcon from '../components/FeatherIcon';
 import theme from '../constants/theme';
-import ProfileInfo from '../components/ProfileInfo';
 import { logout } from '../redux/actions';
+import { FeatherIcon, ProfileInfo } from '../components';
 
 class Profile extends React.Component {
   handleLogout = () => {

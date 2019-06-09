@@ -1,6 +1,7 @@
 import React from 'react';
 import i18n from 'i18n-js';
 import { View, Text, TouchableOpacity } from 'react-native';
+
 import {
   HeaderWrapper,
   Header,
@@ -8,7 +9,7 @@ import {
   HomeBodyWrapper,
 } from '../containers/Home';
 import theme from '../constants/theme';
-import FeatherIcon from '../components/FeatherIcon';
+import { FeatherIcon } from '../components';
 
 export default class InvoiceDetail extends React.Component {
   render() {

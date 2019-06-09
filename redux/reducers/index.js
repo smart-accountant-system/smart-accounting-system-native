@@ -6,6 +6,7 @@ import transaction from './transaction';
 import invoice from './invoice';
 import category from './category';
 import employee from './employee';
+import customer from './customer';
 
 export default combineReducers({
   user,
@@ -15,4 +16,5 @@ export default combineReducers({
   account,
   category,
   employee,
+  customer,
 });

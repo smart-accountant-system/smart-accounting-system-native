@@ -3,20 +3,21 @@ import React from 'react';
 import i18n from 'i18n-js';
 import {
   View,
+  Text,
   ScrollView,
   RefreshControl,
   TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-paper';
+import { getCustomers } from '../redux/actions';
 
 import theme from '../constants/theme';
-import { getCategories } from '../redux/actions';
-import { ItemCategory } from '../containers/PaymentMethod';
+import { CustomerItem } from '../containers/CustomerManagement';
 import { FeatherIcon, Loading, Searchbar } from '../components';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
 
-class PaymentMethod extends React.Component {
+class CustomerManagement extends React.Component {
   state = {
     searchText: '',
     timer: undefined,
@@ -24,7 +25,7 @@ class PaymentMethod extends React.Component {
   };
 
   componentDidMount = () => {
-    this.props.getCategories({
+    this.props.getCustomers({
       success: () => {},
       failure: () => {},
     });
@@ -32,7 +33,7 @@ class PaymentMethod extends React.Component {
 
   _onRefresh = () => {
     this.setState({ refreshing: true, searchText: '' });
-    this.props.getCategories({
+    this.props.getCustomers({
       success: () => {
         this.setState({ refreshing: false });
       },
@@ -46,7 +47,7 @@ class PaymentMethod extends React.Component {
     this.setState({
       searchText: query,
       timer: setTimeout(() => {
-        this.props.getCategories({
+        this.props.getCustomers({
           params: {
             search: query,
           },
@@ -58,7 +59,7 @@ class PaymentMethod extends React.Component {
   };
 
   render() {
-    const { navigation, categories } = this.props;
+    const { navigation, customers } = this.props;
     const { searchText, refreshing } = this.state;
     return (
       <View style={{ display: 'flex', flex: 1 }}>
@@ -67,7 +68,7 @@ class PaymentMethod extends React.Component {
             <TouchableOpacity onPress={() => navigation.navigate('Home')}>
               <FeatherIcon color={theme.colors.white} name="chevron-left" />
             </TouchableOpacity>
-            <Typography>{i18n.t('paymentMethod')}</Typography>
+            <Typography>{i18n.t('customerManagement')}</Typography>
             <FeatherIcon color={theme.colors.primary} name="user" />
           </Header>
         </HeaderWrapper>
@@ -77,7 +78,7 @@ class PaymentMethod extends React.Component {
           onChangeText={this.handleSearch}
         />
 
-        {categories ? (
+        {customers ? (
           <ScrollView
             refreshControl={
               <RefreshControl
@@ -86,23 +87,13 @@ class PaymentMethod extends React.Component {
               />
             }
           >
-            {categories.categories.map(category => (
-              <ItemCategory
-                key={category._id}
-                id={category._id}
-                name={category.name}
-                detail={category.detail}
-                time={
-                  category.createdAt
-                    ? new Date(category.createdAt).toLocaleDateString('vi-VN', {
-                        day: 'numeric',
-                        month: 'long',
-                      })
-                    : null
-                }
-              >
-                {JSON.stringify(category)}
-              </ItemCategory>
+            {customers.customers.map(customer => (
+              <CustomerItem
+                key={customer._id}
+                name={customer.name}
+                phone={customer.phone}
+                address={customer.address}
+              />
             ))}
           </ScrollView>
         ) : (
@@ -114,15 +105,15 @@ class PaymentMethod extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  categories: state.category.categories,
+  customers: state.customer.customers,
 });
 const mapDispatchToProps = {
-  getCategories,
+  getCustomers,
 };
 
 export default withTheme(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(PaymentMethod)
+  )(CustomerManagement)
 );

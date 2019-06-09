@@ -5,3 +5,4 @@ export * from './invoice';
 export * from './account';
 export * from './category';
 export * from './employee';
+export * from './customer';

@@ -6,8 +6,8 @@ export const en = {
   profile: 'Profile',
   logout: 'Logout',
   paymentMethod: 'Payment method',
-  employeeList: 'Employee list',
-  customerList: 'Customer list',
+  employeeManagement: 'Employee management',
+  customerManagement: 'Customer management',
   menu: 'Menu',
   receipt: 'Receipt',
   transaction: 'Transaction',
@@ -17,7 +17,6 @@ export const en = {
   payment: 'Payment',
   customer: 'Customer',
   phone: 'Phone',
-  category: 'Payment Method',
 };
 
 export const vi = {
@@ -28,8 +27,8 @@ export const vi = {
   profile: 'Thông tin cá nhân',
   logout: 'Đăng xuất',
   paymentMethod: 'Phương thức thanh toán',
-  employeeList: 'Danh sách nhân viên',
-  customerList: 'Danh sách khách hàng',
+  employeeManagement: 'Quản lý nhân viên',
+  customerManagement: 'Quản lý khách hàng',
   menu: 'Danh mục',
   receipt: 'Biên lai',
   transaction: 'Giao dịch',
@@ -39,5 +38,4 @@ export const vi = {
   payment: 'Thanh toán',
   customer: 'Khách hàng',
   phone: 'Số điện thoại',
-  category: 'Phương thức thanh toán',
 };

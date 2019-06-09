@@ -19,6 +19,7 @@ import Account from '../screens/Account';
 import AccountDetail from '../screens/AccountDetail';
 import PaymentMethod from '../screens/PaymentMethod';
 import EmployeeManagement from '../screens/EmployeeManagement';
+import CustomerManagement from '../screens/CustomerManagement';
 import theme from '../constants/theme';
 import { en, vi } from '../constants/localization';
 
@@ -28,10 +29,11 @@ i18n.locale = Localization.locale;
 
 export const HomeStack = createStackNavigator(
   {
-    EmployeeManagement,
     Home,
-    PaymentMethod,
     Profile,
+    PaymentMethod,
+    EmployeeManagement,
+    CustomerManagement,
   },
   {
     headerMode: 'none',

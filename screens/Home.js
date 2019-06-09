@@ -45,21 +45,21 @@ class Home extends React.Component {
               <StyledField left>
                 <MenuItem
                   mini
-                  onPress={() => {}}
+                  onPress={() => navigation.navigate('EmployeeManagement')}
                   color="#f87d4d"
                   icon="briefcase"
                   number={11}
-                  name={i18n.t('employeeList')}
+                  name={i18n.t('employeeManagement')}
                 />
               </StyledField>
               <StyledField right>
                 <MenuItem
                   mini
-                  onPress={() => {}}
+                  onPress={() => navigation.navigate('CustomerManagement')}
                   color="#e05246"
                   icon="users"
                   number={32}
-                  name={i18n.t('customerList')}
+                  name={i18n.t('customerManagement')}
                 />
               </StyledField>
             </FieldContainer>

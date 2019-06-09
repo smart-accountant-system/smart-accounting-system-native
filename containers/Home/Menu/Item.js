@@ -5,9 +5,8 @@ import FeatherIcon from '../../../components/FeatherIcon';
 
 const StyledItem = styled.TouchableOpacity`
   display: flex;
-  flex-direction: row;
+  flex-direction: ${props => (!props.mini ? 'row' : 'column')};
   align-items: center;
-  flex-flow: row wrap;
 
   padding: 16px;
   margin-bottom: 16px;
@@ -37,6 +36,7 @@ const Typogaphy = styled.Text`
 
 const DescriptionContainer = styled.View`
   margin-left: 16px;
+  flex: 1;
 `;
 
 const Description = styled.Text`
@@ -45,14 +45,23 @@ const Description = styled.Text`
   ${props => (props.marginTop ? `margin-top: ${props.marginTop}px;` : '')}
 `;
 
-export default ({ onPress, color, icon, number, name, marginTop }) => (
-  <StyledItem onPress={onPress}>
-    <IconContainer color={color}>
-      <FeatherIcon size={30} color="#fff" name={icon} />
-    </IconContainer>
-    <Typogaphy>{number}</Typogaphy>
+const ConceptualContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+export default ({ onPress, color, icon, number, name, mini }) => (
+  <StyledItem mini={mini} onPress={onPress}>
+    <ConceptualContainer>
+      <IconContainer color={color}>
+        <FeatherIcon size={30} color="#fff" name={icon} />
+      </IconContainer>
+      <Typogaphy>{number}</Typogaphy>
+    </ConceptualContainer>
+
     <DescriptionContainer>
-      <Description marginTop={marginTop}>{name}</Description>
+      <Description marginTop={mini ? 16 : 0}>{name}</Description>
       <Description marginTop={4} size={15} color="#222">
         in total
       </Description>

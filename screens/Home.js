@@ -38,38 +38,39 @@ class Home extends React.Component {
             <FeatherIcon color={theme.colors.primary} name="user" />
           </Header>
         </HeaderWrapper>
+        <ScrollView>
+          <MenuContainer>
+            <MenuItem
+              onPress={() => {}}
+              icon="shopping-cart"
+              number={23}
+              name={i18n.t('paymentMethod')}
+            />
 
-        <MenuContainer>
-          <MenuItem
-            onPress={() => {}}
-            icon="shopping-cart"
-            number={23}
-            name={i18n.t('paymentMethod')}
-          />
-
-          <FieldContainer>
-            <StyledField left>
-              <MenuItem
-                onPress={() => {}}
-                color="#f87d4d"
-                marginTop="16"
-                icon="briefcase"
-                number={11}
-                name={i18n.t('employeeList')}
-              />
-            </StyledField>
-            <StyledField right>
-              <MenuItem
-                onPress={() => {}}
-                color="#e05246"
-                marginTop="16"
-                icon="users"
-                number={32}
-                name={i18n.t('customerList')}
-              />
-            </StyledField>
-          </FieldContainer>
-        </MenuContainer>
+            <FieldContainer>
+              <StyledField left>
+                <MenuItem
+                  mini
+                  onPress={() => {}}
+                  color="#f87d4d"
+                  icon="briefcase"
+                  number={11}
+                  name={i18n.t('employeeList')}
+                />
+              </StyledField>
+              <StyledField right>
+                <MenuItem
+                  mini
+                  onPress={() => {}}
+                  color="#e05246"
+                  icon="users"
+                  number={32}
+                  name={i18n.t('customerList')}
+                />
+              </StyledField>
+            </FieldContainer>
+          </MenuContainer>
+        </ScrollView>
       </View>
     );
   }

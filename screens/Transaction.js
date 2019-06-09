@@ -205,7 +205,11 @@ class Transaction extends React.Component {
                   toAccount={transaction.toAccount.id.name}
                   cost={transaction.amount}
                   time={new Date(transaction.createdAt).toLocaleDateString(
-                    'vi-VN'
+                    'vi-VN',
+                    {
+                      day: 'numeric',
+                      month: 'long',
+                    }
                   )}
                 />
               </TouchableOpacity>

@@ -31,11 +31,11 @@ const IconContainer = styled.View`
 const Typogaphy = styled.Text`
   font-size: 30;
   padding-left: 24px;
+  padding-right: 24px;
   color: #111;
 `;
 
 const DescriptionContainer = styled.View`
-  margin-left: 16px;
   flex: 1;
 `;
 

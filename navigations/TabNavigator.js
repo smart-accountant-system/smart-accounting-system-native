@@ -17,6 +17,7 @@ import Transaction from '../screens/Transaction';
 import TransactionDetail from '../screens/TransactionDetail';
 import Account from '../screens/Account';
 import AccountDetail from '../screens/AccountDetail';
+import PaymentMethod from '../screens/PaymentMethod';
 import theme from '../constants/theme';
 import { en, vi } from '../constants/localization';
 
@@ -26,6 +27,7 @@ i18n.locale = Localization.locale;
 
 export const HomeStack = createStackNavigator(
   {
+    PaymentMethod,
     Home,
     Profile,
   },

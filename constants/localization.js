@@ -17,6 +17,7 @@ export const en = {
   payment: 'Payment',
   customer: 'Customer',
   phone: 'Phone',
+  category: 'Payment Method',
 };
 
 export const vi = {
@@ -38,4 +39,5 @@ export const vi = {
   payment: 'Thanh toán',
   customer: 'Khách hàng',
   phone: 'Số điện thoại',
+  category: 'Phương thức thanh toán',
 };

@@ -41,7 +41,7 @@ class Home extends React.Component {
         <ScrollView>
           <MenuContainer>
             <MenuItem
-              onPress={() => {}}
+              onPress={() => navigation.navigate('PaymentMethod')}
               icon="shopping-cart"
               number={23}
               name={i18n.t('paymentMethod')}

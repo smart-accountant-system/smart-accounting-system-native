@@ -35,6 +35,7 @@ const TransactionDetail = styled.Text`
 const HeaderContainer = styled.View`
   display: flex;
   flex-direction: row;
+  align-items: center;
   flex: 1;
   overflow: hidden;
 `;

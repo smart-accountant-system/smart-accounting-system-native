@@ -1,3 +1,4 @@
+// WORKING...
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import {
@@ -16,7 +17,7 @@ import FeatherIcon from '../components/FeatherIcon';
 import Loading from '../components/Loading';
 import { ItemCategory } from '../containers/PaymentMethod';
 
-class PaymentMethod extends React.Component {
+class EmployeeManagement extends React.Component {
   state = {
     searchText: '',
     timer: undefined,
@@ -130,5 +131,5 @@ export default withTheme(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(PaymentMethod)
+  )(EmployeeManagement)
 );

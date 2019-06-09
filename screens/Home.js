@@ -14,16 +14,14 @@ import {
   HeaderWrapper,
   Header,
   Typography,
-  HomeBodyWrapper,
-  FeatureText,
-  FeatureHeaderWrapper,
-  FeatureContent,
-  InforWrapper,
+  MenuContainer,
+  MenuItem,
+  FieldContainer,
+  StyledField,
 } from '../containers/Home';
 import FeatherIcon from '../components/FeatherIcon';
 import theme from '../constants/theme';
 import { logout } from '../redux/actions';
-import ProfileInfo from '../components/ProfileInfo';
 
 class Home extends React.Component {
   render() {
@@ -40,21 +38,38 @@ class Home extends React.Component {
             <FeatherIcon color={theme.colors.primary} name="user" />
           </Header>
         </HeaderWrapper>
-        <HomeBodyWrapper>
-          <ScrollView>
-            <FeatureHeaderWrapper>
-              <FeatureText>{i18n.t('menu')}</FeatureText>
-            </FeatureHeaderWrapper>
-            <FeatureContent>
-              <ProfileInfo
-                name="shopping-cart"
-                info={i18n.t('paymentMethod')}
+
+        <MenuContainer>
+          <MenuItem
+            onPress={() => {}}
+            icon="shopping-cart"
+            number={23}
+            name={i18n.t('paymentMethod')}
+          />
+
+          <FieldContainer>
+            <StyledField left>
+              <MenuItem
+                onPress={() => {}}
+                color="#f87d4d"
+                marginTop="16"
+                icon="briefcase"
+                number={11}
+                name={i18n.t('employeeList')}
               />
-              <ProfileInfo name="briefcase" info={i18n.t('employeeList')} />
-              <ProfileInfo name="users" info={i18n.t('customerList')} />
-            </FeatureContent>
-          </ScrollView>
-        </HomeBodyWrapper>
+            </StyledField>
+            <StyledField right>
+              <MenuItem
+                onPress={() => {}}
+                color="#e05246"
+                marginTop="16"
+                icon="users"
+                number={32}
+                name={i18n.t('customerList')}
+              />
+            </StyledField>
+          </FieldContainer>
+        </MenuContainer>
       </View>
     );
   }

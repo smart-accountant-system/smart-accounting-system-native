@@ -8,8 +8,8 @@ const InvoiceContentContainer = styled.View`
   background-color: #fff;
   padding: 10px;
   width: 100%;
-  border-top-color: #f1f1f1;
-  border-top-width: 2px;
+  border-bottom-color: #f1f1f1;
+  border-bottom-width: 2px;
 
   display: flex;
   flex-direction: row;

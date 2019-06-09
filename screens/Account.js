@@ -76,6 +76,8 @@ class Account extends React.Component {
           style={{
             shadowOffset: { width: 0, height: 0 },
             shadowOpacity: 0,
+            borderBottomWidth: 2,
+            borderBottomColor: '#f1f1f1',
           }}
         />
 

@@ -9,7 +9,17 @@ import reducers from '../reducers';
 const persistConfig = {
   key: 'sas1',
   storage: AsyncStorage,
-  whitelist: ['user', 'receipt'],
+  whitelist: [
+    'user',
+    'receipt',
+    'transaction',
+    'invoice',
+    'account',
+    'category',
+    'employee',
+    'customer',
+    'dashboard',
+  ],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

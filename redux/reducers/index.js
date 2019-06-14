@@ -7,6 +7,7 @@ import invoice from './invoice';
 import category from './category';
 import employee from './employee';
 import customer from './customer';
+import dashboard from './dashboard';
 
 export default combineReducers({
   user,
@@ -17,4 +18,5 @@ export default combineReducers({
   category,
   employee,
   customer,
+  dashboard,
 });

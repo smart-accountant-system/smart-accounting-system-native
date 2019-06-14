@@ -1,8 +1,15 @@
+/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import i18n from 'i18n-js';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-paper';
-import { View, StatusBar, TouchableOpacity, ScrollView } from 'react-native';
+import {
+  View,
+  StatusBar,
+  TouchableOpacity,
+  ScrollView,
+  RefreshControl,
+} from 'react-native';
 
 import {
   HeaderWrapper,
@@ -14,12 +21,34 @@ import {
   StyledField,
 } from '../containers/Home';
 import theme from '../constants/theme';
-import { logout } from '../redux/actions';
-import { FeatherIcon } from '../components';
+import { logout, getDashboard } from '../redux/actions';
+import { FeatherIcon, Loading } from '../components';
 
 class Home extends React.Component {
+  state = {
+    refreshing: false,
+  };
+
+  componentDidMount = () => {
+    this.props.getDashboard({
+      success: () => {},
+      failure: () => {},
+    });
+  };
+
+  _onRefresh = () => {
+    this.setState({ refreshing: true });
+    this.props.getDashboard({
+      success: () => {
+        this.setState({ refreshing: false });
+      },
+      failure: () => {},
+    });
+  };
+
   render() {
-    const { navigation } = this.props;
+    const { navigation, dashboard } = this.props;
+    const { refreshing } = this.state;
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
@@ -32,39 +61,50 @@ class Home extends React.Component {
             <FeatherIcon color={theme.colors.primary} name="user" />
           </Header>
         </HeaderWrapper>
-        <ScrollView>
-          <MenuContainer>
-            <MenuItem
-              onPress={() => navigation.navigate('PaymentMethod')}
-              icon="shopping-cart"
-              number={23}
-              name={i18n.t('paymentMethod')}
-            />
+        {dashboard ? (
+          <ScrollView
+            refreshControl={
+              <RefreshControl
+                onRefresh={this._onRefresh}
+                refreshing={refreshing}
+              />
+            }
+          >
+            <MenuContainer>
+              <MenuItem
+                onPress={() => navigation.navigate('PaymentMethod')}
+                icon="shopping-cart"
+                number={dashboard.totalCategory}
+                name={i18n.t('paymentMethod')}
+              />
 
-            <FieldContainer>
-              <StyledField left>
-                <MenuItem
-                  mini
-                  onPress={() => navigation.navigate('EmployeeManagement')}
-                  color="#f87d4d"
-                  icon="briefcase"
-                  number={11}
-                  name={i18n.t('employeeManagement')}
-                />
-              </StyledField>
-              <StyledField right>
-                <MenuItem
-                  mini
-                  onPress={() => navigation.navigate('CustomerManagement')}
-                  color="#e05246"
-                  icon="users"
-                  number={32}
-                  name={i18n.t('customerManagement')}
-                />
-              </StyledField>
-            </FieldContainer>
-          </MenuContainer>
-        </ScrollView>
+              <FieldContainer>
+                <StyledField left>
+                  <MenuItem
+                    mini
+                    onPress={() => navigation.navigate('EmployeeManagement')}
+                    color="#f87d4d"
+                    icon="briefcase"
+                    number={dashboard.totalEmployee}
+                    name={i18n.t('employeeManagement')}
+                  />
+                </StyledField>
+                <StyledField right>
+                  <MenuItem
+                    mini
+                    onPress={() => navigation.navigate('CustomerManagement')}
+                    color="#e05246"
+                    icon="users"
+                    number={dashboard.totalCustomer}
+                    name={i18n.t('customerManagement')}
+                  />
+                </StyledField>
+              </FieldContainer>
+            </MenuContainer>
+          </ScrollView>
+        ) : (
+          <Loading />
+        )}
       </View>
     );
   }
@@ -72,9 +112,11 @@ class Home extends React.Component {
 
 const mapStateToProps = state => ({
   info: state.user,
+  dashboard: state.dashboard.dashboard,
 });
 const mapDispatchToProps = {
   logout,
+  getDashboard,
 };
 
 export default withTheme(

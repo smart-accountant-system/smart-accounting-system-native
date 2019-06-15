@@ -2,10 +2,12 @@ import {
   GET_RECEIPTS_REQUEST,
   GET_RECEIPTS_SUCCESS,
   GET_RECEIPTS_FAILURE,
+  CHOOSE_RECEIPT,
 } from '../actions';
 
 const INITIAL_STATE = {
   receipts: null,
+  currentReceipt: null,
   error: null,
 };
 
@@ -26,6 +28,11 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         error: action.payload,
+      };
+    case CHOOSE_RECEIPT:
+      return {
+        ...state,
+        currentReceipt: action.payload,
       };
     default:
       return state;

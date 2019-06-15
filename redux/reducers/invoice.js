@@ -2,10 +2,12 @@ import {
   GET_INVOICES_REQUEST,
   GET_INVOICES_SUCCESS,
   GET_INVOICES_FAILURE,
+  CHOOSE_INVOICE,
 } from '../actions';
 
 const INITIAL_STATE = {
   invoices: null,
+  currentInvoice: null,
   error: null,
 };
 
@@ -26,6 +28,11 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         error: action.payload,
+      };
+    case CHOOSE_INVOICE:
+      return {
+        ...state,
+        currentInvoice: action.payload,
       };
     default:
       return state;

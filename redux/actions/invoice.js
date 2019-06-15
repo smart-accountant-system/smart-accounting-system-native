@@ -5,6 +5,7 @@ import { METHODS } from '../../constants/api';
 export const GET_INVOICES_REQUEST = 'get-invoices-request';
 export const GET_INVOICES_SUCCESS = 'get-invoices-success';
 export const GET_INVOICES_FAILURE = 'get-invoices-failure';
+export const CHOOSE_INVOICE = 'choose-invoice';
 
 export function getInvoices(
   params,
@@ -43,5 +44,12 @@ export function getInvoices(
       });
       failure();
     }
+  };
+}
+
+export function chooseInvoice(invoice) {
+  return {
+    type: CHOOSE_INVOICE,
+    payload: invoice,
   };
 }

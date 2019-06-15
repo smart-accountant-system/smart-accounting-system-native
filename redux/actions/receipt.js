@@ -5,6 +5,7 @@ import { ENDPOINTS, METHODS } from '../../constants/api';
 export const GET_RECEIPTS_REQUEST = 'get-receipts-request';
 export const GET_RECEIPTS_SUCCESS = 'get-receipts-success';
 export const GET_RECEIPTS_FAILURE = 'get-receipts-failure';
+export const CHOOSE_RECEIPT = 'choose-receipt';
 
 export function getReceipts(
   params,
@@ -43,5 +44,12 @@ export function getReceipts(
       });
       failure();
     }
+  };
+}
+
+export function chooseReceipt(receipt) {
+  return {
+    type: CHOOSE_RECEIPT,
+    payload: receipt,
   };
 }

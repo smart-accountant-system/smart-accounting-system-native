@@ -13,7 +13,7 @@ import {
   FilterTime,
 } from '../components/Filter';
 import theme from '../constants/theme';
-import { logout, getReceipts } from '../redux/actions';
+import { logout, getReceipts, chooseReceipt } from '../redux/actions';
 import { handle401 } from '../constants/strategies';
 import { FeatherIcon, Loading } from '../components';
 import { ReceiptItem, ReceiptContent } from '../containers/Receipt';
@@ -130,7 +130,8 @@ class Receipt extends React.Component {
 
   receiptDetail = receipt => {
     const { navigation } = this.props;
-    navigation.navigate('ReceiptDetail', { receipt });
+    navigation.navigate('ReceiptDetail');
+    this.props.chooseReceipt(receipt);
   };
 
   render() {
@@ -246,6 +247,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   logout,
   getReceipts,
+  chooseReceipt,
 };
 
 export default withTheme(

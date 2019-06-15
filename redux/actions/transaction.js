@@ -5,6 +5,7 @@ import { ENDPOINTS, METHODS } from '../../constants/api';
 export const GET_TRANSACTIONS_REQUEST = 'get-transactions-request';
 export const GET_TRANSACTIONS_SUCCESS = 'get-transactions-success';
 export const GET_TRANSACTIONS_FAILURE = 'get-transactions-failure';
+export const CHOOSE_TRANSACTION = 'choose-transaction';
 
 export function getTransactions(
   params,
@@ -43,5 +44,12 @@ export function getTransactions(
       });
       failure();
     }
+  };
+}
+
+export function chooseTransaction(transaction) {
+  return {
+    type: CHOOSE_TRANSACTION,
+    payload: transaction,
   };
 }

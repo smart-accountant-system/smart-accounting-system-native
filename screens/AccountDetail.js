@@ -1,15 +1,18 @@
 import React from 'react';
 import i18n from 'i18n-js';
+import { connect } from 'react-redux';
+import { withTheme } from 'react-native-paper';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
 import theme from '../constants/theme';
 import { FeatherIcon } from '../components';
 
-export default class AccountDetail extends React.Component {
+class AccountDetail extends React.Component {
   render() {
-    const { navigation } = this.props;
-    const account = navigation.getParam('account', '');
-    const color = account.debit > account.credit ? '#438763' : '#ad6b8d';
+    const { navigation, currentAccount } = this.props;
+    const color =
+      currentAccount.debit > currentAccount.credit ? '#438763' : '#ad6b8d';
     // I have no idea for this
     return (
       <View style={{ display: 'flex', flex: 1 }}>
@@ -42,21 +45,24 @@ export default class AccountDetail extends React.Component {
                 paddingRight: 16,
               }}
             >
-              {account.name}
+              {currentAccount.name}
             </Text>
             <View style={{ flex: 1 }}>
               <Text style={{ flexWrap: 'wrap' }}>
-                {account.description} {account.description}{' '}
-                {account.description} {account.description}{' '}
-                {account.description} {account.description}{' '}
-                {account.description} a a a a a a a a a a a a a a a a a a a a a
-                a a a a a a a a a
+                {currentAccount.description} {currentAccount.description}{' '}
+                {currentAccount.description} {currentAccount.description}{' '}
+                {currentAccount.description} {currentAccount.description}{' '}
+                {currentAccount.description} a a a a a a a a a a a a a a a a a a
+                a a a a a a a a a a a a
               </Text>
               <Text style={{ textAlign: 'right', marginTop: 8 }}>
-                {new Date(account.createdAt).toLocaleDateString('vi-VN', {
-                  day: 'numeric',
-                  month: 'long',
-                })}
+                {new Date(currentAccount.createdAt).toLocaleDateString(
+                  'vi-VN',
+                  {
+                    day: 'numeric',
+                    month: 'long',
+                  }
+                )}
               </Text>
             </View>
           </View>
@@ -83,7 +89,7 @@ export default class AccountDetail extends React.Component {
                   color: '#438763',
                 }}
               >
-                {account.debit}
+                {currentAccount.debit}
               </Text>
             </View>
             <View
@@ -101,7 +107,7 @@ export default class AccountDetail extends React.Component {
                   textAlign: 'right',
                 }}
               >
-                {account.credit}
+                {currentAccount.credit}
               </Text>
             </View>
           </View>
@@ -110,3 +116,15 @@ export default class AccountDetail extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  currentAccount: state.account.currentAccount,
+});
+const mapDispatchToProps = {};
+
+export default withTheme(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(AccountDetail)
+);

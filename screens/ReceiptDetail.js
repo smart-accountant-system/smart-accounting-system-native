@@ -1,24 +1,25 @@
 import React from 'react';
 import i18n from 'i18n-js';
 import { View, TouchableOpacity, ScrollView, Text } from 'react-native';
+import { connect } from 'react-redux';
+import { withTheme } from 'react-native-paper';
 
 import { Header, Typography, HeaderWrapper } from '../containers/Home';
 import theme from '../constants/theme';
 import { FeatherIcon } from '../components';
 
-export default class ReceiptDetail extends React.Component {
+class ReceiptDetail extends React.Component {
   render() {
-    const { navigation } = this.props;
-    const receipt = navigation.getParam('receipt', '');
+    const { navigation, currentReceipt } = this.props;
     const type =
-      receipt.payment.type === 0
+      currentReceipt.payment.type === 0
         ? 'Receipt Voucher' // phieu thu
         : 'Payment Voucher'; // phieu chi
-    const status = receipt.status
+    const status = currentReceipt.status
       ? 'Recorded as a transaction'
       : 'Not record as a transaction yet';
-    const color = receipt.status ? '#438763' : '#ad6b8d';
-    const customer = receipt.customer.name;
+    const color = currentReceipt.status ? '#438763' : '#ad6b8d';
+    const customer = currentReceipt.customer.name;
     // const payment = receipt.payment.category.name;
     // const cost = receipt.payment.amountMoney;
     // const description = receipt.payment.description;
@@ -26,8 +27,8 @@ export default class ReceiptDetail extends React.Component {
       description,
       amountMoney: cost,
       category: { name: payment },
-    } = receipt.payment;
-    const { createdAt } = receipt;
+    } = currentReceipt.payment;
+    const { createdAt } = currentReceipt;
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
@@ -154,3 +155,15 @@ export default class ReceiptDetail extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  currentReceipt: state.receipt.currentReceipt,
+});
+const mapDispatchToProps = {};
+
+export default withTheme(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(ReceiptDetail)
+);

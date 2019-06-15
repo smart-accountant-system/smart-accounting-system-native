@@ -6,7 +6,7 @@ import { withTheme } from 'react-native-paper';
 import { View, ScrollView, RefreshControl } from 'react-native';
 
 import theme from '../constants/theme';
-import { logout, getAccounts } from '../redux/actions';
+import { logout, getAccounts, chooseAccount } from '../redux/actions';
 import { handle401 } from '../constants/strategies';
 import { FeatherIcon, Loading, Searchbar } from '../components';
 import { AccountItem, AccountContent } from '../containers/Account';
@@ -51,7 +51,8 @@ class Account extends React.Component {
 
   accountDetail = account => {
     const { navigation } = this.props;
-    navigation.navigate('AccountDetail', { account });
+    navigation.navigate('AccountDetail');
+    this.props.chooseAccount(account);
   };
 
   handleSearch = query => {
@@ -144,6 +145,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   logout,
   getAccounts,
+  chooseAccount,
 };
 
 export default withTheme(

@@ -1,19 +1,19 @@
 import React from 'react';
 import i18n from 'i18n-js';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { connect } from 'react-redux';
 
 import theme from '../constants/theme';
 import { FeatherIcon } from '../components';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
 
-export default class InvoiceDetail extends React.Component {
+class InvoiceDetail extends React.Component {
   render() {
-    const { navigation } = this.props;
-    const invoice = navigation.getParam('invoice', '');
-    const name = invoice.type === 0 ? 'Purchase' : 'Sale';
-    const color = invoice.status ? '#438763' : '#ad6b8d';
-    const status = invoice.status ? 'Paid' : 'Unpaid';
-    const { createdAt, totalCost } = invoice;
+    const { navigation, currentInvoice } = this.props;
+    const name = currentInvoice.type === 0 ? 'Purchase' : 'Sale';
+    const color = currentInvoice.status ? '#438763' : '#ad6b8d';
+    const status = currentInvoice.status ? 'Paid' : 'Unpaid';
+    const { createdAt, totalCost } = currentInvoice;
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
@@ -94,7 +94,7 @@ export default class InvoiceDetail extends React.Component {
               cost
             </Text>
           </View>
-          {invoice.detail.map(({ product, quantity, unitPrice }) => (
+          {currentInvoice.detail.map(({ product, quantity, unitPrice }) => (
             <View
               key={Math.random()}
               style={{
@@ -142,3 +142,13 @@ export default class InvoiceDetail extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  currentInvoice: state.invoice.currentInvoice,
+});
+const mapDispatchToProps = {};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(InvoiceDetail);

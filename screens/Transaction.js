@@ -22,7 +22,7 @@ import {
 import theme from '../constants/theme';
 import { handle401 } from '../constants/strategies';
 import { FeatherIcon, Loading } from '../components';
-import { logout, getTransactions } from '../redux/actions';
+import { logout, getTransactions, chooseTransaction } from '../redux/actions';
 import { TransactionContent } from '../containers/Transaction';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
 
@@ -137,7 +137,8 @@ class Transaction extends React.Component {
 
   transactionDetail = transaction => {
     const { navigation } = this.props;
-    navigation.navigate('TransactionDetail', { transaction });
+    navigation.navigate('TransactionDetail');
+    this.props.chooseTransaction(transaction);
   };
 
   render() {
@@ -244,7 +245,7 @@ class Transaction extends React.Component {
 const mapStateToProps = state => ({
   transactions: state.transaction.transactions,
 });
-const mapDispatchToProps = { logout, getTransactions };
+const mapDispatchToProps = { logout, getTransactions, chooseTransaction };
 
 export default withTheme(
   connect(

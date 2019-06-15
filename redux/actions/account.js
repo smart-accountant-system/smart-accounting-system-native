@@ -5,6 +5,7 @@ import { METHODS } from '../../constants/api';
 export const GET_ACCOUNTS_REQUEST = 'get-accounts-request';
 export const GET_ACCOUNTS_SUCCESS = 'get-accounts-success';
 export const GET_ACCOUNTS_FAILURE = 'get-accounts-failure';
+export const CHOOSE_ACCOUNT = 'choose-account';
 
 export function getAccounts(
   params,
@@ -43,5 +44,12 @@ export function getAccounts(
       });
       failure();
     }
+  };
+}
+
+export function chooseAccount(account) {
+  return {
+    type: CHOOSE_ACCOUNT,
+    payload: account,
   };
 }

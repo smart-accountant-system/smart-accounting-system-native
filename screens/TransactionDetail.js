@@ -1,15 +1,17 @@
 import React from 'react';
 import i18n from 'i18n-js';
 import { View, TouchableOpacity, ScrollView, Text } from 'react-native';
+import { connect } from 'react-redux';
+import { withTheme } from 'react-native-paper';
 
 import { Header, Typography, HeaderWrapper } from '../containers/Home';
 import theme from '../constants/theme';
 import { FeatherIcon, ReceiptItem } from '../components';
 
-export default class TransactionDetail extends React.Component {
+class TransactionDetail extends React.Component {
   render() {
-    const { navigation } = this.props;
-    const transaction = navigation.getParam('transaction', '');
+    const { navigation, currentTransaction } = this.props;
+    console.log(currentTransaction);
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
@@ -32,3 +34,15 @@ export default class TransactionDetail extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  currentTransaction: state.transaction.currentTransaction,
+});
+const mapDispatchToProps = {};
+
+export default withTheme(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(TransactionDetail)
+);

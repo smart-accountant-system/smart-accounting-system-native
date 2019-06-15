@@ -23,7 +23,7 @@ import {
 import theme from '../constants/theme';
 import { handle401 } from '../constants/strategies';
 import { FeatherIcon, Loading } from '../components';
-import { logout, getInvoices } from '../redux/actions';
+import { logout, getInvoices, chooseInvoice } from '../redux/actions';
 import { InvoiceItem, InvoiceContent } from '../containers/Invoice';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
 
@@ -138,7 +138,8 @@ class Invoice extends React.Component {
 
   invoiceDetail = invoice => {
     const { navigation } = this.props;
-    navigation.navigate('InvoiceDetail', { invoice });
+    navigation.navigate('InvoiceDetail');
+    this.props.chooseInvoice(invoice);
   };
 
   render() {
@@ -247,6 +248,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   logout,
   getInvoices,
+  chooseInvoice,
 };
 
 export default connect(

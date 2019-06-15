@@ -5,6 +5,11 @@ import { ENDPOINTS, METHODS } from '../../constants/api';
 export const GET_RECEIPTS_REQUEST = 'get-receipts-request';
 export const GET_RECEIPTS_SUCCESS = 'get-receipts-success';
 export const GET_RECEIPTS_FAILURE = 'get-receipts-failure';
+
+export const GET_RECEIPT_BY_ID_REQUEST = 'get-receipt-by-id-request';
+export const GET_RECEIPT_BY_ID_SUCCESS = 'get-receipt-by-id-success';
+export const GET_RECEIPT_BY_ID_FAILURE = 'get-receipt-by-id-failure';
+
 export const CHOOSE_RECEIPT = 'choose-receipt';
 
 export function getReceipts(
@@ -51,5 +56,44 @@ export function chooseReceipt(receipt) {
   return {
     type: CHOOSE_RECEIPT,
     payload: receipt,
+  };
+}
+
+export function getReceiptById(
+  id,
+  { success = () => {}, failure = () => {}, handle401 }
+) {
+  return async dispatch => {
+    try {
+      dispatch({ type: GET_RECEIPT_BY_ID_REQUEST });
+      const endpoint = `/receipts/${id}`;
+
+      const result = await query({
+        endpoint,
+        method: METHODS.get,
+      });
+
+      if (result.status === 200) {
+        dispatch({
+          type: GET_RECEIPT_BY_ID_SUCCESS,
+          payload: result.data,
+        });
+        success();
+      } else {
+        dispatch({
+          type: GET_RECEIPT_BY_ID_FAILURE,
+        });
+        failure();
+      }
+    } catch (error) {
+      if (error.response.status === 401) {
+        handle401();
+      }
+      dispatch({
+        type: GET_RECEIPT_BY_ID_FAILURE,
+        payload: error,
+      });
+      failure();
+    }
   };
 }

@@ -1,16 +1,45 @@
+/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import i18n from 'i18n-js';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-paper';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  RefreshControl,
+} from 'react-native';
 
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
 import theme from '../constants/theme';
 import { FeatherIcon } from '../components';
+import { getAccountById } from '../redux/actions';
+import { handle401 } from '../constants/strategies';
 
 class AccountDetail extends React.Component {
+  state = {
+    refreshing: false,
+  };
+
+  _onRefresh = () => {
+    const { currentAccount } = this.props;
+    this.setState({ refreshing: true });
+    this.props.getAccountById(currentAccount._id, {
+      success: () => {
+        this.setState({ refreshing: false });
+      },
+      handle401: () =>
+        handle401({
+          logout: this.props.logout,
+          navigation: this.props.navigation,
+        }),
+    });
+  };
+
   render() {
     const { navigation, currentAccount } = this.props;
+    const { refreshing } = this.state;
     const color =
       currentAccount.debit > currentAccount.credit ? '#438763' : '#ad6b8d';
     // I have no idea for this
@@ -25,7 +54,14 @@ class AccountDetail extends React.Component {
             <FeatherIcon color={theme.colors.primary} name="user" />
           </Header>
         </HeaderWrapper>
-        <ScrollView>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              onRefresh={this._onRefresh}
+              refreshing={refreshing}
+            />
+          }
+        >
           <View
             style={{
               padding: 15,
@@ -120,7 +156,9 @@ class AccountDetail extends React.Component {
 const mapStateToProps = state => ({
   currentAccount: state.account.currentAccount,
 });
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  getAccountById,
+};
 
 export default withTheme(
   connect(

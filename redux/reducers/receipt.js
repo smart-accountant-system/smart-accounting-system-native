@@ -2,6 +2,9 @@ import {
   GET_RECEIPTS_REQUEST,
   GET_RECEIPTS_SUCCESS,
   GET_RECEIPTS_FAILURE,
+  GET_RECEIPT_BY_ID_REQUEST,
+  GET_RECEIPT_BY_ID_SUCCESS,
+  GET_RECEIPT_BY_ID_FAILURE,
   CHOOSE_RECEIPT,
 } from '../actions';
 
@@ -33,6 +36,22 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         currentReceipt: action.payload,
+      };
+    case GET_RECEIPT_BY_ID_REQUEST:
+      return {
+        ...state,
+        error: null,
+      };
+    case GET_RECEIPT_BY_ID_SUCCESS:
+      return {
+        ...state,
+        currentReceipt: action.payload,
+        error: null,
+      };
+    case GET_RECEIPT_BY_ID_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
       };
     default:
       return state;

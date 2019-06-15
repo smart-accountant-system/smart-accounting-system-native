@@ -2,6 +2,9 @@ import {
   GET_TRANSACTIONS_REQUEST,
   GET_TRANSACTIONS_SUCCESS,
   GET_TRANSACTIONS_FAILURE,
+  GET_TRANSACTION_BY_ID_REQUEST,
+  GET_TRANSACTION_BY_ID_SUCCESS,
+  GET_TRANSACTION_BY_ID_FAILURE,
   CHOOSE_TRANSACTION,
 } from '../actions';
 
@@ -33,6 +36,22 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         currentTransaction: action.payload,
+      };
+    case GET_TRANSACTION_BY_ID_REQUEST:
+      return {
+        ...state,
+        error: null,
+      };
+    case GET_TRANSACTION_BY_ID_SUCCESS:
+      return {
+        ...state,
+        currentTransaction: action.payload,
+        error: null,
+      };
+    case GET_TRANSACTION_BY_ID_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
       };
     default:
       return state;

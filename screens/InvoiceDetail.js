@@ -1,15 +1,44 @@
+/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import i18n from 'i18n-js';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  RefreshControl,
+} from 'react-native';
 import { connect } from 'react-redux';
 
 import theme from '../constants/theme';
 import { FeatherIcon } from '../components';
+import { handle401 } from '../constants/strategies';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
+import { getInvoiceById } from '../redux/actions';
 
 class InvoiceDetail extends React.Component {
+  state = {
+    refreshing: false,
+  };
+
+  _onRefresh = () => {
+    const { currentInvoice } = this.props;
+    this.setState({ refreshing: true });
+    this.props.getInvoiceById(currentInvoice._id, {
+      success: () => {
+        this.setState({ refreshing: false });
+      },
+      handle401: () =>
+        handle401({
+          logout: this.props.logout,
+          navigation: this.props.navigation,
+        }),
+    });
+  };
+
   render() {
     const { navigation, currentInvoice } = this.props;
+    const { refreshing } = this.state;
     const name = currentInvoice.type === 0 ? 'Purchase' : 'Sale';
     const color = currentInvoice.status ? '#438763' : '#ad6b8d';
     const status = currentInvoice.status ? 'Paid' : 'Unpaid';
@@ -25,7 +54,14 @@ class InvoiceDetail extends React.Component {
             <FeatherIcon color={theme.colors.primary} name="user" />
           </Header>
         </HeaderWrapper>
-        <ScrollView>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              onRefresh={this._onRefresh}
+              refreshing={refreshing}
+            />
+          }
+        >
           <View
             style={{
               padding: 8,
@@ -146,7 +182,9 @@ class InvoiceDetail extends React.Component {
 const mapStateToProps = state => ({
   currentInvoice: state.invoice.currentInvoice,
 });
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  getInvoiceById,
+};
 
 export default connect(
   mapStateToProps,

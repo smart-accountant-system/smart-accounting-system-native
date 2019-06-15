@@ -2,6 +2,9 @@ import {
   GET_INVOICES_REQUEST,
   GET_INVOICES_SUCCESS,
   GET_INVOICES_FAILURE,
+  GET_INVOICE_BY_ID_REQUEST,
+  GET_INVOICE_BY_ID_SUCCESS,
+  GET_INVOICE_BY_ID_FAILURE,
   CHOOSE_INVOICE,
 } from '../actions';
 
@@ -33,6 +36,22 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         currentInvoice: action.payload,
+      };
+    case GET_INVOICE_BY_ID_REQUEST:
+      return {
+        ...state,
+        error: null,
+      };
+    case GET_INVOICE_BY_ID_SUCCESS:
+      return {
+        ...state,
+        currentInvoice: action.payload,
+        error: null,
+      };
+    case GET_INVOICE_BY_ID_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
       };
     default:
       return state;

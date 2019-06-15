@@ -1,16 +1,45 @@
+/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import i18n from 'i18n-js';
-import { View, TouchableOpacity, ScrollView, Text } from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  ScrollView,
+  Text,
+  RefreshControl,
+} from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-paper';
 
 import { Header, Typography, HeaderWrapper } from '../containers/Home';
 import theme from '../constants/theme';
 import { FeatherIcon } from '../components';
+import { getReceiptById } from '../redux/actions';
+import { handle401 } from '../constants/strategies';
 
 class ReceiptDetail extends React.Component {
+  state = {
+    refreshing: false,
+  };
+
+  _onRefresh = () => {
+    const { currentReceipt } = this.props;
+    this.setState({ refreshing: true });
+    this.props.getReceiptById(currentReceipt._id, {
+      success: () => {
+        this.setState({ refreshing: false });
+      },
+      handle401: () =>
+        handle401({
+          logout: this.props.logout,
+          navigation: this.props.navigation,
+        }),
+    });
+  };
+
   render() {
     const { navigation, currentReceipt } = this.props;
+    const { refreshing } = this.state;
     const type =
       currentReceipt.payment.type === 0
         ? 'Receipt Voucher' // phieu thu
@@ -40,7 +69,14 @@ class ReceiptDetail extends React.Component {
             <FeatherIcon color={theme.colors.primary} name="user" />
           </Header>
         </HeaderWrapper>
-        <ScrollView>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              onRefresh={this._onRefresh}
+              refreshing={refreshing}
+            />
+          }
+        >
           <View
             style={{
               padding: 8,
@@ -159,7 +195,9 @@ class ReceiptDetail extends React.Component {
 const mapStateToProps = state => ({
   currentReceipt: state.receipt.currentReceipt,
 });
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  getReceiptById,
+};
 
 export default withTheme(
   connect(

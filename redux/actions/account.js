@@ -8,7 +8,7 @@ export const GET_ACCOUNTS_FAILURE = 'get-accounts-failure';
 
 export function getAccounts(
   params,
-  { success = () => {}, failure = () => {} }
+  { success = () => {}, failure = () => {}, handle401 }
 ) {
   return async dispatch => {
     try {
@@ -34,6 +34,9 @@ export function getAccounts(
         failure();
       }
     } catch (error) {
+      if (error.response.status === 401) {
+        handle401();
+      }
       dispatch({
         type: GET_ACCOUNTS_FAILURE,
         payload: error,

@@ -8,7 +8,7 @@ export const GET_TRANSACTIONS_FAILURE = 'get-transactions-failure';
 
 export function getTransactions(
   params,
-  { success = () => {}, failure = () => {} }
+  { success = () => {}, failure = () => {}, handle401 }
 ) {
   return async dispatch => {
     try {
@@ -34,6 +34,9 @@ export function getTransactions(
         failure();
       }
     } catch (error) {
+      if (error.response.status === 401) {
+        handle401();
+      }
       dispatch({
         type: GET_TRANSACTIONS_FAILURE,
         payload: error,

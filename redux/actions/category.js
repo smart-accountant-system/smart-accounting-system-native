@@ -8,7 +8,7 @@ export const GET_CATEGORIES_FAILURE = 'get-categories-failure';
 
 export function getCategories(
   params,
-  { success = () => {}, failure = () => {} }
+  { success = () => {}, failure = () => {}, handle401 }
 ) {
   return async dispatch => {
     try {
@@ -34,6 +34,9 @@ export function getCategories(
         failure();
       }
     } catch (error) {
+      if (error.response.status === 401) {
+        handle401();
+      }
       dispatch({
         type: GET_CATEGORIES_FAILURE,
         payload: error,

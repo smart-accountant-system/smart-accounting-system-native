@@ -8,7 +8,7 @@ export const GET_INVOICES_FAILURE = 'get-invoices-failure';
 
 export function getInvoices(
   params,
-  { success = () => {}, failure = () => {} }
+  { success = () => {}, failure = () => {}, handle401 }
 ) {
   return async dispatch => {
     try {
@@ -34,6 +34,9 @@ export function getInvoices(
         failure();
       }
     } catch (error) {
+      if (error.response.status === 401) {
+        handle401();
+      }
       dispatch({
         type: GET_INVOICES_FAILURE,
         payload: error,

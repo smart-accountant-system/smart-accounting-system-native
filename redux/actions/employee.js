@@ -8,7 +8,7 @@ export const GET_EMPLOYEES_FAILURE = 'get-employees-failure';
 
 export function getEmployees(
   params,
-  { success = () => {}, failure = () => {} }
+  { success = () => {}, failure = () => {}, handle401 }
 ) {
   return async dispatch => {
     try {
@@ -34,6 +34,9 @@ export function getEmployees(
         failure();
       }
     } catch (error) {
+      if (error.response.status === 401) {
+        handle401();
+      }
       dispatch({
         type: GET_EMPLOYEES_FAILURE,
         payload: error,

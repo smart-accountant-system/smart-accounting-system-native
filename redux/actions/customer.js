@@ -8,7 +8,7 @@ export const GET_CUSTOMERS_FAILURE = 'get-customer-failure';
 
 export function getCustomers(
   params,
-  { success = () => {}, failure = () => {} }
+  { success = () => {}, failure = () => {}, handle401 }
 ) {
   return async dispatch => {
     try {
@@ -34,6 +34,9 @@ export function getCustomers(
         failure();
       }
     } catch (error) {
+      if (error.response.status === 401) {
+        handle401();
+      }
       dispatch({
         type: GET_CUSTOMERS_FAILURE,
         payload: error,

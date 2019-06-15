@@ -8,7 +8,7 @@ export const GET_RECEIPTS_FAILURE = 'get-receipts-failure';
 
 export function getReceipts(
   params,
-  { success = () => {}, failure = () => {} }
+  { success = () => {}, failure = () => {}, handle401 }
 ) {
   return async dispatch => {
     try {
@@ -34,6 +34,9 @@ export function getReceipts(
         failure();
       }
     } catch (error) {
+      if (error.response.status === 401) {
+        handle401();
+      }
       dispatch({
         type: GET_RECEIPTS_FAILURE,
         payload: error,

@@ -114,11 +114,11 @@ AccountStack.navigationOptions = {
 
 const TabNavigator = createBottomTabNavigator(
   {
-    TransactionStack,
     HomeStack,
     AccountStack,
     InvoiceStack,
     ReceiptStack,
+    TransactionStack,
   },
   {
     tabBarOptions: {

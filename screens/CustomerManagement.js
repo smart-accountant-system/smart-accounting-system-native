@@ -9,10 +9,10 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-paper';
-import { getCustomers } from '../redux/actions';
 
 import theme from '../constants/theme';
 import { handle401 } from '../constants/strategies';
+import { logout, getCustomers } from '../redux/actions';
 import { CustomerItem } from '../containers/CustomerManagement';
 import { FeatherIcon, Loading, Searchbar } from '../components';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
@@ -126,6 +126,7 @@ const mapStateToProps = state => ({
   customers: state.customer.customers,
 });
 const mapDispatchToProps = {
+  logout,
   getCustomers,
 };
 

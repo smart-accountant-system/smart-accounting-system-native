@@ -11,7 +11,7 @@ const FilterContainer = styled.TouchableOpacity`
   width: 100%;
   padding: 15px;
   border-bottom-color: #f1f1f1;
-  border-bottom-width: 8px;
+  border-bottom-width: 4px;
 `;
 
 const FilterTitleContainer = styled.View`

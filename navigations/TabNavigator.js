@@ -19,6 +19,7 @@ import Account from '../screens/Account';
 import AccountDetail from '../screens/AccountDetail';
 import PaymentMethod from '../screens/PaymentMethod';
 import EmployeeManagement from '../screens/EmployeeManagement';
+import EmployeeDetail from '../screens/EmployeeDetail';
 import CustomerManagement from '../screens/CustomerManagement';
 import theme from '../constants/theme';
 import { en, vi } from '../constants/localization';
@@ -34,6 +35,8 @@ export const HomeStack = createStackNavigator(
     PaymentMethod,
     EmployeeManagement,
     CustomerManagement,
+
+    EmployeeDetail,
   },
   {
     headerMode: 'none',
@@ -111,11 +114,11 @@ AccountStack.navigationOptions = {
 
 const TabNavigator = createBottomTabNavigator(
   {
+    TransactionStack,
     HomeStack,
     AccountStack,
     InvoiceStack,
     ReceiptStack,
-    TransactionStack,
   },
   {
     tabBarOptions: {

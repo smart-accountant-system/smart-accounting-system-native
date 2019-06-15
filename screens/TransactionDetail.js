@@ -1,15 +1,8 @@
 import React from 'react';
 import i18n from 'i18n-js';
-import { View, TouchableOpacity, ScrollView } from 'react-native';
+import { View, TouchableOpacity, ScrollView, Text } from 'react-native';
 
-import {
-  Header,
-  Typography,
-  FeatureText,
-  HeaderWrapper,
-  HomeBodyWrapper,
-  FeatureHeaderWrapper,
-} from '../containers/Home';
+import { Header, Typography, HeaderWrapper } from '../containers/Home';
 import theme from '../constants/theme';
 import { FeatherIcon, ReceiptItem } from '../components';
 
@@ -30,23 +23,11 @@ export default class TransactionDetail extends React.Component {
             <FeatherIcon color={theme.colors.primary} name="user" />
           </Header>
         </HeaderWrapper>
-        <HomeBodyWrapper>
-          <ScrollView>
-            <FeatureHeaderWrapper>
-              <FeatureText>{i18n.t('receipt')}</FeatureText>
-            </FeatureHeaderWrapper>
-            <ReceiptItem
-              customer="FPT"
-              id="#0000001"
-              type={1}
-              date="May 24, 2019"
-              price="đ7,000,000"
-            />
-            <FeatureHeaderWrapper>
-              <FeatureText>{i18n.t('balance')}</FeatureText>
-            </FeatureHeaderWrapper>
-          </ScrollView>
-        </HomeBodyWrapper>
+        <ScrollView>
+          <View>
+            <Text>a</Text>
+          </View>
+        </ScrollView>
       </View>
     );
   }

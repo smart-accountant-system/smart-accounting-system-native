@@ -11,8 +11,8 @@ import { connect } from 'react-redux';
 import { withTheme } from 'react-native-paper';
 
 import theme from '../constants/theme';
-import { getCategories } from '../redux/actions';
 import { handle401 } from '../constants/strategies';
+import { logout, getCategories } from '../redux/actions';
 import { ItemCategory } from '../containers/PaymentMethod';
 import { FeatherIcon, Loading, Searchbar } from '../components';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
@@ -136,6 +136,7 @@ const mapStateToProps = state => ({
   categories: state.category.categories,
 });
 const mapDispatchToProps = {
+  logout,
   getCategories,
 };
 

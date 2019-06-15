@@ -20,9 +20,9 @@ import {
   FilterTime,
 } from '../components/Filter';
 import theme from '../constants/theme';
-import { getTransactions } from '../redux/actions';
 import { handle401 } from '../constants/strategies';
 import { FeatherIcon, Loading } from '../components';
+import { logout, getTransactions } from '../redux/actions';
 import { TransactionContent } from '../containers/Transaction';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
 
@@ -244,7 +244,7 @@ class Transaction extends React.Component {
 const mapStateToProps = state => ({
   transactions: state.transaction.transactions,
 });
-const mapDispatchToProps = { getTransactions };
+const mapDispatchToProps = { logout, getTransactions };
 
 export default withTheme(
   connect(

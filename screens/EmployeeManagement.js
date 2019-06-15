@@ -10,10 +10,10 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-paper';
-import { getEmployees } from '../redux/actions';
 
 import theme from '../constants/theme';
 import { handle401 } from '../constants/strategies';
+import { logout, getEmployees } from '../redux/actions';
 import { EmployeeItem } from '../containers/EmployeeManagement';
 import { FeatherIcon, Loading, Searchbar } from '../components';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
@@ -109,7 +109,9 @@ class EmployeeManagement extends React.Component {
             {employees.employees.map(employee => (
               <EmployeeItem
                 key={employee._id}
-                onPress={() => {}}
+                onPress={() =>
+                  navigation.navigate('EmployeeDetail', { employee })
+                }
                 fullname={employee.fullname}
                 username={employee.username}
                 role={
@@ -143,6 +145,7 @@ const mapStateToProps = state => ({
   employees: state.employee.employees,
 });
 const mapDispatchToProps = {
+  logout,
   getEmployees,
 };
 

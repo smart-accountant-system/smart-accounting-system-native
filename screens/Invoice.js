@@ -21,9 +21,9 @@ import {
   FilterTime,
 } from '../components/Filter';
 import theme from '../constants/theme';
-import { getInvoices } from '../redux/actions';
 import { handle401 } from '../constants/strategies';
 import { FeatherIcon, Loading } from '../components';
+import { logout, getInvoices } from '../redux/actions';
 import { InvoiceItem, InvoiceContent } from '../containers/Invoice';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
 
@@ -218,7 +218,7 @@ class Invoice extends React.Component {
               >
                 <InvoiceContent
                   id={invoice._id}
-                  name={invoice.type === 0 ? 'Purchased' : 'Selled'}
+                  name={invoice.type === 0 ? 'Purchase' : 'Sale'}
                   color={invoice.status ? '#438763' : '#ad6b8d'}
                   status={invoice.status ? 'Paid' : 'Unpaid'}
                   cost={invoice.totalCost}
@@ -245,6 +245,7 @@ const mapStateToProps = state => ({
   invoices: state.invoice.invoices,
 });
 const mapDispatchToProps = {
+  logout,
   getInvoices,
 };
 

@@ -6,7 +6,7 @@ import { withTheme } from 'react-native-paper';
 import { View, ScrollView, RefreshControl } from 'react-native';
 
 import theme from '../constants/theme';
-import { getAccounts } from '../redux/actions';
+import { logout, getAccounts } from '../redux/actions';
 import { handle401 } from '../constants/strategies';
 import { FeatherIcon, Loading, Searchbar } from '../components';
 import { AccountItem, AccountContent } from '../containers/Account';
@@ -142,6 +142,7 @@ const mapStateToProps = state => ({
   accounts: state.account.accounts,
 });
 const mapDispatchToProps = {
+  logout,
   getAccounts,
 };
 

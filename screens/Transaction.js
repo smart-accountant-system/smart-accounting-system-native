@@ -21,6 +21,7 @@ import {
 } from '../components/Filter';
 import theme from '../constants/theme';
 import { getTransactions } from '../redux/actions';
+import { handle401 } from '../constants/strategies';
 import { FeatherIcon, Loading } from '../components';
 import { TransactionContent } from '../containers/Transaction';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
@@ -39,20 +40,33 @@ class Transaction extends React.Component {
   };
 
   componentDidMount = () => {
-    this.props.getTransactions({
-      success: () => {},
-      failure: () => {},
-    });
+    this.props.getTransactions(
+      {},
+      {
+        handle401: () =>
+          handle401({
+            logout: this.props.logout,
+            navigation: this.props.navigation,
+          }),
+      }
+    );
   };
 
   _onRefresh = () => {
     this.setState({ refreshing: true });
-    this.props.getTransactions({
-      success: () => {
-        this.setState({ refreshing: false });
-      },
-      failure: () => {},
-    });
+    this.props.getTransactions(
+      {},
+      {
+        success: () => {
+          this.setState({ refreshing: false });
+        },
+        handle401: () =>
+          handle401({
+            logout: this.props.logout,
+            navigation: this.props.navigation,
+          }),
+      }
+    );
   };
 
   showDateTimePicker = activatingDate => {
@@ -106,14 +120,19 @@ class Transaction extends React.Component {
       isExpandingFilter: false,
     });
 
-    this.props.getTransactions({
-      params: {
+    this.props.getTransactions(
+      {
         startDate: new Date(fromDate.toDateString()),
         endDate: new Date(toDate.toDateString()),
       },
-      success: () => {},
-      failure: () => {},
-    });
+      {
+        handle401: () =>
+          handle401({
+            logout: this.props.logout,
+            navigation: this.props.navigation,
+          }),
+      }
+    );
   };
 
   transactionDetail = transaction => {

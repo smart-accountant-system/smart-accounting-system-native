@@ -6,7 +6,10 @@ export const GET_TRANSACTIONS_REQUEST = 'get-transactions-request';
 export const GET_TRANSACTIONS_SUCCESS = 'get-transactions-success';
 export const GET_TRANSACTIONS_FAILURE = 'get-transactions-failure';
 
-export function getTransactions({ params, success, failure }) {
+export function getTransactions(
+  params,
+  { success = () => {}, failure = () => {} }
+) {
   return async dispatch => {
     try {
       dispatch({ type: GET_TRANSACTIONS_REQUEST });
@@ -19,23 +22,23 @@ export function getTransactions({ params, success, failure }) {
       });
 
       if (result.status === 200) {
-        success();
         dispatch({
           type: GET_TRANSACTIONS_SUCCESS,
           payload: result.data,
         });
+        success();
       } else {
-        failure();
         dispatch({
           type: GET_TRANSACTIONS_FAILURE,
         });
+        failure();
       }
     } catch (error) {
-      failure();
       dispatch({
         type: GET_TRANSACTIONS_FAILURE,
         payload: error,
       });
+      failure();
     }
   };
 }

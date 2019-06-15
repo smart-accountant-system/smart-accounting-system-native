@@ -19,23 +19,23 @@ export function login(data, callback) {
       });
 
       if (result.status === 200) {
-        callback.success();
         dispatch({
           type: LOGIN_SUCCESS,
           payload: result.data,
         });
+        callback.success();
       } else {
-        callback.failure();
         dispatch({
           type: LOGIN_FAILURE,
         });
+        callback.failure();
       }
     } catch (error) {
-      callback.failure();
       dispatch({
         type: LOGIN_FAILURE,
         payload: error,
       });
+      callback.failure();
     }
   };
 }

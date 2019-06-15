@@ -6,7 +6,10 @@ export const GET_EMPLOYEES_REQUEST = 'get-employees-request';
 export const GET_EMPLOYEES_SUCCESS = 'get-employees-success';
 export const GET_EMPLOYEES_FAILURE = 'get-employees-failure';
 
-export function getEmployees({ params, success, failure }) {
+export function getEmployees(
+  params,
+  { success = () => {}, failure = () => {} }
+) {
   return async dispatch => {
     try {
       dispatch({ type: GET_EMPLOYEES_REQUEST });
@@ -19,23 +22,23 @@ export function getEmployees({ params, success, failure }) {
       });
 
       if (result.status === 200) {
-        success();
         dispatch({
           type: GET_EMPLOYEES_SUCCESS,
           payload: result.data,
         });
+        success();
       } else {
-        failure();
         dispatch({
           type: GET_EMPLOYEES_FAILURE,
         });
+        failure();
       }
     } catch (error) {
-      failure();
       dispatch({
         type: GET_EMPLOYEES_FAILURE,
         payload: error,
       });
+      failure();
     }
   };
 }

@@ -17,14 +17,14 @@ import Layout from '../constants/Layout';
 
 class Login extends React.Component {
   state = {
-    username: 'staff',
+    username: 'manager',
     password: '123456',
     visible: false,
   };
 
   handleLogin = () => {
     const { username, password } = this.state;
-    const { info, navigation } = this.props;
+    const { navigation } = this.props;
 
     this.props.login(
       { username, password },

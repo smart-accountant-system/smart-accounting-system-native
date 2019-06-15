@@ -22,6 +22,7 @@ import {
 } from '../components/Filter';
 import theme from '../constants/theme';
 import { getInvoices } from '../redux/actions';
+import { handle401 } from '../constants/strategies';
 import { FeatherIcon, Loading } from '../components';
 import { InvoiceItem, InvoiceContent } from '../containers/Invoice';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
@@ -40,20 +41,33 @@ class Invoice extends React.Component {
   };
 
   componentDidMount = () => {
-    this.props.getInvoices({
-      success: () => {},
-      failure: () => {},
-    });
+    this.props.getInvoices(
+      {},
+      {
+        handle401: () =>
+          handle401({
+            logout: this.props.logout,
+            navigation: this.props.navigation,
+          }),
+      }
+    );
   };
 
   _onRefresh = () => {
     this.setState({ refreshing: true });
-    this.props.getInvoices({
-      success: () => {
-        this.setState({ refreshing: false });
-      },
-      failure: () => {},
-    });
+    this.props.getInvoices(
+      {},
+      {
+        success: () => {
+          this.setState({ refreshing: false });
+        },
+        handle401: () =>
+          handle401({
+            logout: this.props.logout,
+            navigation: this.props.navigation,
+          }),
+      }
+    );
   };
 
   showDateTimePicker = activatingDate => {
@@ -107,14 +121,19 @@ class Invoice extends React.Component {
       isExpandingFilter: false,
     });
 
-    this.props.getInvoices({
-      params: {
+    this.props.getInvoices(
+      {
         startDate: new Date(fromDate.toDateString()),
         endDate: new Date(toDate.toDateString()),
       },
-      success: () => {},
-      failure: () => {},
-    });
+      {
+        handle401: () =>
+          handle401({
+            logout: this.props.logout,
+            navigation: this.props.navigation,
+          }),
+      }
+    );
   };
 
   invoiceDetail = invoice => {

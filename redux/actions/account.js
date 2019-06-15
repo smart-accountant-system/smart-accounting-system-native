@@ -6,7 +6,10 @@ export const GET_ACCOUNTS_REQUEST = 'get-accounts-request';
 export const GET_ACCOUNTS_SUCCESS = 'get-accounts-success';
 export const GET_ACCOUNTS_FAILURE = 'get-accounts-failure';
 
-export function getAccounts({ params, success, failure }) {
+export function getAccounts(
+  params,
+  { success = () => {}, failure = () => {} }
+) {
   return async dispatch => {
     try {
       dispatch({ type: GET_ACCOUNTS_REQUEST });
@@ -19,23 +22,23 @@ export function getAccounts({ params, success, failure }) {
       });
 
       if (result.status === 200) {
-        success();
         dispatch({
           type: GET_ACCOUNTS_SUCCESS,
           payload: result.data,
         });
+        success();
       } else {
-        failure();
         dispatch({
           type: GET_ACCOUNTS_FAILURE,
         });
+        failure();
       }
     } catch (error) {
-      failure();
       dispatch({
         type: GET_ACCOUNTS_FAILURE,
         payload: error,
       });
+      failure();
     }
   };
 }

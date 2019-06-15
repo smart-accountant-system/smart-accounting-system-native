@@ -7,6 +7,7 @@ import { View, ScrollView, RefreshControl } from 'react-native';
 
 import theme from '../constants/theme';
 import { getAccounts } from '../redux/actions';
+import { handle401 } from '../constants/strategies';
 import { FeatherIcon, Loading, Searchbar } from '../components';
 import { AccountItem, AccountContent } from '../containers/Account';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
@@ -19,20 +20,33 @@ class Account extends React.Component {
   };
 
   componentDidMount = () => {
-    this.props.getAccounts({
-      success: () => {},
-      failure: () => {},
-    });
+    this.props.getAccounts(
+      {},
+      {
+        handle401: () =>
+          handle401({
+            logout: this.props.logout,
+            navigation: this.props.navigation,
+          }),
+      }
+    );
   };
 
   _onRefresh = () => {
     this.setState({ refreshing: true, searchText: '' });
-    this.props.getAccounts({
-      success: () => {
-        this.setState({ refreshing: false });
-      },
-      failure: () => {},
-    });
+    this.props.getAccounts(
+      {},
+      {
+        success: () => {
+          this.setState({ refreshing: false });
+        },
+        handle401: () =>
+          handle401({
+            logout: this.props.logout,
+            navigation: this.props.navigation,
+          }),
+      }
+    );
   };
 
   accountDetail = account => {
@@ -46,13 +60,18 @@ class Account extends React.Component {
     this.setState({
       searchText: query,
       timer: setTimeout(() => {
-        this.props.getAccounts({
-          params: {
+        this.props.getAccounts(
+          {
             search: query,
           },
-          success: () => {},
-          failure: () => {},
-        });
+          {
+            handle401: () =>
+              handle401({
+                logout: this.props.logout,
+                navigation: this.props.navigation,
+              }),
+          }
+        );
       }, 300),
     });
   };

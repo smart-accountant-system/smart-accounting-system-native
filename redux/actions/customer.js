@@ -6,7 +6,10 @@ export const GET_CUSTOMERS_REQUEST = 'get-customer-request';
 export const GET_CUSTOMERS_SUCCESS = 'get-customer-success';
 export const GET_CUSTOMERS_FAILURE = 'get-customer-failure';
 
-export function getCustomers({ params, success, failure }) {
+export function getCustomers(
+  params,
+  { success = () => {}, failure = () => {} }
+) {
   return async dispatch => {
     try {
       dispatch({ type: GET_CUSTOMERS_REQUEST });
@@ -19,23 +22,23 @@ export function getCustomers({ params, success, failure }) {
       });
 
       if (result.status === 200) {
-        success();
         dispatch({
           type: GET_CUSTOMERS_SUCCESS,
           payload: result.data,
         });
+        success();
       } else {
-        failure();
         dispatch({
           type: GET_CUSTOMERS_FAILURE,
         });
+        failure();
       }
     } catch (error) {
-      failure();
       dispatch({
         type: GET_CUSTOMERS_FAILURE,
         payload: error,
       });
+      failure();
     }
   };
 }

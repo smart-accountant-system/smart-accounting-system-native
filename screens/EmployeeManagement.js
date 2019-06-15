@@ -13,6 +13,7 @@ import { withTheme } from 'react-native-paper';
 import { getEmployees } from '../redux/actions';
 
 import theme from '../constants/theme';
+import { handle401 } from '../constants/strategies';
 import { EmployeeItem } from '../containers/EmployeeManagement';
 import { FeatherIcon, Loading, Searchbar } from '../components';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
@@ -25,20 +26,33 @@ class EmployeeManagement extends React.Component {
   };
 
   componentDidMount = () => {
-    this.props.getEmployees({
-      success: () => {},
-      failure: () => {},
-    });
+    this.props.getEmployees(
+      {},
+      {
+        handle401: () =>
+          handle401({
+            logout: this.props.logout,
+            navigation: this.props.navigation,
+          }),
+      }
+    );
   };
 
   _onRefresh = () => {
     this.setState({ refreshing: true, searchText: '' });
-    this.props.getEmployees({
-      success: () => {
-        this.setState({ refreshing: false });
-      },
-      failure: () => {},
-    });
+    this.props.getEmployees(
+      {},
+      {
+        success: () => {
+          this.setState({ refreshing: false });
+        },
+        handle401: () =>
+          handle401({
+            logout: this.props.logout,
+            navigation: this.props.navigation,
+          }),
+      }
+    );
   };
 
   handleSearch = query => {
@@ -47,13 +61,18 @@ class EmployeeManagement extends React.Component {
     this.setState({
       searchText: query,
       timer: setTimeout(() => {
-        this.props.getEmployees({
-          params: {
+        this.props.getEmployees(
+          {
             search: query,
           },
-          success: () => {},
-          failure: () => {},
-        });
+          {
+            handle401: () =>
+              handle401({
+                logout: this.props.logout,
+                navigation: this.props.navigation,
+              }),
+          }
+        );
       }, 300),
     });
   };

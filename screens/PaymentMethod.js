@@ -12,6 +12,7 @@ import { withTheme } from 'react-native-paper';
 
 import theme from '../constants/theme';
 import { getCategories } from '../redux/actions';
+import { handle401 } from '../constants/strategies';
 import { ItemCategory } from '../containers/PaymentMethod';
 import { FeatherIcon, Loading, Searchbar } from '../components';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
@@ -24,20 +25,33 @@ class PaymentMethod extends React.Component {
   };
 
   componentDidMount = () => {
-    this.props.getCategories({
-      success: () => {},
-      failure: () => {},
-    });
+    this.props.getCategories(
+      {},
+      {
+        handle401: () =>
+          handle401({
+            logout: this.props.logout,
+            navigation: this.props.navigation,
+          }),
+      }
+    );
   };
 
   _onRefresh = () => {
     this.setState({ refreshing: true, searchText: '' });
-    this.props.getCategories({
-      success: () => {
-        this.setState({ refreshing: false });
-      },
-      failure: () => {},
-    });
+    this.props.getCategories(
+      {},
+      {
+        success: () => {
+          this.setState({ refreshing: false });
+        },
+        handle401: () =>
+          handle401({
+            logout: this.props.logout,
+            navigation: this.props.navigation,
+          }),
+      }
+    );
   };
 
   handleSearch = query => {
@@ -46,13 +60,18 @@ class PaymentMethod extends React.Component {
     this.setState({
       searchText: query,
       timer: setTimeout(() => {
-        this.props.getCategories({
-          params: {
+        this.props.getCategories(
+          {
             search: query,
           },
-          success: () => {},
-          failure: () => {},
-        });
+          {
+            handle401: () =>
+              handle401({
+                logout: this.props.logout,
+                navigation: this.props.navigation,
+              }),
+          }
+        );
       }, 300),
     });
   };

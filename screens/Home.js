@@ -21,8 +21,9 @@ import {
   StyledField,
 } from '../containers/Home';
 import theme from '../constants/theme';
-import { logout, getDashboard } from '../redux/actions';
+import { handle401 } from '../constants/strategies';
 import { FeatherIcon, Loading } from '../components';
+import { logout, getDashboard } from '../redux/actions';
 
 class Home extends React.Component {
   state = {
@@ -31,8 +32,11 @@ class Home extends React.Component {
 
   componentDidMount = () => {
     this.props.getDashboard({
-      success: () => {},
-      failure: () => {},
+      handle401: () =>
+        handle401({
+          logout: this.props.logout,
+          navigation: this.props.navigation,
+        }),
     });
   };
 
@@ -42,7 +46,11 @@ class Home extends React.Component {
       success: () => {
         this.setState({ refreshing: false });
       },
-      failure: () => {},
+      handle401: () =>
+        handle401({
+          logout: this.props.logout,
+          navigation: this.props.navigation,
+        }),
     });
   };
 
@@ -111,7 +119,6 @@ class Home extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  info: state.user,
   dashboard: state.dashboard.dashboard,
 });
 const mapDispatchToProps = {

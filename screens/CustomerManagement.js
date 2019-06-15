@@ -12,6 +12,7 @@ import { withTheme } from 'react-native-paper';
 import { getCustomers } from '../redux/actions';
 
 import theme from '../constants/theme';
+import { handle401 } from '../constants/strategies';
 import { CustomerItem } from '../containers/CustomerManagement';
 import { FeatherIcon, Loading, Searchbar } from '../components';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
@@ -24,20 +25,33 @@ class CustomerManagement extends React.Component {
   };
 
   componentDidMount = () => {
-    this.props.getCustomers({
-      success: () => {},
-      failure: () => {},
-    });
+    this.props.getCustomers(
+      {},
+      {
+        handle401: () =>
+          handle401({
+            logout: this.props.logout,
+            navigation: this.props.navigation,
+          }),
+      }
+    );
   };
 
   _onRefresh = () => {
     this.setState({ refreshing: true, searchText: '' });
-    this.props.getCustomers({
-      success: () => {
-        this.setState({ refreshing: false });
-      },
-      failure: () => {},
-    });
+    this.props.getCustomers(
+      {},
+      {
+        success: () => {
+          this.setState({ refreshing: false });
+        },
+        handle401: () =>
+          handle401({
+            logout: this.props.logout,
+            navigation: this.props.navigation,
+          }),
+      }
+    );
   };
 
   handleSearch = query => {
@@ -46,13 +60,18 @@ class CustomerManagement extends React.Component {
     this.setState({
       searchText: query,
       timer: setTimeout(() => {
-        this.props.getCustomers({
-          params: {
+        this.props.getCustomers(
+          {
             search: query,
           },
-          success: () => {},
-          failure: () => {},
-        });
+          {
+            handle401: () =>
+              handle401({
+                logout: this.props.logout,
+                navigation: this.props.navigation,
+              }),
+          }
+        );
       }, 300),
     });
   };

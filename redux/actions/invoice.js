@@ -6,7 +6,10 @@ export const GET_INVOICES_REQUEST = 'get-invoices-request';
 export const GET_INVOICES_SUCCESS = 'get-invoices-success';
 export const GET_INVOICES_FAILURE = 'get-invoices-failure';
 
-export function getInvoices({ params, success, failure }) {
+export function getInvoices(
+  params,
+  { success = () => {}, failure = () => {} }
+) {
   return async dispatch => {
     try {
       dispatch({ type: GET_INVOICES_REQUEST });
@@ -19,23 +22,23 @@ export function getInvoices({ params, success, failure }) {
       });
 
       if (result.status === 200) {
-        success();
         dispatch({
           type: GET_INVOICES_SUCCESS,
           payload: result.data,
         });
+        success();
       } else {
-        failure();
         dispatch({
           type: GET_INVOICES_FAILURE,
         });
+        failure();
       }
     } catch (error) {
-      failure();
       dispatch({
         type: GET_INVOICES_FAILURE,
         payload: error,
       });
+      failure();
     }
   };
 }

@@ -4,13 +4,13 @@ import React from 'react';
 import i18n from 'i18n-js';
 import { connect } from 'react-redux';
 import { withTheme, TextInput, Button, HelperText } from 'react-native-paper';
-import { View, TouchableOpacity, ScrollView, Text } from 'react-native';
+import { View, TouchableOpacity, ScrollView } from 'react-native';
 
 import { Header, Typography, HeaderWrapper } from '../containers/Home';
 import theme from '../constants/theme';
 import { FeatherIcon } from '../components';
 import { handle401 } from '../constants/strategies';
-import { logout, addCategory } from '../redux/actions';
+import { logout, addCategory, getCategories } from '../redux/actions';
 
 class PaymentMethodAddition extends React.Component {
   state = {
@@ -26,6 +26,16 @@ class PaymentMethodAddition extends React.Component {
       {
         success: () => {
           this.props.navigation.navigate('PaymentMethod');
+          this.props.getCategories(
+            {},
+            {
+              handle401: () =>
+                handle401({
+                  logout: this.props.logout,
+                  navigation: this.props.navigation,
+                }),
+            }
+          );
         },
         failure: () => {
           this.setState({
@@ -108,6 +118,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   logout,
   addCategory,
+  getCategories,
 };
 
 export default withTheme(

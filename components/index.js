@@ -8,3 +8,4 @@ export { default as ReceiptItem } from './ReceiptItem';
 export { default as Searchbar } from './Searchbar';
 export { default as TabBarIcon } from './TabBarIcon';
 export { default as TransactionItem } from './TransactionItem';
+export { default as Empty } from './Empty';

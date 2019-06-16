@@ -8,20 +8,21 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { withTheme } from 'react-native-paper';
+import { withTheme, Snackbar } from 'react-native-paper';
 
 import theme from '../constants/theme';
 import { handle401 } from '../constants/strategies';
-import { logout, getCategories } from '../redux/actions';
 import { ItemCategory } from '../containers/PaymentMethod';
-import { FeatherIcon, Loading, Searchbar } from '../components';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
+import { FeatherIcon, Loading, Empty, Searchbar } from '../components';
+import { logout, getCategories, removeCategory } from '../redux/actions';
 
 class PaymentMethod extends React.Component {
   state = {
     searchText: '',
     timer: undefined,
     refreshing: false,
+    visibleSnackbar: false,
   };
 
   componentDidMount = () => {
@@ -76,9 +77,26 @@ class PaymentMethod extends React.Component {
     });
   };
 
+  handleRemove = _id => {
+    this.props.removeCategory(_id, {
+      success: () => {
+        this._onRefresh();
+      },
+
+      failure: () => {
+        this.setState({ visibleSnackbar: true });
+      },
+      handle401: () =>
+        handle401({
+          logout: this.props.logout,
+          navigation: this.props.navigation,
+        }),
+    });
+  };
+
   render() {
     const { navigation, categories } = this.props;
-    const { searchText, refreshing } = this.state;
+    const { searchText, refreshing, visibleSnackbar } = this.state;
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
@@ -109,28 +127,43 @@ class PaymentMethod extends React.Component {
               />
             }
           >
-            {categories.categories.map(category => (
-              <ItemCategory
-                key={category._id}
-                id={category._id}
-                name={category.name}
-                detail={category.detail}
-                time={
-                  category.createdAt
-                    ? new Date(category.createdAt).toLocaleDateString('vi-VN', {
-                        day: 'numeric',
-                        month: 'long',
-                      })
-                    : null
-                }
-              >
-                {JSON.stringify(category)}
-              </ItemCategory>
-            ))}
+            {!categories.categories.length ? (
+              <Empty name="payment method" />
+            ) : (
+              categories.categories.map(category => (
+                <ItemCategory
+                  onRemove={() => this.handleRemove(category._id)}
+                  key={category._id}
+                  id={category._id}
+                  name={category.name}
+                  detail={category.detail}
+                  time={
+                    category.createdAt
+                      ? new Date(category.createdAt).toLocaleDateString(
+                          'vi-VN',
+                          {
+                            day: 'numeric',
+                            month: 'long',
+                          }
+                        )
+                      : null
+                  }
+                >
+                  {JSON.stringify(category)}
+                </ItemCategory>
+              ))
+            )}
           </ScrollView>
         ) : (
           <Loading />
         )}
+        <Snackbar
+          visible={visibleSnackbar}
+          onDismiss={() => this.setState({ visibleSnackbar: false })}
+          action={{ label: 'OK', onPress: () => {} }}
+        >
+          Xóa không thành công, vui lòng thử lại sau.
+        </Snackbar>
       </View>
     );
   }
@@ -138,9 +171,11 @@ class PaymentMethod extends React.Component {
 
 const mapStateToProps = state => ({
   categories: state.category.categories,
+  isLoading: state.category.isLoading,
 });
 const mapDispatchToProps = {
   logout,
+  removeCategory,
   getCategories,
 };
 

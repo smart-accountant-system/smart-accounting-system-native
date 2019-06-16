@@ -27,7 +27,7 @@ export function getTransactions(
         method: METHODS.get,
       });
 
-      if (result.status === 200) {
+      if (result.status === 200 || result.status === 304) {
         dispatch({
           type: GET_TRANSACTIONS_SUCCESS,
           payload: result.data,
@@ -73,7 +73,7 @@ export function getTransactionById(
         method: METHODS.get,
       });
 
-      if (result.status === 200) {
+      if (result.status === 200 || result.status === 304) {
         dispatch({
           type: GET_TRANSACTION_BY_ID_SUCCESS,
           payload: result.data,

@@ -42,7 +42,6 @@ class AccountDetail extends React.Component {
     const { refreshing } = this.state;
     const color =
       currentAccount.debit > currentAccount.credit ? '#438763' : '#ad6b8d';
-    // I have no idea for this
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>

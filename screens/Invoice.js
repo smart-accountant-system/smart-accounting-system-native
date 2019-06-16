@@ -138,8 +138,8 @@ class Invoice extends React.Component {
 
   invoiceDetail = invoice => {
     const { navigation } = this.props;
-    navigation.navigate('InvoiceDetail');
     this.props.chooseInvoice(invoice);
+    navigation.navigate('InvoiceDetail');
   };
 
   render() {

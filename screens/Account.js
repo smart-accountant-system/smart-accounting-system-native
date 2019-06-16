@@ -51,8 +51,8 @@ class Account extends React.Component {
 
   accountDetail = account => {
     const { navigation } = this.props;
-    navigation.navigate('AccountDetail');
     this.props.chooseAccount(account);
+    navigation.navigate('AccountDetail');
   };
 
   handleSearch = query => {

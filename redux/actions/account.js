@@ -27,7 +27,7 @@ export function getAccounts(
         method: METHODS.get,
       });
 
-      if (result.status === 200) {
+      if (result.status === 200 || result.status === 304) {
         dispatch({
           type: GET_ACCOUNTS_SUCCESS,
           payload: result.data,
@@ -73,7 +73,7 @@ export function getAccountById(
         method: METHODS.get,
       });
 
-      if (result.status === 200) {
+      if (result.status === 200 || result.status === 304) {
         dispatch({
           type: GET_ACCOUNT_BY_ID_SUCCESS,
           payload: result.data,

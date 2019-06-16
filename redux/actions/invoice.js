@@ -27,7 +27,7 @@ export function getInvoices(
         method: METHODS.get,
       });
 
-      if (result.status === 200) {
+      if (result.status === 200 || result.status === 304) {
         dispatch({
           type: GET_INVOICES_SUCCESS,
           payload: result.data,
@@ -73,7 +73,7 @@ export function getInvoiceById(
         method: METHODS.get,
       });
 
-      if (result.status === 200) {
+      if (result.status === 200 || result.status === 304) {
         dispatch({
           type: GET_INVOICE_BY_ID_SUCCESS,
           payload: result.data,

@@ -2,10 +2,14 @@ import {
   GET_CATEGORIES_REQUEST,
   GET_CATEGORIES_SUCCESS,
   GET_CATEGORIES_FAILURE,
+  POST_CATEGORY_REQUEST,
+  POST_CATEGORY_SUCCESS,
+  POST_CATEGORY_FAILURE,
 } from '../actions';
 
 const INITIAL_STATE = {
   categories: null,
+  isLoading: false,
   error: null,
 };
 
@@ -25,6 +29,25 @@ export default (state = INITIAL_STATE, action) => {
     case GET_CATEGORIES_FAILURE:
       return {
         ...state,
+        error: action.payload,
+      };
+
+    case POST_CATEGORY_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+        error: null,
+      };
+    case POST_CATEGORY_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        error: null,
+      };
+    case POST_CATEGORY_FAILURE:
+      return {
+        ...state,
+        isLoading: false,
         error: action.payload,
       };
     default:

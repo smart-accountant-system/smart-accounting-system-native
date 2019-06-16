@@ -13,7 +13,7 @@ import { withTheme } from 'react-native-paper';
 
 import { Header, Typography, HeaderWrapper } from '../containers/Home';
 import theme from '../constants/theme';
-import { FeatherIcon, ReceiptItem } from '../components';
+import { FeatherIcon } from '../components';
 import { getTransactionById } from '../redux/actions';
 import { handle401 } from '../constants/strategies';
 

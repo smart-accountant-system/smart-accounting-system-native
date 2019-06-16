@@ -18,7 +18,7 @@ export function login(data, callback) {
         method: METHODS.post,
       });
 
-      if (result.status === 200) {
+      if (result.status === 200 || result.status === 304) {
         dispatch({
           type: LOGIN_SUCCESS,
           payload: result.data,

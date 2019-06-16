@@ -21,7 +21,7 @@ export function getDashboard({
         method: METHODS.get,
       });
 
-      if (result.status === 200) {
+      if (result.status === 200 || result.status === 304) {
         success();
         dispatch({
           type: GET_DASHBOARD_SUCCESS,

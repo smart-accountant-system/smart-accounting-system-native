@@ -18,6 +18,7 @@ import TransactionDetail from '../screens/TransactionDetail';
 import Account from '../screens/Account';
 import AccountDetail from '../screens/AccountDetail';
 import PaymentMethod from '../screens/PaymentMethod';
+import PaymentMethodAddition from '../screens/PaymentMethodAddition';
 import EmployeeManagement from '../screens/EmployeeManagement';
 import EmployeeDetail from '../screens/EmployeeDetail';
 import CustomerManagement from '../screens/CustomerManagement';
@@ -32,11 +33,14 @@ export const HomeStack = createStackNavigator(
   {
     Home,
     Profile,
-    PaymentMethod,
-    EmployeeManagement,
-    CustomerManagement,
 
+    PaymentMethod,
+    PaymentMethodAddition,
+
+    EmployeeManagement,
     EmployeeDetail,
+
+    CustomerManagement,
   },
   {
     headerMode: 'none',

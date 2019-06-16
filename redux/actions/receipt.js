@@ -27,7 +27,7 @@ export function getReceipts(
         method: METHODS.get,
       });
 
-      if (result.status === 200) {
+      if (result.status === 200 || result.status === 304) {
         dispatch({
           type: GET_RECEIPTS_SUCCESS,
           payload: result.data,
@@ -73,7 +73,7 @@ export function getReceiptById(
         method: METHODS.get,
       });
 
-      if (result.status === 200) {
+      if (result.status === 200 || result.status === 304) {
         dispatch({
           type: GET_RECEIPT_BY_ID_SUCCESS,
           payload: result.data,

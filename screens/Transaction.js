@@ -137,8 +137,8 @@ class Transaction extends React.Component {
 
   transactionDetail = transaction => {
     const { navigation } = this.props;
-    navigation.navigate('TransactionDetail');
     this.props.chooseTransaction(transaction);
+    navigation.navigate('TransactionDetail');
   };
 
   render() {

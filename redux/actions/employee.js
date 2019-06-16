@@ -21,7 +21,7 @@ export function getEmployees(
         method: METHODS.get,
       });
 
-      if (result.status === 200) {
+      if (result.status === 200 || result.status === 304) {
         dispatch({
           type: GET_EMPLOYEES_SUCCESS,
           payload: result.data,

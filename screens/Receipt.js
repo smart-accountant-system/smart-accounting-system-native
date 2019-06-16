@@ -130,8 +130,8 @@ class Receipt extends React.Component {
 
   receiptDetail = receipt => {
     const { navigation } = this.props;
-    navigation.navigate('ReceiptDetail');
     this.props.chooseReceipt(receipt);
+    navigation.navigate('ReceiptDetail');
   };
 
   render() {

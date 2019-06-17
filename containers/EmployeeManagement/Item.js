@@ -1,6 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, Text, View } from 'react-native';
 import styled from 'styled-components';
+import SwipeoutRemove from '../../components/SwipeoutRemove';
 
 const EmployeeContainer = styled.TouchableOpacity`
   padding: 12px;
@@ -51,21 +52,32 @@ const AmazingStatus = styled.View`
   background-color: ${props => props.color || '#321123'};
 `;
 
-export default ({ onPress, color, fullname, username, role, phone, email }) => (
-  <EmployeeContainer onPress={onPress}>
-    <View>
-      <Card>
-        <AmazingStatus color={color} />
-        <Typoraphy>{fullname}</Typoraphy>
-      </Card>
-      <Detail bold color={color}>
-        {role}
-      </Detail>
-      <Detail>{email}</Detail>
-    </View>
-    <DetailContainer>
-      <Detail>{username}</Detail>
-      <Typoraphy size={18}>{phone}</Typoraphy>
-    </DetailContainer>
-  </EmployeeContainer>
+export default ({
+  onPress,
+  onRemove,
+  color,
+  fullname,
+  username,
+  role,
+  phone,
+  email,
+}) => (
+  <SwipeoutRemove onRemove={onRemove}>
+    <EmployeeContainer onPress={onPress}>
+      <View>
+        <Card>
+          <AmazingStatus color={color} />
+          <Typoraphy>{fullname}</Typoraphy>
+        </Card>
+        <Detail bold color={color}>
+          {role}
+        </Detail>
+        <Detail>{email}</Detail>
+      </View>
+      <DetailContainer>
+        <Detail>{username}</Detail>
+        <Typoraphy size={18}>{phone}</Typoraphy>
+      </DetailContainer>
+    </EmployeeContainer>
+  </SwipeoutRemove>
 );

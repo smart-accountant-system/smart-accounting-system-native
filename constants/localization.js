@@ -36,6 +36,7 @@ export const en = {
 
   // MESSAGE GROUP
   actionSave: 'Save',
+  actionRemove: 'Remove',
   messageEmpty: 'There is no',
   messageAddFail: 'Delete failed, please try again later.',
   messageDeleteFail: 'Delete failed, please try again later.',
@@ -79,6 +80,7 @@ export const vi = {
 
   // MESSAGE GROUP
   actionSave: 'Lưu',
+  actionRemove: 'Xóa',
   messageEmpty: 'Hiện chưa có',
   messageAddFail: 'Thêm không thành công, vui lòng thử lại sau.',
   messageDeleteFail: 'Xóa không thành công, vui lòng thử lại sau.',

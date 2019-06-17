@@ -1,9 +1,9 @@
 import React from 'react';
-import Swipeout from 'react-native-swipeout';
+import i18n from 'i18n-js';
 import { TouchableOpacity, Text, View } from 'react-native';
 
 import styled from 'styled-components';
-import swipeoutRemoveBtn from '../../constants/swipeoutRemoveBtn';
+import SwipeoutRemove from '../../components/SwipeoutRemove';
 
 const StyledContainer = styled.TouchableOpacity`
   background-color: #fff;
@@ -48,7 +48,7 @@ const Detail = styled.Text`
 `;
 
 export default ({ id, name, detail, time, onRemove }) => (
-  <Swipeout right={[{ ...swipeoutRemoveBtn, onPress: onRemove }]}>
+  <SwipeoutRemove onRemove={onRemove}>
     <StyledContainer>
       <View style={{ flex: 1, paddingRight: 4 }}>
         <Typoraphy>
@@ -59,5 +59,5 @@ export default ({ id, name, detail, time, onRemove }) => (
       </View>
       <Detail>{time}</Detail>
     </StyledContainer>
-  </Swipeout>
+  </SwipeoutRemove>
 );

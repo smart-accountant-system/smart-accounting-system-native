@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
+import SwipeoutRemove from '../../components/SwipeoutRemove';
 
 const TransactionContentContainer = styled.View`
   padding-left: 8px;
@@ -60,6 +61,7 @@ const TransactionTyporaphy = styled.View`
 
 export default ({
   id,
+  onRemove,
   checkedBy,
   fromColor,
   toColor,
@@ -68,30 +70,32 @@ export default ({
   time,
   cost,
 }) => (
-  <TransactionContentContainer>
-    <TransactionTyporaphy>
-      <HeaderContainer>
-        <TransactionCodeField>{id}</TransactionCodeField>
-        <TransactionDetail fontSize={18}>{checkedBy}</TransactionDetail>
-      </HeaderContainer>
-      <TransactionDetail>{time}</TransactionDetail>
-    </TransactionTyporaphy>
-    <TransactionTyporaphy>
-      <TransactionName color={fromColor}>{fromAccount}</TransactionName>
-      <NumberFormat
-        value={cost}
-        displayType="text"
-        thousandSeparator
-        prefix="₫"
-        renderText={value => (
-          <TransactionName align="center" fontSize={18}>
-            {value}
-          </TransactionName>
-        )}
-      />
-      <TransactionName align="right" color={toColor}>
-        {toAccount}
-      </TransactionName>
-    </TransactionTyporaphy>
-  </TransactionContentContainer>
+  <SwipeoutRemove onRemove={onRemove}>
+    <TransactionContentContainer>
+      <TransactionTyporaphy>
+        <HeaderContainer>
+          <TransactionCodeField>{id}</TransactionCodeField>
+          <TransactionDetail fontSize={18}>{checkedBy}</TransactionDetail>
+        </HeaderContainer>
+        <TransactionDetail>{time}</TransactionDetail>
+      </TransactionTyporaphy>
+      <TransactionTyporaphy>
+        <TransactionName color={fromColor}>{fromAccount}</TransactionName>
+        <NumberFormat
+          value={cost}
+          displayType="text"
+          thousandSeparator
+          prefix="₫"
+          renderText={value => (
+            <TransactionName align="center" fontSize={18}>
+              {value}
+            </TransactionName>
+          )}
+        />
+        <TransactionName align="right" color={toColor}>
+          {toAccount}
+        </TransactionName>
+      </TransactionTyporaphy>
+    </TransactionContentContainer>
+  </SwipeoutRemove>
 );

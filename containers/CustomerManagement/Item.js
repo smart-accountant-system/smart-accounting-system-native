@@ -1,6 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, Text, View } from 'react-native';
 import styled from 'styled-components';
+import SwipeoutRemove from '../../components/SwipeoutRemove';
 
 const Container = styled.TouchableOpacity`
   display: flex;
@@ -27,12 +28,14 @@ const Typography = styled.Text`
 
 const Detail = styled.Text``;
 
-export default ({ onPress, name, phone, address }) => (
-  <Container onPress={onPress}>
-    <Header>
-      <Typography>{name}</Typography>
-      <Detail>{phone}</Detail>
-    </Header>
-    <Detail>{address}</Detail>
-  </Container>
+export default ({ onPress, onRemove, name, phone, address }) => (
+  <SwipeoutRemove onRemove={onRemove}>
+    <Container onPress={onPress}>
+      <Header>
+        <Typography>{name}</Typography>
+        <Detail>{phone}</Detail>
+      </Header>
+      <Detail>{address}</Detail>
+    </Container>
+  </SwipeoutRemove>
 );

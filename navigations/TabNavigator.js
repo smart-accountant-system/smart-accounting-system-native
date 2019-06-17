@@ -5,22 +5,30 @@ import {
 } from 'react-navigation';
 import i18n from 'i18n-js';
 import { Localization } from 'expo';
+import FeatherIcon from '../components/FeatherIcon';
 
 import Home from '../screens/Home';
+import Profile from '../screens/Profile';
+
 import Invoice from '../screens/Invoice';
 import InvoiceDetail from '../screens/InvoiceDetail';
-import Profile from '../screens/Profile';
+
 import Receipt from '../screens/Receipt';
 import ReceiptDetail from '../screens/ReceiptDetail';
-import FeatherIcon from '../components/FeatherIcon';
+
 import Transaction from '../screens/Transaction';
 import TransactionDetail from '../screens/TransactionDetail';
+
 import Account from '../screens/Account';
 import AccountDetail from '../screens/AccountDetail';
+
 import PaymentMethod from '../screens/PaymentMethod';
 import PaymentMethodAddition from '../screens/PaymentMethodAddition';
+
 import EmployeeManagement from '../screens/EmployeeManagement';
+import EmployeeAddition from '../screens/EmployeeAddition';
 import EmployeeDetail from '../screens/EmployeeDetail';
+
 import CustomerManagement from '../screens/CustomerManagement';
 import theme from '../constants/theme';
 import { en, vi } from '../constants/localization';
@@ -31,6 +39,7 @@ i18n.locale = Localization.locale;
 
 export const HomeStack = createStackNavigator(
   {
+    EmployeeAddition,
     Home,
     Profile,
 

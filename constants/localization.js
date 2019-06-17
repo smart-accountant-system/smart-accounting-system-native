@@ -8,10 +8,9 @@ export const en = {
 
   paymentMethod: 'Payment method',
   paymentMethodAddition: 'Add payment method',
-  paymentMethodName: 'Name',
-  paymentMethodDetail: 'Description',
 
   employee: 'Employee',
+  employeeAddition: 'Add employee',
   employeeManagement: 'Employee management',
 
   customer: 'Customer',
@@ -26,7 +25,17 @@ export const en = {
   account: 'Account',
   balance: 'Balance',
   payment: 'Payment',
+
+  // ADD FIELD
+  username: 'Username',
+  password: 'Password',
+  repassword: 'Repassword',
+  fullname: 'Fullname',
+  role: 'Role',
+  email: 'Email',
   phone: 'Phone',
+  name: 'Name',
+  detail: 'Description',
 
   // ADVANCED FILTER GROUP
   advancedFilter: 'Advanced filter',
@@ -38,7 +47,7 @@ export const en = {
   actionSave: 'Save',
   actionRemove: 'Remove',
   messageEmpty: 'There is no',
-  messageAddFail: 'Delete failed, please try again later.',
+  messageAddFail: 'Add failed, please try again later.',
   messageDeleteFail: 'Delete failed, please try again later.',
 };
 
@@ -52,10 +61,9 @@ export const vi = {
 
   paymentMethod: 'Phương thức thanh toán',
   paymentMethodAddition: 'Thêm phương thức thanh toán',
-  paymentMethodName: 'Tên phương thức',
-  paymentMethodDetail: 'Mô tả chi tiết',
 
   employee: 'Nhân viên',
+  employeeAddition: 'Thêm nhân viên',
   employeeManagement: 'Quản lý nhân viên',
 
   customer: 'Khách hàng',
@@ -70,7 +78,17 @@ export const vi = {
   account: 'Tài khoản',
   balance: 'Bảng cân đối',
   payment: 'Thanh toán',
+
+  // ADD FIELD
+  username: 'Tên đăng nhập',
+  password: 'Mật khẩu',
+  repassword: 'Xác nhận mật khẩu',
+  fullname: 'Họ và tên',
+  role: 'Vai trò',
+  email: 'Thư điện tử',
   phone: 'Số điện thoại',
+  name: 'Tên',
+  detail: 'Mô tả chi tiết',
 
   // ADVANCED FILTER GROUP
   advancedFilter: 'Bộ lọc nâng cao',

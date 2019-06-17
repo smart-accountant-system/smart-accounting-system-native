@@ -8,7 +8,7 @@ import { View, ScrollView, RefreshControl } from 'react-native';
 import theme from '../constants/theme';
 import { logout, getAccounts, chooseAccount } from '../redux/actions';
 import { handle401 } from '../constants/strategies';
-import { FeatherIcon, Loading, Searchbar } from '../components';
+import { FeatherIcon, Loading, Searchbar, Empty } from '../components';
 import { AccountItem, AccountContent } from '../containers/Account';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
 
@@ -89,11 +89,7 @@ class Account extends React.Component {
             <FeatherIcon color={theme.colors.primary} name="user" />
           </Header>
         </HeaderWrapper>
-        <Searchbar
-          value={searchText}
-          placeholder="Search"
-          onChangeText={this.handleSearch}
-        />
+        <Searchbar value={searchText} onChangeText={this.handleSearch} />
 
         {accounts ? (
           <ScrollView
@@ -104,32 +100,38 @@ class Account extends React.Component {
               />
             }
           >
-            {accounts.accounts.map(account => (
-              <AccountItem
-                key={account._id}
-                account={account}
-                accountDetail={this.accountDetail}
-              >
-                <AccountContent
-                  name={account.name}
-                  description={account.description}
-                  color={account.debit > account.credit ? '#438763' : '#ad6b8d'}
-                  balance={Math.abs(account.debit - account.credit)}
-                  balanceType={
-                    account.debit > account.credit
-                      ? 'Debit balance'
-                      : 'Credit balance'
-                  }
-                  time={new Date(account.createdAt).toLocaleDateString(
-                    i18n.t('local'),
-                    {
-                      day: 'numeric',
-                      month: 'long',
+            {!accounts.accounts.length ? (
+              <Empty name={i18n.t('account')} />
+            ) : (
+              accounts.accounts.map(account => (
+                <AccountItem
+                  key={account._id}
+                  account={account}
+                  accountDetail={this.accountDetail}
+                >
+                  <AccountContent
+                    name={account.name}
+                    description={account.description}
+                    color={
+                      account.debit > account.credit ? '#438763' : '#ad6b8d'
                     }
-                  )}
-                />
-              </AccountItem>
-            ))}
+                    balance={Math.abs(account.debit - account.credit)}
+                    balanceType={
+                      account.debit > account.credit
+                        ? 'Debit balance'
+                        : 'Credit balance'
+                    }
+                    time={new Date(account.createdAt).toLocaleDateString(
+                      i18n.t('local'),
+                      {
+                        day: 'numeric',
+                        month: 'long',
+                      }
+                    )}
+                  />
+                </AccountItem>
+              ))
+            )}
           </ScrollView>
         ) : (
           <Loading />

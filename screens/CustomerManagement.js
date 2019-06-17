@@ -14,7 +14,7 @@ import theme from '../constants/theme';
 import { handle401 } from '../constants/strategies';
 import { logout, getCustomers } from '../redux/actions';
 import { CustomerItem } from '../containers/CustomerManagement';
-import { FeatherIcon, Loading, Searchbar } from '../components';
+import { FeatherIcon, Loading, Searchbar, Empty } from '../components';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
 
 class CustomerManagement extends React.Component {
@@ -90,11 +90,7 @@ class CustomerManagement extends React.Component {
             <FeatherIcon color={theme.colors.primary} name="user" />
           </Header>
         </HeaderWrapper>
-        <Searchbar
-          value={searchText}
-          placeholder="Search"
-          onChangeText={this.handleSearch}
-        />
+        <Searchbar value={searchText} onChangeText={this.handleSearch} />
 
         {customers ? (
           <ScrollView
@@ -105,14 +101,18 @@ class CustomerManagement extends React.Component {
               />
             }
           >
-            {customers.customers.map(customer => (
-              <CustomerItem
-                key={customer._id}
-                name={customer.name}
-                phone={customer.phone}
-                address={customer.address}
-              />
-            ))}
+            {!customers.customers.length ? (
+              <Empty name={i18n.t('customer')} />
+            ) : (
+              customers.customers.map(customer => (
+                <CustomerItem
+                  key={customer._id}
+                  name={customer.name}
+                  phone={customer.phone}
+                  address={customer.address}
+                />
+              ))
+            )}
           </ScrollView>
         ) : (
           <Loading />

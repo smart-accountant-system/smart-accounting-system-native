@@ -8,10 +8,13 @@ export const en = {
 
   paymentMethod: 'Payment method',
   paymentMethodAddition: 'Add payment method',
-  paymentMethodName: 'Payment method name',
+  paymentMethodName: 'Name',
   paymentMethodDetail: 'Description',
 
+  employee: 'Employee',
   employeeManagement: 'Employee management',
+
+  customer: 'Customer',
   customerManagement: 'Customer management',
   menu: 'Menu',
   receipt: 'Receipt',
@@ -19,14 +22,22 @@ export const en = {
   transaction: 'Transaction',
   transactionDetail: 'Transaction detail',
 
+  search: 'Search',
   account: 'Account',
   balance: 'Balance',
   payment: 'Payment',
-  customer: 'Customer',
   phone: 'Phone',
+
+  // ADVANCED FILTER GROUP
+  advancedFilter: 'Advanced filter',
+  from: 'From',
+  to: 'To',
+  doFilter: 'Filter',
 
   // MESSAGE GROUP
   actionSave: 'Save',
+  messageEmpty: 'There is no',
+  messageAddFail: 'Delete failed, please try again later.',
   messageDeleteFail: 'Delete failed, please try again later.',
 };
 
@@ -43,7 +54,10 @@ export const vi = {
   paymentMethodName: 'Tên phương thức',
   paymentMethodDetail: 'Mô tả chi tiết',
 
+  employee: 'Nhân viên',
   employeeManagement: 'Quản lý nhân viên',
+
+  customer: 'Khách hàng',
   customerManagement: 'Quản lý khách hàng',
   menu: 'Danh mục',
   receipt: 'Biên lai',
@@ -51,13 +65,21 @@ export const vi = {
   transaction: 'Giao dịch',
   transactionDetail: 'Chi tiết giao dịch',
 
+  search: 'Tìm kiếm',
   account: 'Tài khoản',
   balance: 'Bảng cân đối',
   payment: 'Thanh toán',
-  customer: 'Khách hàng',
   phone: 'Số điện thoại',
+
+  // ADVANCED FILTER GROUP
+  advancedFilter: 'Bộ lọc nâng cao',
+  from: 'Từ',
+  to: 'Đến',
+  doFilter: 'Lọc',
 
   // MESSAGE GROUP
   actionSave: 'Lưu',
+  messageEmpty: 'Hiện chưa có',
+  messageAddFail: 'Thêm không thành công, vui lòng thử lại sau.',
   messageDeleteFail: 'Xóa không thành công, vui lòng thử lại sau.',
 };

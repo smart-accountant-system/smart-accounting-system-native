@@ -1,4 +1,5 @@
 import React from 'react';
+import i18n from 'i18n-js';
 import styled from 'styled-components';
 import { View, Text, TouchableOpacity } from 'react-native';
 import theme from '../../constants/theme';
@@ -29,7 +30,7 @@ export default ({ title, isExpand, onPress }) => (
   <FilterContainer onPress={onPress}>
     <FilterTitleContainer>
       <FeatherIcon color={theme.colors.primary} name="filter" />
-      <FilterTitle>{title}</FilterTitle>
+      <FilterTitle>{title || i18n.t('advancedFilter')}</FilterTitle>
     </FilterTitleContainer>
     <FeatherIcon
       color={theme.colors.primary}

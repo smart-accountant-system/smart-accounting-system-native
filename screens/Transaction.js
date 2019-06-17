@@ -21,10 +21,10 @@ import {
 } from '../components/Filter';
 import theme from '../constants/theme';
 import { handle401 } from '../constants/strategies';
-import { FeatherIcon, Loading } from '../components';
-import { logout, getTransactions, chooseTransaction } from '../redux/actions';
+import { FeatherIcon, Loading, Empty } from '../components';
 import { TransactionContent } from '../containers/Transaction';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
+import { logout, getTransactions, chooseTransaction } from '../redux/actions';
 
 class Transaction extends React.Component {
   state = {
@@ -79,7 +79,7 @@ class Transaction extends React.Component {
 
   handleDatePicked = date => {
     const { activatingDate } = this.state;
-    if (activatingDate === 'From') {
+    if (activatingDate === i18n.t('from')) {
       this.setState({
         fromDate: new Date(date),
       });
@@ -162,7 +162,6 @@ class Transaction extends React.Component {
         </HeaderWrapper>
 
         <FilterHeader
-          title="Advance filter"
           isExpand={this.state.isExpandingFilter}
           onPress={this.handlePressFilter}
         />
@@ -170,13 +169,13 @@ class Transaction extends React.Component {
         <FilterBody height={this.state.filterHeight}>
           <FilterField first>
             <FilterTime
-              title="From"
+              title={i18n.t('from')}
               first
               date={fromDate.toLocaleDateString(i18n.t('local'))}
               showDateTimePicker={this.showDateTimePicker}
             />
             <FilterTime
-              title="To"
+              title={i18n.t('to')}
               second
               date={toDate.toLocaleDateString(i18n.t('local'))}
               showDateTimePicker={this.showDateTimePicker}
@@ -186,14 +185,16 @@ class Transaction extends React.Component {
           <FilterField height="52">
             <FeatherIcon color="#f1f1f1" name="user" />
             <Button mode="contained" onPress={this.doFilter}>
-              <Text style={{ color: theme.colors.white }}>Filter</Text>
+              <Text style={{ color: theme.colors.white }}>
+                {i18n.t('doFilter')}
+              </Text>
             </Button>
           </FilterField>
         </FilterBody>
 
         <DateTimePicker
           isVisible={isDatePickerVisible}
-          date={activatingDate === 'from' ? fromDate : toDate}
+          date={activatingDate === i18n.t('from') ? fromDate : toDate}
           onConfirm={this.handleDatePicked}
           onCancel={this.hideDateTimePicker}
         />
@@ -206,33 +207,37 @@ class Transaction extends React.Component {
               />
             }
           >
-            {transactions.transactions.map(transaction => (
-              <TouchableOpacity
-                key={transaction._id}
-                onPress={() => this.transactionDetail(transaction)}
-              >
-                <TransactionContent
-                  id={transaction._id}
-                  checkedBy={transaction.checkedBy.fullname}
-                  fromColor={
-                    transaction.fromAccount.type === 0 ? '#438763' : '#ad6b8d'
-                  }
-                  toColor={
-                    transaction.toAccount.type === 0 ? '#438763' : '#ad6b8d'
-                  }
-                  fromAccount={transaction.fromAccount.id.name}
-                  toAccount={transaction.toAccount.id.name}
-                  cost={transaction.amount}
-                  time={new Date(transaction.createdAt).toLocaleDateString(
-                    i18n.t('local'),
-                    {
-                      day: 'numeric',
-                      month: 'long',
+            {!transactions.transactions.length ? (
+              <Empty name={i18n.t('transaction')} />
+            ) : (
+              transactions.transactions.map(transaction => (
+                <TouchableOpacity
+                  key={transaction._id}
+                  onPress={() => this.transactionDetail(transaction)}
+                >
+                  <TransactionContent
+                    id={transaction._id}
+                    checkedBy={transaction.checkedBy.fullname}
+                    fromColor={
+                      transaction.fromAccount.type === 0 ? '#438763' : '#ad6b8d'
                     }
-                  )}
-                />
-              </TouchableOpacity>
-            ))}
+                    toColor={
+                      transaction.toAccount.type === 0 ? '#438763' : '#ad6b8d'
+                    }
+                    fromAccount={transaction.fromAccount.id.name}
+                    toAccount={transaction.toAccount.id.name}
+                    cost={transaction.amount}
+                    time={new Date(transaction.createdAt).toLocaleDateString(
+                      i18n.t('local'),
+                      {
+                        day: 'numeric',
+                        month: 'long',
+                      }
+                    )}
+                  />
+                </TouchableOpacity>
+              ))
+            )}
           </ScrollView>
         ) : (
           <Loading />

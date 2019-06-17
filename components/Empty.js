@@ -1,4 +1,5 @@
 import React from 'react';
+import i18n from 'i18n-js';
 import { View, Text } from 'react-native';
 import styled from 'styled-components';
 
@@ -15,6 +16,8 @@ const EmptyText = styled.Text`
 `;
 export default ({ name }) => (
   <NiceView>
-    <EmptyText>There is no {name}.</EmptyText>
+    <EmptyText>
+      {i18n.t('messageEmpty')} {name.toLowerCase()}.
+    </EmptyText>
   </NiceView>
 );

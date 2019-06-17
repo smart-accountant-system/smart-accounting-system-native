@@ -6,11 +6,12 @@ import { connect } from 'react-redux';
 import { withTheme, TextInput, Button, HelperText } from 'react-native-paper';
 import { View, TouchableOpacity, ScrollView, Text } from 'react-native';
 
-import { Header, Typography, HeaderWrapper } from '../containers/Home';
 import theme from '../constants/theme';
 import { FeatherIcon } from '../components';
 import { handle401 } from '../constants/strategies';
 import { logout, addCategory, getCategories } from '../redux/actions';
+import { Header, Typography, HeaderWrapper } from '../containers/Home';
+import { FewStyledContainer } from '../containers/PaymentMethodAddition';
 
 class PaymentMethodAddition extends React.Component {
   state = {
@@ -85,16 +86,12 @@ class PaymentMethodAddition extends React.Component {
                 this.setState({ detail, isVisible: false })
               }
             />
-            <HelperText type="error" visible={isVisible}>
-              Thêm phương thức thanh toán không thành công
-            </HelperText>
-            <View
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                paddingTop: 20,
-              }}
-            >
+            <FewStyledContainer>
+              <HelperText type="error" visible={isVisible}>
+                {i18n.t('messageAddFail')}
+              </HelperText>
+            </FewStyledContainer>
+            <FewStyledContainer paddingTop>
               <Button
                 mode="contained"
                 style={{ width: 170 }}
@@ -104,7 +101,7 @@ class PaymentMethodAddition extends React.Component {
               >
                 <Text>{i18n.t('actionSave')}</Text>
               </Button>
-            </View>
+            </FewStyledContainer>
           </View>
         </ScrollView>
       </View>

@@ -15,7 +15,7 @@ import theme from '../constants/theme';
 import { handle401 } from '../constants/strategies';
 import { logout, getEmployees } from '../redux/actions';
 import { EmployeeItem } from '../containers/EmployeeManagement';
-import { FeatherIcon, Loading, Searchbar } from '../components';
+import { FeatherIcon, Loading, Searchbar, Empty } from '../components';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
 
 class EmployeeManagement extends React.Component {
@@ -91,11 +91,7 @@ class EmployeeManagement extends React.Component {
             <FeatherIcon color={theme.colors.primary} name="user" />
           </Header>
         </HeaderWrapper>
-        <Searchbar
-          value={searchText}
-          placeholder="Search"
-          onChangeText={this.handleSearch}
-        />
+        <Searchbar value={searchText} onChangeText={this.handleSearch} />
 
         {employees ? (
           <ScrollView
@@ -106,32 +102,36 @@ class EmployeeManagement extends React.Component {
               />
             }
           >
-            {employees.employees.map(employee => (
-              <EmployeeItem
-                key={employee._id}
-                onPress={() =>
-                  navigation.navigate('EmployeeDetail', { employee })
-                }
-                fullname={employee.fullname}
-                username={employee.username}
-                role={
-                  employee.role === 1
-                    ? 'Staff'
-                    : employee.role === 2
-                    ? 'Accountant'
-                    : 'Manager'
-                }
-                color={
-                  employee.role === 1
-                    ? '#8ec448'
-                    : employee.role === 2
-                    ? '#f87d4d'
-                    : '#e05246'
-                }
-                phone={employee.phone}
-                email={employee.email}
-              />
-            ))}
+            {!employees.employees.length ? (
+              <Empty name={i18n.t('employee')} />
+            ) : (
+              employees.employees.map(employee => (
+                <EmployeeItem
+                  key={employee._id}
+                  onPress={() =>
+                    navigation.navigate('EmployeeDetail', { employee })
+                  }
+                  fullname={employee.fullname}
+                  username={employee.username}
+                  role={
+                    employee.role === 1
+                      ? 'Staff'
+                      : employee.role === 2
+                      ? 'Accountant'
+                      : 'Manager'
+                  }
+                  color={
+                    employee.role === 1
+                      ? '#8ec448'
+                      : employee.role === 2
+                      ? '#f87d4d'
+                      : '#e05246'
+                  }
+                  phone={employee.phone}
+                  email={employee.email}
+                />
+              ))
+            )}
           </ScrollView>
         ) : (
           <Loading />

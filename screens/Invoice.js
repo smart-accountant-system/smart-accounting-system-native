@@ -22,7 +22,7 @@ import {
 } from '../components/Filter';
 import theme from '../constants/theme';
 import { handle401 } from '../constants/strategies';
-import { FeatherIcon, Loading } from '../components';
+import { FeatherIcon, Loading, Empty } from '../components';
 import { logout, getInvoices, chooseInvoice } from '../redux/actions';
 import { InvoiceItem, InvoiceContent } from '../containers/Invoice';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
@@ -80,7 +80,7 @@ class Invoice extends React.Component {
 
   handleDatePicked = date => {
     const { activatingDate } = this.state;
-    if (activatingDate === 'From') {
+    if (activatingDate === i18n.t('from')) {
       this.setState({
         fromDate: new Date(date),
       });
@@ -166,7 +166,6 @@ class Invoice extends React.Component {
         </HeaderWrapper>
 
         <FilterHeader
-          title="Advance filter"
           isExpand={this.state.isExpandingFilter}
           onPress={this.handlePressFilter}
         />
@@ -174,13 +173,13 @@ class Invoice extends React.Component {
         <FilterBody height={this.state.filterHeight}>
           <FilterField first>
             <FilterTime
-              title="From"
+              title={i18n.t('from')}
               first
               date={fromDate.toLocaleDateString(i18n.t('local'))}
               showDateTimePicker={this.showDateTimePicker}
             />
             <FilterTime
-              title="To"
+              title={i18n.t('to')}
               second
               date={toDate.toLocaleDateString(i18n.t('local'))}
               showDateTimePicker={this.showDateTimePicker}
@@ -190,14 +189,16 @@ class Invoice extends React.Component {
           <FilterField height="52">
             <FeatherIcon color="#f1f1f1" name="user" />
             <Button mode="contained" onPress={this.doFilter}>
-              <Text style={{ color: theme.colors.white }}>Filter</Text>
+              <Text style={{ color: theme.colors.white }}>
+                {i18n.t('doFilter')}
+              </Text>
             </Button>
           </FilterField>
         </FilterBody>
 
         <DateTimePicker
           isVisible={isDatePickerVisible}
-          date={activatingDate === 'from' ? fromDate : toDate}
+          date={activatingDate === i18n.t('from') ? fromDate : toDate}
           onConfirm={this.handleDatePicked}
           onCancel={this.hideDateTimePicker}
         />
@@ -211,28 +212,32 @@ class Invoice extends React.Component {
               />
             }
           >
-            {invoices.invoices.map(invoice => (
-              <InvoiceItem
-                key={invoice._id}
-                invoice={invoice}
-                invoiceDetail={this.invoiceDetail}
-              >
-                <InvoiceContent
-                  id={invoice._id}
-                  name={invoice.type === 0 ? 'Purchase' : 'Sale'}
-                  color={invoice.status ? '#438763' : '#ad6b8d'}
-                  status={invoice.status ? 'Paid' : 'Unpaid'}
-                  cost={invoice.totalCost}
-                  time={new Date(invoice.createdAt).toLocaleDateString(
-                    i18n.t('local'),
-                    {
-                      day: 'numeric',
-                      month: 'long',
-                    }
-                  )}
-                />
-              </InvoiceItem>
-            ))}
+            {!invoices.invoices.length ? (
+              <Empty name={i18n.t('invoice')} />
+            ) : (
+              invoices.invoices.map(invoice => (
+                <InvoiceItem
+                  key={invoice._id}
+                  invoice={invoice}
+                  invoiceDetail={this.invoiceDetail}
+                >
+                  <InvoiceContent
+                    id={invoice._id}
+                    name={invoice.type === 0 ? 'Purchase' : 'Sale'}
+                    color={invoice.status ? '#438763' : '#ad6b8d'}
+                    status={invoice.status ? 'Paid' : 'Unpaid'}
+                    cost={invoice.totalCost}
+                    time={new Date(invoice.createdAt).toLocaleDateString(
+                      i18n.t('local'),
+                      {
+                        day: 'numeric',
+                        month: 'long',
+                      }
+                    )}
+                  />
+                </InvoiceItem>
+              ))
+            )}
           </ScrollView>
         ) : (
           <Loading />

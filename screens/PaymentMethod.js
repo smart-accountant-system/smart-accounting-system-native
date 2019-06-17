@@ -112,11 +112,7 @@ class PaymentMethod extends React.Component {
             </TouchableOpacity>
           </Header>
         </HeaderWrapper>
-        <Searchbar
-          value={searchText}
-          placeholder="Search"
-          onChangeText={this.handleSearch}
-        />
+        <Searchbar value={searchText} onChangeText={this.handleSearch} />
 
         {categories ? (
           <ScrollView
@@ -128,7 +124,7 @@ class PaymentMethod extends React.Component {
             }
           >
             {!categories.categories.length ? (
-              <Empty name="payment method" />
+              <Empty name={i18n.t('paymentMethod')} />
             ) : (
               categories.categories.map(category => (
                 <ItemCategory

@@ -15,7 +15,7 @@ import {
 import theme from '../constants/theme';
 import { logout, getReceipts, chooseReceipt } from '../redux/actions';
 import { handle401 } from '../constants/strategies';
-import { FeatherIcon, Loading } from '../components';
+import { FeatherIcon, Loading, Empty } from '../components';
 import { ReceiptItem, ReceiptContent } from '../containers/Receipt';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
 
@@ -72,7 +72,7 @@ class Receipt extends React.Component {
 
   handleDatePicked = date => {
     const { activatingDate } = this.state;
-    if (activatingDate === 'From') {
+    if (activatingDate === i18n.t('from')) {
       this.setState({
         fromDate: new Date(date),
       });
@@ -155,7 +155,6 @@ class Receipt extends React.Component {
         </HeaderWrapper>
 
         <FilterHeader
-          title="Advance filter"
           isExpand={this.state.isExpandingFilter}
           onPress={this.handlePressFilter}
         />
@@ -163,13 +162,13 @@ class Receipt extends React.Component {
         <FilterBody height={this.state.filterHeight}>
           <FilterField first>
             <FilterTime
-              title="From"
+              title={i18n.t('from')}
               first
               date={fromDate.toLocaleDateString(i18n.t('local'))}
               showDateTimePicker={this.showDateTimePicker}
             />
             <FilterTime
-              title="To"
+              title={i18n.t('to')}
               second
               date={toDate.toLocaleDateString(i18n.t('local'))}
               showDateTimePicker={this.showDateTimePicker}
@@ -179,14 +178,16 @@ class Receipt extends React.Component {
           <FilterField height="52">
             <FeatherIcon color="#f1f1f1" name="user" />
             <Button mode="contained" onPress={this.doFilter}>
-              <Text style={{ color: theme.colors.white }}>Filter</Text>
+              <Text style={{ color: theme.colors.white }}>
+                {i18n.t('doFilter')}
+              </Text>
             </Button>
           </FilterField>
         </FilterBody>
 
         <DateTimePicker
           isVisible={isDatePickerVisible}
-          date={activatingDate === 'from' ? fromDate : toDate}
+          date={activatingDate === i18n.t('from') ? fromDate : toDate}
           onConfirm={this.handleDatePicked}
           onCancel={this.hideDateTimePicker}
         />
@@ -200,38 +201,42 @@ class Receipt extends React.Component {
               />
             }
           >
-            {receipts.receipts.map(receipt => (
-              <ReceiptItem
-                receipt={receipt}
-                receiptDetail={this.receiptDetail}
-                key={receipt._id}
-              >
-                <ReceiptContent
-                  id={receipt._id}
-                  customer={receipt.customer.name}
-                  payment={receipt.payment.category.name}
-                  type={
-                    receipt.payment.type === 0
-                      ? 'Receipt voucher' // phieu thu
-                      : 'Payment voucher' // phieu chi
-                  }
-                  color={receipt.status ? '#438763' : '#ad6b8d'}
-                  status={
-                    receipt.status
-                      ? 'Recorded as a transaction'
-                      : 'Not record as a transaction yet'
-                  }
-                  cost={receipt.payment.amountMoney}
-                  time={new Date(receipt.createdAt).toLocaleDateString(
-                    i18n.t('local'),
-                    {
-                      day: 'numeric',
-                      month: 'long',
+            {!receipts.receipts.length ? (
+              <Empty name={i18n.t('receipt')} />
+            ) : (
+              receipts.receipts.map(receipt => (
+                <ReceiptItem
+                  receipt={receipt}
+                  receiptDetail={this.receiptDetail}
+                  key={receipt._id}
+                >
+                  <ReceiptContent
+                    id={receipt._id}
+                    customer={receipt.customer.name}
+                    payment={receipt.payment.category.name}
+                    type={
+                      receipt.payment.type === 0
+                        ? 'Receipt voucher' // phieu thu
+                        : 'Payment voucher' // phieu chi
                     }
-                  )}
-                />
-              </ReceiptItem>
-            ))}
+                    color={receipt.status ? '#438763' : '#ad6b8d'}
+                    status={
+                      receipt.status
+                        ? 'Recorded as a transaction'
+                        : 'Not record as a transaction yet'
+                    }
+                    cost={receipt.payment.amountMoney}
+                    time={new Date(receipt.createdAt).toLocaleDateString(
+                      i18n.t('local'),
+                      {
+                        day: 'numeric',
+                        month: 'long',
+                      }
+                    )}
+                  />
+                </ReceiptItem>
+              ))
+            )}
           </ScrollView>
         ) : (
           <Loading />

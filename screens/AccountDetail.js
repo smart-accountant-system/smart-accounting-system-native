@@ -92,7 +92,7 @@ class AccountDetail extends React.Component {
               </Text>
               <Text style={{ textAlign: 'right', marginTop: 8 }}>
                 {new Date(currentAccount.createdAt).toLocaleDateString(
-                  'vi-VN',
+                  i18n.t('local'),
                   {
                     day: 'numeric',
                     month: 'long',

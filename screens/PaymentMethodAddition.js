@@ -4,7 +4,7 @@ import React from 'react';
 import i18n from 'i18n-js';
 import { connect } from 'react-redux';
 import { withTheme, TextInput, Button, HelperText } from 'react-native-paper';
-import { View, TouchableOpacity, ScrollView } from 'react-native';
+import { View, TouchableOpacity, ScrollView, Text } from 'react-native';
 
 import { Header, Typography, HeaderWrapper } from '../containers/Home';
 import theme from '../constants/theme';
@@ -63,20 +63,20 @@ class PaymentMethodAddition extends React.Component {
             >
               <FeatherIcon color={theme.colors.white} name="chevron-left" />
             </TouchableOpacity>
-            <Typography> Thêm phương thức thanh toán</Typography>
+            <Typography>{i18n.t('paymentMethodAddition')}</Typography>
             <FeatherIcon color={theme.colors.primary} name="user" />
           </Header>
         </HeaderWrapper>
         <ScrollView>
           <View>
             <TextInput
-              label="Tên phương thức"
+              label={i18n.t('paymentMethodName')}
               value={name}
               onChangeText={name => this.setState({ name, isVisible: false })}
               style={{ backgroundColor: '#fff' }}
             />
             <TextInput
-              label="Mô tả chi tiết"
+              label={i18n.t('paymentMethodDetail')}
               numberOfLines={3}
               multiline
               style={{ backgroundColor: '#fff' }}
@@ -102,7 +102,7 @@ class PaymentMethodAddition extends React.Component {
                 onPress={this.handleAddPaymentMethod}
                 loading={isLoading}
               >
-                Lưu
+                <Text>{i18n.t('actionSave')}</Text>
               </Button>
             </View>
           </View>

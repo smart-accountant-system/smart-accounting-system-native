@@ -121,7 +121,7 @@ class Account extends React.Component {
                       : 'Credit balance'
                   }
                   time={new Date(account.createdAt).toLocaleDateString(
-                    'vi-VN',
+                    i18n.t('local'),
                     {
                       day: 'numeric',
                       month: 'long',

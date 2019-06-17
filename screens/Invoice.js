@@ -176,13 +176,13 @@ class Invoice extends React.Component {
             <FilterTime
               title="From"
               first
-              date={fromDate.toLocaleDateString('vi-VN')}
+              date={fromDate.toLocaleDateString(i18n.t('local'))}
               showDateTimePicker={this.showDateTimePicker}
             />
             <FilterTime
               title="To"
               second
-              date={toDate.toLocaleDateString('vi-VN')}
+              date={toDate.toLocaleDateString(i18n.t('local'))}
               showDateTimePicker={this.showDateTimePicker}
             />
           </FilterField>
@@ -224,7 +224,7 @@ class Invoice extends React.Component {
                   status={invoice.status ? 'Paid' : 'Unpaid'}
                   cost={invoice.totalCost}
                   time={new Date(invoice.createdAt).toLocaleDateString(
-                    'vi-VN',
+                    i18n.t('local'),
                     {
                       day: 'numeric',
                       month: 'long',

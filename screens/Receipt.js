@@ -165,13 +165,13 @@ class Receipt extends React.Component {
             <FilterTime
               title="From"
               first
-              date={fromDate.toLocaleDateString('vi-VN')}
+              date={fromDate.toLocaleDateString(i18n.t('local'))}
               showDateTimePicker={this.showDateTimePicker}
             />
             <FilterTime
               title="To"
               second
-              date={toDate.toLocaleDateString('vi-VN')}
+              date={toDate.toLocaleDateString(i18n.t('local'))}
               showDateTimePicker={this.showDateTimePicker}
             />
           </FilterField>
@@ -223,7 +223,7 @@ class Receipt extends React.Component {
                   }
                   cost={receipt.payment.amountMoney}
                   time={new Date(receipt.createdAt).toLocaleDateString(
-                    'vi-VN',
+                    i18n.t('local'),
                     {
                       day: 'numeric',
                       month: 'long',

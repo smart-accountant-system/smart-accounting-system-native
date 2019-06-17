@@ -74,7 +74,7 @@ class InvoiceDetail extends React.Component {
           >
             <Text style={{ fontSize: 20 }}>{name} Invoice</Text>
             <Text style={{ color: '#444', paddingBottom: 8 }}>
-              {new Date(createdAt).toLocaleDateString('vi-VN', {
+              {new Date(createdAt).toLocaleDateString(i18n.t('local'), {
                 day: 'numeric',
                 month: 'long',
                 year: 'numeric',

@@ -140,7 +140,7 @@ class PaymentMethod extends React.Component {
                   time={
                     category.createdAt
                       ? new Date(category.createdAt).toLocaleDateString(
-                          'vi-VN',
+                          i18n.t('local'),
                           {
                             day: 'numeric',
                             month: 'long',
@@ -162,7 +162,7 @@ class PaymentMethod extends React.Component {
           onDismiss={() => this.setState({ visibleSnackbar: false })}
           action={{ label: 'OK', onPress: () => {} }}
         >
-          Xóa không thành công, vui lòng thử lại sau.
+          {i18n.t('messageDeleteFail')}
         </Snackbar>
       </View>
     );

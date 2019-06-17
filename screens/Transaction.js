@@ -172,13 +172,13 @@ class Transaction extends React.Component {
             <FilterTime
               title="From"
               first
-              date={fromDate.toLocaleDateString('vi-VN')}
+              date={fromDate.toLocaleDateString(i18n.t('local'))}
               showDateTimePicker={this.showDateTimePicker}
             />
             <FilterTime
               title="To"
               second
-              date={toDate.toLocaleDateString('vi-VN')}
+              date={toDate.toLocaleDateString(i18n.t('local'))}
               showDateTimePicker={this.showDateTimePicker}
             />
           </FilterField>
@@ -224,7 +224,7 @@ class Transaction extends React.Component {
                   toAccount={transaction.toAccount.id.name}
                   cost={transaction.amount}
                   time={new Date(transaction.createdAt).toLocaleDateString(
-                    'vi-VN',
+                    i18n.t('local'),
                     {
                       day: 'numeric',
                       month: 'long',

@@ -1,8 +1,14 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
+import {
+  Text,
+  View,
+  ScrollView,
+  StatusBar,
+  KeyboardAvoidingView,
+} from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme, HelperText, Button } from 'react-native-paper';
-import { Text, View, ScrollView, KeyboardAvoidingView } from 'react-native';
 
 import {
   LoginContainer,
@@ -48,6 +54,8 @@ class Login extends React.Component {
     const { theme, info } = this.props;
     return (
       <LoginBackground>
+        <StatusBar barStyle="light-content" />
+
         <ScrollView>
           <KeyboardAvoidingView
             enabled

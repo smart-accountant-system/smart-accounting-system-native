@@ -8,6 +8,7 @@ import { View, TouchableOpacity, ScrollView, Text } from 'react-native';
 
 import theme from '../constants/theme';
 import { handle401 } from '../constants/strategies';
+import { Radio, RadioGroup } from '../containers/EmployeeAddition';
 import { FeatherIcon, InterestTextInput } from '../components';
 import { logout, addEmployee, getEmployees } from '../redux/actions';
 import { Header, Typography, HeaderWrapper } from '../containers/Home';
@@ -15,14 +16,15 @@ import { FewStyledContainer } from '../containers/PaymentMethodAddition';
 
 class PaymentMethodAddition extends React.Component {
   state = {
-    username: '2122',
-    password: '',
-    repassword: '',
-    fullname: '',
-    role: '',
-    email: '',
-    phone: '',
+    username: 'staff_sample',
+    password: '123456',
+    repassword: '123456',
+    fullname: 'staff',
+    role: 1,
+    email: 'staff_sample@gmail.com',
+    phone: '0123456789',
     isVisible: false,
+    isTypo: false,
   };
 
   handleAddPaymentMethod = () => {
@@ -35,11 +37,17 @@ class PaymentMethodAddition extends React.Component {
       email,
       phone,
     } = this.state;
+
+    if (repassword !== password) {
+      this.setState({ isVisible: true, isTypo: true });
+      return;
+    }
+
     this.props.addEmployee(
-      { username, password, repassword, fullname, role, email, phone },
+      { username, password, fullname, role, email, phone },
       {
         success: () => {
-          this.props.navigation.navigate('PaymentMethod');
+          this.props.navigation.navigate('EmployeeManagement');
           this.props.getEmployees(
             {},
             {
@@ -76,7 +84,9 @@ class PaymentMethodAddition extends React.Component {
       email,
       phone,
       isVisible,
+      isTypo,
     } = this.state;
+
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
@@ -87,70 +97,79 @@ class PaymentMethodAddition extends React.Component {
               <FeatherIcon color={theme.colors.white} name="chevron-left" />
             </TouchableOpacity>
             <Typography>{i18n.t('employeeAddition')}</Typography>
-            <FeatherIcon color={theme.colors.primary} name="user" />
+            <Text />
           </Header>
         </HeaderWrapper>
+
         <ScrollView>
-          <View>
-            <InterestTextInput
-              label={i18n.t('username')}
-              value={username}
-              onChangeText={username => this.setState({ username })}
-            />
+          <InterestTextInput
+            label={i18n.t('username')}
+            value={username}
+            onChangeText={username => this.setState({ username })}
+          />
+          <InterestTextInput
+            label={i18n.t('password')}
+            value={password}
+            secureTextEntry
+            onChangeText={password => this.setState({ password })}
+          />
+          <InterestTextInput
+            label={i18n.t('repassword')}
+            value={repassword}
+            secureTextEntry
+            onChangeText={repassword => this.setState({ repassword })}
+          />
+          <InterestTextInput
+            label={i18n.t('fullname')}
+            value={fullname}
+            onChangeText={fullname => this.setState({ fullname })}
+          />
+          <InterestTextInput
+            label={i18n.t('email')}
+            value={email}
+            onChangeText={email => this.setState({ email })}
+          />
+          <InterestTextInput
+            label={i18n.t('phone')}
+            value={phone}
+            onChangeText={phone => this.setState({ phone })}
+          />
 
-            <InterestTextInput
-              label={i18n.t('password')}
-              value={password}
-              secureTextEntry
-              onChangeText={password => this.setState({ password })}
+          <RadioGroup>
+            <Radio
+              label={i18n.t('staff')}
+              selected={role === 1}
+              onPress={() => this.setState({ role: 1 })}
             />
-
-            <InterestTextInput
-              label={i18n.t('repassword')}
-              value={repassword}
-              secureTextEntry
-              onChangeText={repassword => this.setState({ repassword })}
+            <Radio
+              label={i18n.t('accountant')}
+              selected={role === 2}
+              onPress={() => this.setState({ role: 2 })}
             />
-            <InterestTextInput
-              label={i18n.t('fullname')}
-              value={fullname}
-              onChangeText={fullname => this.setState({ fullname })}
+            <Radio
+              label={i18n.t('manager')}
+              selected={role === 3}
+              onPress={() => this.setState({ role: 3 })}
             />
-            <InterestTextInput
-              label={i18n.t('role')}
-              value={role}
-              onChangeText={role => this.setState({ role })}
-            />
-            <InterestTextInput
-              label={i18n.t('email')}
-              value={email}
-              onChangeText={email => this.setState({ email })}
-            />
-            <InterestTextInput
-              label={i18n.t('phone')}
-              value={phone}
-              onChangeText={phone => this.setState({ phone })}
-            />
-
-            <FewStyledContainer paddingTop>
-              <Button
-                mode="contained"
-                style={{ width: 170 }}
-                contentStyle={{ height: 50 }}
-                onPress={this.handleAddPaymentMethod}
-                loading={isLoading}
-              >
-                <Text>{i18n.t('actionSave')}</Text>
-              </Button>
-            </FewStyledContainer>
-          </View>
+          </RadioGroup>
+          <FewStyledContainer paddingTop>
+            <Button
+              mode="contained"
+              style={{ width: 170 }}
+              contentStyle={{ height: 50 }}
+              onPress={this.handleAddPaymentMethod}
+              loading={isLoading}
+            >
+              <Text>{i18n.t('actionSave')}</Text>
+            </Button>
+          </FewStyledContainer>
         </ScrollView>
         <Snackbar
           visible={isVisible}
-          onDismiss={() => this.setState({ isVisible: false })}
+          onDismiss={() => this.setState({ isVisible: false, isTypo: false })}
           action={{ label: 'OK', onPress: () => {} }}
         >
-          {i18n.t('messageAddFail')}
+          {isTypo ? i18n.t('messageWP') : i18n.t('messageAddFail')}
         </Snackbar>
       </View>
     );

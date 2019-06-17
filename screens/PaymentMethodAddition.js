@@ -69,40 +69,36 @@ class PaymentMethodAddition extends React.Component {
           </Header>
         </HeaderWrapper>
         <ScrollView>
-          <View>
-            <InterestTextInput
-              label={i18n.t('name')}
-              value={name}
-              onChangeText={name => this.setState({ name, isVisible: false })}
-              style={{ backgroundColor: '#fff' }}
-            />
-            <InterestTextInput
-              label={i18n.t('detail')}
-              numberOfLines={3}
-              multiline
-              style={{ backgroundColor: '#fff' }}
-              value={detail}
-              onChangeText={detail =>
-                this.setState({ detail, isVisible: false })
-              }
-            />
-            <FewStyledContainer>
-              <HelperText type="error" visible={isVisible}>
-                {i18n.t('messageAddFail')}
-              </HelperText>
-            </FewStyledContainer>
-            <FewStyledContainer paddingTop>
-              <Button
-                mode="contained"
-                style={{ width: 170 }}
-                contentStyle={{ height: 50 }}
-                onPress={this.handleAddPaymentMethod}
-                loading={isLoading}
-              >
-                <Text>{i18n.t('actionSave')}</Text>
-              </Button>
-            </FewStyledContainer>
-          </View>
+          <InterestTextInput
+            label={i18n.t('name')}
+            value={name}
+            onChangeText={name => this.setState({ name, isVisible: false })}
+            style={{ backgroundColor: '#fff' }}
+          />
+          <InterestTextInput
+            label={i18n.t('detail')}
+            numberOfLines={3}
+            multiline
+            style={{ backgroundColor: '#fff' }}
+            value={detail}
+            onChangeText={detail => this.setState({ detail, isVisible: false })}
+          />
+          <FewStyledContainer>
+            <HelperText type="error" visible={isVisible}>
+              {i18n.t('messageAddFail')}
+            </HelperText>
+          </FewStyledContainer>
+          <FewStyledContainer paddingTop>
+            <Button
+              mode="contained"
+              style={{ width: 170 }}
+              contentStyle={{ height: 50 }}
+              onPress={this.handleAddPaymentMethod}
+              loading={isLoading}
+            >
+              <Text>{i18n.t('actionSave')}</Text>
+            </Button>
+          </FewStyledContainer>
         </ScrollView>
       </View>
     );

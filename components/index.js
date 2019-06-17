@@ -10,3 +10,4 @@ export { default as TabBarIcon } from './TabBarIcon';
 export { default as TransactionItem } from './TransactionItem';
 export { default as Empty } from './Empty';
 export { default as InterestTextInput } from './InterestTextInput';
+export { default as RadioButton } from './RadioButton';

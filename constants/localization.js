@@ -36,6 +36,9 @@ export const en = {
   phone: 'Phone',
   name: 'Name',
   detail: 'Description',
+  staff: 'Staff',
+  accountant: 'Accountant',
+  manager: 'Manager',
 
   // ADVANCED FILTER GROUP
   advancedFilter: 'Advanced filter',
@@ -47,8 +50,9 @@ export const en = {
   actionSave: 'Save',
   actionRemove: 'Remove',
   messageEmpty: 'There is no',
-  messageAddFail: 'Add failed, please try again later.',
+  messageAddFail: 'Add failed, please check again.',
   messageDeleteFail: 'Delete failed, please try again later.',
+  messageWP: 'Your repassword is not match',
 };
 
 export const vi = {
@@ -89,6 +93,9 @@ export const vi = {
   phone: 'Số điện thoại',
   name: 'Tên',
   detail: 'Mô tả chi tiết',
+  staff: 'Nhân viên',
+  accountant: 'Kế toán',
+  manager: 'Quản lý',
 
   // ADVANCED FILTER GROUP
   advancedFilter: 'Bộ lọc nâng cao',
@@ -100,6 +107,7 @@ export const vi = {
   actionSave: 'Lưu',
   actionRemove: 'Xóa',
   messageEmpty: 'Hiện chưa có',
-  messageAddFail: 'Thêm không thành công, vui lòng thử lại sau.',
+  messageAddFail: 'Thêm không thành công, vui lòng kiểm tra lại.',
   messageDeleteFail: 'Xóa không thành công, vui lòng thử lại sau.',
+  messageWP: 'Xác nhận mật khẩu không khớp',
 };

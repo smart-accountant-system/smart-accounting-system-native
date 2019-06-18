@@ -60,7 +60,6 @@ class Home extends React.Component {
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
-          <StatusBar barStyle="light-content" />
           <Header>
             <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
               <FeatherIcon color={theme.colors.white} name="user" />

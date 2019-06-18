@@ -1,8 +1,8 @@
 import React from 'react';
-import { StyleSheet, StatusBar } from 'react-native';
+import { StatusBar } from 'react-native';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import { AppLoading, Asset, Font, Icon, Permissions, Localization } from 'expo';
+import { AppLoading, Font, Icon, Permissions, Localization } from 'expo';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { ThemeProvider } from 'styled-components';
 import i18n from 'i18n-js';
@@ -82,6 +82,7 @@ export default class App extends React.Component {
           <PersistGate loading={null} persistor={persistor}>
             <MessageProvider>
               <PaperProvider theme={theme}>
+                <StatusBar barStyle="light-content" />
                 <AppNavigator />
               </PaperProvider>
             </MessageProvider>

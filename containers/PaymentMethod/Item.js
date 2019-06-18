@@ -47,8 +47,8 @@ const Detail = styled.Text`
   color: ${props => props.color || '#333'};
 `;
 
-export default ({ id, name, detail, time, onRemove }) => (
-  <SwipeoutRemove onRemove={onRemove}>
+export default ({ editable, id, name, detail, time, onRemove }) => (
+  <SwipeoutRemove editable={editable} onRemove={onRemove}>
     <StyledContainer activeOpacity={0.75}>
       <View style={{ flex: 1, paddingRight: 4 }}>
         <Typoraphy>

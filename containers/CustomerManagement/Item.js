@@ -28,9 +28,9 @@ const Typography = styled.Text`
 
 const Detail = styled.Text``;
 
-export default ({ onPress, onRemove, name, phone, address }) => (
+export default ({ onRemove, name, phone, address }) => (
   <SwipeoutRemove onRemove={onRemove}>
-    <Container onPress={onPress}>
+    <Container activeOpacity={0.75}>
       <Header>
         <Typography>{name}</Typography>
         <Detail>{phone}</Detail>

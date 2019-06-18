@@ -33,7 +33,6 @@ class Profile extends React.Component {
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
-          <StatusBar barStyle="light-content" />
           <Header>
             <TouchableOpacity onPress={() => navigation.navigate('Home')}>
               <FeatherIcon color={theme.colors.white} name="x" />

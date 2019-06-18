@@ -50,6 +50,7 @@ export const en = {
 
   // MESSAGE GROUP
   actionSave: 'Save',
+  actionEdit: 'Edit',
   actionRemove: 'Remove',
   messageEmpty: 'There is no',
   messageAddFail: 'Add failed, please check again.',
@@ -109,6 +110,7 @@ export const vi = {
 
   // MESSAGE GROUP
   actionSave: 'Lưu',
+  actionEdit: 'Sửa',
   actionRemove: 'Xóa',
   messageEmpty: 'Hiện chưa có',
   messageAddFail: 'Thêm không thành công, vui lòng kiểm tra lại.',

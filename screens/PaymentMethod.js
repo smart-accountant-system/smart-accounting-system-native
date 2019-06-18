@@ -128,6 +128,8 @@ class PaymentMethod extends React.Component {
             ) : (
               categories.categories.map(category => (
                 <ItemCategory
+                  editable
+                  onEdit={() => {}}
                   onRemove={() => this.handleRemove(category._id)}
                   key={category._id}
                   id={category._id}

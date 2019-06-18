@@ -7,13 +7,17 @@ const defaultConfig = {
   backgroundColor: '#e22f2f',
   color: '#fff',
 };
+// BUILDING...
+export default ({ editable, onEdit, onRemove, children }) => {
+  const listBtn = [
+    { ...defaultConfig, text: i18n.t('actionRemove'), onPress: onRemove },
+  ];
+  if (editable) {
+    listBtn.unshift({
+      text: i18n.t('actionEdit'),
+      onPress: onEdit,
+    });
+  }
 
-export default ({ onRemove, children }) => (
-  <Swipeout
-    right={[
-      { ...defaultConfig, text: i18n.t('actionRemove'), onPress: onRemove },
-    ]}
-  >
-    {children}
-  </Swipeout>
-);
+  return <Swipeout right={listBtn}>{children}</Swipeout>;
+};

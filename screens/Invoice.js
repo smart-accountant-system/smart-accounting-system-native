@@ -155,7 +155,6 @@ class Invoice extends React.Component {
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
-          <StatusBar barStyle="light-content" />
           <Header>
             <FeatherIcon color={theme.colors.primary} name="user" />
             <Typography>{i18n.t('invoice')}</Typography>

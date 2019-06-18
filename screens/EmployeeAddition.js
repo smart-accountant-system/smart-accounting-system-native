@@ -74,7 +74,7 @@ class PaymentMethodAddition extends React.Component {
   };
 
   render() {
-    const { navigation, isLoading } = this.props;
+    const { navigation, isLoading, error } = this.props;
     const {
       username,
       password,
@@ -178,6 +178,7 @@ class PaymentMethodAddition extends React.Component {
 
 const mapStateToProps = state => ({
   isLoading: state.employee.isLoading,
+  error: state.employee.error,
 });
 const mapDispatchToProps = {
   logout,

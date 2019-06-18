@@ -101,7 +101,7 @@ export function removeEmployee(
   return async dispatch => {
     try {
       dispatch({ type: DELETE_EMPLOYEE_REQUEST });
-      const endpoint = `/categories/${_id}`;
+      const endpoint = `/employees/${_id}`;
 
       const result = await query({
         endpoint,

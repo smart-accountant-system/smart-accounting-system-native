@@ -9,11 +9,11 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { withTheme } from 'react-native-paper';
+import { withTheme, Snackbar } from 'react-native-paper';
 
 import theme from '../constants/theme';
 import { handle401 } from '../constants/strategies';
-import { logout, getEmployees } from '../redux/actions';
+import { logout, getEmployees, removeEmployee } from '../redux/actions';
 import { EmployeeItem } from '../containers/EmployeeManagement';
 import { FeatherIcon, Loading, Searchbar, Empty } from '../components';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
@@ -23,6 +23,7 @@ class EmployeeManagement extends React.Component {
     searchText: '',
     timer: undefined,
     refreshing: false,
+    visibleSnackbar: false,
   };
 
   componentDidMount = () => {
@@ -77,9 +78,26 @@ class EmployeeManagement extends React.Component {
     });
   };
 
+  handleRemove = _id => {
+    this.props.removeEmployee(_id, {
+      success: () => {
+        this._onRefresh();
+      },
+
+      failure: () => {
+        this.setState({ visibleSnackbar: true });
+      },
+      handle401: () =>
+        handle401({
+          logout: this.props.logout,
+          navigation: this.props.navigation,
+        }),
+    });
+  };
+
   render() {
     const { navigation, employees } = this.props;
-    const { searchText, refreshing } = this.state;
+    const { searchText, refreshing, visibleSnackbar } = this.state;
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
@@ -111,6 +129,7 @@ class EmployeeManagement extends React.Component {
             ) : (
               employees.employees.map(employee => (
                 <EmployeeItem
+                  onRemove={() => this.handleRemove(employee._id)}
                   key={employee._id}
                   onPress={() =>
                     navigation.navigate('EmployeeDetail', { employee })
@@ -140,6 +159,13 @@ class EmployeeManagement extends React.Component {
         ) : (
           <Loading />
         )}
+        <Snackbar
+          visible={visibleSnackbar}
+          onDismiss={() => this.setState({ visibleSnackbar: false })}
+          action={{ label: 'OK', onPress: () => {} }}
+        >
+          {i18n.t('messageDeleteFail')}
+        </Snackbar>
       </View>
     );
   }
@@ -151,6 +177,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   logout,
   getEmployees,
+  removeEmployee,
 };
 
 export default withTheme(

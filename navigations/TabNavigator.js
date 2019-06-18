@@ -39,7 +39,6 @@ i18n.locale = Localization.locale;
 
 export const HomeStack = createStackNavigator(
   {
-    EmployeeAddition,
     Home,
     Profile,
 
@@ -48,6 +47,7 @@ export const HomeStack = createStackNavigator(
 
     EmployeeManagement,
     EmployeeDetail,
+    EmployeeAddition,
 
     CustomerManagement,
   },

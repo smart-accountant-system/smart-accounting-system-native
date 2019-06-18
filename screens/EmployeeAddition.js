@@ -14,7 +14,7 @@ import { logout, addEmployee, getEmployees } from '../redux/actions';
 import { Header, Typography, HeaderWrapper } from '../containers/Home';
 import { FewStyledContainer } from '../containers/PaymentMethodAddition';
 
-class PaymentMethodAddition extends React.Component {
+class EmployeeAddition extends React.Component {
   state = {
     username: 'staff_sample',
     password: '123456',
@@ -27,7 +27,7 @@ class PaymentMethodAddition extends React.Component {
     isTypo: false,
   };
 
-  handleAddPaymentMethod = () => {
+  handleAddEmployee = () => {
     const {
       username,
       password,
@@ -157,7 +157,7 @@ class PaymentMethodAddition extends React.Component {
               mode="contained"
               style={{ width: 170 }}
               contentStyle={{ height: 50 }}
-              onPress={this.handleAddPaymentMethod}
+              onPress={this.handleAddEmployee}
               loading={isLoading}
             >
               <Text>{i18n.t('actionSave')}</Text>
@@ -190,5 +190,5 @@ export default withTheme(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(PaymentMethodAddition)
+  )(EmployeeAddition)
 );

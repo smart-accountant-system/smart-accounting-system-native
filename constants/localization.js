@@ -14,6 +14,7 @@ export const en = {
   employeeManagement: 'Employee management',
 
   customer: 'Customer',
+  customerAddition: 'Add customer',
   customerManagement: 'Customer management',
   menu: 'Menu',
   receipt: 'Receipt',
@@ -39,6 +40,7 @@ export const en = {
   staff: 'Staff',
   accountant: 'Accountant',
   manager: 'Manager',
+  address: 'Address',
 
   // ADVANCED FILTER GROUP
   advancedFilter: 'Advanced filter',
@@ -71,6 +73,7 @@ export const vi = {
   employeeManagement: 'Quản lý nhân viên',
 
   customer: 'Khách hàng',
+  customerAddition: 'Thêm khách hàng',
   customerManagement: 'Quản lý khách hàng',
   menu: 'Danh mục',
   receipt: 'Biên lai',
@@ -96,6 +99,7 @@ export const vi = {
   staff: 'Nhân viên',
   accountant: 'Kế toán',
   manager: 'Quản lý',
+  address: 'Địa chỉ',
 
   // ADVANCED FILTER GROUP
   advancedFilter: 'Bộ lọc nâng cao',

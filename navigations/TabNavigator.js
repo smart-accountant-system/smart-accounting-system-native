@@ -30,6 +30,7 @@ import EmployeeAddition from '../screens/EmployeeAddition';
 import EmployeeDetail from '../screens/EmployeeDetail';
 
 import CustomerManagement from '../screens/CustomerManagement';
+import CustomerAddition from '../screens/CustomerAddition';
 import theme from '../constants/theme';
 import { en, vi } from '../constants/localization';
 
@@ -49,6 +50,7 @@ export const HomeStack = createStackNavigator(
     EmployeeDetail,
     EmployeeAddition,
 
+    CustomerAddition,
     CustomerManagement,
   },
   {

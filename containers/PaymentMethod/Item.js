@@ -49,7 +49,7 @@ const Detail = styled.Text`
 
 export default ({ id, name, detail, time, onRemove }) => (
   <SwipeoutRemove onRemove={onRemove}>
-    <StyledContainer>
+    <StyledContainer activeOpacity={0.75}>
       <View style={{ flex: 1, paddingRight: 4 }}>
         <Typoraphy>
           <CodeField>{id}</CodeField>

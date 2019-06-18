@@ -8,11 +8,11 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { withTheme } from 'react-native-paper';
+import { withTheme, Snackbar } from 'react-native-paper';
 
 import theme from '../constants/theme';
 import { handle401 } from '../constants/strategies';
-import { logout, getCustomers } from '../redux/actions';
+import { logout, getCustomers, removeCustomer } from '../redux/actions';
 import { CustomerItem } from '../containers/CustomerManagement';
 import { FeatherIcon, Loading, Searchbar, Empty } from '../components';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
@@ -22,6 +22,7 @@ class CustomerManagement extends React.Component {
     searchText: '',
     timer: undefined,
     refreshing: false,
+    visibleSnackbar: false,
   };
 
   componentDidMount = () => {
@@ -76,9 +77,27 @@ class CustomerManagement extends React.Component {
     });
   };
 
+  handleRemove = _id => {
+    this.props.removeCustomer(_id, {
+      success: () => {
+        this._onRefresh();
+      },
+
+      failure: () => {
+        this.setState({ visibleSnackbar: true });
+      },
+      handle401: () =>
+        handle401({
+          logout: this.props.logout,
+          navigation: this.props.navigation,
+        }),
+    });
+  };
+
   render() {
     const { navigation, customers } = this.props;
-    const { searchText, refreshing } = this.state;
+    const { searchText, refreshing, visibleSnackbar } = this.state;
+
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
@@ -87,7 +106,11 @@ class CustomerManagement extends React.Component {
               <FeatherIcon color={theme.colors.white} name="chevron-left" />
             </TouchableOpacity>
             <Typography>{i18n.t('customerManagement')}</Typography>
-            <FeatherIcon color={theme.colors.primary} name="user" />
+            <TouchableOpacity
+              onPress={() => navigation.navigate('CustomerAddition')}
+            >
+              <FeatherIcon color={theme.colors.white} name="plus" />
+            </TouchableOpacity>
           </Header>
         </HeaderWrapper>
         <Searchbar value={searchText} onChangeText={this.handleSearch} />
@@ -106,6 +129,7 @@ class CustomerManagement extends React.Component {
             ) : (
               customers.customers.map(customer => (
                 <CustomerItem
+                  onRemove={() => this.handleRemove(customer._id)}
                   key={customer._id}
                   name={customer.name}
                   phone={customer.phone}
@@ -117,6 +141,13 @@ class CustomerManagement extends React.Component {
         ) : (
           <Loading />
         )}
+        <Snackbar
+          visible={visibleSnackbar}
+          onDismiss={() => this.setState({ visibleSnackbar: false })}
+          action={{ label: 'OK', onPress: () => {} }}
+        >
+          {i18n.t('messageDeleteFail')}
+        </Snackbar>
       </View>
     );
   }
@@ -128,6 +159,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   logout,
   getCustomers,
+  removeCustomer,
 };
 
 export default withTheme(

@@ -23,6 +23,7 @@ import AvenirNextBold from './assets/fonts/AvenirNextLTPro-Bold.otf';
 import NotoSans from './assets/fonts/NotoSans-Regular.ttf';
 import theme from './constants/theme';
 import { en, vi } from './constants/localization';
+import MiniOfflineSign from './components/MiniOfflineSign';
 
 i18n.fallbacks = true;
 i18n.translations = { en, vi };
@@ -84,6 +85,7 @@ export default class App extends React.Component {
               <PaperProvider theme={theme}>
                 <StatusBar barStyle="light-content" />
                 <AppNavigator />
+                <MiniOfflineSign />
               </PaperProvider>
             </MessageProvider>
           </PersistGate>

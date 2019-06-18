@@ -40,10 +40,10 @@ i18n.locale = Localization.locale;
 
 export const HomeStack = createStackNavigator(
   {
-    PaymentMethod,
     Home,
     Profile,
 
+    PaymentMethod,
     PaymentMethodAddition,
 
     EmployeeManagement,

@@ -18,9 +18,9 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case DELETE_EMPLOYEE_REQUEST:
-    case POST_EMPLOYEE_REQUEST:
     case GET_EMPLOYEES_REQUEST:
+    case POST_EMPLOYEE_REQUEST:
+    case DELETE_EMPLOYEE_REQUEST:
       return {
         ...state,
         isLoading: true,

@@ -74,7 +74,7 @@ class EmployeeAddition extends React.Component {
   };
 
   render() {
-    const { navigation, isLoading, error } = this.props;
+    const { navigation, isLoading } = this.props;
     const {
       username,
       password,

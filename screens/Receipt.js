@@ -13,7 +13,12 @@ import {
   FilterTime,
 } from '../components/Filter';
 import theme from '../constants/theme';
-import { logout, getReceipts, chooseReceipt } from '../redux/actions';
+import {
+  logout,
+  getReceipts,
+  chooseReceipt,
+  deleteReceiptById,
+} from '../redux/actions';
 import { handle401 } from '../constants/strategies';
 import { FeatherIcon, Loading, Empty } from '../components';
 import { ReceiptItem, ReceiptContent } from '../containers/Receipt';
@@ -134,6 +139,8 @@ class Receipt extends React.Component {
     navigation.navigate('ReceiptDetail');
   };
 
+  handleRemoveReceipt = id => {};
+
   render() {
     const { receipts } = this.props;
     const {
@@ -209,6 +216,7 @@ class Receipt extends React.Component {
                   receipt={receipt}
                   receiptDetail={this.receiptDetail}
                   key={receipt._id}
+                  onRemove={() => this.handleRemoveReceipt(receipt._id)}
                 >
                   <ReceiptContent
                     id={receipt._id}
@@ -253,6 +261,7 @@ const mapDispatchToProps = {
   logout,
   getReceipts,
   chooseReceipt,
+  deleteReceiptById,
 };
 
 export default withTheme(

@@ -10,6 +10,13 @@ export const GET_TRANSACTION_BY_ID_REQUEST = 'get-transaction-by-id-request';
 export const GET_TRANSACTION_BY_ID_SUCCESS = 'get-transaction-by-id-success';
 export const GET_TRANSACTION_BY_ID_FAILURE = 'get-transaction-by-id-failure';
 
+export const DELETE_TRANSACTION_BY_ID_REQUEST =
+  'delete-transaction-by-id-request';
+export const DELETE_TRANSACTION_BY_ID_SUCCESS =
+  'delete-transaction-by-id-success';
+export const DELETE_TRANSACTION_BY_ID_FAILURE =
+  'delete-transaction-by-id-failure';
+
 export const CHOOSE_TRANSACTION = 'choose-transaction';
 
 export function getTransactions(
@@ -76,7 +83,6 @@ export function getTransactionById(
       if (result.status === 200 || result.status === 304) {
         dispatch({
           type: GET_TRANSACTION_BY_ID_SUCCESS,
-          payload: result.data,
         });
         success();
       } else {
@@ -91,6 +97,45 @@ export function getTransactionById(
       }
       dispatch({
         type: GET_TRANSACTION_BY_ID_FAILURE,
+        payload: error,
+      });
+      failure();
+    }
+  };
+}
+
+export function deleteTransactionById(
+  id,
+  { success = () => {}, failure = () => {}, handle401 }
+) {
+  return async dispatch => {
+    try {
+      dispatch({ type: DELETE_TRANSACTION_BY_ID_REQUEST });
+      const endpoint = `/transactions/${id}`;
+
+      const result = await query({
+        endpoint,
+        method: METHODS.delete,
+      });
+
+      if (result.status === 200 || result.status === 304) {
+        dispatch({
+          type: DELETE_TRANSACTION_BY_ID_REQUEST,
+          payload: result.data,
+        });
+        success();
+      } else {
+        dispatch({
+          type: DELETE_TRANSACTION_BY_ID_FAILURE,
+        });
+        failure();
+      }
+    } catch (error) {
+      if (error.response.status === 401) {
+        handle401();
+      }
+      dispatch({
+        type: DELETE_TRANSACTION_BY_ID_FAILURE,
         payload: error,
       });
       failure();

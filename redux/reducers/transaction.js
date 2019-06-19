@@ -5,6 +5,9 @@ import {
   GET_TRANSACTION_BY_ID_REQUEST,
   GET_TRANSACTION_BY_ID_SUCCESS,
   GET_TRANSACTION_BY_ID_FAILURE,
+  DELETE_TRANSACTION_BY_ID_REQUEST,
+  DELETE_TRANSACTION_BY_ID_SUCCESS,
+  DELETE_TRANSACTION_BY_ID_FAILURE,
   CHOOSE_TRANSACTION,
 } from '../actions';
 
@@ -49,6 +52,21 @@ export default (state = INITIAL_STATE, action) => {
         error: null,
       };
     case GET_TRANSACTION_BY_ID_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+      };
+    case DELETE_TRANSACTION_BY_ID_REQUEST:
+      return {
+        ...state,
+        error: null,
+      };
+    case DELETE_TRANSACTION_BY_ID_SUCCESS:
+      return {
+        ...state,
+        error: null,
+      };
+    case DELETE_TRANSACTION_BY_ID_FAILURE:
       return {
         ...state,
         error: action.payload,

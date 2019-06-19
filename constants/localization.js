@@ -48,6 +48,9 @@ export const en = {
   to: 'To',
   doFilter: 'Filter',
 
+  // ACTION GROUP
+  hide: 'Hide',
+
   // MESSAGE GROUP
   actionSave: 'Save',
   actionEdit: 'Edit',
@@ -55,6 +58,7 @@ export const en = {
   messageEmpty: 'There is no',
   messageAddFail: 'Add failed, please check again.',
   messageDeleteFail: 'Delete failed, please try again later.',
+  messageDeleteSuccess: 'Delete successfully',
   messageWP: 'Your repassword is not match',
 };
 
@@ -108,6 +112,9 @@ export const vi = {
   to: 'Đến',
   doFilter: 'Lọc',
 
+  // ACTION GROUP
+  hide: 'Ẩn',
+
   // MESSAGE GROUP
   actionSave: 'Lưu',
   actionEdit: 'Sửa',
@@ -115,5 +122,6 @@ export const vi = {
   messageEmpty: 'Hiện chưa có',
   messageAddFail: 'Thêm không thành công, vui lòng kiểm tra lại.',
   messageDeleteFail: 'Xóa không thành công, vui lòng thử lại sau.',
+  messageDeleteSuccess: 'Xoá thành công',
   messageWP: 'Xác nhận mật khẩu không khớp',
 };

@@ -49,12 +49,12 @@ export const en = {
   doFilter: 'Filter',
 
   // ACTION GROUP
-  hide: 'Hide',
-
-  // MESSAGE GROUP
   actionSave: 'Save',
   actionEdit: 'Edit',
   actionRemove: 'Remove',
+  actionHide: 'Hide',
+
+  // MESSAGE GROUP
   messageEmpty: 'There is no',
   messageAddFail: 'Add failed, please check again.',
   messageDeleteFail: 'Delete failed, please try again later.',
@@ -113,12 +113,12 @@ export const vi = {
   doFilter: 'Lọc',
 
   // ACTION GROUP
-  hide: 'Ẩn',
-
-  // MESSAGE GROUP
   actionSave: 'Lưu',
   actionEdit: 'Sửa',
   actionRemove: 'Xóa',
+  actionHide: 'Ẩn',
+
+  // MESSAGE GROUP
   messageEmpty: 'Hiện chưa có',
   messageAddFail: 'Thêm không thành công, vui lòng kiểm tra lại.',
   messageDeleteFail: 'Xóa không thành công, vui lòng thử lại sau.',

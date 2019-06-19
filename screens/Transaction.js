@@ -11,7 +11,7 @@ import {
   RefreshControl,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { withTheme, Button, Snackbar } from 'react-native-paper';
+import { withTheme, Button } from 'react-native-paper';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
 import {
@@ -262,6 +262,7 @@ class Transaction extends React.Component {
                     onRemove={() =>
                       this.handleRemoveTransaction(transaction._id)
                     }
+                    responsed={deleteFailNotification}
                   />
                 </TouchableOpacity>
               ))
@@ -273,7 +274,7 @@ class Transaction extends React.Component {
         <SnackBar
           deleteFailNotification={deleteFailNotification}
           onDismiss={() => this.setState({ deleteFailNotification: false })}
-          label={i18n.t('hide')}
+          label={i18n.t('actionHide')}
           text={i18n.t('messageDeleteFail')}
         />
       </View>

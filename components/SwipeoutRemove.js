@@ -1,3 +1,4 @@
+/* eslint-disable react/no-this-in-sfc */
 import React from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import i18n from 'i18n-js';
@@ -19,37 +20,56 @@ const Container = styled.View`
   align-items: center;
 `;
 
-const Icon = ({ editable }) => (
-  <Container>
-    <FeatherIcon
-      color={theme.colors.white}
-      name={editable ? 'edit' : 'trash-2'}
-    />
-  </Container>
-);
-
 const Loading = () => (
   <Container>
     <ActivityIndicator size="small" color="#fff" />
   </Container>
 );
+const Icon = ({ editable, isLoading }) =>
+  isLoading ? (
+    <Loading />
+  ) : (
+    <Container>
+      <FeatherIcon
+        color={theme.colors.white}
+        name={editable ? 'edit' : 'trash-2'}
+      />
+    </Container>
+  );
+export default class SwipeoutRemove extends React.Component {
+  state = {
+    isLoading: false,
+  };
 
-export default ({ editable, onEdit, onRemove, removeLoading, children }) => {
-  const listBtn = [
-    {
-      ...defaultConfig,
-      text: i18n.t('actionRemove'),
-      onPress: onRemove,
-      component: <Icon />,
-    },
-  ];
-  if (editable) {
-    listBtn.unshift({
-      text: i18n.t('actionEdit'),
-      onPress: onEdit,
-      component: <Icon editable />,
-    });
+  componentWillReceiveProps = () => {
+    this.setState({ isLoading: false });
+  };
+
+  render() {
+    const { editable, onEdit, onRemove, children } = this.props;
+    const { isLoading } = this.state;
+    const that = this;
+    const listBtn = [
+      {
+        ...defaultConfig,
+        text: i18n.t('actionRemove'),
+        component: <Icon isLoading={isLoading} />,
+        onPress() {
+          that.setState({ isLoading: true });
+          if (!isLoading) {
+            onRemove();
+          }
+        },
+      },
+    ];
+    if (editable) {
+      listBtn.unshift({
+        text: i18n.t('actionEdit'),
+        onPress: onEdit,
+        component: <Icon editable />,
+      });
+    }
+
+    return <Swipeout right={listBtn}>{children}</Swipeout>;
   }
-
-  return <Swipeout right={listBtn}>{children}</Swipeout>;
-};
+}

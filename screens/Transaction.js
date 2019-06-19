@@ -166,7 +166,6 @@ class Transaction extends React.Component {
 
   render() {
     const { transactions } = this.props;
-    // console.log(transactions);
     const {
       isDatePickerVisible,
       fromDate,

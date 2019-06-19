@@ -1,25 +1,31 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react';
-import { ActivityIndicator, AsyncStorage, StatusBar, View } from 'react-native';
+import { connect } from 'react-redux';
+import { ActivityIndicator, StatusBar, View } from 'react-native';
+import ROLE from '../constants/role';
 
-export default class AuthLoadingScreen extends React.Component {
+class AuthLoadingScreen extends React.Component {
   constructor(props) {
     super(props);
     this._bootstrapAsync();
   }
 
-  // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
     const { navigation } = this.props;
-    const object = await AsyncStorage.getItem('persist:sas1');
-    const { info } = JSON.parse(JSON.parse(object).user);
+    const {
+      user: { info },
+    } = this.props;
+    console.log(info);
 
-    // This will switch to the App screen or Auth screen and this loading
-    // screen will be unmounted and thrown away.
-    navigation.navigate(info ? 'TabNavigator' : 'Login');
-    // navigation.navigate('TabNavigator');
+    navigation.navigate(
+      !info
+        ? 'Login'
+        : info.role === ROLE.MANAGER || info.role === ROLE.ACCOUNTANT
+        ? 'TabNavigator'
+        : 'StaffNavigator'
+    );
   };
 
-  // Render any loading content that you like here
   render() {
     return (
       <View>
@@ -29,3 +35,13 @@ export default class AuthLoadingScreen extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  user: state.user,
+});
+const mapDispatchToProps = {};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AuthLoadingScreen);

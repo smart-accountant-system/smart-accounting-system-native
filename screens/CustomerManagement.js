@@ -10,6 +10,7 @@ import {
 import { connect } from 'react-redux';
 import { withTheme, Snackbar } from 'react-native-paper';
 
+import ROLE from '../constants/role';
 import theme from '../constants/theme';
 import { handle401 } from '../constants/strategies';
 import { logout, getCustomers, removeCustomer } from '../redux/actions';
@@ -95,16 +96,21 @@ class CustomerManagement extends React.Component {
   };
 
   render() {
-    const { navigation, customers } = this.props;
+    const { navigation, customers, info } = this.props;
     const { searchText, refreshing, visibleSnackbar } = this.state;
 
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
           <Header>
-            <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-              <FeatherIcon color={theme.colors.white} name="chevron-left" />
-            </TouchableOpacity>
+            {info.role === ROLE.STAFF ? (
+              <FeatherIcon color={theme.colors.primary} name="chevron-left" />
+            ) : (
+              <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+                <FeatherIcon color={theme.colors.white} name="chevron-left" />
+              </TouchableOpacity>
+            )}
+
             <Typography>{i18n.t('customerManagement')}</Typography>
             <TouchableOpacity
               onPress={() => navigation.navigate('CustomerAddition')}
@@ -154,6 +160,7 @@ class CustomerManagement extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  info: state.user.info,
   customers: state.customer.customers,
 });
 const mapDispatchToProps = {

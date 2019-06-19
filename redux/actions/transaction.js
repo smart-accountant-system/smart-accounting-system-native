@@ -83,6 +83,7 @@ export function getTransactionById(
       if (result.status === 200 || result.status === 304) {
         dispatch({
           type: GET_TRANSACTION_BY_ID_SUCCESS,
+          payload: result.data,
         });
         success();
       } else {
@@ -120,8 +121,8 @@ export function deleteTransactionById(
 
       if (result.status === 200 || result.status === 304) {
         dispatch({
-          type: DELETE_TRANSACTION_BY_ID_REQUEST,
-          payload: result.data,
+          type: DELETE_TRANSACTION_BY_ID_SUCCESS,
+          payload: id,
         });
         success();
       } else {

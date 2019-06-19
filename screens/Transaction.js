@@ -10,7 +10,7 @@ import {
   RefreshControl,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { withTheme, Button } from 'react-native-paper';
+import { withTheme, Button, Snackbar } from 'react-native-paper';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
 import {
@@ -24,7 +24,13 @@ import { handle401 } from '../constants/strategies';
 import { FeatherIcon, Loading, Empty } from '../components';
 import { TransactionContent } from '../containers/Transaction';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
-import { logout, getTransactions, chooseTransaction } from '../redux/actions';
+import {
+  logout,
+  getTransactions,
+  chooseTransaction,
+  deleteTransactionById,
+} from '../redux/actions';
+import SnackBar from '../components/Message/SnackBar';
 
 class Transaction extends React.Component {
   state = {
@@ -37,6 +43,7 @@ class Transaction extends React.Component {
     filterHeight: new Animated.Value(0),
 
     refreshing: false,
+    deleteSuccessNotification: false,
   };
 
   componentDidMount = () => {
@@ -141,6 +148,29 @@ class Transaction extends React.Component {
     navigation.navigate('TransactionDetail');
   };
 
+  handleRemoveTransaction = id => {
+    this.props.deleteTransactionById(id, {
+      success: () => {
+        this.props.getTransactions(
+          {},
+          {
+            handle401: () =>
+              handle401({
+                logout: this.props.logout,
+                navigation: this.props.navigation,
+              }),
+          }
+        );
+        this.setState({ deleteSuccessNotification: true });
+      },
+      handle401: () =>
+        handle401({
+          logout: this.props.logout,
+          navigation: this.props.navigation,
+        }),
+    });
+  };
+
   render() {
     const { transactions } = this.props;
     const {
@@ -149,6 +179,7 @@ class Transaction extends React.Component {
       toDate,
       activatingDate,
       refreshing,
+      deleteSuccessNotification,
     } = this.state;
 
     return (
@@ -234,6 +265,9 @@ class Transaction extends React.Component {
                         month: 'long',
                       }
                     )}
+                    onRemove={() =>
+                      this.handleRemoveTransaction(transaction._id)
+                    }
                   />
                 </TouchableOpacity>
               ))
@@ -242,6 +276,13 @@ class Transaction extends React.Component {
         ) : (
           <Loading />
         )}
+        <SnackBar
+          deleteSuccessNotification={deleteSuccessNotification}
+          onDismiss={() => this.setState({ deleteSuccessNotification: false })}
+          label={i18n.t('hide')}
+          backgroundColor={theme.colors.success}
+          text={i18n.t('messageDeleteSuccess')}
+        />
       </View>
     );
   }
@@ -250,7 +291,12 @@ class Transaction extends React.Component {
 const mapStateToProps = state => ({
   transactions: state.transaction.transactions,
 });
-const mapDispatchToProps = { logout, getTransactions, chooseTransaction };
+const mapDispatchToProps = {
+  logout,
+  getTransactions,
+  chooseTransaction,
+  deleteTransactionById,
+};
 
 export default withTheme(
   connect(

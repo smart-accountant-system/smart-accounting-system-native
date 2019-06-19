@@ -34,11 +34,7 @@ class OfflineNotice extends PureComponent {
   }
 
   handleConnectivityChange = isConnected => {
-    if (isConnected) {
-      this.setState({ isConnected });
-    } else {
-      this.setState({ isConnected });
-    }
+    this.setState({ isConnected });
   };
 
   render() {

@@ -34,6 +34,8 @@ export default {
     grey: '#888',
     receive: '#3AAC74',
     pay: '#7C2064',
+    tabIconDefault: '#888',
+    success: '#4ee863',
   },
   // fonts,
 };

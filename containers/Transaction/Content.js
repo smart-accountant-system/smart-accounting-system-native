@@ -62,6 +62,7 @@ const TransactionTyporaphy = styled.View`
 export default ({
   id,
   onRemove,
+  removeLoading,
   checkedBy,
   fromColor,
   toColor,
@@ -70,7 +71,7 @@ export default ({
   time,
   cost,
 }) => (
-  <SwipeoutRemove onRemove={onRemove}>
+  <SwipeoutRemove onRemove={onRemove} removeLoading={removeLoading}>
     <TransactionContentContainer>
       <TransactionTyporaphy>
         <HeaderContainer>

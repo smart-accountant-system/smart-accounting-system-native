@@ -15,7 +15,6 @@ class AuthLoadingScreen extends React.Component {
     const {
       user: { info },
     } = this.props;
-    console.log(info);
 
     navigation.navigate(
       !info

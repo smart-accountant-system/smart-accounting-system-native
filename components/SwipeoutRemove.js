@@ -1,7 +1,8 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
 import i18n from 'i18n-js';
 import Swipeout from 'react-native-swipeout';
+import styled from 'styled-components';
 
 import FeatherIcon from './FeatherIcon';
 import theme from '../constants/theme';
@@ -12,30 +13,41 @@ const defaultConfig = {
   color: '#fff',
 };
 
-const RemoveIcon = ({ editable }) => (
-  <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+const Container = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Icon = ({ editable }) => (
+  <Container>
     <FeatherIcon
       color={theme.colors.white}
       name={editable ? 'edit' : 'trash-2'}
     />
-  </View>
+  </Container>
 );
 
-// BUILDING...
-export default ({ editable, onEdit, onRemove, children }) => {
+const Loading = () => (
+  <Container>
+    <ActivityIndicator size="small" color="#fff" />
+  </Container>
+);
+
+export default ({ editable, onEdit, onRemove, removeLoading, children }) => {
   const listBtn = [
     {
       ...defaultConfig,
       text: i18n.t('actionRemove'),
       onPress: onRemove,
-      component: <RemoveIcon />,
+      component: <Icon />,
     },
   ];
   if (editable) {
     listBtn.unshift({
       text: i18n.t('actionEdit'),
       onPress: onEdit,
-      component: <RemoveIcon editable />,
+      component: <Icon editable />,
     });
   }
 

@@ -64,6 +64,12 @@ export default (state = INITIAL_STATE, action) => {
     case DELETE_TRANSACTION_BY_ID_SUCCESS:
       return {
         ...state,
+        transactions: {
+          total: state.transactions.total - 1,
+          transactions: state.transactions.transactions.filter(
+            transaction => transaction._id !== action.payload
+          ),
+        },
         error: null,
       };
     case DELETE_TRANSACTION_BY_ID_FAILURE:

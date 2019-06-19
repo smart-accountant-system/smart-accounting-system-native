@@ -151,16 +151,6 @@ class Transaction extends React.Component {
   handleRemoveTransaction = id => {
     this.props.deleteTransactionById(id, {
       success: () => {
-        this.props.getTransactions(
-          {},
-          {
-            handle401: () =>
-              handle401({
-                logout: this.props.logout,
-                navigation: this.props.navigation,
-              }),
-          }
-        );
         this.setState({ deleteSuccessNotification: true });
       },
       handle401: () =>
@@ -173,6 +163,7 @@ class Transaction extends React.Component {
 
   render() {
     const { transactions } = this.props;
+    // console.log(transactions);
     const {
       isDatePickerVisible,
       fromDate,

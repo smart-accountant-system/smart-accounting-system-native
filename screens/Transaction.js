@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Animated,
+  LayoutAnimation,
   RefreshControl,
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -43,7 +44,7 @@ class Transaction extends React.Component {
     filterHeight: new Animated.Value(0),
 
     refreshing: false,
-    deleteSuccessNotification: false,
+    deleteFailNotification: false,
   };
 
   componentDidMount = () => {
@@ -149,9 +150,11 @@ class Transaction extends React.Component {
   };
 
   handleRemoveTransaction = id => {
+    LayoutAnimation.spring();
     this.props.deleteTransactionById(id, {
-      success: () => {
-        this.setState({ deleteSuccessNotification: true });
+      success: () => {},
+      failure: () => {
+        this.setState({ deleteFailNotification: true });
       },
       handle401: () =>
         handle401({
@@ -170,7 +173,7 @@ class Transaction extends React.Component {
       toDate,
       activatingDate,
       refreshing,
-      deleteSuccessNotification,
+      deleteFailNotification,
     } = this.state;
 
     return (
@@ -268,11 +271,10 @@ class Transaction extends React.Component {
           <Loading />
         )}
         <SnackBar
-          deleteSuccessNotification={deleteSuccessNotification}
-          onDismiss={() => this.setState({ deleteSuccessNotification: false })}
+          deleteFailNotification={deleteFailNotification}
+          onDismiss={() => this.setState({ deleteFailNotification: false })}
           label={i18n.t('hide')}
-          backgroundColor={theme.colors.success}
-          text={i18n.t('messageDeleteSuccess')}
+          text={i18n.t('messageDeleteFail')}
         />
       </View>
     );

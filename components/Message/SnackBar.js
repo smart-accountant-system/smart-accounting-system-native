@@ -1,24 +1,13 @@
 import React from 'react';
 import { Snackbar } from 'react-native-paper';
 
-export default ({
-  deleteSuccessNotification,
-  onDismiss,
-  label,
-  text,
-  backgroundColor,
-}) => (
+export default ({ deleteFailNotification, onDismiss, label, text }) => (
   <Snackbar
-    visible={deleteSuccessNotification}
+    visible={deleteFailNotification}
     onDismiss={onDismiss}
     action={{
       label,
-      onPress: () => {
-        // Do something
-      },
-    }}
-    style={{
-      backgroundColor,
+      onPress: () => {},
     }}
   >
     {text}

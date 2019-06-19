@@ -5,6 +5,9 @@ import {
   GET_RECEIPT_BY_ID_REQUEST,
   GET_RECEIPT_BY_ID_SUCCESS,
   GET_RECEIPT_BY_ID_FAILURE,
+  DELETE_RECEIPT_BY_ID_REQUEST,
+  DELETE_RECEIPT_BY_ID_SUCCESS,
+  DELETE_RECEIPT_BY_ID_FAILURE,
   CHOOSE_RECEIPT,
 } from '../actions';
 
@@ -49,6 +52,24 @@ export default (state = INITIAL_STATE, action) => {
         error: null,
       };
     case GET_RECEIPT_BY_ID_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+      };
+    case DELETE_RECEIPT_BY_ID_REQUEST:
+      return {
+        ...state,
+        error: null,
+      };
+    case DELETE_RECEIPT_BY_ID_SUCCESS:
+      return {
+        ...state,
+        receipts: state.receipts.filter(
+          receipt => receipt._id !== action.payload
+        ),
+        error: null,
+      };
+    case DELETE_RECEIPT_BY_ID_FAILURE:
       return {
         ...state,
         error: action.payload,

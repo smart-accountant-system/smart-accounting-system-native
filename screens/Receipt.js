@@ -164,7 +164,7 @@ class Receipt extends React.Component {
   };
 
   render() {
-    const { receipts } = this.props;
+    const { receipts, loading } = this.props;
     const {
       isDatePickerVisible,
       fromDate,
@@ -222,7 +222,7 @@ class Receipt extends React.Component {
           onCancel={this.hideDateTimePicker}
         />
 
-        {receipts ? (
+        {receipts && !loading ? (
           <ScrollView
             refreshControl={
               <RefreshControl
@@ -286,6 +286,7 @@ class Receipt extends React.Component {
 
 const mapStateToProps = state => ({
   receipts: state.receipt.receipts,
+  loading: state.receipt.loading,
 });
 const mapDispatchToProps = {
   logout,

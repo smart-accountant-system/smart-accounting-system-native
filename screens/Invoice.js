@@ -165,7 +165,7 @@ class Invoice extends React.Component {
   };
 
   render() {
-    const { navigation, invoices } = this.props;
+    const { navigation, invoices, loading } = this.props;
     const {
       isDatePickerVisible,
       fromDate,
@@ -225,7 +225,7 @@ class Invoice extends React.Component {
           onCancel={this.hideDateTimePicker}
         />
 
-        {invoices ? (
+        {invoices && !loading ? (
           <ScrollView
             refreshControl={
               <RefreshControl
@@ -279,6 +279,7 @@ class Invoice extends React.Component {
 
 const mapStateToProps = state => ({
   invoices: state.invoice.invoices,
+  loading: state.invoice.isLoading,
 });
 const mapDispatchToProps = {
   logout,

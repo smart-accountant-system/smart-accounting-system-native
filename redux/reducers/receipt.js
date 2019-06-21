@@ -14,6 +14,7 @@ import {
 const INITIAL_STATE = {
   receipts: null,
   currentReceipt: null,
+  loading: false,
   error: null,
 };
 
@@ -22,17 +23,20 @@ export default (state = INITIAL_STATE, action) => {
     case GET_RECEIPTS_REQUEST:
       return {
         ...state,
+        loading: true,
         error: null,
       };
     case GET_RECEIPTS_SUCCESS:
       return {
         ...state,
         receipts: action.payload,
+        loading: false,
         error: null,
       };
     case GET_RECEIPTS_FAILURE:
       return {
         ...state,
+        loading: false,
         error: action.payload,
       };
     case CHOOSE_RECEIPT:

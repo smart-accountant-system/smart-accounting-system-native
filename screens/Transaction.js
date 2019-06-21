@@ -7,7 +7,6 @@ import {
   ScrollView,
   TouchableOpacity,
   Animated,
-  LayoutAnimation,
   RefreshControl,
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -150,9 +149,7 @@ class Transaction extends React.Component {
   };
 
   handleRemoveTransaction = id => {
-    LayoutAnimation.spring();
     this.props.deleteTransactionById(id, {
-      success: () => {},
       failure: () => {
         this.setState({ deleteFailNotification: true });
       },

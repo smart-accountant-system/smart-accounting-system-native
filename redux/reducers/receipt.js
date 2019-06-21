@@ -64,9 +64,12 @@ export default (state = INITIAL_STATE, action) => {
     case DELETE_RECEIPT_BY_ID_SUCCESS:
       return {
         ...state,
-        receipts: state.receipts.filter(
-          receipt => receipt._id !== action.payload
-        ),
+        receipts: {
+          total: state.receipts.total - 1,
+          receipts: state.receipts.receipts.filter(
+            receipt => receipt._id !== action.payload._id
+          ),
+        },
         error: null,
       };
     case DELETE_RECEIPT_BY_ID_FAILURE:

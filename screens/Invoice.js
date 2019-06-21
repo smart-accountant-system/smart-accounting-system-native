@@ -4,14 +4,13 @@ import i18n from 'i18n-js';
 import {
   Text,
   View,
-  StatusBar,
   TouchableOpacity,
   ScrollView,
   Animated,
   RefreshControl,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { Button } from 'react-native-paper';
+import { Button, Snackbar } from 'react-native-paper';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
 import {
@@ -23,7 +22,12 @@ import {
 import theme from '../constants/theme';
 import { handle401 } from '../constants/strategies';
 import { FeatherIcon, Loading, Empty } from '../components';
-import { logout, getInvoices, chooseInvoice } from '../redux/actions';
+import {
+  logout,
+  getInvoices,
+  chooseInvoice,
+  removeInvoice,
+} from '../redux/actions';
 import { InvoiceItem, InvoiceContent } from '../containers/Invoice';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
 
@@ -38,6 +42,7 @@ class Invoice extends React.Component {
     filterHeight: new Animated.Value(0),
 
     refreshing: false,
+    visibleSnackbar: false,
   };
 
   componentDidMount = () => {
@@ -142,6 +147,19 @@ class Invoice extends React.Component {
     navigation.navigate('InvoiceDetail');
   };
 
+  handleRemoveInvoice = _id => {
+    this.props.removeInvoice(_id, {
+      failure: () => {
+        this.setState({ visibleSnackbar: true });
+      },
+      handle401: () =>
+        handle401({
+          logout: this.props.logout,
+          navigation: this.props.navigation,
+        }),
+    });
+  };
+
   render() {
     const { navigation, invoices } = this.props;
     const {
@@ -150,7 +168,10 @@ class Invoice extends React.Component {
       toDate,
       activatingDate,
       refreshing,
+      visibleSnackbar,
     } = this.state;
+
+    console.log(invoices);
 
     return (
       <View style={{ display: 'flex', flex: 1 }}>
@@ -217,6 +238,7 @@ class Invoice extends React.Component {
               invoices.invoices.map(invoice => (
                 <InvoiceItem
                   key={invoice._id}
+                  onRemove={() => this.handleRemoveInvoice(invoice._id)}
                   invoice={invoice}
                   invoiceDetail={this.invoiceDetail}
                 >
@@ -241,6 +263,13 @@ class Invoice extends React.Component {
         ) : (
           <Loading />
         )}
+        <Snackbar
+          visible={visibleSnackbar}
+          onDismiss={() => this.setState({ visibleSnackbar: false })}
+          action={{ label: 'OK', onPress: () => {} }}
+        >
+          {i18n.t('messageDeleteFail')}
+        </Snackbar>
       </View>
     );
   }
@@ -253,6 +282,7 @@ const mapDispatchToProps = {
   logout,
   getInvoices,
   chooseInvoice,
+  removeInvoice,
 };
 
 export default connect(

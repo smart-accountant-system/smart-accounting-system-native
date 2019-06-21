@@ -38,7 +38,7 @@ class TransactionDetail extends React.Component {
   };
 
   render() {
-    const { navigation, currentTransaction } = this.props;
+    const { navigation } = this.props;
     const { refreshing } = this.state;
     return (
       <View style={{ display: 'flex', flex: 1 }}>

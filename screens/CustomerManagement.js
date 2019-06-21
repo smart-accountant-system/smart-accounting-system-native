@@ -80,10 +80,6 @@ class CustomerManagement extends React.Component {
 
   handleRemove = _id => {
     this.props.removeCustomer(_id, {
-      success: () => {
-        this._onRefresh();
-      },
-
       failure: () => {
         this.setState({ visibleSnackbar: true });
       },

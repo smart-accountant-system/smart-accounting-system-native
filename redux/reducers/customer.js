@@ -35,10 +35,22 @@ export default (state = INITIAL_STATE, action) => {
         error: null,
       };
     case POST_CUSTOMER_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        error: null,
+      };
     case DELETE_CUSTOMER_SUCCESS:
       return {
         ...state,
         isLoading: false,
+
+        customers: {
+          total: state.customers.total - 1,
+          customers: state.customers.customers.filter(
+            customer => customer._id !== action.payload._id
+          ),
+        },
         error: null,
       };
 

@@ -2,7 +2,7 @@
 import React from 'react';
 import i18n from 'i18n-js';
 import { connect } from 'react-redux';
-import { Button, withTheme } from 'react-native-paper';
+import { Button, withTheme, Snackbar } from 'react-native-paper';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import { Text, View, ScrollView, Animated, RefreshControl } from 'react-native';
 
@@ -35,6 +35,7 @@ class Receipt extends React.Component {
     filterHeight: new Animated.Value(0),
 
     refreshing: false,
+    visibleSnackbar: false,
   };
 
   componentDidMount = () => {
@@ -139,7 +140,18 @@ class Receipt extends React.Component {
     navigation.navigate('ReceiptDetail');
   };
 
-  handleRemoveReceipt = id => {};
+  handleRemoveReceipt = id => {
+    this.props.deleteReceiptById(id, {
+      failure: () => {
+        this.setState({ visibleSnackbar: true });
+      },
+      handle401: () =>
+        handle401({
+          logout: this.props.logout,
+          navigation: this.props.navigation,
+        }),
+    });
+  };
 
   render() {
     const { receipts } = this.props;
@@ -149,6 +161,7 @@ class Receipt extends React.Component {
       toDate,
       activatingDate,
       refreshing,
+      visibleSnackbar,
     } = this.state;
 
     return (
@@ -249,6 +262,13 @@ class Receipt extends React.Component {
         ) : (
           <Loading />
         )}
+        <Snackbar
+          visible={visibleSnackbar}
+          onDismiss={() => this.setState({ visibleSnackbar: false })}
+          action={{ label: 'OK', onPress: () => {} }}
+        >
+          {i18n.t('messageDeleteFail')}
+        </Snackbar>
       </View>
     );
   }

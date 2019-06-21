@@ -116,10 +116,10 @@ export function deleteReceiptById(
         method: METHODS.delete,
       });
 
-      if (result.status === 200 || result.status === 304) {
+      if (result.status === 200) {
         dispatch({
           type: DELETE_RECEIPT_BY_ID_SUCCESS,
-          payload: id,
+          payload: result.data,
         });
         success();
       } else {

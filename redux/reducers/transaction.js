@@ -67,7 +67,7 @@ export default (state = INITIAL_STATE, action) => {
         transactions: {
           total: state.transactions.total - 1,
           transactions: state.transactions.transactions.filter(
-            transaction => transaction._id !== action.payload
+            transaction => transaction._id !== action.payload._id
           ),
         },
         error: null,

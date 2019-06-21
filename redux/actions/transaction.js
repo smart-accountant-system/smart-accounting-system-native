@@ -122,7 +122,7 @@ export function deleteTransactionById(
       if (result.status === 200 || result.status === 304) {
         dispatch({
           type: DELETE_TRANSACTION_BY_ID_SUCCESS,
-          payload: id,
+          payload: result.data,
         });
         success();
       } else {

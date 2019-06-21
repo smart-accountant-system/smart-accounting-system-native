@@ -12,6 +12,14 @@ export const GET_ACCOUNT_BY_ID_FAILURE = 'get-account-by-id-failure';
 
 export const CHOOSE_ACCOUNT = 'choose-account';
 
+export const POST_ACCOUNT_REQUEST = 'post-account-request';
+export const POST_ACCOUNT_SUCCESS = 'post-account-success';
+export const POST_ACCOUNT_FAILURE = 'post-account-failure';
+
+export const DELETE_ACCOUNT_REQUEST = 'delete-account-request';
+export const DELETE_ACCOUNT_SUCCESS = 'delete-account-success';
+export const DELETE_ACCOUNT_FAILURE = 'delete-account-failure';
+
 export function getAccounts(
   params,
   { success = () => {}, failure = () => {}, handle401 }
@@ -91,6 +99,85 @@ export function getAccountById(
       }
       dispatch({
         type: GET_ACCOUNT_BY_ID_FAILURE,
+        payload: error,
+      });
+      failure();
+    }
+  };
+}
+
+export function addAccount(
+  data,
+  { success = () => {}, failure = () => {}, handle401 }
+) {
+  return async dispatch => {
+    try {
+      dispatch({ type: POST_ACCOUNT_REQUEST });
+      const endpoint = '/accounts';
+
+      const result = await query({
+        data,
+        endpoint,
+        method: METHODS.post,
+      });
+
+      if (result.status === 200 || result.status === 201) {
+        dispatch({
+          type: POST_ACCOUNT_SUCCESS,
+          payload: result.data,
+        });
+        success();
+      } else {
+        dispatch({
+          type: POST_ACCOUNT_FAILURE,
+        });
+        failure();
+      }
+    } catch (error) {
+      if (error.response.status === 401) {
+        handle401();
+      }
+      dispatch({
+        type: POST_ACCOUNT_FAILURE,
+        payload: error,
+      });
+      failure();
+    }
+  };
+}
+
+export function removeAccount(
+  _id,
+  { success = () => {}, failure = () => {}, handle401 }
+) {
+  return async dispatch => {
+    try {
+      dispatch({ type: DELETE_ACCOUNT_REQUEST });
+      const endpoint = `/accounts/${_id}`;
+
+      const result = await query({
+        endpoint,
+        method: METHODS.delete,
+      });
+
+      if (result.status === 200) {
+        dispatch({
+          type: DELETE_ACCOUNT_SUCCESS,
+          payload: result.data,
+        });
+        success();
+      } else {
+        dispatch({
+          type: DELETE_ACCOUNT_FAILURE,
+        });
+        failure();
+      }
+    } catch (error) {
+      if (error.response.status === 401) {
+        handle401();
+      }
+      dispatch({
+        type: DELETE_ACCOUNT_FAILURE,
         payload: error,
       });
       failure();

@@ -44,7 +44,6 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isLoading: false,
-
         customers: {
           total: state.customers.total - 1,
           customers: state.customers.customers.filter(

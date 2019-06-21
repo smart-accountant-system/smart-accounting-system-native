@@ -171,8 +171,6 @@ class Invoice extends React.Component {
       visibleSnackbar,
     } = this.state;
 
-    console.log(invoices);
-
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>

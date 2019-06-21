@@ -2,11 +2,16 @@
 import React from 'react';
 import i18n from 'i18n-js';
 import { connect } from 'react-redux';
-import { withTheme } from 'react-native-paper';
+import { withTheme, Snackbar } from 'react-native-paper';
 import { View, ScrollView, RefreshControl } from 'react-native';
 
 import theme from '../constants/theme';
-import { logout, getAccounts, chooseAccount } from '../redux/actions';
+import {
+  logout,
+  getAccounts,
+  chooseAccount,
+  removeAccount,
+} from '../redux/actions';
 import { handle401 } from '../constants/strategies';
 import { FeatherIcon, Loading, Searchbar, Empty } from '../components';
 import { AccountItem, AccountContent } from '../containers/Account';
@@ -17,6 +22,7 @@ class Account extends React.Component {
     searchText: '',
     timer: undefined,
     refreshing: false,
+    visibleSnackbar: false,
   };
 
   componentDidMount = () => {
@@ -77,9 +83,22 @@ class Account extends React.Component {
     });
   };
 
+  handleRemove = _id => {
+    this.props.removeAccount(_id, {
+      failure: () => {
+        this.setState({ visibleSnackbar: true });
+      },
+      handle401: () =>
+        handle401({
+          logout: this.props.logout,
+          navigation: this.props.navigation,
+        }),
+    });
+  };
+
   render() {
     const { accounts } = this.props;
-    const { searchText, refreshing } = this.state;
+    const { searchText, refreshing, visibleSnackbar } = this.state;
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
@@ -105,6 +124,7 @@ class Account extends React.Component {
             ) : (
               accounts.accounts.map(account => (
                 <AccountItem
+                  onRemove={() => this.handleRemove(account._id)}
                   key={account._id}
                   account={account}
                   accountDetail={this.accountDetail}
@@ -136,6 +156,13 @@ class Account extends React.Component {
         ) : (
           <Loading />
         )}
+        <Snackbar
+          visible={visibleSnackbar}
+          onDismiss={() => this.setState({ visibleSnackbar: false })}
+          action={{ label: 'OK', onPress: () => {} }}
+        >
+          {i18n.t('messageDeleteFail')}
+        </Snackbar>
       </View>
     );
   }
@@ -148,6 +175,7 @@ const mapDispatchToProps = {
   logout,
   getAccounts,
   chooseAccount,
+  removeAccount,
 };
 
 export default withTheme(

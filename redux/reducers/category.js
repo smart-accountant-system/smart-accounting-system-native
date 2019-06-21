@@ -35,13 +35,25 @@ export default (state = INITIAL_STATE, action) => {
         categories: action.payload,
         error: null
       };
+      
     case POST_CATEGORY_SUCCESS:
+        return {
+          ...state,
+          isLoading: false,
+          error: null,
+        };
     case DELETE_CATEGORY_SUCCESS:
-      return {
-        ...state,
-        isLoading: false,
-        error: null
-      };
+        return {
+          ...state,
+          categories: {
+            total: state.categories.total - 1,
+            categories: state.categories.categories.filter(
+              category => category._id !== action.payload._id
+            ),
+          },
+          isLoading: false,
+          error: null,
+        };
 
     case GET_CATEGORIES_FAILURE:
     case POST_CATEGORY_FAILURE:

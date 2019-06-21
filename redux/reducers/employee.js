@@ -35,10 +35,21 @@ export default (state = INITIAL_STATE, action) => {
         error: null,
       };
     case POST_EMPLOYEE_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        error: null,
+      };
     case DELETE_EMPLOYEE_SUCCESS:
       return {
         ...state,
         isLoading: false,
+        employees: {
+          total: state.employees.total - 1,
+          employees: state.employees.employees.filter(
+            employee => employee._id !== action.payload._id
+          ),
+        },
         error: null,
       };
 

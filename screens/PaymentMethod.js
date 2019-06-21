@@ -79,10 +79,6 @@ class PaymentMethod extends React.Component {
 
   handleRemove = _id => {
     this.props.removeCategory(_id, {
-      success: () => {
-        this._onRefresh();
-      },
-
       failure: () => {
         this.setState({ visibleSnackbar: true });
       },

@@ -80,10 +80,6 @@ class EmployeeManagement extends React.Component {
 
   handleRemove = _id => {
     this.props.removeEmployee(_id, {
-      success: () => {
-        this._onRefresh();
-      },
-
       failure: () => {
         this.setState({ visibleSnackbar: true });
       },

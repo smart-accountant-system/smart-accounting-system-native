@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Animated,
   RefreshControl,
+  LayoutAnimation,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme, Button } from 'react-native-paper';
@@ -150,6 +151,9 @@ class Transaction extends React.Component {
 
   handleRemoveTransaction = id => {
     this.props.deleteTransactionById(id, {
+      success: () => {
+        LayoutAnimation.spring();
+      },
       failure: () => {
         this.setState({ deleteFailNotification: true });
       },

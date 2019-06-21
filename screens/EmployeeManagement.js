@@ -7,6 +7,7 @@ import {
   ScrollView,
   RefreshControl,
   TouchableOpacity,
+  LayoutAnimation,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme, Snackbar } from 'react-native-paper';
@@ -80,6 +81,9 @@ class EmployeeManagement extends React.Component {
 
   handleRemove = _id => {
     this.props.removeEmployee(_id, {
+      success: () => {
+        LayoutAnimation.spring();
+      },
       failure: () => {
         this.setState({ visibleSnackbar: true });
       },

@@ -6,6 +6,7 @@ import {
   ScrollView,
   RefreshControl,
   TouchableOpacity,
+  LayoutAnimation,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme, Snackbar } from 'react-native-paper';
@@ -79,6 +80,9 @@ class PaymentMethod extends React.Component {
 
   handleRemove = _id => {
     this.props.removeCategory(_id, {
+      success: () => {
+        LayoutAnimation.spring();
+      },
       failure: () => {
         this.setState({ visibleSnackbar: true });
       },

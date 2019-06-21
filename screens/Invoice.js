@@ -8,6 +8,7 @@ import {
   ScrollView,
   Animated,
   RefreshControl,
+  LayoutAnimation,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Button, Snackbar } from 'react-native-paper';
@@ -149,6 +150,9 @@ class Invoice extends React.Component {
 
   handleRemoveInvoice = _id => {
     this.props.removeInvoice(_id, {
+      success: () => {
+        LayoutAnimation.spring();
+      },
       failure: () => {
         this.setState({ visibleSnackbar: true });
       },

@@ -4,7 +4,13 @@ import React from 'react';
 import i18n from 'i18n-js';
 import { connect } from 'react-redux';
 import { withTheme, Button, Snackbar } from 'react-native-paper';
-import { View, TouchableOpacity, ScrollView, Text } from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  LayoutAnimation,
+} from 'react-native';
 
 import {
   DetailItem,
@@ -74,6 +80,7 @@ class InvoiceAddition extends React.Component {
   };
 
   handleAdd = product => {
+    LayoutAnimation.spring();
     const { detail } = this.state;
     this.setState({
       detail: [...detail, product],
@@ -82,6 +89,7 @@ class InvoiceAddition extends React.Component {
 
   handleRemoveDetail = key => {
     const { detail } = this.state;
+    LayoutAnimation.spring();
     this.setState({
       detail: detail.filter(item => item.key !== key),
     });

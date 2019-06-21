@@ -177,7 +177,9 @@ class Invoice extends React.Component {
           <Header>
             <FeatherIcon color={theme.colors.primary} name="user" />
             <Typography>{i18n.t('invoice')}</Typography>
-            <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('InvoiceAddition')}
+            >
               <FeatherIcon color={theme.colors.white} name="plus" />
             </TouchableOpacity>
           </Header>

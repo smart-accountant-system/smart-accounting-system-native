@@ -70,6 +70,10 @@ export default class SwipeoutRemove extends React.Component {
       });
     }
 
-    return <Swipeout right={listBtn}>{children}</Swipeout>;
+    return (
+      <Swipeout style={{ backgroundColor: 'transparent' }} right={listBtn}>
+        {children}
+      </Swipeout>
+    );
   }
 }

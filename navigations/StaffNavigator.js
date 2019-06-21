@@ -16,18 +16,8 @@ import InvoiceDetail from '../screens/InvoiceDetail';
 import Receipt from '../screens/Receipt';
 import ReceiptDetail from '../screens/ReceiptDetail';
 
-import Transaction from '../screens/Transaction';
-import TransactionDetail from '../screens/TransactionDetail';
-
-import Account from '../screens/Account';
-import AccountDetail from '../screens/AccountDetail';
-
-import PaymentMethod from '../screens/PaymentMethod';
-import PaymentMethodAddition from '../screens/PaymentMethodAddition';
-
-import EmployeeManagement from '../screens/EmployeeManagement';
-import EmployeeAddition from '../screens/EmployeeAddition';
-import EmployeeDetail from '../screens/EmployeeDetail';
+import InvoiceAddition from '../screens/InvoiceAddition';
+import InvoiceProductAddition from '../screens/InvoiceProductAddition';
 
 import CustomerManagement from '../screens/CustomerManagement';
 import CustomerAddition from '../screens/CustomerAddition';
@@ -52,6 +42,8 @@ const InvoiceStack = createStackNavigator(
   {
     Invoice,
     InvoiceDetail,
+    InvoiceAddition,
+    InvoiceProductAddition,
   },
   {
     headerMode: 'none',

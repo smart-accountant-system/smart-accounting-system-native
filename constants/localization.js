@@ -2,9 +2,13 @@ export const en = {
   local: 'en-EN',
 
   dashboard: 'Dashboard',
-  invoice: 'Invoice',
   profile: 'Profile',
   logout: 'Logout',
+
+  invoice: 'Invoice',
+  invoiceAddition: 'Add invoice',
+  invoiceDetail: 'Invoice Detail',
+  invoiceProduceAddition: 'Add product',
 
   paymentMethod: 'Payment method',
   paymentMethodAddition: 'Add payment method',
@@ -36,11 +40,18 @@ export const en = {
   email: 'Email',
   phone: 'Phone',
   name: 'Name',
+  quantity: 'Quantity',
+  unitPrice: 'Unit Price',
   detail: 'Description',
   staff: 'Staff',
   accountant: 'Accountant',
   manager: 'Manager',
   address: 'Address',
+  purchasedInvoice: 'Purchased Invoice',
+  selledInvoice: 'Selled Invoice',
+  product: 'Product',
+  cost: 'Cost',
+  totalCost: 'Total cost',
 
   // ADVANCED FILTER GROUP
   advancedFilter: 'Advanced filter',
@@ -66,9 +77,13 @@ export const vi = {
   local: 'vi-VN',
 
   dashboard: 'Trang chủ',
-  invoice: 'Hoá đơn',
   profile: 'Thông tin cá nhân',
   logout: 'Đăng xuất',
+
+  invoice: 'Hoá đơn',
+  invoiceAddtion: 'Thêm hoá đơn',
+  invoiceDetail: 'Chi tiết hóa đơn',
+  invoiceProduceAddition: 'Thêm sản phẩm',
 
   paymentMethod: 'Phương thức thanh toán',
   paymentMethodAddition: 'Thêm phương thức thanh toán',
@@ -100,11 +115,18 @@ export const vi = {
   email: 'Thư điện tử',
   phone: 'Số điện thoại',
   name: 'Tên',
+  quantity: 'Số lượng',
+  unitPrice: 'Đơn giá',
   detail: 'Mô tả chi tiết',
   staff: 'Nhân viên',
   accountant: 'Kế toán',
   manager: 'Quản lý',
   address: 'Địa chỉ',
+  purchasedInvoice: 'Hóa đơn nhập hàng',
+  selledInvoice: 'Hóa đơn bán hàng',
+  product: 'Sản phẩm',
+  cost: 'Thành tiền',
+  totalCost: 'Tổng tiền',
 
   // ADVANCED FILTER GROUP
   advancedFilter: 'Bộ lọc nâng cao',
@@ -120,6 +142,7 @@ export const vi = {
 
   // MESSAGE GROUP
   messageEmpty: 'Hiện chưa có',
+  messageNotAllowEmpty: 'Không nhận dữ liệu rỗng',
   messageAddFail: 'Thêm không thành công, vui lòng kiểm tra lại.',
   messageDeleteFail: 'Xóa không thành công, vui lòng thử lại sau.',
   messageDeleteSuccess: 'Xoá thành công',

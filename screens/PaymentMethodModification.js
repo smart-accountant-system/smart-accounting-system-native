@@ -76,13 +76,11 @@ class PaymentMethodModifycation extends React.Component {
             label={i18n.t('name')}
             value={name}
             onChangeText={name => this.setState({ name, isVisible: false })}
-            style={{ backgroundColor: '#fff' }}
           />
           <InterestTextInput
             label={i18n.t('detail')}
             numberOfLines={3}
             multiline
-            style={{ backgroundColor: '#fff' }}
             value={detail}
             onChangeText={detail => this.setState({ detail, isVisible: false })}
           />

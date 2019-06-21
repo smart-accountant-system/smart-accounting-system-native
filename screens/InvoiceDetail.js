@@ -15,6 +15,12 @@ import { FeatherIcon } from '../components';
 import { handle401 } from '../constants/strategies';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
 import { getInvoiceById } from '../redux/actions';
+import {
+  HeaderInvoice,
+  DescriptionHeader,
+  DetailItem,
+  FooterInvoice,
+} from '../containers/InvoiceDetail';
 
 class InvoiceDetail extends React.Component {
   state = {
@@ -50,7 +56,7 @@ class InvoiceDetail extends React.Component {
             <TouchableOpacity onPress={() => navigation.navigate('Invoice')}>
               <FeatherIcon color={theme.colors.white} name="chevron-left" />
             </TouchableOpacity>
-            <Typography>{i18n.t('invoice')}</Typography>
+            <Typography>{i18n.t('invoiceDetail')}</Typography>
             <FeatherIcon color={theme.colors.primary} name="user" />
           </Header>
         </HeaderWrapper>
@@ -62,117 +68,31 @@ class InvoiceDetail extends React.Component {
             />
           }
         >
-          <View
-            style={{
-              padding: 8,
-              borderBottomColor: '#f1f1f1',
-              borderBottomWidth: 3,
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <Text style={{ fontSize: 20 }}>{name} Invoice</Text>
-            <Text style={{ color: '#444', paddingBottom: 8 }}>
-              {new Date(createdAt).toLocaleDateString(i18n.t('local'), {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric',
-              })}
-            </Text>
-            <Text style={{ color }}>{status}</Text>
-          </View>
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              padding: 8,
-              marginBottom: -18,
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 12,
-                width: '30%',
-                color: '#666',
-              }}
-            >
-              product
-            </Text>
-            <Text
-              style={{
-                fontSize: 12,
-                width: '15%',
-                color: '#666',
-                textAlign: 'right',
-              }}
-            >
-              quantity
-            </Text>
-            <Text
-              style={{
-                fontSize: 12,
-                width: '25%',
-                color: '#666',
-                textAlign: 'right',
-              }}
-            >
-              unit price
-            </Text>
-            <Text
-              style={{
-                fontSize: 12,
-                width: '30%',
-                color: '#666',
-                textAlign: 'right',
-              }}
-            >
-              cost
-            </Text>
-          </View>
+          <HeaderInvoice
+            name={name}
+            color={color}
+            status={status}
+            createdAt={new Date(createdAt).toLocaleDateString(i18n.t('local'), {
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric',
+            })}
+          />
+          <DescriptionHeader
+            product={i18n.t('product')}
+            quantity={i18n.t('quantity')}
+            unitPrice={i18n.t('unitPrice')}
+            cost={i18n.t('cost')}
+          />
           {currentInvoice.detail.map(({ product, quantity, unitPrice }) => (
-            <View
+            <DetailItem
               key={Math.random()}
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                padding: 8,
-                borderBottomColor: '#f1f1f1',
-                borderBottomWidth: 1,
-              }}
-            >
-              <Text style={{ width: '30%', fontSize: 18 }}>{product}</Text>
-              <Text style={{ width: '15%', textAlign: 'right' }}>
-                {quantity}
-              </Text>
-              <Text style={{ width: '25%', textAlign: 'right' }}>
-                {unitPrice}
-              </Text>
-              <Text style={{ width: '30%', textAlign: 'right', fontSize: 16 }}>
-                {unitPrice * quantity}
-              </Text>
-            </View>
+              product={product}
+              quantity={quantity}
+              unitPrice={unitPrice}
+            />
           ))}
-          <View
-            style={{
-              padding: 8,
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 12,
-                color: '#666',
-                textAlign: 'right',
-              }}
-            >
-              total cost
-            </Text>
-            <Text style={{ color, fontSize: 18, textAlign: 'right' }}>
-              {totalCost}
-            </Text>
-          </View>
+          <FooterInvoice color={color} totalCost={totalCost} />
         </ScrollView>
       </View>
     );

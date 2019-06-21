@@ -1,10 +1,10 @@
 import React from 'react';
 import { TextInput } from 'react-native-paper';
 
-export default props => (
+export default ({ style, ...others }) => (
   <TextInput
-    {...props}
+    {...others}
     autoCapitalize="none"
-    style={{ backgroundColor: '#fff' }}
+    style={{ ...style, backgroundColor: '#fff' }}
   />
 );

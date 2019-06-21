@@ -227,7 +227,7 @@ class Invoice extends React.Component {
           onCancel={this.hideDateTimePicker}
         />
 
-        {invoices && !loading ? (
+        {invoices ? (
           <ScrollView
             refreshControl={
               <RefreshControl

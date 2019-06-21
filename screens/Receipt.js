@@ -222,7 +222,7 @@ class Receipt extends React.Component {
           onCancel={this.hideDateTimePicker}
         />
 
-        {receipts && !loading ? (
+        {receipts ? (
           <ScrollView
             refreshControl={
               <RefreshControl

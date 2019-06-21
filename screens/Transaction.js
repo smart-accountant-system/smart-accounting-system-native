@@ -223,7 +223,7 @@ class Transaction extends React.Component {
           onConfirm={this.handleDatePicked}
           onCancel={this.hideDateTimePicker}
         />
-        {transactions && !loading ? (
+        {transactions ? (
           <ScrollView
             refreshControl={
               <RefreshControl

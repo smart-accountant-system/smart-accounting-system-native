@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import {
@@ -18,6 +19,7 @@ import {
   AmazingCircle,
   LoginFooter,
 } from '../containers/Login';
+import ROLE from '../constants/role';
 import { login } from '../redux/actions';
 import Layout from '../constants/Layout';
 
@@ -36,7 +38,16 @@ class Login extends React.Component {
       { username, password },
       {
         success: () => {
-          navigation.navigate('Home');
+          const {
+            user: { info },
+          } = this.props;
+          navigation.navigate(
+            !info
+              ? 'Login'
+              : info.role === ROLE.MANAGER || info.role === ROLE.ACCOUNTANT
+              ? 'TabNavigator'
+              : 'StaffNavigator'
+          );
         },
         failure: () => {
           this.setState({ visible: true });
@@ -51,7 +62,7 @@ class Login extends React.Component {
 
   render() {
     const { username, password, visible } = this.state;
-    const { theme, info } = this.props;
+    const { theme, user } = this.props;
     return (
       <LoginBackground>
         <StatusBar barStyle="light-content" />
@@ -116,7 +127,7 @@ class Login extends React.Component {
                   style={{ width: Layout.deviceWidth - 50, marginTop: 10 }}
                   contentStyle={{ height: 50 }}
                   onPress={this.handleLogin}
-                  loading={info.isLogging}
+                  loading={user.isLogging}
                 >
                   <Text
                     style={{
@@ -146,7 +157,7 @@ class Login extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  info: state.user,
+  user: state.user,
 });
 const mapDispatchToProps = {
   login,

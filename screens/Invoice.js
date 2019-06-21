@@ -15,20 +15,22 @@ import { Button, Snackbar } from 'react-native-paper';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
 import {
-  FilterHeader,
-  FilterBody,
-  FilterField,
-  FilterTime,
-} from '../components/Filter';
-import theme from '../constants/theme';
-import { handle401 } from '../constants/strategies';
-import { FeatherIcon, Loading, Empty } from '../components';
-import {
   logout,
   getInvoices,
   chooseInvoice,
   removeInvoice,
 } from '../redux/actions';
+import {
+  FilterHeader,
+  FilterBody,
+  FilterField,
+  FilterTime,
+} from '../components/Filter';
+import ROLE from '../constants/role';
+import theme from '../constants/theme';
+import { handle401 } from '../constants/strategies';
+import { FeatherIcon, Loading, Empty } from '../components';
+
 import { InvoiceItem, InvoiceContent } from '../containers/Invoice';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
 
@@ -165,7 +167,11 @@ class Invoice extends React.Component {
   };
 
   render() {
-    const { navigation, invoices, loading } = this.props;
+    const {
+      navigation,
+      invoices,
+      user: { info },
+    } = this.props;
     const {
       isDatePickerVisible,
       fromDate,
@@ -181,11 +187,15 @@ class Invoice extends React.Component {
           <Header>
             <FeatherIcon color={theme.colors.primary} name="user" />
             <Typography>{i18n.t('invoice')}</Typography>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('InvoiceAddition')}
-            >
-              <FeatherIcon color={theme.colors.white} name="plus" />
-            </TouchableOpacity>
+            {info.role === ROLE.STAFF ? (
+              <TouchableOpacity
+                onPress={() => navigation.navigate('InvoiceAddition')}
+              >
+                <FeatherIcon color={theme.colors.white} name="plus" />
+              </TouchableOpacity>
+            ) : (
+              <FeatherIcon color={theme.colors.primary} name="plus" />
+            )}
           </Header>
         </HeaderWrapper>
 
@@ -280,6 +290,7 @@ class Invoice extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  user: state.user,
   invoices: state.invoice.invoices,
   loading: state.invoice.isLoading,
 });

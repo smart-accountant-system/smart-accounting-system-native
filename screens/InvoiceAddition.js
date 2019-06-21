@@ -95,6 +95,24 @@ class InvoiceAddition extends React.Component {
     });
   };
 
+  handleUpdateDate = ({ key, product, quantity, unitPrice }) => {
+    const { detail } = this.state;
+
+    LayoutAnimation.spring();
+    this.setState({
+      detail: detail.map(item =>
+        item.key === key
+          ? {
+              key,
+              product,
+              quantity,
+              unitPrice,
+            }
+          : item
+      ),
+    });
+  };
+
   render() {
     const { navigation, isLoading } = this.props;
     const { detail, isVisible, type } = this.state;
@@ -130,6 +148,13 @@ class InvoiceAddition extends React.Component {
             <SwipeoutRemove
               key={key}
               onRemove={() => this.handleRemoveDetail(key)}
+              editable
+              onEdit={() => {
+                navigation.navigate('InvoiceProductAddition', {
+                  product: { key, product, quantity, unitPrice },
+                  handleUpdate: this.handleUpdateDate,
+                });
+              }}
             >
               {index === 0 && (
                 <DescriptionHeader

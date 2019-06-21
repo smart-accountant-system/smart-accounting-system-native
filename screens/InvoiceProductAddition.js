@@ -15,29 +15,44 @@ import { logout, addCategory, getCategories } from '../redux/actions';
 import { Header, Typography, HeaderWrapper } from '../containers/Home';
 import { FewStyledContainer } from '../containers/PaymentMethodAddition';
 
-const numbers = '0123456789';
 export default class InvoiceProductAddition extends React.Component {
-  state = {
-    product: '',
-    quantity: '',
-    unitPrice: '',
-    isVisible: false,
-  };
+  constructor(props) {
+    super(props);
 
-  handleAddData = () => {
+    const { navigation } = this.props;
+    const { product, quantity, unitPrice } = navigation.getParam('product', '');
+    console.log(product, quantity, unitPrice);
+
+    this.state = {
+      product: product || '',
+      quantity: quantity ? quantity.toString() : '',
+      unitPrice: unitPrice ? unitPrice.toString() : '',
+      isVisible: false,
+    };
+  }
+
+  valid = () => {
     const { product, quantity, unitPrice } = this.state;
     const numQuantity = parseInt(quantity || 0);
     const numUnitPrice = parseInt(unitPrice || 0);
     const lengthQ = Math.trunc(Math.log(numQuantity) / Math.log(10)) + 1;
     const lengthU = Math.trunc(Math.log(numUnitPrice) / Math.log(10)) + 1;
 
-    const result =
+    return (
       product.length === 0 ||
       lengthQ !== quantity.length ||
-      lengthU !== unitPrice.length;
+      lengthU !== unitPrice.length
+    );
+  };
 
-    this.setState({ isVisible: result });
-    if (!result) {
+  handleAddData = () => {
+    const validate = this.valid();
+    this.setState({ isVisible: validate });
+
+    if (!validate) {
+      const { product, quantity, unitPrice } = this.state;
+      const numQuantity = parseInt(quantity || 0);
+      const numUnitPrice = parseInt(unitPrice || 0);
       const { navigation } = this.props;
       const handleAdd = navigation.getParam('handleAdd', '');
       handleAdd({
@@ -50,8 +65,31 @@ export default class InvoiceProductAddition extends React.Component {
     }
   };
 
+  handleUpdateData = () => {
+    const validate = this.valid();
+    this.setState({ isVisible: validate });
+
+    if (!validate) {
+      const { product, quantity, unitPrice } = this.state;
+      const numQuantity = parseInt(quantity || 0);
+      const numUnitPrice = parseInt(unitPrice || 0);
+      const { navigation } = this.props;
+      const handleUpdate = navigation.getParam('handleUpdate', '');
+      const { key } = navigation.getParam('product', '');
+      handleUpdate({
+        key,
+        product,
+        quantity: numQuantity,
+        unitPrice: numUnitPrice,
+      });
+      navigation.navigate('InvoiceAddition');
+    }
+  };
+
   render() {
     const { navigation } = this.props;
+    const { key } = navigation.getParam('product', '');
+
     const { product, quantity, unitPrice, isVisible } = this.state;
     return (
       <View style={{ display: 'flex', flex: 1 }}>
@@ -104,9 +142,9 @@ export default class InvoiceProductAddition extends React.Component {
               mode="contained"
               style={{ width: 170 }}
               contentStyle={{ height: 50 }}
-              onPress={this.handleAddData}
+              onPress={key ? this.handleUpdateData : this.handleAddData}
             >
-              <Text>{i18n.t('actionSave')}</Text>
+              <Text>{key ? i18n.t('actionUpdate') : i18n.t('actionAdd')}</Text>
             </Button>
           </FewStyledContainer>
         </ScrollView>
@@ -116,7 +154,7 @@ export default class InvoiceProductAddition extends React.Component {
           onDismiss={() => this.setState({ isVisible: false })}
           action={{ label: 'OK', onPress: () => {} }}
         >
-          {i18n.t('messageAddFail')}
+          {key ? i18n.t('messageUpdateFail') : i18n.t('messageAddFail')}
         </Snackbar>
       </View>
     );

@@ -61,6 +61,7 @@ export const en = {
 
   // ACTION GROUP
   actionSave: 'Save',
+  actionUpdate: 'Update',
   actionEdit: 'Edit',
   actionRemove: 'Remove',
   actionHide: 'Hide',
@@ -68,6 +69,7 @@ export const en = {
   // MESSAGE GROUP
   messageEmpty: 'There is no',
   messageAddFail: 'Add failed, please check again.',
+  messageUpdateFail: 'Update failed, please check again.',
   messageDeleteFail: 'Delete failed, please try again later.',
   messageDeleteSuccess: 'Delete successfully',
   messageWP: 'Your repassword is not match',
@@ -136,6 +138,7 @@ export const vi = {
 
   // ACTION GROUP
   actionSave: 'Lưu',
+  actionUpdate: 'Cập nhật',
   actionEdit: 'Sửa',
   actionRemove: 'Xóa',
   actionHide: 'Ẩn',
@@ -144,6 +147,7 @@ export const vi = {
   messageEmpty: 'Hiện chưa có',
   messageNotAllowEmpty: 'Không nhận dữ liệu rỗng',
   messageAddFail: 'Thêm không thành công, vui lòng kiểm tra lại.',
+  messageUpdateFail: 'Cập nhật không thành công, vui lòng kiểm tra lại.',
   messageDeleteFail: 'Xóa không thành công, vui lòng thử lại sau.',
   messageDeleteSuccess: 'Xoá thành công',
   messageWP: 'Xác nhận mật khẩu không khớp',

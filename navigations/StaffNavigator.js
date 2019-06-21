@@ -40,9 +40,9 @@ export const HomeStack = createStackNavigator(
 
 const InvoiceStack = createStackNavigator(
   {
+    InvoiceAddition,
     Invoice,
     InvoiceDetail,
-    InvoiceAddition,
     InvoiceProductAddition,
   },
   {
@@ -96,9 +96,9 @@ CustomerStack.navigationOptions = {
 
 const StaffNavigator = createBottomTabNavigator(
   {
+    InvoiceStack,
     HomeStack,
     CustomerStack,
-    InvoiceStack,
     ReceiptStack,
   },
   {

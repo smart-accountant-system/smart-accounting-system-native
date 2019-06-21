@@ -4,7 +4,14 @@ import i18n from 'i18n-js';
 import { connect } from 'react-redux';
 import { Button, withTheme, Snackbar } from 'react-native-paper';
 import DateTimePicker from 'react-native-modal-datetime-picker';
-import { Text, View, ScrollView, Animated, RefreshControl } from 'react-native';
+import {
+  Text,
+  View,
+  ScrollView,
+  Animated,
+  RefreshControl,
+  LayoutAnimation,
+} from 'react-native';
 
 import {
   FilterHeader,
@@ -142,6 +149,9 @@ class Receipt extends React.Component {
 
   handleRemoveReceipt = id => {
     this.props.deleteReceiptById(id, {
+      success: () => {
+        LayoutAnimation.spring();
+      },
       failure: () => {
         this.setState({ visibleSnackbar: true });
       },
@@ -154,7 +164,7 @@ class Receipt extends React.Component {
   };
 
   render() {
-    const { receipts } = this.props;
+    const { receipts, loading } = this.props;
     const {
       isDatePickerVisible,
       fromDate,
@@ -212,7 +222,7 @@ class Receipt extends React.Component {
           onCancel={this.hideDateTimePicker}
         />
 
-        {receipts ? (
+        {receipts && !loading ? (
           <ScrollView
             refreshControl={
               <RefreshControl
@@ -276,6 +286,7 @@ class Receipt extends React.Component {
 
 const mapStateToProps = state => ({
   receipts: state.receipt.receipts,
+  loading: state.receipt.loading,
 });
 const mapDispatchToProps = {
   logout,

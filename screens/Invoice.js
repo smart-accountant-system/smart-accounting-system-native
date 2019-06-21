@@ -8,6 +8,7 @@ import {
   ScrollView,
   Animated,
   RefreshControl,
+  LayoutAnimation,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Button, Snackbar } from 'react-native-paper';
@@ -149,6 +150,9 @@ class Invoice extends React.Component {
 
   handleRemoveInvoice = _id => {
     this.props.removeInvoice(_id, {
+      success: () => {
+        LayoutAnimation.spring();
+      },
       failure: () => {
         this.setState({ visibleSnackbar: true });
       },
@@ -161,7 +165,7 @@ class Invoice extends React.Component {
   };
 
   render() {
-    const { navigation, invoices } = this.props;
+    const { navigation, invoices, loading } = this.props;
     const {
       isDatePickerVisible,
       fromDate,
@@ -223,7 +227,7 @@ class Invoice extends React.Component {
           onCancel={this.hideDateTimePicker}
         />
 
-        {invoices ? (
+        {invoices && !loading ? (
           <ScrollView
             refreshControl={
               <RefreshControl
@@ -277,6 +281,7 @@ class Invoice extends React.Component {
 
 const mapStateToProps = state => ({
   invoices: state.invoice.invoices,
+  loading: state.invoice.isLoading,
 });
 const mapDispatchToProps = {
   logout,

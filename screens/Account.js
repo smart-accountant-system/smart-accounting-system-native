@@ -3,7 +3,12 @@ import React from 'react';
 import i18n from 'i18n-js';
 import { connect } from 'react-redux';
 import { withTheme, Snackbar } from 'react-native-paper';
-import { View, ScrollView, RefreshControl } from 'react-native';
+import {
+  View,
+  ScrollView,
+  RefreshControl,
+  LayoutAnimation,
+} from 'react-native';
 
 import theme from '../constants/theme';
 import {
@@ -85,6 +90,9 @@ class Account extends React.Component {
 
   handleRemove = _id => {
     this.props.removeAccount(_id, {
+      success: () => {
+        LayoutAnimation.spring();
+      },
       failure: () => {
         this.setState({ visibleSnackbar: true });
       },

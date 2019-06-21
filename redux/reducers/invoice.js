@@ -24,6 +24,11 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case GET_INVOICES_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+        error: null,
+      };
     case GET_INVOICE_BY_ID_REQUEST:
     case POST_INVOICE_REQUEST:
     case DELETE_INVOICE_REQUEST:
@@ -68,6 +73,11 @@ export default (state = INITIAL_STATE, action) => {
       };
 
     case GET_INVOICES_FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
+      };
     case GET_INVOICE_BY_ID_FAILURE:
     case POST_INVOICE_FAILURE:
     case DELETE_INVOICE_FAILURE:

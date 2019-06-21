@@ -14,6 +14,7 @@ import {
 const INITIAL_STATE = {
   transactions: null,
   currentTransaction: null,
+  loading: false,
   error: null,
 };
 
@@ -22,17 +23,20 @@ export default (state = INITIAL_STATE, action) => {
     case GET_TRANSACTIONS_REQUEST:
       return {
         ...state,
+        loading: true,
         error: null,
       };
     case GET_TRANSACTIONS_SUCCESS:
       return {
         ...state,
         transactions: action.payload,
+        loading: false,
         error: null,
       };
     case GET_TRANSACTIONS_FAILURE:
       return {
         ...state,
+        loading: false,
         error: action.payload,
       };
     case CHOOSE_TRANSACTION:

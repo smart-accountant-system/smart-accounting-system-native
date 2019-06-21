@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Animated,
   RefreshControl,
+  LayoutAnimation,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme, Button } from 'react-native-paper';
@@ -150,6 +151,9 @@ class Transaction extends React.Component {
 
   handleRemoveTransaction = id => {
     this.props.deleteTransactionById(id, {
+      success: () => {
+        LayoutAnimation.spring();
+      },
       failure: () => {
         this.setState({ deleteFailNotification: true });
       },
@@ -162,7 +166,7 @@ class Transaction extends React.Component {
   };
 
   render() {
-    const { transactions } = this.props;
+    const { transactions, loading } = this.props;
     const {
       isDatePickerVisible,
       fromDate,
@@ -219,7 +223,7 @@ class Transaction extends React.Component {
           onConfirm={this.handleDatePicked}
           onCancel={this.hideDateTimePicker}
         />
-        {transactions ? (
+        {transactions && !loading ? (
           <ScrollView
             refreshControl={
               <RefreshControl
@@ -280,6 +284,7 @@ class Transaction extends React.Component {
 
 const mapStateToProps = state => ({
   transactions: state.transaction.transactions,
+  loading: state.transaction.loading,
 });
 const mapDispatchToProps = {
   logout,

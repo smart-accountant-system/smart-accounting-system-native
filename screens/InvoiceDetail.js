@@ -3,7 +3,6 @@ import React from 'react';
 import i18n from 'i18n-js';
 import {
   View,
-  Text,
   TouchableOpacity,
   ScrollView,
   RefreshControl,
@@ -13,6 +12,7 @@ import { connect } from 'react-redux';
 import theme from '../constants/theme';
 import { FeatherIcon } from '../components';
 import { handle401 } from '../constants/strategies';
+import { AmazingText } from '../containers/InvoiceAddition';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
 import { getInvoiceById } from '../redux/actions';
 import {
@@ -48,7 +48,12 @@ class InvoiceDetail extends React.Component {
     const name = currentInvoice.type === 0 ? 'Purchase' : 'Sale';
     const color = currentInvoice.status ? '#438763' : '#ad6b8d';
     const status = currentInvoice.status ? 'Paid' : 'Unpaid';
-    const { createdAt, totalCost } = currentInvoice;
+    const {
+      createdBy: { fullname, username },
+      createdAt,
+      totalCost,
+    } = currentInvoice;
+
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
@@ -70,6 +75,8 @@ class InvoiceDetail extends React.Component {
         >
           <HeaderInvoice
             name={name}
+            employeeUsername={username}
+            employeeName={fullname}
             color={color}
             status={status}
             createdAt={new Date(createdAt).toLocaleDateString(i18n.t('local'), {
@@ -93,6 +100,15 @@ class InvoiceDetail extends React.Component {
             />
           ))}
           <FooterInvoice color={color} totalCost={totalCost} />
+
+          <AmazingText
+            content={i18n.t('accountAddPayment')}
+            onPress={() => {
+              navigation.navigate('PaymentAddition', {
+                _id: currentInvoice._id,
+              });
+            }}
+          />
         </ScrollView>
       </View>
     );

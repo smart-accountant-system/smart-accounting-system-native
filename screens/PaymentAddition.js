@@ -26,7 +26,7 @@ class InvoiceProductAddition extends React.Component {
       type: 0,
       isVisible: false,
       isChoosing: false,
-      currentPaymentMethod: '',
+      currentPaymentMethodId: '',
     };
   }
 
@@ -59,8 +59,11 @@ class InvoiceProductAddition extends React.Component {
       type,
       isVisible,
       isChoosing,
-      currentPaymentMethod,
+      currentPaymentMethodId,
     } = this.state;
+    const currentPaymentMethod = categories.categories.find(
+      category => category._id === currentPaymentMethodId
+    );
 
     return (
       <View style={{ display: 'flex', flex: 1 }}>
@@ -96,10 +99,24 @@ class InvoiceProductAddition extends React.Component {
             value={description}
             onChangeText={description => this.setState({ description })}
           />
-          <AmazingText
-            content="Choose payment method"
-            onPress={() => this.setState({ isChoosing: true })}
-          />
+          {currentPaymentMethod ? (
+            <PaymentMethodItem
+              id={currentPaymentMethod._id}
+              name={currentPaymentMethod.name}
+              detail={currentPaymentMethod.detail}
+              time={moment(currentPaymentMethod.time).format('DD/MM/YYYY')}
+              onPress={() =>
+                this.setState({
+                  isChoosing: true,
+                })
+              }
+            />
+          ) : (
+            <AmazingText
+              content="Choose payment method"
+              onPress={() => this.setState({ isChoosing: true })}
+            />
+          )}
 
           <FewStyledContainer paddingTop>
             <Button
@@ -135,9 +152,11 @@ class InvoiceProductAddition extends React.Component {
                         detail={category.detail}
                         time={moment(category.time).format('DD/MM/YYYY')}
                         onPress={() =>
-                          this.setState({ currentPaymentMethod: category._id })
+                          this.setState({
+                            currentPaymentMethodId: category._id,
+                          })
                         }
-                        currentPaymentMethod={currentPaymentMethod}
+                        currentPaymentMethodId={currentPaymentMethodId}
                       />
                     ))
                   ) : (

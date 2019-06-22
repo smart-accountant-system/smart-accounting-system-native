@@ -55,6 +55,8 @@ export const en = {
   totalCost: 'Total cost',
   paymentIn: 'Received',
   paymentOut: 'Spent',
+  amountMoney: 'Ammount of money',
+  description: 'Description',
 
   // ADVANCED FILTER GROUP
   advancedFilter: 'Advanced filter',
@@ -137,6 +139,8 @@ export const vi = {
   totalCost: 'Tổng tiền',
   paymentIn: 'Nhận vào',
   paymentOut: 'Chi ra',
+  amountMoney: 'Số tiền',
+  description: 'Mô tả',
 
   // ADVANCED FILTER GROUP
   advancedFilter: 'Bộ lọc nâng cao',

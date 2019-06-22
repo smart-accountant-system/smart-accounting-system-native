@@ -56,14 +56,14 @@ export default ({
   time,
   onRemove,
   onPress,
-  currentPaymentMethod,
+  currentPaymentMethodId,
 }) => (
   <SwipeoutRemove editable={editable} onRemove={onRemove}>
     <StyledContainer
       activeOpacity={0.5}
       onPress={onPress}
       backgroundColor={
-        currentPaymentMethod === id ? theme.colors.receive : '#fff'
+        currentPaymentMethodId === id ? theme.colors.receive : '#fff'
       }
     >
       <View style={{ flex: 1, paddingRight: 4 }}>

@@ -12,6 +12,7 @@ import Profile from '../screens/Profile';
 
 import Invoice from '../screens/Invoice';
 import InvoiceDetail from '../screens/InvoiceDetail';
+import PaymentAddition from '../screens/PaymentAddition';
 
 import Receipt from '../screens/Receipt';
 import ReceiptDetail from '../screens/ReceiptDetail';
@@ -40,9 +41,10 @@ export const HomeStack = createStackNavigator(
 
 const InvoiceStack = createStackNavigator(
   {
-    InvoiceAddition,
     Invoice,
     InvoiceDetail,
+    PaymentAddition,
+    InvoiceAddition,
     InvoiceProductAddition,
   },
   {

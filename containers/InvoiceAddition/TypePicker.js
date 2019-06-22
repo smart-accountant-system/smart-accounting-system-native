@@ -32,15 +32,15 @@ const Radio = ({ selected, onPress, label }) => (
   </RadioContainer>
 );
 
-export default ({ type, firstPress, secondPress }) => (
+export default ({ type, firstLabel, secondLabel, firstPress, secondPress }) => (
   <RadioGroup>
     <Radio
-      label={i18n.t('purchasedInvoice')}
+      label={firstLabel || i18n.t('purchasedInvoice')}
       selected={type === 0}
       onPress={firstPress}
     />
     <Radio
-      label={i18n.t('selledInvoice')}
+      label={secondLabel || i18n.t('selledInvoice')}
       selected={type === 1}
       onPress={secondPress}
     />

@@ -8,7 +8,8 @@ export const en = {
   invoice: 'Invoice',
   invoiceAddition: 'Add invoice',
   invoiceDetail: 'Invoice Detail',
-  invoiceProduceAddition: 'Add product',
+  invoiceProductAddition: 'Add product',
+  paymentAddition: 'Add payment',
 
   paymentMethod: 'Payment method',
   paymentMethodAddition: 'Add payment method',
@@ -52,6 +53,8 @@ export const en = {
   product: 'Product',
   cost: 'Cost',
   totalCost: 'Total cost',
+  paymentIn: 'Received',
+  paymentOut: 'Spent',
 
   // ADVANCED FILTER GROUP
   advancedFilter: 'Advanced filter',
@@ -87,7 +90,8 @@ export const vi = {
   invoice: 'Hoá đơn',
   invoiceAddtion: 'Thêm hoá đơn',
   invoiceDetail: 'Chi tiết hóa đơn',
-  invoiceProduceAddition: 'Thêm sản phẩm',
+  invoiceProductAddition: 'Thêm sản phẩm',
+  paymentAddition: 'Thêm khoản thanh toán',
 
   paymentMethod: 'Phương thức thanh toán',
   paymentMethodAddition: 'Thêm phương thức thanh toán',
@@ -131,6 +135,8 @@ export const vi = {
   product: 'Sản phẩm',
   cost: 'Thành tiền',
   totalCost: 'Tổng tiền',
+  paymentIn: 'Nhận vào',
+  paymentOut: 'Chi ra',
 
   // ADVANCED FILTER GROUP
   advancedFilter: 'Bộ lọc nâng cao',

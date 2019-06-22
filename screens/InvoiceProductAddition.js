@@ -92,7 +92,7 @@ export default class InvoiceProductAddition extends React.Component {
             >
               <FeatherIcon color={theme.colors.white} name="chevron-left" />
             </TouchableOpacity>
-            <Typography>{i18n.t('invoiceProduceAddition')}</Typography>
+            <Typography>{i18n.t('invoiceProductAddition')}</Typography>
             <FeatherIcon color={theme.colors.primary} name="user" />
           </Header>
         </HeaderWrapper>

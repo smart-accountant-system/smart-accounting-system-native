@@ -12,7 +12,7 @@ import { FeatherIcon, InterestTextInput, Empty } from '../components';
 import { Header, Typography, HeaderWrapper } from '../containers/Home';
 import { TypePicker, AmazingText } from '../containers/InvoiceAddition';
 import { FewStyledContainer } from '../containers/PaymentMethodAddition';
-import { getCategories } from '../redux/actions';
+import { getCategories, addPayment } from '../redux/actions';
 import { handle401 } from '../constants/strategies';
 import PaymentMethodItem from '../containers/PaymentMethod/Item';
 
@@ -46,9 +46,32 @@ class InvoiceProductAddition extends React.Component {
 
   handleAdd = () => {
     const { navigation } = this.props;
+    const {
+      amountMoney,
+      description,
+      type,
+      currentPaymentMethodId,
+    } = this.state;
     const _id = navigation.getParam('_id', '');
 
     // call api to create payment for invoice(_id)
+    this.props.addPayment(
+      {
+        invoice: _id,
+        category: currentPaymentMethodId,
+        amountMoney,
+        description,
+        type,
+      },
+      {
+        success: () => {},
+        handle401: () =>
+          handle401({
+            logout: this.props.logout,
+            navigation: this.props.navigation,
+          }),
+      }
+    );
   };
 
   render() {
@@ -182,6 +205,7 @@ const mapStateToProps = state => ({
 });
 const mapDispatchToProps = {
   getCategories,
+  addPayment,
 };
 
 export default connect(

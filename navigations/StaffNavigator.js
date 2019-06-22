@@ -45,7 +45,6 @@ const InvoiceStack = createStackNavigator(
     InvoiceAddition,
     InvoiceDetail,
     PaymentAddition,
-    InvoiceAddition,
     InvoiceProductAddition,
   },
   {

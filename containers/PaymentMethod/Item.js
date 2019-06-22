@@ -4,9 +4,10 @@ import { TouchableOpacity, Text, View } from 'react-native';
 
 import styled from 'styled-components';
 import SwipeoutRemove from '../../components/SwipeoutRemove';
+import theme from '../../constants/theme';
 
 const StyledContainer = styled.TouchableOpacity`
-  background-color: #fff;
+  background-color: ${({ backgroundColor }) => backgroundColor || '#fff'};
   padding: 10px;
   width: 100%;
   border-bottom-color: #f1f1f1;
@@ -47,9 +48,24 @@ const Detail = styled.Text`
   color: ${props => props.color || '#333'};
 `;
 
-export default ({ editable, id, name, detail, time, onRemove }) => (
+export default ({
+  editable,
+  id,
+  name,
+  detail,
+  time,
+  onRemove,
+  onPress,
+  currentPaymentMethod,
+}) => (
   <SwipeoutRemove editable={editable} onRemove={onRemove}>
-    <StyledContainer activeOpacity={0.75}>
+    <StyledContainer
+      activeOpacity={0.5}
+      onPress={onPress}
+      backgroundColor={
+        currentPaymentMethod === id ? theme.colors.receive : '#fff'
+      }
+    >
       <View style={{ flex: 1, paddingRight: 4 }}>
         <Typoraphy>
           <CodeField>{id}</CodeField>

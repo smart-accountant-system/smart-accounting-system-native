@@ -7,3 +7,4 @@ export * from './category';
 export * from './employee';
 export * from './customer';
 export * from './dashboard';
+export * from './payment';

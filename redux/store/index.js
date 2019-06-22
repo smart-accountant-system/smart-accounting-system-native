@@ -19,6 +19,7 @@ const persistConfig = {
     'employee',
     'customer',
     'dashboard',
+    'payment',
   ],
 };
 

@@ -1,16 +1,22 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable no-shadow */
 import React from 'react';
 import i18n from 'i18n-js';
 import { Snackbar, Button, Dialog, Portal } from 'react-native-paper';
 import { View, TouchableOpacity, ScrollView, Text } from 'react-native';
+import { connect } from 'react-redux';
+import moment from 'moment';
 
 import theme from '../constants/theme';
-import { FeatherIcon, InterestTextInput } from '../components';
+import { FeatherIcon, InterestTextInput, Empty } from '../components';
 import { Header, Typography, HeaderWrapper } from '../containers/Home';
 import { TypePicker, AmazingText } from '../containers/InvoiceAddition';
 import { FewStyledContainer } from '../containers/PaymentMethodAddition';
+import { getCategories } from '../redux/actions';
+import { handle401 } from '../constants/strategies';
+import PaymentMethodItem from '../containers/PaymentMethod/Item';
 
-export default class InvoiceProductAddition extends React.Component {
+class InvoiceProductAddition extends React.Component {
   constructor(props) {
     super(props);
 
@@ -20,8 +26,23 @@ export default class InvoiceProductAddition extends React.Component {
       type: 0,
       isVisible: false,
       isChoosing: false,
+      currentPaymentMethod: '',
     };
   }
+
+  componentDidMount = () => {
+    this.props.getCategories(
+      {},
+      {
+        success: () => {},
+        handle401: () =>
+          handle401({
+            logout: this.props.logout,
+            navigation: this.props.navigation,
+          }),
+      }
+    );
+  };
 
   handleAdd = () => {
     const { navigation } = this.props;
@@ -31,14 +52,16 @@ export default class InvoiceProductAddition extends React.Component {
   };
 
   render() {
-    const { navigation } = this.props;
+    const { navigation, categories } = this.props;
     const {
       amountMoney,
       description,
       type,
       isVisible,
       isChoosing,
+      currentPaymentMethod,
     } = this.state;
+
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
@@ -101,14 +124,48 @@ export default class InvoiceProductAddition extends React.Component {
           <Dialog dismissable={false} visible={isChoosing}>
             <Dialog.Title>Choose payment method</Dialog.Title>
             <Dialog.Content>
-              <Text>
-                Đổ list payment method lên đây, làm cái touchableopacity cho
-                user chọn
-              </Text>
+              <View style={{ height: 300 }}>
+                <ScrollView>
+                  {categories ? (
+                    categories.categories.map(category => (
+                      <PaymentMethodItem
+                        key={category._id}
+                        id={category._id}
+                        name={category.name}
+                        detail={category.detail}
+                        time={moment(category.time).format('DD/MM/YYYY')}
+                        onPress={() =>
+                          this.setState({ currentPaymentMethod: category._id })
+                        }
+                        currentPaymentMethod={currentPaymentMethod}
+                      />
+                    ))
+                  ) : (
+                    <Empty name={i18n.t('paymentMethod')} />
+                  )}
+                </ScrollView>
+              </View>
             </Dialog.Content>
+            <Dialog.Actions>
+              <Button onPress={() => this.setState({ isChoosing: false })}>
+                {i18n.t('actionSave')}
+              </Button>
+            </Dialog.Actions>
           </Dialog>
         </Portal>
       </View>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  categories: state.category.categories,
+});
+const mapDispatchToProps = {
+  getCategories,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(InvoiceProductAddition);

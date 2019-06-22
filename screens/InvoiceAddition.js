@@ -13,15 +13,13 @@ import {
 } from 'react-native';
 
 import {
-  DetailItem,
-  DescriptionHeader,
-  FooterInvoice,
-} from '../containers/InvoiceDetail';
+  TypePicker,
+  AmazingText,
+  InvoiceDetail,
+} from '../containers/InvoiceAddition';
 import theme from '../constants/theme';
 import { FeatherIcon } from '../components';
 import { handle401 } from '../constants/strategies';
-import SwipeoutRemove from '../components/SwipeoutRemove';
-import { Radio, RadioGroup, AmazingText } from '../containers/InvoiceAddition';
 import { logout, addInvoice, getInvoices } from '../redux/actions';
 import { Header, Typography, HeaderWrapper } from '../containers/Home';
 import { FewStyledContainer } from '../containers/PaymentMethodAddition';
@@ -131,51 +129,23 @@ class InvoiceAddition extends React.Component {
             <FeatherIcon color={theme.colors.primary} name="user" />
           </Header>
         </HeaderWrapper>
-        <RadioGroup>
-          <Radio
-            label={i18n.t('purchasedInvoice')}
-            selected={type === 0}
-            onPress={() => this.setState({ type: 0 })}
-          />
-          <Radio
-            label={i18n.t('selledInvoice')}
-            selected={type === 1}
-            onPress={() => this.setState({ type: 1 })}
-          />
-        </RadioGroup>
-        <ScrollView>
-          {detail.map(({ key, product, quantity, unitPrice }, index) => (
-            <SwipeoutRemove
-              key={key}
-              onRemove={() => this.handleRemoveDetail(key)}
-              editable
-              onEdit={() => {
-                navigation.navigate('InvoiceProductAddition', {
-                  product: { key, product, quantity, unitPrice },
-                  handleUpdate: this.handleUpdateDate,
-                });
-              }}
-            >
-              {index === 0 && (
-                <DescriptionHeader
-                  product={i18n.t('product')}
-                  quantity={i18n.t('quantity')}
-                  unitPrice={i18n.t('unitPrice')}
-                  cost={i18n.t('cost')}
-                />
-              )}
-              <DetailItem
-                product={product}
-                quantity={quantity}
-                unitPrice={unitPrice}
-              />
-            </SwipeoutRemove>
-          ))}
-          {detail.length > 0 && (
-            <FooterInvoice color="#ad6b8d" totalCost={totalCost} />
-          )}
 
+        <TypePicker
+          type={type}
+          firstPress={() => this.setState({ type: 0 })}
+          secondPress={() => this.setState({ type: 1 })}
+        />
+
+        <ScrollView>
+          <InvoiceDetail
+            detail={detail}
+            totalCost={totalCost}
+            navigation={navigation}
+            handleUpdateDate={this.handleUpdateDate}
+            handleRemoveDetail={this.handleRemoveDetail}
+          />
           <AmazingText
+            content={i18n.t('accountAddProduct')}
             onPress={() => {
               navigation.navigate('InvoiceProductAddition', {
                 handleAdd: this.handleAdd,

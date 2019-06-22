@@ -1,8 +1,3 @@
-/* eslint-disable no-plusplus */
-/* eslint-disable no-empty */
-/* eslint-disable no-bitwise */
-/* eslint-disable no-shadow */
-/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import i18n from 'i18n-js';
 import { Button, Snackbar } from 'react-native-paper';
@@ -11,7 +6,6 @@ import { View, TouchableOpacity, ScrollView, Text } from 'react-native';
 import theme from '../constants/theme';
 import { FeatherIcon, InterestTextInput } from '../components';
 import { InvoiceDetailContainer } from '../containers/InvoiceAddition';
-import { logout, addCategory, getCategories } from '../redux/actions';
 import { Header, Typography, HeaderWrapper } from '../containers/Home';
 import { FewStyledContainer } from '../containers/PaymentMethodAddition';
 
@@ -21,8 +15,6 @@ export default class InvoiceProductAddition extends React.Component {
 
     const { navigation } = this.props;
     const { product, quantity, unitPrice } = navigation.getParam('product', '');
-    console.log(product, quantity, unitPrice);
-
     this.state = {
       product: product || '',
       quantity: quantity ? quantity.toString() : '',
@@ -144,7 +136,7 @@ export default class InvoiceProductAddition extends React.Component {
               contentStyle={{ height: 50 }}
               onPress={key ? this.handleUpdateData : this.handleAddData}
             >
-              <Text>{key ? i18n.t('actionUpdate') : i18n.t('actionAdd')}</Text>
+              <Text>{key ? i18n.t('actionUpdate') : i18n.t('actionSave')}</Text>
             </Button>
           </FewStyledContainer>
         </ScrollView>

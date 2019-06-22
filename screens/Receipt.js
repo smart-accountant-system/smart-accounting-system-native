@@ -43,6 +43,7 @@ class Receipt extends React.Component {
 
     refreshing: false,
     visibleSnackbar: false,
+    loading: false,
   };
 
   componentDidMount = () => {
@@ -116,7 +117,8 @@ class Receipt extends React.Component {
   };
 
   doFilter = () => {
-    const { filterHeight, fromDate, toDate } = this.state;
+    const { filterHeight, fromDate, toDate, loading } = this.state;
+    this.setState({ loading: true });
 
     Animated.timing(filterHeight, {
       toValue: 0,
@@ -132,6 +134,12 @@ class Receipt extends React.Component {
         endDate: new Date(toDate.toDateString()),
       },
       {
+        success: () => {
+          this.setState({ loading: false });
+        },
+        failure: () => {
+          this.setState({ loading: false });
+        },
         handle401: () =>
           handle401({
             logout: this.props.logout,
@@ -164,7 +172,7 @@ class Receipt extends React.Component {
   };
 
   render() {
-    const { receipts, loading } = this.props;
+    const { receipts } = this.props;
     const {
       isDatePickerVisible,
       fromDate,
@@ -172,6 +180,7 @@ class Receipt extends React.Component {
       activatingDate,
       refreshing,
       visibleSnackbar,
+      loading,
     } = this.state;
 
     return (
@@ -222,7 +231,7 @@ class Receipt extends React.Component {
           onCancel={this.hideDateTimePicker}
         />
 
-        {receipts ? (
+        {receipts && !loading ? (
           <ScrollView
             refreshControl={
               <RefreshControl
@@ -286,7 +295,6 @@ class Receipt extends React.Component {
 
 const mapStateToProps = state => ({
   receipts: state.receipt.receipts,
-  loading: state.receipt.loading,
 });
 const mapDispatchToProps = {
   logout,

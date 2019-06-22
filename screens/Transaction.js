@@ -45,6 +45,7 @@ class Transaction extends React.Component {
 
     refreshing: false,
     deleteFailNotification: false,
+    loading: false,
   };
 
   componentDidMount = () => {
@@ -119,6 +120,7 @@ class Transaction extends React.Component {
 
   doFilter = () => {
     const { filterHeight, fromDate, toDate } = this.state;
+    this.setState({ loading: true });
 
     Animated.timing(filterHeight, {
       toValue: 0,
@@ -134,6 +136,12 @@ class Transaction extends React.Component {
         endDate: new Date(toDate.toDateString()),
       },
       {
+        success: () => {
+          this.setState({ loading: false });
+        },
+        failure: () => {
+          this.setState({ loading: false });
+        },
         handle401: () =>
           handle401({
             logout: this.props.logout,
@@ -166,7 +174,7 @@ class Transaction extends React.Component {
   };
 
   render() {
-    const { transactions, loading } = this.props;
+    const { transactions } = this.props;
     const {
       isDatePickerVisible,
       fromDate,
@@ -174,6 +182,7 @@ class Transaction extends React.Component {
       activatingDate,
       refreshing,
       deleteFailNotification,
+      loading,
     } = this.state;
 
     return (
@@ -223,7 +232,7 @@ class Transaction extends React.Component {
           onConfirm={this.handleDatePicked}
           onCancel={this.hideDateTimePicker}
         />
-        {transactions ? (
+        {transactions && !loading ? (
           <ScrollView
             refreshControl={
               <RefreshControl
@@ -284,7 +293,6 @@ class Transaction extends React.Component {
 
 const mapStateToProps = state => ({
   transactions: state.transaction.transactions,
-  loading: state.transaction.loading,
 });
 const mapDispatchToProps = {
   logout,

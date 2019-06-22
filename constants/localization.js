@@ -65,6 +65,8 @@ export const en = {
   actionEdit: 'Edit',
   actionRemove: 'Remove',
   actionHide: 'Hide',
+  accountAddProduct: '+ Add more product',
+  accountAddPayment: '+ Add more payment',
 
   // MESSAGE GROUP
   messageEmpty: 'There is no',
@@ -142,6 +144,8 @@ export const vi = {
   actionEdit: 'Sửa',
   actionRemove: 'Xóa',
   actionHide: 'Ẩn',
+  accountAddProduct: '+ Thêm sản phẩm',
+  accountAddPayment: '+ Thêm khoản thanh toán',
 
   // MESSAGE GROUP
   messageEmpty: 'Hiện chưa có',

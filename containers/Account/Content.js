@@ -9,8 +9,12 @@ const AccountContentContainer = styled.View`
   padding: 10px;
   padding-right: 18px;
   width: 100%;
+  ${({ noBorder }) =>
+    noBorder
+      ? null
+      : `
   border-bottom-color: #f1f1f1;
-  border-bottom-width: 2px;
+  border-bottom-width: 2px;`}
 
   display: flex;
   flex-direction: column;
@@ -36,8 +40,16 @@ const ItemRow = styled.View`
   align-items: ${({ end }) => (end ? 'flex-end' : 'flex-start')};
 `;
 
-export default ({ name, description, color, time, balanceType, balance }) => (
-  <AccountContentContainer>
+export default ({
+  name,
+  noBorder,
+  description,
+  color,
+  time,
+  balanceType,
+  balance,
+}) => (
+  <AccountContentContainer noBorder={noBorder}>
     <ItemRow>
       <AccountTyporaphy>{name}</AccountTyporaphy>
       <AccountDetail>{time}</AccountDetail>

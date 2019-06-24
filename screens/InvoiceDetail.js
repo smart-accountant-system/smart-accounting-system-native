@@ -115,7 +115,9 @@ class InvoiceDetail extends React.Component {
 
           {/* list payment here */}
           {paymentsOfInvoice.map(payment => (
-            <Text key={payment._id}>{payment.description}</Text>
+            <Text key={payment._id}>
+              {payment.description} {payment.amountMoney}
+            </Text>
           ))}
 
           {info.role === ROLE.STAFF ? (

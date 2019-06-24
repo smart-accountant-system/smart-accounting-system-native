@@ -112,6 +112,7 @@ class InvoiceProductAddition extends React.Component {
         <ScrollView>
           <InterestTextInput
             label={i18n.t('amountMoney')}
+            keyboardType="phone-pad"
             value={amountMoney}
             onChangeText={amountMoney => this.setState({ amountMoney })}
           />
@@ -122,35 +123,27 @@ class InvoiceProductAddition extends React.Component {
             value={description}
             onChangeText={description => this.setState({ description })}
           />
-          {currentPaymentMethod ? (
-            <PaymentMethodItem
-              id={currentPaymentMethod._id}
-              name={currentPaymentMethod.name}
-              detail={currentPaymentMethod.detail}
-              time={moment(currentPaymentMethod.time).format('DD/MM/YYYY')}
-              onPress={() =>
-                this.setState({
-                  isChoosing: true,
-                })
-              }
-            />
-          ) : (
-            <AmazingText
-              content="Choose payment method"
-              onPress={() => this.setState({ isChoosing: true })}
-            />
-          )}
+          <AmazingText
+            content={
+              currentPaymentMethod
+                ? `Payment method: ${currentPaymentMethod.name}`
+                : 'Choose payment method'
+            }
+            onPress={() => this.setState({ isChoosing: true })}
+          />
 
-          <FewStyledContainer paddingTop>
-            <Button
-              mode="contained"
-              style={{ width: 170 }}
-              contentStyle={{ height: 50 }}
-              onPress={this.handleAdd}
-            >
-              <Text>{i18n.t('actionSave')}</Text>
-            </Button>
-          </FewStyledContainer>
+          {currentPaymentMethod && (
+            <FewStyledContainer paddingTop>
+              <Button
+                mode="contained"
+                style={{ width: 170 }}
+                contentStyle={{ height: 50 }}
+                onPress={this.handleAdd}
+              >
+                <Text>{i18n.t('actionSave')}</Text>
+              </Button>
+            </FewStyledContainer>
+          )}
         </ScrollView>
 
         <Snackbar
@@ -173,10 +166,21 @@ class InvoiceProductAddition extends React.Component {
                         id={category._id}
                         name={category.name}
                         detail={category.detail}
-                        time={moment(category.time).format('DD/MM/YYYY')}
+                        time={
+                          category.createdAt
+                            ? new Date(category.createdAt).toLocaleDateString(
+                                i18n.t('local'),
+                                {
+                                  day: 'numeric',
+                                  month: 'long',
+                                }
+                              )
+                            : null
+                        }
                         onPress={() =>
                           this.setState({
                             currentPaymentMethodId: category._id,
+                            isChoosing: false,
                           })
                         }
                         currentPaymentMethodId={currentPaymentMethodId}
@@ -188,11 +192,6 @@ class InvoiceProductAddition extends React.Component {
                 </ScrollView>
               </View>
             </Dialog.Content>
-            <Dialog.Actions>
-              <Button onPress={() => this.setState({ isChoosing: false })}>
-                {i18n.t('actionSave')}
-              </Button>
-            </Dialog.Actions>
           </Dialog>
         </Portal>
       </View>

@@ -24,6 +24,7 @@ export const AmazingText = ({ onPress, content }) => (
       style={{
         fontSize: 17,
         color: theme.colors.primary,
+        textAlign: 'center',
       }}
     >
       {content}

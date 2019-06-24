@@ -1,5 +1,4 @@
 import React from 'react';
-import i18n from 'i18n-js';
 import { TouchableOpacity, Text, View } from 'react-native';
 
 import styled from 'styled-components';

@@ -5,14 +5,13 @@ import i18n from 'i18n-js';
 import { Snackbar, Button, Dialog, Portal } from 'react-native-paper';
 import { View, TouchableOpacity, ScrollView, Text } from 'react-native';
 import { connect } from 'react-redux';
-import moment from 'moment';
 
 import theme from '../constants/theme';
 import { FeatherIcon, InterestTextInput, Empty } from '../components';
 import { Header, Typography, HeaderWrapper } from '../containers/Home';
 import { TypePicker, AmazingText } from '../containers/InvoiceAddition';
 import { FewStyledContainer } from '../containers/PaymentMethodAddition';
-import { getCategories, addPayment } from '../redux/actions';
+import { getCategories, addPayment, getPayments } from '../redux/actions';
 import { handle401 } from '../constants/strategies';
 import PaymentMethodItem from '../containers/PaymentMethod/Item';
 
@@ -27,6 +26,7 @@ class InvoiceProductAddition extends React.Component {
       isVisible: false,
       isChoosing: false,
       currentPaymentMethodId: '',
+      isLoading: false,
     };
   }
 
@@ -53,6 +53,7 @@ class InvoiceProductAddition extends React.Component {
       currentPaymentMethodId,
     } = this.state;
     const _id = navigation.getParam('_id', '');
+    this.setState({ isLoading: true });
 
     // call api to create payment for invoice(_id)
     if (currentPaymentMethodId !== '') {
@@ -66,7 +67,23 @@ class InvoiceProductAddition extends React.Component {
         },
         {
           success: () => {
-            navigation.navigate('InvoiceDetail');
+            this.props.getPayments(
+              {},
+              {
+                success: () => {
+                  this.setState({ isLoading: false });
+                  navigation.navigate('InvoiceDetail');
+                },
+                failure: () => {
+                  this.setState({ isLoading: false });
+                },
+                handle401: () =>
+                  handle401({
+                    logout: this.props.logout,
+                    navigation: this.props.navigation,
+                  }),
+              }
+            );
           },
           failure: () => {
             this.setState({ isVisible: true });
@@ -92,6 +109,7 @@ class InvoiceProductAddition extends React.Component {
       isVisible,
       isChoosing,
       currentPaymentMethodId,
+      isLoading,
     } = this.state;
     const currentPaymentMethod = categories.categories.find(
       category => category._id === currentPaymentMethodId
@@ -121,7 +139,6 @@ class InvoiceProductAddition extends React.Component {
         <ScrollView>
           <InterestTextInput
             label={i18n.t('amountMoney')}
-            keyboardType="phone-pad"
             value={amountMoney}
             keyboardType="number-pad"
             onChangeText={amountMoney => this.setState({ amountMoney })}
@@ -149,6 +166,7 @@ class InvoiceProductAddition extends React.Component {
                 style={{ width: 170 }}
                 contentStyle={{ height: 50 }}
                 onPress={this.handleAdd}
+                loading={isLoading}
               >
                 <Text>{i18n.t('actionSave')}</Text>
               </Button>
@@ -215,6 +233,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   getCategories,
   addPayment,
+  getPayments,
 };
 
 export default connect(

@@ -14,7 +14,7 @@ import { FeatherIcon } from '../components';
 import { handle401 } from '../constants/strategies';
 import { AmazingText } from '../containers/InvoiceAddition';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
-import { getInvoiceById } from '../redux/actions';
+import { getInvoiceById, getPayments } from '../redux/actions';
 import {
   HeaderInvoice,
   DescriptionHeader,
@@ -43,7 +43,7 @@ class InvoiceDetail extends React.Component {
   };
 
   render() {
-    const { navigation, currentInvoice } = this.props;
+    const { navigation, currentInvoice, payments } = this.props;
     const { refreshing } = this.state;
     const name = currentInvoice.type === 0 ? 'Purchase' : 'Sale';
     const color = currentInvoice.status ? '#438763' : '#ad6b8d';
@@ -53,7 +53,8 @@ class InvoiceDetail extends React.Component {
       createdAt,
       totalCost,
     } = currentInvoice;
-    console.log(currentInvoice);
+
+    // console.log(payments);
 
     return (
       <View style={{ display: 'flex', flex: 1 }}>
@@ -118,9 +119,11 @@ class InvoiceDetail extends React.Component {
 
 const mapStateToProps = state => ({
   currentInvoice: state.invoice.currentInvoice,
+  payments: state.payment.payments,
 });
 const mapDispatchToProps = {
   getInvoiceById,
+  getPayments,
 };
 
 export default connect(

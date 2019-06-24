@@ -60,12 +60,17 @@ class InvoiceProductAddition extends React.Component {
         {
           invoice: _id,
           category: currentPaymentMethodId,
-          amountMoney,
+          amountMoney: parseInt(amountMoney),
           description,
           type,
         },
         {
-          success: () => {},
+          success: () => {
+            navigation.navigate('InvoiceDetail');
+          },
+          failure: () => {
+            this.setState({ isVisible: true });
+          },
           handle401: () =>
             handle401({
               logout: this.props.logout,

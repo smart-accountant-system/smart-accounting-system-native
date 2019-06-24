@@ -51,7 +51,7 @@ export function getPayments(
 }
 
 export function addPayment(
-  params,
+  data,
   { success = () => {}, failure = () => {}, handle401 }
 ) {
   return async dispatch => {
@@ -61,7 +61,7 @@ export function addPayment(
 
       const result = await query({
         endpoint,
-        params,
+        data,
         method: METHODS.post,
       });
 

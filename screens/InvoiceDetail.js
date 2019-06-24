@@ -53,6 +53,7 @@ class InvoiceDetail extends React.Component {
       createdAt,
       totalCost,
     } = currentInvoice;
+    console.log(currentInvoice);
 
     return (
       <View style={{ display: 'flex', flex: 1 }}>

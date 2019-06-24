@@ -55,23 +55,27 @@ class InvoiceProductAddition extends React.Component {
     const _id = navigation.getParam('_id', '');
 
     // call api to create payment for invoice(_id)
-    this.props.addPayment(
-      {
-        invoice: _id,
-        category: currentPaymentMethodId,
-        amountMoney,
-        description,
-        type,
-      },
-      {
-        success: () => {},
-        handle401: () =>
-          handle401({
-            logout: this.props.logout,
-            navigation: this.props.navigation,
-          }),
-      }
-    );
+    if (currentPaymentMethodId !== '') {
+      this.props.addPayment(
+        {
+          invoice: _id,
+          category: currentPaymentMethodId,
+          amountMoney,
+          description,
+          type,
+        },
+        {
+          success: () => {},
+          handle401: () =>
+            handle401({
+              logout: this.props.logout,
+              navigation: this.props.navigation,
+            }),
+        }
+      );
+    } else {
+      this.setState({ isVisible: true });
+    }
   };
 
   render() {
@@ -113,6 +117,7 @@ class InvoiceProductAddition extends React.Component {
           <InterestTextInput
             label={i18n.t('amountMoney')}
             value={amountMoney}
+            keyboardType="number-pad"
             onChangeText={amountMoney => this.setState({ amountMoney })}
           />
           <InterestTextInput

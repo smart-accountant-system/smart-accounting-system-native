@@ -1,7 +1,7 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import i18n from 'i18n-js';
-import { View, StatusBar, TouchableOpacity, ScrollView } from 'react-native';
+import { View, TouchableOpacity, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-paper';
 
@@ -13,6 +13,7 @@ import {
   Avatar,
   AvatarTypography,
   InforWrapper,
+  AvatarPicture,
 } from '../containers/Home';
 import theme from '../constants/theme';
 import { logout } from '../redux/actions';
@@ -44,9 +45,18 @@ class Profile extends React.Component {
         <ScrollView>
           <ContentWrapper>
             <Avatar color={info.color}>
-              <AvatarTypography color={info.color}>
-                {info.fullname.substring(0, 1).toUpperCase()}
-              </AvatarTypography>
+              {info.avatar ? (
+                <AvatarPicture
+                  borderRadius={100}
+                  source={{
+                    uri: info.avatar,
+                  }}
+                />
+              ) : (
+                <AvatarTypography color={info.color}>
+                  {info.fullname.substring(0, 1).toUpperCase()}
+                </AvatarTypography>
+              )}
             </Avatar>
             <AvatarTypography size="30" color={info.color}>
               {info.fullname}

@@ -21,6 +21,11 @@ export const Avatar = styled.View`
   align-items: center;
 `;
 
+export const AvatarPicture = styled.ImageBackground`
+  width: 200px;
+  height: 200px;
+`;
+
 export const AvatarTypography = styled.Text`
   color: ${props => props.color || '#000'};
   font-size: ${props => props.size || '50px'};

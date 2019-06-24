@@ -19,6 +19,7 @@ import {
   getInvoices,
   chooseInvoice,
   removeInvoice,
+  getPayments,
 } from '../redux/actions';
 import {
   FilterHeader,
@@ -51,6 +52,16 @@ class Invoice extends React.Component {
 
   componentDidMount = () => {
     this.props.getInvoices(
+      {},
+      {
+        handle401: () =>
+          handle401({
+            logout: this.props.logout,
+            navigation: this.props.navigation,
+          }),
+      }
+    );
+    this.props.getPayments(
       {},
       {
         handle401: () =>
@@ -307,6 +318,7 @@ const mapDispatchToProps = {
   getInvoices,
   chooseInvoice,
   removeInvoice,
+  getPayments,
 };
 
 export default connect(

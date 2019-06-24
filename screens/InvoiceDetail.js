@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 
+import ROLE from '../constants/role';
 import theme from '../constants/theme';
 import { FeatherIcon } from '../components';
 import { handle401 } from '../constants/strategies';
@@ -43,7 +44,11 @@ class InvoiceDetail extends React.Component {
   };
 
   render() {
-    const { navigation, currentInvoice } = this.props;
+    const {
+      navigation,
+      currentInvoice,
+      user: { info },
+    } = this.props;
     const { refreshing } = this.state;
     const name = currentInvoice.type === 0 ? 'Purchase' : 'Sale';
     const color = currentInvoice.status ? '#438763' : '#ad6b8d';
@@ -100,15 +105,16 @@ class InvoiceDetail extends React.Component {
             />
           ))}
           <FooterInvoice color={color} totalCost={totalCost} />
-
-          <AmazingText
-            content={i18n.t('accountAddPayment')}
-            onPress={() => {
-              navigation.navigate('PaymentAddition', {
-                _id: currentInvoice._id,
-              });
-            }}
-          />
+          {info.role === ROLE.STAFF ? (
+            <AmazingText
+              content={i18n.t('accountAddPayment')}
+              onPress={() => {
+                navigation.navigate('PaymentAddition', {
+                  _id: currentInvoice._id,
+                });
+              }}
+            />
+          ) : null}
         </ScrollView>
       </View>
     );
@@ -116,6 +122,7 @@ class InvoiceDetail extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  user: state.user,
   currentInvoice: state.invoice.currentInvoice,
 });
 const mapDispatchToProps = {

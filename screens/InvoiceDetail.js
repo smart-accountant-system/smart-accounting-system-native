@@ -28,6 +28,19 @@ class InvoiceDetail extends React.Component {
     refreshing: false,
   };
 
+  componentDidMount = () => {
+    this.props.getPayments(
+      {},
+      {
+        handle401: () =>
+          handle401({
+            logout: this.props.logout,
+            navigation: this.props.navigation,
+          }),
+      }
+    );
+  };
+
   _onRefresh = () => {
     const { currentInvoice } = this.props;
     this.setState({ refreshing: true });

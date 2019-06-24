@@ -65,7 +65,11 @@ export function addPayment(
         method: METHODS.post,
       });
 
-      if (result.status === 200 || result.status === 304) {
+      if (
+        result.status === 200 ||
+        result.status === 304 ||
+        result.status === 201
+      ) {
         dispatch({
           type: ADD_PAYMENTS_SUCCESS,
           payload: result.data,

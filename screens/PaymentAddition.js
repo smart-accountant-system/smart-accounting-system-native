@@ -5,7 +5,6 @@ import i18n from 'i18n-js';
 import { Snackbar, Button, Dialog, Portal } from 'react-native-paper';
 import { View, TouchableOpacity, ScrollView, Text } from 'react-native';
 import { connect } from 'react-redux';
-import moment from 'moment';
 
 import theme from '../constants/theme';
 import { FeatherIcon, InterestTextInput, Empty } from '../components';
@@ -121,9 +120,8 @@ class InvoiceProductAddition extends React.Component {
         <ScrollView>
           <InterestTextInput
             label={i18n.t('amountMoney')}
-            keyboardType="phone-pad"
+            keyboardType="numeric"
             value={amountMoney}
-            keyboardType="number-pad"
             onChangeText={amountMoney => this.setState({ amountMoney })}
           />
           <InterestTextInput

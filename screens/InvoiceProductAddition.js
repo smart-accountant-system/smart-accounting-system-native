@@ -117,7 +117,7 @@ export default class InvoiceProductAddition extends React.Component {
               <InterestTextInput
                 label={i18n.t('quantity')}
                 value={quantity}
-                keyboardType="phone-pad"
+                keyboardType="numeric"
                 onChangeText={quantity => this.setState({ quantity })}
               />
             </View>
@@ -125,7 +125,7 @@ export default class InvoiceProductAddition extends React.Component {
               <InterestTextInput
                 label={i18n.t('unitPrice')}
                 value={unitPrice}
-                keyboardType="phone-pad"
+                keyboardType="numeric"
                 onChangeText={unitPrice => this.setState({ unitPrice })}
               />
             </View>

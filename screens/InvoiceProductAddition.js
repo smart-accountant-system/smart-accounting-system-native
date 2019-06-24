@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import React from 'react';
 import i18n from 'i18n-js';
 import { Button, Snackbar } from 'react-native-paper';

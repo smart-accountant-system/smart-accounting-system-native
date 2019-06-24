@@ -84,11 +84,7 @@ class AccountDetail extends React.Component {
             </Text>
             <View style={{ flex: 1 }}>
               <Text style={{ flexWrap: 'wrap' }}>
-                {currentAccount.description} {currentAccount.description}{' '}
-                {currentAccount.description} {currentAccount.description}{' '}
-                {currentAccount.description} {currentAccount.description}{' '}
-                {currentAccount.description} a a a a a a a a a a a a a a a a a a
-                a a a a a a a a a a a a
+                {currentAccount.description}
               </Text>
               <Text style={{ textAlign: 'right', marginTop: 8 }}>
                 {new Date(currentAccount.createdAt).toLocaleDateString(

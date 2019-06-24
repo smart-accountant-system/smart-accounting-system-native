@@ -7,12 +7,13 @@ const AccountContentContainer = styled.View`
   margin-left: 8px;
   background-color: #fff;
   padding: 10px;
+  padding-right: 18px;
   width: 100%;
   border-bottom-color: #f1f1f1;
   border-bottom-width: 2px;
 
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
 `;
 
@@ -25,26 +26,25 @@ const AccountDetail = styled.Text`
   margin-top: ${props => (props.first ? 16 : 0)}px;
   margin-bottom: ${props => (props.first ? 4 : 0)}px;
   color: ${props => props.color || '#333'};
-  ${props => (props.fontSize ? `font-size: ${props.fontSize}px` : '')}
+  ${props => (props.fontSize ? `font-size: ${props.fontSize}px` : null)}
 `;
 
-const InforBalanceContainer = styled.View`
+const ItemRow = styled.View`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-between;
-  align-items: flex-end;
-  padding-right: 5;
+  align-items: ${({ end }) => (end ? 'flex-end' : 'flex-start')};
 `;
 
 export default ({ name, description, color, time, balanceType, balance }) => (
   <AccountContentContainer>
-    <View>
+    <ItemRow>
       <AccountTyporaphy>{name}</AccountTyporaphy>
-      <AccountDetail first>{description}</AccountDetail>
-      <AccountDetail color={color}>{balanceType}</AccountDetail>
-    </View>
-    <InforBalanceContainer>
       <AccountDetail>{time}</AccountDetail>
+    </ItemRow>
+    <AccountDetail first>{description}</AccountDetail>
+    <ItemRow end>
+      <AccountDetail color={color}>{balanceType}</AccountDetail>
       <NumberFormat
         value={balance}
         displayType="text"
@@ -56,6 +56,6 @@ export default ({ name, description, color, time, balanceType, balance }) => (
           </AccountDetail>
         )}
       />
-    </InforBalanceContainer>
+    </ItemRow>
   </AccountContentContainer>
 );

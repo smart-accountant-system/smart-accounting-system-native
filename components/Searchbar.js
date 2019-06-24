@@ -5,6 +5,7 @@ import { Searchbar } from 'react-native-paper';
 export default ({ ...others }) => (
   <Searchbar
     {...others}
+    autoCapitalize="none"
     placeholder={i18n.t('search')}
     style={{
       shadowOffset: { width: 0, height: 0 },

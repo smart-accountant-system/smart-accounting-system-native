@@ -139,8 +139,8 @@ class InvoiceProductAddition extends React.Component {
         <ScrollView>
           <InterestTextInput
             label={i18n.t('amountMoney')}
+            keyboardType="numeric"
             value={amountMoney}
-            keyboardType="number-pad"
             onChangeText={amountMoney => this.setState({ amountMoney })}
           />
           <InterestTextInput

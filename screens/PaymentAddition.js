@@ -7,7 +7,12 @@ import { View, TouchableOpacity, ScrollView, Text } from 'react-native';
 import { connect } from 'react-redux';
 
 import theme from '../constants/theme';
-import { FeatherIcon, InterestTextInput, Empty } from '../components';
+import {
+  FeatherIcon,
+  InterestTextInput,
+  CurrencyInput,
+  Empty,
+} from '../components';
 import { Header, Typography, HeaderWrapper } from '../containers/Home';
 import { TypePicker, AmazingText } from '../containers/InvoiceAddition';
 import { FewStyledContainer } from '../containers/PaymentMethodAddition';
@@ -67,15 +72,12 @@ class InvoiceProductAddition extends React.Component {
         },
         {
           success: () => {
+            this.setState({ isLoading: false });
             this.props.getPayments(
               {},
               {
                 success: () => {
-                  this.setState({ isLoading: false });
                   navigation.navigate('InvoiceDetail');
-                },
-                failure: () => {
-                  this.setState({ isLoading: false });
                 },
                 handle401: () =>
                   handle401({
@@ -86,7 +88,7 @@ class InvoiceProductAddition extends React.Component {
             );
           },
           failure: () => {
-            this.setState({ isVisible: true });
+            this.setState({ isVisible: true, isLoading: false });
           },
           handle401: () =>
             handle401({
@@ -137,10 +139,9 @@ class InvoiceProductAddition extends React.Component {
           secondPress={() => this.setState({ type: 1 })}
         />
         <ScrollView>
-          <InterestTextInput
+          <CurrencyInput
             label={i18n.t('amountMoney')}
-            keyboardType="numeric"
-            value={amountMoney}
+            amountMoney={amountMoney}
             onChangeText={amountMoney => this.setState({ amountMoney })}
           />
           <InterestTextInput

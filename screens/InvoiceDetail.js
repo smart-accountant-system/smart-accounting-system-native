@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   ScrollView,
   RefreshControl,
-  Text,
 } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -17,11 +16,8 @@ import { handle401 } from '../constants/strategies';
 import { AmazingText } from '../containers/InvoiceAddition';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
 import { getInvoiceById, getPayments } from '../redux/actions';
-import {
-  HeaderInvoice,
-  DescriptionHeader,
-  DetailItem,
-  FooterInvoice,
+import InvoiceDetailSection, {
+  PaymentSection,
 } from '../containers/InvoiceDetail';
 
 class InvoiceDetail extends React.Component {
@@ -53,14 +49,6 @@ class InvoiceDetail extends React.Component {
     } = this.props;
 
     const { refreshing } = this.state;
-    const name = currentInvoice.type === 0 ? 'Purchase' : 'Sale';
-    const color = currentInvoice.status ? '#438763' : '#ad6b8d';
-    const status = currentInvoice.status ? 'Paid' : 'Unpaid';
-    const {
-      createdBy: { fullname, username },
-      createdAt,
-      totalCost,
-    } = currentInvoice;
 
     const paymentsOfInvoice = payments.payments.filter(
       payment => payment.invoice === currentInvoice._id
@@ -85,40 +73,8 @@ class InvoiceDetail extends React.Component {
             />
           }
         >
-          <HeaderInvoice
-            name={name}
-            employeeUsername={username}
-            employeeName={fullname}
-            color={color}
-            status={status}
-            createdAt={new Date(createdAt).toLocaleDateString(i18n.t('local'), {
-              day: 'numeric',
-              month: 'long',
-              year: 'numeric',
-            })}
-          />
-          <DescriptionHeader
-            product={i18n.t('product')}
-            quantity={i18n.t('quantity')}
-            unitPrice={i18n.t('unitPrice')}
-            cost={i18n.t('cost')}
-          />
-          {currentInvoice.detail.map(({ product, quantity, unitPrice }) => (
-            <DetailItem
-              key={Math.random()}
-              product={product}
-              quantity={quantity}
-              unitPrice={unitPrice}
-            />
-          ))}
-          <FooterInvoice color={color} totalCost={totalCost} />
-
-          {/* list payment here */}
-          {paymentsOfInvoice.map(payment => (
-            <Text key={payment._id}>
-              {payment.description} {payment.amountMoney}
-            </Text>
-          ))}
+          <InvoiceDetailSection currentInvoice={currentInvoice} />
+          <PaymentSection payments={paymentsOfInvoice} />
 
           {info.role === ROLE.STAFF ? (
             <AmazingText

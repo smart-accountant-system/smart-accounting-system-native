@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   RefreshControl,
+  Text,
 } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -61,7 +62,9 @@ class InvoiceDetail extends React.Component {
       totalCost,
     } = currentInvoice;
 
-    console.log(payments);
+    const paymentsOfInvoice = payments.payments.filter(
+      payment => payment.invoice === currentInvoice._id
+    );
 
     return (
       <View style={{ display: 'flex', flex: 1 }}>
@@ -109,6 +112,12 @@ class InvoiceDetail extends React.Component {
             />
           ))}
           <FooterInvoice color={color} totalCost={totalCost} />
+
+          {/* list payment here */}
+          {paymentsOfInvoice.map(payment => (
+            <Text key={payment._id}>{payment.description}</Text>
+          ))}
+
           {info.role === ROLE.STAFF ? (
             <AmazingText
               content={i18n.t('accountAddPayment')}

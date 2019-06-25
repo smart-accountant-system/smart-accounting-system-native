@@ -49,19 +49,6 @@ class Invoice extends React.Component {
     loading: false,
   };
 
-  componentDidMount = () => {
-    this.props.getInvoices(
-      {},
-      {
-        handle401: () =>
-          handle401({
-            logout: this.props.logout,
-            navigation: this.props.navigation,
-          }),
-      }
-    );
-  };
-
   _onRefresh = () => {
     this.setState({ refreshing: true });
     this.props.getInvoices(

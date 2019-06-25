@@ -98,6 +98,7 @@ class EmployeeManagement extends React.Component {
   render() {
     const { navigation, employees } = this.props;
     const { searchText, refreshing, visibleSnackbar } = this.state;
+    console.log(employees);
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>

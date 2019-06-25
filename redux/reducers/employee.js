@@ -38,6 +38,10 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isLoading: false,
+        employees: {
+          employees: [...state.employees.employees, action.payload],
+          total: state.employees.total + 1,
+        },
         error: null,
       };
     case DELETE_EMPLOYEE_SUCCESS:

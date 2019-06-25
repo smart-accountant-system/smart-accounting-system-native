@@ -80,6 +80,7 @@ class InvoiceDetail extends React.Component {
     } = this.props;
 
     const { refreshing } = this.state;
+    console.log(currentInvoice);
 
     return (
       <View style={{ display: 'flex', flex: 1 }}>

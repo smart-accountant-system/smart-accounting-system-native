@@ -79,6 +79,10 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isLoading: false,
+        invoices: {
+          invoices: [...state.invoices.invoices, action.payload],
+          total: state.invoices.total + 1,
+        },
         error: null,
       };
     case DELETE_INVOICE_SUCCESS:

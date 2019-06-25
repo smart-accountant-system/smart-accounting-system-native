@@ -17,8 +17,8 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 import {
   logout,
   getInvoices,
-  chooseInvoice,
   removeInvoice,
+  getPayments,
 } from '../redux/actions';
 import {
   FilterHeader,
@@ -139,10 +139,23 @@ class Invoice extends React.Component {
     );
   };
 
-  invoiceDetail = invoice => {
+  invoiceDetail = ({ _id }) => {
     const { navigation } = this.props;
-    this.props.chooseInvoice(invoice);
-    navigation.navigate('InvoiceDetail');
+    navigation.navigate('InvoiceDetail', {
+      _id,
+    });
+
+    this.props.getPayments(
+      _id,
+      {},
+      {
+        handle401: () =>
+          handle401({
+            logout: this.props.logout,
+            navigation: this.props.navigation,
+          }),
+      }
+    );
   };
 
   handleRemoveInvoice = _id => {
@@ -292,8 +305,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   logout,
   getInvoices,
-  chooseInvoice,
   removeInvoice,
+  getPayments,
 };
 
 export default connect(

@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 /* eslint-disable eqeqeq */
 /* eslint-disable array-callback-return */
 /* eslint-disable react/destructuring-assignment */
@@ -30,26 +31,30 @@ import { getInvoiceById, getPayments } from '../redux/actions';
 import { PaymentSection } from '../containers/InvoiceDetail';
 
 class InvoiceDetail extends React.Component {
-  state = {
-    refreshing: false,
+  constructor(props) {
+    super(props);
+    const { navigation } = props;
+    this._id = navigation.getParam('_id', '');
+    this.state = {
+      refreshing: false,
 
-    isDatePickerVisible: false,
-    activatingDate: undefined,
-    fromDate: new Date(),
-    toDate: new Date(),
+      isDatePickerVisible: false,
+      activatingDate: undefined,
+      fromDate: new Date(),
+      toDate: new Date(),
 
-    isExpandingFilter: false,
-    filterHeight: new Animated.Value(0),
-    loading: false,
-  };
+      isExpandingFilter: false,
+      filterHeight: new Animated.Value(0),
+      loading: false,
+    };
+  }
 
   _onRefresh = () => {
     const { navigation } = this.props;
-    const _id = navigation.getParam('_id', '');
     this.setState({ refreshing: true });
 
     this.props.getPayments(
-      _id,
+      this._id,
       {},
       {
         success: () => {
@@ -108,9 +113,7 @@ class InvoiceDetail extends React.Component {
   };
 
   doFilter = () => {
-    const { navigation } = this.props;
     const { filterHeight, fromDate, toDate } = this.state;
-    const _id = navigation.getParam('_id', '');
 
     this.setState({ loading: true });
 
@@ -123,7 +126,7 @@ class InvoiceDetail extends React.Component {
     });
 
     this.props.getPayments(
-      _id,
+      this._id,
       {
         startDate: new Date(fromDate.toDateString()),
         endDate: new Date(toDate.toDateString()),
@@ -146,20 +149,13 @@ class InvoiceDetail extends React.Component {
 
   getNewestInvoice = () => {
     const {
-      navigation,
       invoices: { invoices },
     } = this.props;
 
-    const _id = navigation.getParam('_id', '');
-
-    let invoice;
-
-    invoices.map(item => {
-      if (item._id == _id) {
-        invoice = item;
+    for (let i = 0; i < invoices.length; i++)
+      if (invoices[i]._id == this._id) {
+        return invoices[i];
       }
-    });
-    return invoice;
   };
 
   render() {
@@ -167,7 +163,6 @@ class InvoiceDetail extends React.Component {
       navigation,
       user: { info },
     } = this.props;
-    const _id = navigation.getParam('_id', '');
 
     const {
       isDatePickerVisible,
@@ -179,7 +174,6 @@ class InvoiceDetail extends React.Component {
       loading,
     } = this.state;
     const { payments } = this.getNewestInvoice();
-
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
@@ -194,7 +188,7 @@ class InvoiceDetail extends React.Component {
               <TouchableOpacity
                 onPress={() => {
                   navigation.navigate('PaymentAddition', {
-                    _id,
+                    _id: this._id,
                     previous: 'Payment',
                   });
                 }}

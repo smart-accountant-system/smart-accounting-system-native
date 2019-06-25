@@ -20,6 +20,20 @@ import { FeatherIcon, Loading, Searchbar, Empty } from '../components';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
 
 class EmployeeManagement extends React.Component {
+  constructor(props) {
+    super(props);
+    this.props.getEmployees(
+      {},
+      {
+        handle401: () =>
+          handle401({
+            logout: this.props.logout,
+            navigation: this.props.navigation,
+          }),
+      }
+    );
+  }
+
   state = {
     searchText: '',
     timer: undefined,

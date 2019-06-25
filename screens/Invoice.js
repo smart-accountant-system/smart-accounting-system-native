@@ -35,6 +35,23 @@ import { InvoiceItem, InvoiceContent } from '../containers/Invoice';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
 
 class Invoice extends React.Component {
+  constructor(props) {
+    super(props);
+    this.props.getInvoices(
+      {},
+      {
+        success: () => {
+          this.setState({ refreshing: false });
+        },
+        handle401: () =>
+          handle401({
+            logout: this.props.logout,
+            navigation: this.props.navigation,
+          }),
+      }
+    );
+  }
+
   state = {
     isDatePickerVisible: false,
     activatingDate: undefined,

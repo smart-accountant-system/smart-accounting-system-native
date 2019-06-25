@@ -12,7 +12,6 @@ import {
 
 const INITIAL_STATE = {
   customers: null,
-  isLoading: false,
   error: null,
 };
 
@@ -23,7 +22,6 @@ export default (state = INITIAL_STATE, action) => {
     case GET_CUSTOMERS_REQUEST:
       return {
         ...state,
-        isLoading: true,
         error: null,
       };
 
@@ -31,19 +29,20 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         customers: action.payload,
-        isLoading: false,
         error: null,
       };
     case POST_CUSTOMER_SUCCESS:
       return {
         ...state,
-        isLoading: false,
+        customers: {
+          total: state.customers.total + 1,
+          customers: [...state.customers.customers, action.payload],
+        },
         error: null,
       };
     case DELETE_CUSTOMER_SUCCESS:
       return {
         ...state,
-        isLoading: false,
         customers: {
           total: state.customers.total - 1,
           customers: state.customers.customers.filter(
@@ -58,7 +57,6 @@ export default (state = INITIAL_STATE, action) => {
     case DELETE_CUSTOMER_FAILURE:
       return {
         ...state,
-        isLoading: false,
         error: action.payload,
       };
     default:

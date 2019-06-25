@@ -97,7 +97,6 @@ class PaymentMethod extends React.Component {
   render() {
     const { navigation, categories } = this.props;
     const { searchText, refreshing, visibleSnackbar } = this.state;
-    console.log(categories);
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>

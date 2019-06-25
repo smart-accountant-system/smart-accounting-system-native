@@ -48,16 +48,6 @@ class EmployeeAddition extends React.Component {
       {
         success: () => {
           this.props.navigation.navigate('EmployeeManagement');
-          this.props.getEmployees(
-            {},
-            {
-              handle401: () =>
-                handle401({
-                  logout: this.props.logout,
-                  navigation: this.props.navigation,
-                }),
-            }
-          );
         },
         failure: () => {
           this.setState({

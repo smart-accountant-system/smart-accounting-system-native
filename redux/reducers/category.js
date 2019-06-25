@@ -40,6 +40,10 @@ export default (state = INITIAL_STATE, action) => {
         return {
           ...state,
           isLoading: false,
+          categories: {
+            categories: [...state.categories.categories, action.payload],
+            total: state.categories.total + 1,
+          },
           error: null,
         };
     case DELETE_CATEGORY_SUCCESS:

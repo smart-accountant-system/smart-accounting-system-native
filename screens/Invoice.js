@@ -35,8 +35,21 @@ import { InvoiceItem, InvoiceContent } from '../containers/Invoice';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
 
 class Invoice extends React.Component {
-  constructor(props) {
-    super(props);
+  state = {
+    isDatePickerVisible: false,
+    activatingDate: undefined,
+    fromDate: new Date(),
+    toDate: new Date(),
+
+    isExpandingFilter: false,
+    filterHeight: new Animated.Value(0),
+
+    refreshing: false,
+    visibleSnackbar: false,
+    loading: false,
+  };
+
+  componentDidMount = () => {
     this.props.getInvoices(
       {},
       {
@@ -50,20 +63,6 @@ class Invoice extends React.Component {
           }),
       }
     );
-  }
-
-  state = {
-    isDatePickerVisible: false,
-    activatingDate: undefined,
-    fromDate: new Date(),
-    toDate: new Date(),
-
-    isExpandingFilter: false,
-    filterHeight: new Animated.Value(0),
-
-    refreshing: false,
-    visibleSnackbar: false,
-    loading: false,
   };
 
   _onRefresh = () => {

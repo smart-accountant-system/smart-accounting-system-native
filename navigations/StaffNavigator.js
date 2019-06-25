@@ -42,9 +42,9 @@ export const HomeStack = createStackNavigator(
 
 const InvoiceStack = createStackNavigator(
   {
+    Invoice,
     InvoiceDetail,
     Payment,
-    Invoice,
     InvoiceAddition,
     PaymentAddition,
     InvoiceProductAddition,

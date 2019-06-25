@@ -10,8 +10,6 @@ export const GET_INVOICE_BY_ID_REQUEST = 'get-invoice-by-id-request';
 export const GET_INVOICE_BY_ID_SUCCESS = 'get-invoice-by-id-success';
 export const GET_INVOICE_BY_ID_FAILURE = 'get-invoice-by-id-failure';
 
-export const CHOOSE_INVOICE = 'choose-invoice';
-
 export const POST_INVOICE_REQUEST = 'post-invoice-request';
 export const POST_INVOICE_SUCCESS = 'post-invoice-success';
 export const POST_INVOICE_FAILURE = 'post-invoice-failure';
@@ -57,13 +55,6 @@ export function getInvoices(
       });
       failure();
     }
-  };
-}
-
-export function chooseInvoice(invoice) {
-  return {
-    type: CHOOSE_INVOICE,
-    payload: invoice,
   };
 }
 

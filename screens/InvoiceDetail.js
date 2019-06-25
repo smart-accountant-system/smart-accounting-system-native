@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 /* eslint-disable array-callback-return */
 /* eslint-disable eqeqeq */
 /* eslint-disable react/destructuring-assignment */
@@ -17,49 +18,22 @@ import { FeatherIcon } from '../components';
 import { handle401 } from '../constants/strategies';
 import { AmazingText } from '../containers/InvoiceAddition';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
-import { getInvoiceById, getPayments, chooseInvoice } from '../redux/actions';
+import { getInvoiceById } from '../redux/actions';
 import InvoiceDetailSection from '../containers/InvoiceDetail';
 
 class InvoiceDetail extends React.Component {
-  state = {
-    refreshing: false,
-  };
-
-  componentDidMount = () => {
-    const {
-      currentInvoice: { _id },
-    } = this.props;
-    this.props.getPayments(
-      _id,
-      {},
-      {
-        success: () => {
-          const {
-            invoices: { invoices },
-          } = this.props;
-          let invoice;
-
-          invoices.map(item => {
-            if (item._id == _id) {
-              invoice = item;
-            }
-          });
-          this.props.chooseInvoice(invoice);
-          console.log(invoice);
-        },
-        handle401: () =>
-          handle401({
-            logout: this.props.logout,
-            navigation: this.props.navigation,
-          }),
-      }
-    );
-  };
+  constructor(props) {
+    super(props);
+    const { navigation } = props;
+    this._id = navigation.getParam('_id', '');
+    this.state = {
+      refreshing: false,
+    };
+  }
 
   _onRefresh = () => {
-    const { currentInvoice } = this.props;
     this.setState({ refreshing: true });
-    this.props.getInvoiceById(currentInvoice._id, {
+    this.props.getInvoiceById(this._id, {
       success: () => {
         this.setState({ refreshing: false });
       },
@@ -71,15 +45,26 @@ class InvoiceDetail extends React.Component {
     });
   };
 
+  getNewestInvoice = () => {
+    const {
+      invoices: { invoices },
+    } = this.props;
+
+    for (let i = 0; i < invoices.length; i++)
+      if (invoices[i]._id == this._id) {
+        return invoices[i];
+      }
+  };
+
   render() {
     const {
       navigation,
-      currentInvoice,
-      currentInvoice: { payments },
       user: { info },
     } = this.props;
-
     const { refreshing } = this.state;
+
+    const invoice = this.getNewestInvoice();
+    const { payments } = invoice;
 
     return (
       <View style={{ display: 'flex', flex: 1 }}>
@@ -100,14 +85,14 @@ class InvoiceDetail extends React.Component {
             />
           }
         >
-          <InvoiceDetailSection currentInvoice={currentInvoice} />
+          <InvoiceDetailSection currentInvoice={invoice} />
 
           {info.role === ROLE.STAFF ? (
             <AmazingText
               content={i18n.t('accountAddPayment')}
               onPress={() => {
                 navigation.navigate('PaymentAddition', {
-                  _id: currentInvoice._id,
+                  _id: invoice._id,
                   previous: 'InvoiceDetail',
                 });
               }}
@@ -118,7 +103,7 @@ class InvoiceDetail extends React.Component {
               content="Show recorded payments"
               onPress={() => {
                 navigation.navigate('Payment', {
-                  _id: currentInvoice._id,
+                  _id: invoice._id,
                 });
               }}
             />
@@ -131,13 +116,10 @@ class InvoiceDetail extends React.Component {
 
 const mapStateToProps = state => ({
   user: state.user,
-  currentInvoice: state.invoice.currentInvoice,
   invoices: state.invoice.invoices,
 });
 const mapDispatchToProps = {
-  chooseInvoice,
   getInvoiceById,
-  getPayments,
 };
 
 export default connect(

@@ -21,29 +21,23 @@ class CustomerAddition extends React.Component {
 711-2880 Nulla St.
 Mankato Mississippi 96522`,
     isVisible: false,
+    isLoading: false,
   };
 
   handleAddCustomer = () => {
     const { name, phone, address } = this.state;
+    this.setState({ isLoading: true });
     this.props.addCustomer(
       { name, phone, address },
       {
         success: () => {
           this.props.navigation.navigate('CustomerManagement');
-          this.props.getCustomers(
-            {},
-            {
-              handle401: () =>
-                handle401({
-                  logout: this.props.logout,
-                  navigation: this.props.navigation,
-                }),
-            }
-          );
+          this.setState({ isLoading: false });
         },
         failure: () => {
           this.setState({
             isVisible: true,
+            isLoading: false,
           });
         },
         handle401: () =>
@@ -56,8 +50,8 @@ Mankato Mississippi 96522`,
   };
 
   render() {
-    const { navigation, isLoading } = this.props;
-    const { name, phone, address, isVisible } = this.state;
+    const { navigation } = this.props;
+    const { name, phone, address, isVisible, isLoading } = this.state;
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
@@ -115,7 +109,6 @@ Mankato Mississippi 96522`,
 }
 
 const mapStateToProps = state => ({
-  isLoading: state.customer.isLoading,
   error: state.customer.error,
 });
 const mapDispatchToProps = {

@@ -100,8 +100,8 @@ CustomerStack.navigationOptions = {
 
 const StaffNavigator = createBottomTabNavigator(
   {
-    CustomerStack,
     HomeStack,
+    CustomerStack,
     InvoiceStack,
     ReceiptStack,
   },

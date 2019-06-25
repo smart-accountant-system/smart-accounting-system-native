@@ -61,7 +61,6 @@ class InvoiceProductAddition extends React.Component {
     const previous = navigation.getParam('previous', '');
     this.setState({ isLoading: true });
 
-    // call api to create payment for invoice(_id)
     if (currentPaymentMethodId !== '') {
       this.props.addPayment(
         {

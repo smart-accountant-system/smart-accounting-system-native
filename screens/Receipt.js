@@ -117,7 +117,7 @@ class Receipt extends React.Component {
   };
 
   doFilter = () => {
-    const { filterHeight, fromDate, toDate, loading } = this.state;
+    const { filterHeight, fromDate, toDate } = this.state;
     this.setState({ loading: true });
 
     Animated.timing(filterHeight, {

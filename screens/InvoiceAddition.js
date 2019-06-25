@@ -27,14 +27,7 @@ import { FewStyledContainer } from '../containers/PaymentMethodAddition';
 class InvoiceAddition extends React.Component {
   state = {
     type: 0,
-    detail: [
-      {
-        key: Math.random(),
-        product: 'a',
-        quantity: 1,
-        unitPrice: 1,
-      },
-    ],
+    detail: [],
     isVisible: false,
   };
 

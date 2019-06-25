@@ -58,6 +58,7 @@ class InvoiceProductAddition extends React.Component {
       currentPaymentMethodId,
     } = this.state;
     const _id = navigation.getParam('_id', '');
+    const previous = navigation.getParam('previous', '');
     this.setState({ isLoading: true });
 
     // call api to create payment for invoice(_id)
@@ -74,10 +75,11 @@ class InvoiceProductAddition extends React.Component {
           success: () => {
             this.setState({ isLoading: false });
             this.props.getPayments(
+              _id,
               {},
               {
                 success: () => {
-                  navigation.navigate('InvoiceDetail');
+                  navigation.navigate(previous);
                 },
                 handle401: () =>
                   handle401({
@@ -116,14 +118,13 @@ class InvoiceProductAddition extends React.Component {
     const currentPaymentMethod = categories.categories.find(
       category => category._id === currentPaymentMethodId
     );
+    const previous = navigation.getParam('previous', '');
 
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
           <Header>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('InvoiceDetail')}
-            >
+            <TouchableOpacity onPress={() => navigation.navigate(previous)}>
               <FeatherIcon color={theme.colors.white} name="chevron-left" />
             </TouchableOpacity>
             <Typography>{i18n.t('paymentAddition')}</Typography>

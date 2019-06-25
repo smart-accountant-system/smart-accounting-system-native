@@ -1,38 +1,15 @@
 import React from 'react';
 import i18n from 'i18n-js';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import styled from 'styled-components';
+import Item from './Item';
+import Content from '../../Account/Content';
 
 const Container = styled.View`
-  border-top-color: #f1f1f1;
-  border-top-width: 3px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-const Header = styled.Text`
-  font-size: 18px;
-  font-weight: 300;
   padding-top: 8px;
-  padding-bottom: 16px;
 `;
-const ItemContainer = styled.View`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  padding: 8px;
-`;
-
-const ItemField = styled.View`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
 export default ({ payments }) => (
   <Container>
-    <Header>Recorded Payments</Header>
     {payments.map(
       ({
         _id,
@@ -42,25 +19,21 @@ export default ({ payments }) => (
         amountMoney,
         description,
       }) => (
-        <ItemContainer key={_id}>
-          <ItemField>
-            <Text>Cat {name}</Text>
-            <Text>
-              {new Date(createdAt).toLocaleDateString(i18n.t('local'), {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric',
-              })}
-            </Text>
-          </ItemField>
-
-          <Text>
-            {!type ? i18n.t('paymentIn') : i18n.t('paymentOut')} Payment
-          </Text>
-          <Text>{amountMoney}</Text>
-          <Text>{description}</Text>
-          <Text />
-        </ItemContainer>
+        <Item onRemove={() => {}} key={_id} type={type}>
+          <Content
+            name={name}
+            description={description}
+            color={!type ? '#438763' : '#ad6b8d'}
+            balance={amountMoney}
+            balanceType={`${
+              !type ? i18n.t('paymentIn') : i18n.t('paymentOut')
+            } payment`}
+            time={new Date(createdAt).toLocaleDateString(i18n.t('local'), {
+              day: 'numeric',
+              month: 'long',
+            })}
+          />
+        </Item>
       )
     )}
   </Container>

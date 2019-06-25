@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import {
   GET_INVOICES_REQUEST,
   GET_INVOICES_SUCCESS,
@@ -12,6 +13,9 @@ import {
   DELETE_INVOICE_REQUEST,
   DELETE_INVOICE_SUCCESS,
   DELETE_INVOICE_FAILURE,
+  GET_PAYMENTS_REQUEST,
+  GET_PAYMENTS_SUCCESS,
+  GET_PAYMENTS_FAILURE,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -23,12 +27,8 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case GET_PAYMENTS_REQUEST:
     case GET_INVOICES_REQUEST:
-      return {
-        ...state,
-        isLoading: true,
-        error: null,
-      };
     case GET_INVOICE_BY_ID_REQUEST:
     case POST_INVOICE_REQUEST:
     case DELETE_INVOICE_REQUEST:
@@ -38,6 +38,25 @@ export default (state = INITIAL_STATE, action) => {
         error: null,
       };
 
+    case GET_PAYMENTS_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        invoices: {
+          total: state.invoices.total,
+          invoices: state.invoices.invoices.map(invoice =>
+            invoice._id == action.payload.invoice
+              ? {
+                  ...invoice,
+                  payments: {
+                    payments: action.payload.payments,
+                    total: action.payload.total,
+                  },
+                }
+              : invoice
+          ),
+        },
+      };
     case GET_INVOICES_SUCCESS:
       return {
         ...state,
@@ -49,7 +68,10 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isLoading: false,
-        currentInvoice: action.payload,
+        currentInvoice: action.payload, // OLD VER
+        invoice: state.invoices.invoices.map(invoice =>
+          invoice._id == action.payload._id ? action.payload : invoice
+        ),
         error: null,
       };
 
@@ -72,12 +94,8 @@ export default (state = INITIAL_STATE, action) => {
         error: null,
       };
 
+    case GET_PAYMENTS_FAILURE:
     case GET_INVOICES_FAILURE:
-      return {
-        ...state,
-        isLoading: false,
-        error: action.payload,
-      };
     case GET_INVOICE_BY_ID_FAILURE:
     case POST_INVOICE_FAILURE:
     case DELETE_INVOICE_FAILURE:

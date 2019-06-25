@@ -11,13 +11,14 @@ export const ADD_PAYMENTS_SUCCESS = 'add-payments-success';
 export const ADD_PAYMENTS_FAILURE = 'add-payments-failure';
 
 export function getPayments(
+  invoice,
   params,
   { success = () => {}, failure = () => {}, handle401 }
 ) {
   return async dispatch => {
     try {
       dispatch({ type: GET_PAYMENTS_REQUEST });
-      const endpoint = '/payments';
+      const endpoint = `/payments/invoices/${invoice}`;
 
       const result = await query({
         endpoint,

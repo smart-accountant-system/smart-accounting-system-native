@@ -1,25 +1,20 @@
+/* eslint-disable eqeqeq */
+/* eslint-disable array-callback-return */
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import i18n from 'i18n-js';
 import {
   Text,
   View,
+  Animated,
   TouchableOpacity,
   ScrollView,
-  Animated,
   RefreshControl,
-  LayoutAnimation,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { Button, Snackbar } from 'react-native-paper';
+import { Button } from 'react-native-paper';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
-import {
-  logout,
-  getInvoices,
-  chooseInvoice,
-  removeInvoice,
-} from '../redux/actions';
 import {
   FilterHeader,
   FilterBody,
@@ -28,14 +23,16 @@ import {
 } from '../components/Filter';
 import ROLE from '../constants/role';
 import theme from '../constants/theme';
-import { handle401 } from '../constants/strategies';
 import { FeatherIcon, Loading, Empty } from '../components';
-
-import { InvoiceItem, InvoiceContent } from '../containers/Invoice';
+import { handle401 } from '../constants/strategies';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
+import { getInvoiceById, getPayments } from '../redux/actions';
+import { PaymentSection } from '../containers/InvoiceDetail';
 
-class Invoice extends React.Component {
+class InvoiceDetail extends React.Component {
   state = {
+    refreshing: false,
+
     isDatePickerVisible: false,
     activatingDate: undefined,
     fromDate: new Date(),
@@ -43,31 +40,22 @@ class Invoice extends React.Component {
 
     isExpandingFilter: false,
     filterHeight: new Animated.Value(0),
-
-    refreshing: false,
-    visibleSnackbar: false,
     loading: false,
   };
 
-  componentDidMount = () => {
-    this.props.getInvoices(
-      {},
-      {
-        handle401: () =>
-          handle401({
-            logout: this.props.logout,
-            navigation: this.props.navigation,
-          }),
-      }
-    );
-  };
-
   _onRefresh = () => {
+    const { navigation } = this.props;
+    const _id = navigation.getParam('_id', '');
     this.setState({ refreshing: true });
-    this.props.getInvoices(
+
+    this.props.getPayments(
+      _id,
       {},
       {
         success: () => {
+          this.setState({ refreshing: false });
+        },
+        false: () => {
           this.setState({ refreshing: false });
         },
         handle401: () =>
@@ -120,7 +108,10 @@ class Invoice extends React.Component {
   };
 
   doFilter = () => {
+    const { navigation } = this.props;
     const { filterHeight, fromDate, toDate } = this.state;
+    const _id = navigation.getParam('_id', '');
+
     this.setState({ loading: true });
 
     Animated.timing(filterHeight, {
@@ -131,7 +122,8 @@ class Invoice extends React.Component {
       isExpandingFilter: false,
     });
 
-    this.props.getInvoices(
+    this.props.getPayments(
+      _id,
       {
         startDate: new Date(fromDate.toDateString()),
         endDate: new Date(toDate.toDateString()),
@@ -152,67 +144,72 @@ class Invoice extends React.Component {
     );
   };
 
-  invoiceDetail = invoice => {
-    const { navigation } = this.props;
-    this.props.chooseInvoice(invoice);
-    navigation.navigate('InvoiceDetail');
-  };
+  getNewestInvoice = () => {
+    const {
+      navigation,
+      invoices: { invoices },
+    } = this.props;
 
-  handleRemoveInvoice = _id => {
-    this.props.removeInvoice(_id, {
-      success: () => {
-        LayoutAnimation.spring();
-      },
-      failure: () => {
-        this.setState({ visibleSnackbar: true });
-      },
-      handle401: () =>
-        handle401({
-          logout: this.props.logout,
-          navigation: this.props.navigation,
-        }),
+    const _id = navigation.getParam('_id', '');
+
+    let invoice;
+
+    invoices.map(item => {
+      if (item._id == _id) {
+        invoice = item;
+      }
     });
+    return invoice;
   };
 
   render() {
     const {
       navigation,
-      invoices,
       user: { info },
     } = this.props;
+    const _id = navigation.getParam('_id', '');
+
     const {
       isDatePickerVisible,
       fromDate,
       toDate,
       activatingDate,
       refreshing,
-      visibleSnackbar,
+      isExpandingFilter,
       loading,
     } = this.state;
+    const { payments } = this.getNewestInvoice();
 
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
           <Header>
-            <FeatherIcon color={theme.colors.primary} name="user" />
-            <Typography>{i18n.t('invoice')}</Typography>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('InvoiceDetail')}
+            >
+              <FeatherIcon color={theme.colors.white} name="chevron-left" />
+            </TouchableOpacity>
+            <Typography>{i18n.t('payment')}</Typography>
             {info.role === ROLE.STAFF ? (
               <TouchableOpacity
-                onPress={() => navigation.navigate('InvoiceAddition')}
+                onPress={() => {
+                  navigation.navigate('PaymentAddition', {
+                    _id,
+                    previous: 'Payment',
+                  });
+                }}
               >
                 <FeatherIcon color={theme.colors.white} name="plus" />
               </TouchableOpacity>
             ) : (
-              <FeatherIcon color={theme.colors.primary} name="plus" />
+              <FeatherIcon color={theme.colors.primary} name="user" />
             )}
           </Header>
         </HeaderWrapper>
-
         <FilterHeader
-          isExpand={this.state.isExpandingFilter}
+          isExpand={isExpandingFilter}
           onPress={this.handlePressFilter}
         />
-
         <FilterBody height={this.state.filterHeight}>
           <FilterField first>
             <FilterTime
@@ -238,15 +235,13 @@ class Invoice extends React.Component {
             </Button>
           </FilterField>
         </FilterBody>
-
         <DateTimePicker
           isVisible={isDatePickerVisible}
           date={activatingDate === i18n.t('from') ? fromDate : toDate}
           onConfirm={this.handleDatePicked}
           onCancel={this.hideDateTimePicker}
         />
-
-        {invoices && !loading ? (
+        {payments && !loading ? (
           <ScrollView
             refreshControl={
               <RefreshControl
@@ -255,44 +250,15 @@ class Invoice extends React.Component {
               />
             }
           >
-            {!invoices.invoices.length ? (
-              <Empty name={i18n.t('invoice')} />
+            {!payments.payments.length ? (
+              <Empty name={i18n.t('payment')} />
             ) : (
-              invoices.invoices.map(invoice => (
-                <InvoiceItem
-                  key={invoice._id}
-                  onRemove={() => this.handleRemoveInvoice(invoice._id)}
-                  invoice={invoice}
-                  invoiceDetail={this.invoiceDetail}
-                >
-                  <InvoiceContent
-                    id={invoice._id}
-                    name={invoice.type === 0 ? 'Purchase' : 'Sale'}
-                    color={invoice.status ? '#438763' : '#ad6b8d'}
-                    status={invoice.status ? 'Paid' : 'Unpaid'}
-                    cost={invoice.totalCost}
-                    time={new Date(invoice.createdAt).toLocaleDateString(
-                      i18n.t('local'),
-                      {
-                        day: 'numeric',
-                        month: 'long',
-                      }
-                    )}
-                  />
-                </InvoiceItem>
-              ))
+              <PaymentSection payments={payments.payments} />
             )}
           </ScrollView>
         ) : (
           <Loading />
         )}
-        <Snackbar
-          visible={visibleSnackbar}
-          onDismiss={() => this.setState({ visibleSnackbar: false })}
-          action={{ label: 'OK', onPress: () => {} }}
-        >
-          {i18n.t('messageDeleteFail')}
-        </Snackbar>
       </View>
     );
   }
@@ -303,13 +269,11 @@ const mapStateToProps = state => ({
   invoices: state.invoice.invoices,
 });
 const mapDispatchToProps = {
-  logout,
-  getInvoices,
-  chooseInvoice,
-  removeInvoice,
+  getInvoiceById,
+  getPayments,
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Invoice);
+)(InvoiceDetail);

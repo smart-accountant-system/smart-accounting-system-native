@@ -1,3 +1,5 @@
+/* eslint-disable array-callback-return */
+/* eslint-disable eqeqeq */
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import i18n from 'i18n-js';
@@ -15,14 +17,43 @@ import { FeatherIcon } from '../components';
 import { handle401 } from '../constants/strategies';
 import { AmazingText } from '../containers/InvoiceAddition';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
-import { getInvoiceById, getPayments } from '../redux/actions';
-import InvoiceDetailSection, {
-  PaymentSection,
-} from '../containers/InvoiceDetail';
+import { getInvoiceById, getPayments, chooseInvoice } from '../redux/actions';
+import InvoiceDetailSection from '../containers/InvoiceDetail';
 
 class InvoiceDetail extends React.Component {
   state = {
     refreshing: false,
+  };
+
+  componentDidMount = () => {
+    const {
+      currentInvoice: { _id },
+    } = this.props;
+    this.props.getPayments(
+      _id,
+      {},
+      {
+        success: () => {
+          const {
+            invoices: { invoices },
+          } = this.props;
+          let invoice;
+
+          invoices.map(item => {
+            if (item._id == _id) {
+              invoice = item;
+            }
+          });
+          this.props.chooseInvoice(invoice);
+          console.log(invoice);
+        },
+        handle401: () =>
+          handle401({
+            logout: this.props.logout,
+            navigation: this.props.navigation,
+          }),
+      }
+    );
   };
 
   _onRefresh = () => {
@@ -44,15 +75,11 @@ class InvoiceDetail extends React.Component {
     const {
       navigation,
       currentInvoice,
-      payments,
+      currentInvoice: { payments },
       user: { info },
     } = this.props;
 
     const { refreshing } = this.state;
-
-    const paymentsOfInvoice = payments.payments.filter(
-      payment => payment.invoice === currentInvoice._id
-    );
 
     return (
       <View style={{ display: 'flex', flex: 1 }}>
@@ -74,7 +101,6 @@ class InvoiceDetail extends React.Component {
           }
         >
           <InvoiceDetailSection currentInvoice={currentInvoice} />
-          <PaymentSection payments={paymentsOfInvoice} />
 
           {info.role === ROLE.STAFF ? (
             <AmazingText
@@ -82,10 +108,21 @@ class InvoiceDetail extends React.Component {
               onPress={() => {
                 navigation.navigate('PaymentAddition', {
                   _id: currentInvoice._id,
+                  previous: 'InvoiceDetail',
                 });
               }}
             />
           ) : null}
+          {payments && (
+            <AmazingText
+              content="Show recorded payments"
+              onPress={() => {
+                navigation.navigate('Payment', {
+                  _id: currentInvoice._id,
+                });
+              }}
+            />
+          )}
         </ScrollView>
       </View>
     );
@@ -95,9 +132,10 @@ class InvoiceDetail extends React.Component {
 const mapStateToProps = state => ({
   user: state.user,
   currentInvoice: state.invoice.currentInvoice,
-  payments: state.payment.payments,
+  invoices: state.invoice.invoices,
 });
 const mapDispatchToProps = {
+  chooseInvoice,
   getInvoiceById,
   getPayments,
 };

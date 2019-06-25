@@ -45,16 +45,6 @@ class InvoiceAddition extends React.Component {
       {
         success: () => {
           this.props.navigation.navigate('Invoice');
-          this.props.getInvoices(
-            {},
-            {
-              handle401: () =>
-                handle401({
-                  logout: this.props.logout,
-                  navigation: this.props.navigation,
-                }),
-            }
-          );
         },
         failure: () => {
           this.setState({

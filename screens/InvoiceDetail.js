@@ -62,6 +62,7 @@ class InvoiceDetail extends React.Component {
       user: { info },
     } = this.props;
     const { refreshing } = this.state;
+
     const invoice = this.getNewestInvoice();
     const { payments } = invoice;
 

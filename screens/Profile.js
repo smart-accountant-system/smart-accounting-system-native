@@ -80,6 +80,11 @@ class Profile extends React.Component {
                 info={info.phone}
               />
               <ProfileInfo
+                title={i18n.t('company')}
+                name="printer"
+                info={info.company.name}
+              />
+              <ProfileInfo
                 onPress={this.handleLogout}
                 name="log-out"
                 info="Logout"

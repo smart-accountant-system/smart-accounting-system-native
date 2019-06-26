@@ -59,6 +59,7 @@ export const en = {
   paymentOut: 'Spent',
   amountMoney: 'Ammount of money',
   description: 'Description',
+  company: 'Company',
 
   // ADVANCED FILTER GROUP
   advancedFilter: 'Advanced filter',
@@ -149,6 +150,7 @@ export const vi = {
   paymentOut: 'Chi ra',
   amountMoney: 'Số tiền',
   description: 'Mô tả',
+  company: 'Công ty',
 
   // ADVANCED FILTER GROUP
   advancedFilter: 'Bộ lọc nâng cao',

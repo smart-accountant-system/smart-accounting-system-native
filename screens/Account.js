@@ -108,7 +108,6 @@ class Account extends React.Component {
   render() {
     const { accounts, navigation } = this.props;
     const { searchText, refreshing, visibleSnackbar } = this.state;
-    console.log(accounts);
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>

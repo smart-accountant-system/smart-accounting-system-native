@@ -52,6 +52,10 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isLoading: false,
+        accounts: {
+          total: state.accounts.total + 1,
+          accounts: [...state.accounts.accounts, action.payload],
+        },
         error: null,
       };
     case DELETE_ACCOUNT_SUCCESS:

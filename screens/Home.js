@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { withTheme } from 'react-native-paper';
 import {
   View,
-  StatusBar,
   TouchableOpacity,
   ScrollView,
   RefreshControl,
@@ -58,7 +57,6 @@ class Home extends React.Component {
   render() {
     const { navigation, dashboard, info } = this.props;
     const { refreshing } = this.state;
-    console.log(dashboard);
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>

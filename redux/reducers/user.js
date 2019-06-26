@@ -1,9 +1,11 @@
 /* eslint-disable no-plusplus */
+import { Localization } from 'expo';
 import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGOUT,
+  CHANGE_LOCALIZATION,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -11,6 +13,8 @@ const INITIAL_STATE = {
   isLogging: false,
   error: null,
   info: null,
+  localization: Localization.locale,
+  isLocaleSet: false,
 };
 
 function getRandomColor() {
@@ -46,6 +50,12 @@ export default (state = INITIAL_STATE, action) => {
       };
     case LOGOUT:
       return INITIAL_STATE;
+    case CHANGE_LOCALIZATION:
+      return {
+        ...state,
+        localization: action.payload,
+        isLocaleSet: true,
+      };
     default:
       return state;
   }

@@ -3,7 +3,7 @@ import React from 'react';
 import i18n from 'i18n-js';
 import { View, TouchableOpacity, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-import { withTheme } from 'react-native-paper';
+import { withTheme, Switch } from 'react-native-paper';
 
 import {
   HeaderWrapper,
@@ -16,10 +16,14 @@ import {
   AvatarPicture,
 } from '../containers/Home';
 import theme from '../constants/theme';
-import { logout } from '../redux/actions';
+import { logout, changeLocalization } from '../redux/actions';
 import { FeatherIcon, ProfileInfo } from '../components';
 
 class Profile extends React.Component {
+  state = {
+    isSwitchOn: false,
+  };
+
   handleLogout = () => {
     const { navigation } = this.props;
     this.props.logout({
@@ -29,8 +33,20 @@ class Profile extends React.Component {
     });
   };
 
+  // change localization function
+  handleChangeLocalization = () => {
+    const { isSwitchOn } = this.state;
+    if (isSwitchOn) {
+      this.props.changeLocalization('en');
+    } else {
+      this.props.changeLocalization('vi');
+    }
+    this.setState({ isSwitchOn: !isSwitchOn });
+  };
+
   render() {
     const { navigation, info } = this.props;
+    const { isSwitchOn } = this.state;
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
@@ -62,6 +78,14 @@ class Profile extends React.Component {
               {info.fullname}
             </AvatarTypography>
             <InforWrapper>
+              {/* Localization button here */}
+              <View style={{ paddingLeft: 50 }}>
+                <Switch
+                  value={isSwitchOn}
+                  onValueChange={this.handleChangeLocalization}
+                />
+              </View>
+
               <ProfileInfo name="user" info={info.username} />
               <ProfileInfo name="inbox" info={info.email} />
               <ProfileInfo name="phone" info={info.phone} />
@@ -83,6 +107,7 @@ const mapStateToProps = state => ({
 });
 const mapDispatchToProps = {
   logout,
+  changeLocalization,
 };
 
 export default withTheme(

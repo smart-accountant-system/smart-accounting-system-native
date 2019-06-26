@@ -37,6 +37,12 @@ export const HomeStack = createStackNavigator(
   },
   {
     headerMode: 'none',
+    navigationOptions: () => ({
+      tabBarLabel: i18n.t('dashboard'),
+      tabBarIcon: ({ focused }) => (
+        <FeatherIcon focused={focused} name="bar-chart-2" />
+      ),
+    }),
   }
 );
 
@@ -51,6 +57,12 @@ const InvoiceStack = createStackNavigator(
   },
   {
     headerMode: 'none',
+    navigationOptions: () => ({
+      tabBarLabel: i18n.t('invoice'),
+      tabBarIcon: ({ focused }) => (
+        <FeatherIcon focused={focused} name="feather" />
+      ),
+    }),
   }
 );
 
@@ -61,6 +73,12 @@ const ReceiptStack = createStackNavigator(
   },
   {
     headerMode: 'none',
+    navigationOptions: () => ({
+      tabBarLabel: i18n.t('receipt'),
+      tabBarIcon: ({ focused }) => (
+        <FeatherIcon focused={focused} name="clipboard" />
+      ),
+    }),
   }
 );
 
@@ -71,32 +89,14 @@ const CustomerStack = createStackNavigator(
   },
   {
     headerMode: 'none',
+    navigationOptions: () => ({
+      tabBarLabel: i18n.t('customer'),
+      tabBarIcon: ({ focused }) => (
+        <FeatherIcon focused={focused} name="users" />
+      ),
+    }),
   }
 );
-
-HomeStack.navigationOptions = {
-  tabBarLabel: i18n.t('dashboard'),
-  tabBarIcon: ({ focused }) => (
-    <FeatherIcon focused={focused} name="bar-chart-2" />
-  ),
-};
-
-InvoiceStack.navigationOptions = {
-  tabBarLabel: i18n.t('invoice'),
-  tabBarIcon: ({ focused }) => <FeatherIcon focused={focused} name="feather" />,
-};
-
-ReceiptStack.navigationOptions = {
-  tabBarLabel: i18n.t('receipt'),
-  tabBarIcon: ({ focused }) => (
-    <FeatherIcon focused={focused} name="clipboard" />
-  ),
-};
-
-CustomerStack.navigationOptions = {
-  tabBarLabel: i18n.t('customer'),
-  tabBarIcon: ({ focused }) => <FeatherIcon focused={focused} name="users" />,
-};
 
 const StaffNavigator = createBottomTabNavigator(
   {

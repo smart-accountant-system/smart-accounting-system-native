@@ -22,18 +22,19 @@ import AvenirNext from './assets/fonts/AvenirNextLTPro-Regular.otf';
 import AvenirNextBold from './assets/fonts/AvenirNextLTPro-Bold.otf';
 import NotoSans from './assets/fonts/NotoSans-Regular.ttf';
 import theme from './constants/theme';
-import { en, vi } from './constants/localization';
 import MiniOfflineSign from './components/MiniOfflineSign';
 
-i18n.fallbacks = true;
-i18n.translations = { en, vi };
-i18n.locale = Localization.locale;
-// i18n.locale = 'vi';
+import LocaleWrapper from './components/LocaleWrapper';
+import { initLocale } from './locale';
 
 export default class App extends React.Component {
   state = {
     isLoadingComplete: false,
   };
+
+  componentWillMount() {
+    initLocale();
+  }
 
   componentDidMount = async () => {
     await Permissions.askAsync(Permissions.NOTIFICATIONS);
@@ -81,13 +82,15 @@ export default class App extends React.Component {
       <ThemeProvider theme={theme}>
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
-            <MessageProvider>
-              <PaperProvider theme={theme}>
-                <StatusBar barStyle="light-content" />
-                <AppNavigator />
-                <MiniOfflineSign />
-              </PaperProvider>
-            </MessageProvider>
+            <LocaleWrapper>
+              <MessageProvider>
+                <PaperProvider theme={theme}>
+                  <StatusBar barStyle="light-content" />
+                  <AppNavigator />
+                  <MiniOfflineSign />
+                </PaperProvider>
+              </MessageProvider>
+            </LocaleWrapper>
           </PersistGate>
         </Provider>
       </ThemeProvider>

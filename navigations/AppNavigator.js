@@ -1,4 +1,6 @@
+import React from 'react';
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
+import { connect } from 'react-redux';
 
 import Login from '../screens/Login';
 import AuthLoadingScreen from '../screens/AuthLoadingScreen';
@@ -19,4 +21,12 @@ const StackNavigator = createSwitchNavigator(
   }
 );
 
-export default createAppContainer(StackNavigator);
+const AppContainer = createAppContainer(StackNavigator);
+
+const Navigation = ({ localization }) => (
+  <AppContainer screenProps={{ localization }} />
+);
+
+export default connect(state => ({
+  localization: state.user.localization,
+}))(Navigation);

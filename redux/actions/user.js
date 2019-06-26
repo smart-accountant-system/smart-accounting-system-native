@@ -1,4 +1,6 @@
 /* eslint-disable import/no-cycle */
+import i18n from 'i18n-js';
+import moment from 'moment';
 import { query } from '../../services/api';
 import { ENDPOINTS, METHODS } from '../../constants/api';
 
@@ -6,6 +8,7 @@ export const LOGIN_REQUEST = 'login-request';
 export const LOGIN_SUCCESS = 'login-success';
 export const LOGIN_FAILURE = 'login-failure';
 export const LOGOUT = 'logout';
+export const CHANGE_LOCALIZATION = 'change-localization';
 
 export function login(data, callback) {
   return async dispatch => {
@@ -44,5 +47,14 @@ export function logout(callback) {
   callback.success();
   return {
     type: LOGOUT,
+  };
+}
+
+export function changeLocalization(localization) {
+  i18n.locale = localization;
+  moment.locale(localization);
+  return {
+    type: CHANGE_LOCALIZATION,
+    payload: localization,
   };
 }

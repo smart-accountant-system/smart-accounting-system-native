@@ -170,3 +170,8 @@ export const vi = {
   messageDeleteSuccess: 'Xoá thành công',
   messageWP: 'Xác nhận mật khẩu không khớp',
 };
+
+export const localizations = {
+  English: 'en',
+  Vietnamese: 'vi',
+};

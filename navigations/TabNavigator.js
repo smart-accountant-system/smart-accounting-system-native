@@ -4,7 +4,6 @@ import {
   createStackNavigator,
 } from 'react-navigation';
 import i18n from 'i18n-js';
-import { Localization } from 'expo';
 import FeatherIcon from '../components/FeatherIcon';
 
 import Home from '../screens/Home';
@@ -34,11 +33,6 @@ import EmployeeDetail from '../screens/EmployeeDetail';
 import CustomerManagement from '../screens/CustomerManagement';
 import CustomerAddition from '../screens/CustomerAddition';
 import theme from '../constants/theme';
-import { en, vi } from '../constants/localization';
-
-i18n.fallbacks = true;
-i18n.translations = { en, vi };
-i18n.locale = Localization.locale;
 
 export const HomeStack = createStackNavigator(
   {
@@ -57,6 +51,12 @@ export const HomeStack = createStackNavigator(
   },
   {
     headerMode: 'none',
+    navigationOptions: () => ({
+      tabBarLabel: i18n.t('dashboard'),
+      tabBarIcon: ({ focused }) => (
+        <FeatherIcon focused={focused} name="bar-chart-2" />
+      ),
+    }),
   }
 );
 
@@ -68,6 +68,12 @@ const InvoiceStack = createStackNavigator(
   },
   {
     headerMode: 'none',
+    navigationOptions: () => ({
+      tabBarLabel: i18n.t('invoice'),
+      tabBarIcon: ({ focused }) => (
+        <FeatherIcon focused={focused} name="feather" />
+      ),
+    }),
   }
 );
 
@@ -78,6 +84,12 @@ const ReceiptStack = createStackNavigator(
   },
   {
     headerMode: 'none',
+    navigationOptions: () => ({
+      tabBarLabel: i18n.t('receipt'),
+      tabBarIcon: ({ focused }) => (
+        <FeatherIcon focused={focused} name="clipboard" />
+      ),
+    }),
   }
 );
 
@@ -88,6 +100,12 @@ const TransactionStack = createStackNavigator(
   },
   {
     headerMode: 'none',
+    navigationOptions: () => ({
+      tabBarLabel: i18n.t('transaction'),
+      tabBarIcon: ({ focused }) => (
+        <FeatherIcon focused={focused} name="link" />
+      ),
+    }),
   }
 );
 
@@ -99,37 +117,14 @@ const AccountStack = createStackNavigator(
   },
   {
     headerMode: 'none',
+    navigationOptions: () => ({
+      tabBarLabel: i18n.t('account'),
+      tabBarIcon: ({ focused }) => (
+        <FeatherIcon focused={focused} name="book" />
+      ),
+    }),
   }
 );
-
-HomeStack.navigationOptions = {
-  tabBarLabel: i18n.t('dashboard'),
-  tabBarIcon: ({ focused }) => (
-    <FeatherIcon focused={focused} name="bar-chart-2" />
-  ),
-};
-
-InvoiceStack.navigationOptions = {
-  tabBarLabel: i18n.t('invoice'),
-  tabBarIcon: ({ focused }) => <FeatherIcon focused={focused} name="feather" />,
-};
-
-ReceiptStack.navigationOptions = {
-  tabBarLabel: i18n.t('receipt'),
-  tabBarIcon: ({ focused }) => (
-    <FeatherIcon focused={focused} name="clipboard" />
-  ),
-};
-
-TransactionStack.navigationOptions = {
-  tabBarLabel: i18n.t('transaction'),
-  tabBarIcon: ({ focused }) => <FeatherIcon focused={focused} name="link" />,
-};
-
-AccountStack.navigationOptions = {
-  tabBarLabel: i18n.t('account'),
-  tabBarIcon: ({ focused }) => <FeatherIcon focused={focused} name="book" />,
-};
 
 const TabNavigator = createBottomTabNavigator(
   {

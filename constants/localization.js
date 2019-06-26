@@ -3,6 +3,8 @@ export const en = {
 
   dashboard: 'Dashboard',
   profile: 'Profile',
+  login: 'Login',
+  signup: 'Sign up',
   logout: 'Logout',
 
   invoice: 'Invoice',
@@ -83,6 +85,8 @@ export const en = {
   messageDeleteFail: 'Delete failed, please try again later.',
   messageDeleteSuccess: 'Delete successfully',
   messageWP: 'Your repassword is not match',
+  messageForgetPassword: 'Forget your password',
+  messageHaveNoAccount: `Don't have an account?`,
 
   // LANGUAGE
   english: 'English',
@@ -94,6 +98,8 @@ export const vi = {
 
   dashboard: 'Trang chủ',
   profile: 'Thông tin cá nhân',
+  login: 'Đăng nhập',
+  signup: 'Đăng ký',
   logout: 'Đăng xuất',
 
   invoice: 'Hoá đơn',
@@ -175,6 +181,8 @@ export const vi = {
   messageDeleteFail: 'Xóa không thành công, vui lòng thử lại sau.',
   messageDeleteSuccess: 'Xoá thành công',
   messageWP: 'Xác nhận mật khẩu không khớp',
+  messageForgetPassword: 'Quên mật khẩu',
+  messageHaveNoAccount: `Chưa có tài khoản?`,
 
   // LANGUAGE
   english: 'Tiếng Anh',

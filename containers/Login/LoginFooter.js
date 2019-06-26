@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import i18n from 'i18n-js';
 
 const Primary = styled.Text`
   color: ${props => props.color};
@@ -24,13 +25,13 @@ const FooterContainer = styled.View`
 export default ({ handleForgetPassword, color, handleSignup }) => (
   <FooterContainer>
     <Primary onPress={handleForgetPassword} color={color}>
-      Forget your password
+      {i18n.t('messageForgetPassword')}
     </Primary>
     <Secondary>
-      Don't have an account?
+      {i18n.t('messageHaveNoAccount')}
       <Primary onPress={handleSignup} color={color}>
         {' '}
-        Sign up
+        {i18n.t('signup')}
       </Primary>
     </Secondary>
   </FooterContainer>

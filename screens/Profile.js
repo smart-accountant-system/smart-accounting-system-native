@@ -65,7 +65,7 @@ class Profile extends React.Component {
             <InforWrapper>
               <Localization />
               <ProfileInfo
-                title={i18n.t('fullname')}
+                title={i18n.t('username')}
                 name="user"
                 info={info.username}
               />

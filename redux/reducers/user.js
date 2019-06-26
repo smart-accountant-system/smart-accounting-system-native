@@ -49,7 +49,10 @@ export default (state = INITIAL_STATE, action) => {
         error: action.payload,
       };
     case LOGOUT:
-      return INITIAL_STATE;
+      return {
+        localization: state.localization,
+        ...INITIAL_STATE,
+      };
     case CHANGE_LOCALIZATION:
       return {
         ...state,

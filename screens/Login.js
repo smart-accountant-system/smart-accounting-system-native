@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme, HelperText, Button } from 'react-native-paper';
+import i18n from 'i18n-js';
 
 import {
   LoginContainer,
@@ -18,6 +19,7 @@ import {
   TextInputWrapper,
   AmazingCircle,
   LoginFooter,
+  SocialButton,
 } from '../containers/Login';
 import ROLE from '../constants/role';
 import { login } from '../redux/actions';
@@ -25,8 +27,8 @@ import Layout from '../constants/Layout';
 
 class Login extends React.Component {
   state = {
-    username: 'manager',
-    password: '123456',
+    username: '',
+    password: '',
     visible: false,
   };
 
@@ -63,6 +65,7 @@ class Login extends React.Component {
   render() {
     const { username, password, visible } = this.state;
     const { theme, user } = this.props;
+    console.log(user);
     return (
       <LoginBackground>
         <StatusBar barStyle="light-content" />
@@ -102,7 +105,7 @@ class Login extends React.Component {
                 }}
               >
                 <TextInputWrapper
-                  label="Username"
+                  label={i18n.t('username')}
                   autoCompleteType="username"
                   autoCapitalize="none"
                   value={username}
@@ -110,7 +113,7 @@ class Login extends React.Component {
                   onChangeText={text => this.setState({ username: text })}
                 />
                 <TextInputWrapper
-                  label="Password"
+                  label={i18n.t('password')}
                   autoCompleteType="password"
                   autoCapitalize="none"
                   value={password}
@@ -136,9 +139,22 @@ class Login extends React.Component {
                       color: theme.colors.white,
                     }}
                   >
-                    LOGIN
+                    {i18n.t('login')}
                   </Text>
                 </Button>
+                <View
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    padding: 10,
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    width: 140,
+                  }}
+                >
+                  <SocialButton name="facebook" background="#4968AD" />
+                  <SocialButton name="google" background="#C65447" />
+                </View>
               </View>
 
               <LoginFooter

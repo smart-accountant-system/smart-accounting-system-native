@@ -59,6 +59,8 @@ export const en = {
   paymentOut: 'Spent',
   amountMoney: 'Ammount of money',
   description: 'Description',
+  purchase: 'Purchase',
+  sale: 'Sale',
   paid: 'Paid',
   unpaid: 'Unpaid',
   addedBy: 'Added by',

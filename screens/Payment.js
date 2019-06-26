@@ -28,10 +28,14 @@ import theme from '../constants/theme';
 import { FeatherIcon, Loading, Empty } from '../components';
 import { handle401 } from '../constants/strategies';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
-import { getInvoiceById, getPayments, removePayment } from '../redux/actions';
+import {
+  getInvoiceById,
+  getPaymentsForInvoice,
+  removePayment,
+} from '../redux/actions';
 import { PaymentSection } from '../containers/InvoiceDetail';
 
-class InvoiceDetail extends React.Component {
+class Payment extends React.Component {
   constructor(props) {
     super(props);
     const { navigation } = props;
@@ -53,7 +57,7 @@ class InvoiceDetail extends React.Component {
   _onRefresh = () => {
     this.setState({ refreshing: true });
 
-    this.props.getPayments(
+    this.props.getPaymentsForInvoice(
       this._id,
       {},
       {
@@ -125,7 +129,7 @@ class InvoiceDetail extends React.Component {
       isExpandingFilter: false,
     });
 
-    this.props.getPayments(
+    this.props.getPaymentsForInvoice(
       this._id,
       {
         startDate: new Date(fromDate.toDateString()),
@@ -292,11 +296,11 @@ const mapStateToProps = state => ({
 });
 const mapDispatchToProps = {
   getInvoiceById,
-  getPayments,
+  getPaymentsForInvoice,
   removePayment,
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(InvoiceDetail);
+)(Payment);

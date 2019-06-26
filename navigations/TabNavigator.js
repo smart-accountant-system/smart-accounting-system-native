@@ -16,6 +16,8 @@ import Payment from '../screens/Payment';
 
 import Receipt from '../screens/Receipt';
 import ReceiptDetail from '../screens/ReceiptDetail';
+import ReceiptAddition from '../screens/ReceiptAddition';
+import PaymentInReceipt from '../screens/PaymentInReceipt';
 
 import Transaction from '../screens/Transaction';
 import TransactionDetail from '../screens/TransactionDetail';
@@ -83,6 +85,8 @@ const ReceiptStack = createStackNavigator(
   {
     Receipt,
     ReceiptDetail,
+    ReceiptAddition,
+    PaymentInReceipt,
   },
   {
     headerMode: 'none',

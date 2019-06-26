@@ -2,6 +2,13 @@
 import { query } from '../../services/api';
 import { METHODS } from '../../constants/api';
 
+export const GET_PAYMENTS_FOR_INVOICE_REQUEST =
+  'get-payments-for-invoice-request';
+export const GET_PAYMENTS_FOR_INVOICE_SUCCESS =
+  'get-payments-for-invoice-success';
+export const GET_PAYMENTS_FOR_INVOICE_FAILURE =
+  'get-payments-for-invoice-failure';
+
 export const GET_PAYMENTS_REQUEST = 'get-payments-request';
 export const GET_PAYMENTS_SUCCESS = 'get-payments-success';
 export const GET_PAYMENTS_FAILURE = 'get-payments-failure';
@@ -14,15 +21,55 @@ export const DELETE_PAYMENT_REQUEST = 'delete-payment-request';
 export const DELETE_PAYMENT_SUCCESS = 'delete-payment-success';
 export const DELETE_PAYMENT_FAILURE = 'delete-payment-failure';
 
-export function getPayments(
+export function getPaymentsForInvoice(
   invoice,
   params,
   { success = () => {}, failure = () => {}, handle401 }
 ) {
   return async dispatch => {
     try {
-      dispatch({ type: GET_PAYMENTS_REQUEST });
+      dispatch({ type: GET_PAYMENTS_FOR_INVOICE_REQUEST });
       const endpoint = `/payments/invoices/${invoice}`;
+
+      const result = await query({
+        endpoint,
+        params,
+        method: METHODS.get,
+      });
+
+      if (result.status === 200 || result.status === 304) {
+        dispatch({
+          type: GET_PAYMENTS_FOR_INVOICE_SUCCESS,
+          payload: result.data,
+        });
+        success();
+      } else {
+        dispatch({
+          type: GET_PAYMENTS_FOR_INVOICE_FAILURE,
+        });
+        failure();
+      }
+    } catch (error) {
+      if (error.response.status === 401) {
+        handle401();
+      }
+      dispatch({
+        type: GET_PAYMENTS_FOR_INVOICE_FAILURE,
+        payload: error,
+      });
+      failure();
+    }
+  };
+}
+
+export function getPayments(
+  params,
+  { success = () => {}, failure = () => {}, handle401 }
+) {
+  return async dispatch => {
+    try {
+      dispatch({ type: GET_PAYMENTS_REQUEST });
+      const endpoint = `/payments`;
 
       const result = await query({
         endpoint,

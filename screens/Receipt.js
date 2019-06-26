@@ -11,6 +11,7 @@ import {
   Animated,
   RefreshControl,
   LayoutAnimation,
+  TouchableOpacity,
 } from 'react-native';
 
 import {
@@ -172,7 +173,7 @@ class Receipt extends React.Component {
   };
 
   render() {
-    const { receipts } = this.props;
+    const { receipts, navigation } = this.props;
     const {
       isDatePickerVisible,
       fromDate,
@@ -189,7 +190,11 @@ class Receipt extends React.Component {
           <Header>
             <FeatherIcon color={theme.colors.primary} name="user" />
             <Typography>{i18n.t('receipt')}</Typography>
-            <FeatherIcon color={theme.colors.primary} name="user" />
+            <TouchableOpacity
+              onPress={() => navigation.navigate('ReceiptAddition')}
+            >
+              <FeatherIcon color={theme.colors.white} name="plus" />
+            </TouchableOpacity>
           </Header>
         </HeaderWrapper>
 

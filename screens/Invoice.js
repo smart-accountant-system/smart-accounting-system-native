@@ -283,9 +283,11 @@ class Invoice extends React.Component {
                 >
                   <InvoiceContent
                     id={invoice._id}
-                    name={invoice.type === 0 ? 'Purchase' : 'Sale'}
+                    name={
+                      invoice.type === 0 ? i18n.t('purchase') : i18n.t('sale')
+                    }
                     color={invoice.status ? '#438763' : '#ad6b8d'}
-                    status={invoice.status ? 'Paid' : 'Unpaid'}
+                    status={invoice.status ? i18n.t('paid') : i18n.t('unpaid')}
                     cost={invoice.totalCost}
                     time={new Date(invoice.createdAt).toLocaleDateString(
                       i18n.t('local'),

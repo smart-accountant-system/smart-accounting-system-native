@@ -59,6 +59,9 @@ export const en = {
   paymentOut: 'Spent',
   amountMoney: 'Ammount of money',
   description: 'Description',
+  paid: 'Paid',
+  unpaid: 'Unpaid',
+  addedBy: 'Added by',
 
   // ADVANCED FILTER GROUP
   advancedFilter: 'Advanced filter',
@@ -72,8 +75,9 @@ export const en = {
   actionEdit: 'Edit',
   actionRemove: 'Remove',
   actionHide: 'Hide',
-  accountAddProduct: '+ Add more product',
-  accountAddPayment: '+ Add more payment',
+  actionShowPayment: 'Show recorded payments',
+  actionAddProduct: '+ Add more product',
+  actionAddPayment: '+ Add more payment',
 
   // MESSAGE GROUP
   messageEmpty: 'There is no',
@@ -149,6 +153,13 @@ export const vi = {
   paymentOut: 'Chi ra',
   amountMoney: 'Số tiền',
   description: 'Mô tả',
+  paid: 'Đã thanh toán',
+  unpaid: 'Chưa thanh toán',
+  purchase: 'Mua hàng',
+  sale: 'Bán hàng',
+  purchaseInvoice: 'Hóa đơn mua hàng',
+  saleInvoice: 'Hóa đơn bán hàng',
+  addedBy: 'Đã thêm bởi',
 
   // ADVANCED FILTER GROUP
   advancedFilter: 'Bộ lọc nâng cao',
@@ -162,8 +173,9 @@ export const vi = {
   actionEdit: 'Sửa',
   actionRemove: 'Xóa',
   actionHide: 'Ẩn',
-  accountAddProduct: '+ Thêm sản phẩm',
-  accountAddPayment: '+ Thêm khoản thanh toán',
+  actionShowPayment: 'Hiện các khoản đã thanh toán',
+  actionAddProduct: '+ Thêm sản phẩm',
+  actionAddPayment: '+ Thêm khoản thanh toán',
 
   // MESSAGE GROUP
   messageEmpty: 'Hiện chưa có',

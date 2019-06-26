@@ -9,9 +9,12 @@ import DetailItem from './DetailItem';
 
 export { default as PaymentSection } from './PaymentSection';
 export default ({ currentInvoice }) => {
-  const name = currentInvoice.type === 0 ? 'Purchase' : 'Sale';
+  const name =
+    currentInvoice.type === 0
+      ? i18n.t('purchaseInvoice')
+      : i18n.t('saleInvoice');
   const color = currentInvoice.status ? '#438763' : '#ad6b8d';
-  const status = currentInvoice.status ? 'Paid' : 'Unpaid';
+  const status = currentInvoice.status ? i18n.t('paid') : i18n.t('unpaid');
   const {
     createdBy: { fullname, username },
     createdAt,

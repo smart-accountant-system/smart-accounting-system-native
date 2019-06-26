@@ -59,14 +59,26 @@ class Profile extends React.Component {
                 </AvatarTypography>
               )}
             </Avatar>
-            <AvatarTypography size="30" color={info.color}>
+            <AvatarTypography size="24" color={info.color}>
               {info.fullname}
             </AvatarTypography>
             <InforWrapper>
               <Localization />
-              <ProfileInfo name="user" info={info.username} />
-              <ProfileInfo name="inbox" info={info.email} />
-              <ProfileInfo name="phone" info={info.phone} />
+              <ProfileInfo
+                title={i18n.t('fullname')}
+                name="user"
+                info={info.username}
+              />
+              <ProfileInfo
+                title={i18n.t('email')}
+                name="inbox"
+                info={info.email}
+              />
+              <ProfileInfo
+                title={i18n.t('phone')}
+                name="phone"
+                info={info.phone}
+              />
               <ProfileInfo
                 onPress={this.handleLogout}
                 name="log-out"

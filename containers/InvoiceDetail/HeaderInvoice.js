@@ -1,4 +1,5 @@
 import React from 'react';
+import i18n from 'i18n-js';
 import { View, Text } from 'react-native';
 import styled from 'styled-components';
 
@@ -20,10 +21,10 @@ export default ({
   createdAt,
 }) => (
   <Container>
-    <Text style={{ fontSize: 22, fontWeight: '300' }}>{name} Invoice</Text>
+    <Text style={{ fontSize: 22, fontWeight: '300' }}>{name}</Text>
     {employeeName && (
       <Text style={{ color: '#444', fontWeight: '300' }}>
-        Added by{' '}
+        {i18n.t('addedBy')}{' '}
         <Text
           style={{
             color: '#444',

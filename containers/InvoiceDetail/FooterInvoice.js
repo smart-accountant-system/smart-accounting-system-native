@@ -1,4 +1,5 @@
 import React from 'react';
+import i18n from 'i18n-js';
 import { View, Text } from 'react-native';
 import NumberFormat from 'react-number-format';
 
@@ -13,9 +14,10 @@ export default ({ totalCost, color }) => (
         fontSize: 12,
         color: '#666',
         textAlign: 'right',
+        textTransform: 'lowercase',
       }}
     >
-      total cost
+      {i18n.t('totalCost')}
     </Text>
 
     <NumberFormat

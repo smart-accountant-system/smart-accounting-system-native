@@ -132,7 +132,7 @@ class InvoiceAddition extends React.Component {
             handleRemoveDetail={this.handleRemoveDetail}
           />
           <AmazingText
-            content={i18n.t('accountAddProduct')}
+            content={i18n.t('actionAddProduct')}
             onPress={() => {
               navigation.navigate('InvoiceProductAddition', {
                 handleAdd: this.handleAdd,

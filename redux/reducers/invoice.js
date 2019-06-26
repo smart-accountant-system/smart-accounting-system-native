@@ -1,3 +1,5 @@
+/* eslint-disable no-shadow */
+/* eslint-disable no-case-declarations */
 /* eslint-disable eqeqeq */
 import {
   GET_INVOICES_REQUEST,
@@ -15,16 +17,23 @@ import {
   GET_PAYMENTS_REQUEST,
   GET_PAYMENTS_SUCCESS,
   GET_PAYMENTS_FAILURE,
+  POST_PAYMENT_REQUEST,
+  POST_PAYMENT_SUCCESS,
+  POST_PAYMENT_FAILURE,
+  DELETE_PAYMENT_REQUEST,
+  DELETE_PAYMENT_SUCCESS,
+  DELETE_PAYMENT_FAILURE,
 } from '../actions';
 
 const INITIAL_STATE = {
   invoices: null,
-  isLoading: false,
   error: null,
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case DELETE_PAYMENT_REQUEST:
+    case POST_PAYMENT_REQUEST:
     case GET_PAYMENTS_REQUEST:
     case GET_INVOICES_REQUEST:
     case GET_INVOICE_BY_ID_REQUEST:
@@ -32,14 +41,12 @@ export default (state = INITIAL_STATE, action) => {
     case DELETE_INVOICE_REQUEST:
       return {
         ...state,
-        isLoading: true,
         error: null,
       };
 
     case GET_PAYMENTS_SUCCESS:
       return {
         ...state,
-        isLoading: false,
         invoices: {
           total: state.invoices.total,
           invoices: state.invoices.invoices.map(invoice =>
@@ -58,24 +65,68 @@ export default (state = INITIAL_STATE, action) => {
     case GET_INVOICES_SUCCESS:
       return {
         ...state,
-        isLoading: false,
         invoices: action.payload,
         error: null,
       };
     case GET_INVOICE_BY_ID_SUCCESS:
       return {
         ...state,
-        isLoading: false,
-        invoice: state.invoices.invoices.map(invoice =>
-          invoice._id == action.payload._id ? action.payload : invoice
-        ),
+        invoices: {
+          total: state.invoices.total,
+          invoices: state.invoices.invoices.map(invoice =>
+            invoice._id == action.payload._id ? action.payload : invoice
+          ),
+        },
         error: null,
       };
 
+    case POST_PAYMENT_SUCCESS:
+      return {
+        ...state,
+        invoices: {
+          total: state.invoices.total,
+          invoices: state.invoices.invoices.map(invoice =>
+            invoice._id == action.payload.invoice
+              ? {
+                  ...invoice,
+                  payments: {
+                    total: invoice.payments.total + 1,
+                    payments: [
+                      ...invoice.payments.payments,
+                      action.payload.payment,
+                    ],
+                  },
+                }
+              : invoice
+          ),
+        },
+        error: null,
+      };
+
+    case DELETE_PAYMENT_SUCCESS:
+      return {
+        ...state,
+        invoices: {
+          total: state.invoices.total,
+          invoices: state.invoices.invoices.map(invoice =>
+            invoice._id == action.payload.invoice
+              ? {
+                  ...invoice,
+                  payments: {
+                    total: invoice.payments.total - 1,
+                    payments: invoice.payments.payments.filter(
+                      payment => payment._id !== action.payload.payment._id
+                    ),
+                  },
+                }
+              : invoice
+          ),
+        },
+        error: null,
+      };
     case POST_INVOICE_SUCCESS:
       return {
         ...state,
-        isLoading: false,
         invoices: {
           invoices: [...state.invoices.invoices, action.payload],
           total: state.invoices.total + 1,
@@ -91,10 +142,11 @@ export default (state = INITIAL_STATE, action) => {
             invoice => invoice._id !== action.payload._id
           ),
         },
-        isLoading: false,
         error: null,
       };
 
+    case DELETE_PAYMENT_FAILURE:
+    case POST_PAYMENT_FAILURE:
     case GET_PAYMENTS_FAILURE:
     case GET_INVOICES_FAILURE:
     case GET_INVOICE_BY_ID_FAILURE:
@@ -102,7 +154,6 @@ export default (state = INITIAL_STATE, action) => {
     case DELETE_INVOICE_FAILURE:
       return {
         ...state,
-        isLoading: false,
         error: action.payload,
       };
 

@@ -6,9 +6,13 @@ export const GET_PAYMENTS_REQUEST = 'get-payments-request';
 export const GET_PAYMENTS_SUCCESS = 'get-payments-success';
 export const GET_PAYMENTS_FAILURE = 'get-payments-failure';
 
-export const ADD_PAYMENTS_REQUEST = 'add-payments-request';
-export const ADD_PAYMENTS_SUCCESS = 'add-payments-success';
-export const ADD_PAYMENTS_FAILURE = 'add-payments-failure';
+export const POST_PAYMENT_REQUEST = 'post-payment-request';
+export const POST_PAYMENT_SUCCESS = 'post-payment-success';
+export const POST_PAYMENT_FAILURE = 'post-payment-failure';
+
+export const DELETE_PAYMENT_REQUEST = 'delete-payment-request';
+export const DELETE_PAYMENT_SUCCESS = 'delete-payment-success';
+export const DELETE_PAYMENT_FAILURE = 'delete-payment-failure';
 
 export function getPayments(
   invoice,
@@ -57,7 +61,7 @@ export function addPayment(
 ) {
   return async dispatch => {
     try {
-      dispatch({ type: ADD_PAYMENTS_REQUEST });
+      dispatch({ type: POST_PAYMENT_REQUEST });
       const endpoint = '/payments';
 
       const result = await query({
@@ -72,13 +76,13 @@ export function addPayment(
         result.status === 201
       ) {
         dispatch({
-          type: ADD_PAYMENTS_SUCCESS,
+          type: POST_PAYMENT_SUCCESS,
           payload: result.data,
         });
         success();
       } else {
         dispatch({
-          type: ADD_PAYMENTS_FAILURE,
+          type: POST_PAYMENT_FAILURE,
         });
         failure();
       }
@@ -87,7 +91,46 @@ export function addPayment(
         handle401();
       }
       dispatch({
-        type: ADD_PAYMENTS_FAILURE,
+        type: POST_PAYMENT_FAILURE,
+        payload: error,
+      });
+      failure();
+    }
+  };
+}
+
+export function removePayment(
+  _id,
+  { success = () => {}, failure = () => {}, handle401 }
+) {
+  return async dispatch => {
+    try {
+      dispatch({ type: DELETE_PAYMENT_REQUEST });
+      const endpoint = `/payments/${_id}`;
+
+      const result = await query({
+        endpoint,
+        method: METHODS.delete,
+      });
+
+      if (result.status === 200) {
+        dispatch({
+          type: DELETE_PAYMENT_SUCCESS,
+          payload: result.data,
+        });
+        success();
+      } else {
+        dispatch({
+          type: DELETE_PAYMENT_FAILURE,
+        });
+        failure();
+      }
+    } catch (error) {
+      if (error.response.status === 401) {
+        handle401();
+      }
+      dispatch({
+        type: DELETE_PAYMENT_FAILURE,
         payload: error,
       });
       failure();

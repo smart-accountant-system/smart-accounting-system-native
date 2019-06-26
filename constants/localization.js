@@ -82,6 +82,10 @@ export const en = {
   messageDeleteFail: 'Delete failed, please try again later.',
   messageDeleteSuccess: 'Delete successfully',
   messageWP: 'Your repassword is not match',
+
+  // LANGUAGE
+  english: 'English',
+  vietnamese: 'Vietnamese',
 };
 
 export const vi = {
@@ -169,6 +173,10 @@ export const vi = {
   messageDeleteFail: 'Xóa không thành công, vui lòng thử lại sau.',
   messageDeleteSuccess: 'Xoá thành công',
   messageWP: 'Xác nhận mật khẩu không khớp',
+
+  // LANGUAGE
+  english: 'Tiếng Anh',
+  vietnamese: 'Tiếng Việt',
 };
 
 export const localizations = {

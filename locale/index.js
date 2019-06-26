@@ -5,8 +5,6 @@ import { en, vi } from '../constants/localization';
 import store from '../redux/store';
 import { changeLocalization } from '../redux/actions';
 
-export const locales = ['en', 'vi'];
-
 export const getLocaleString = locale => {
   switch (locale) {
     case 'en':

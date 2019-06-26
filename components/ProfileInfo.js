@@ -15,8 +15,9 @@ export default class ProfileInfo extends React.Component {
             flexDirection: 'row',
             alignItems: 'center',
             borderBottomColor: 'grey',
-            borderBottomWidth: info === 'Logout' ? 0 : 0.5,
+            borderBottomWidth: 0.5,
             width: '100%',
+            padding: 10,
           }}
         >
           <FeatherIcon color={theme.colors.grey} name={name} size={30} />

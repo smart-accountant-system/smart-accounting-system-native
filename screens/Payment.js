@@ -11,9 +11,10 @@ import {
   TouchableOpacity,
   ScrollView,
   RefreshControl,
+  LayoutAnimation,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { Button } from 'react-native-paper';
+import { Button, Snackbar } from 'react-native-paper';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
 import {
@@ -27,7 +28,7 @@ import theme from '../constants/theme';
 import { FeatherIcon, Loading, Empty } from '../components';
 import { handle401 } from '../constants/strategies';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
-import { getInvoiceById, getPayments } from '../redux/actions';
+import { getInvoiceById, getPayments, removePayment } from '../redux/actions';
 import { PaymentSection } from '../containers/InvoiceDetail';
 
 class InvoiceDetail extends React.Component {
@@ -50,7 +51,6 @@ class InvoiceDetail extends React.Component {
   }
 
   _onRefresh = () => {
-    const { navigation } = this.props;
     this.setState({ refreshing: true });
 
     this.props.getPayments(
@@ -158,6 +158,22 @@ class InvoiceDetail extends React.Component {
       }
   };
 
+  handleRemove = _id => {
+    this.props.removePayment(_id, {
+      success: () => {
+        LayoutAnimation.spring();
+      },
+      failure: () => {
+        this.setState({ visibleSnackbar: true });
+      },
+      handle401: () =>
+        handle401({
+          logout: this.props.logout,
+          navigation: this.props.navigation,
+        }),
+    });
+  };
+
   render() {
     const {
       navigation,
@@ -172,7 +188,9 @@ class InvoiceDetail extends React.Component {
       refreshing,
       isExpandingFilter,
       loading,
+      visibleSnackbar,
     } = this.state;
+
     const { payments } = this.getNewestInvoice();
     return (
       <View style={{ display: 'flex', flex: 1 }}>
@@ -247,12 +265,22 @@ class InvoiceDetail extends React.Component {
             {!payments.payments.length ? (
               <Empty name={i18n.t('payment')} />
             ) : (
-              <PaymentSection payments={payments.payments} />
+              <PaymentSection
+                onRemove={this.handleRemove}
+                payments={payments.payments}
+              />
             )}
           </ScrollView>
         ) : (
           <Loading />
         )}
+        <Snackbar
+          visible={visibleSnackbar}
+          onDismiss={() => this.setState({ visibleSnackbar: false })}
+          action={{ label: 'OK', onPress: () => {} }}
+        >
+          {i18n.t('messageDeleteFail')}
+        </Snackbar>
       </View>
     );
   }
@@ -265,6 +293,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   getInvoiceById,
   getPayments,
+  removePayment,
 };
 
 export default connect(

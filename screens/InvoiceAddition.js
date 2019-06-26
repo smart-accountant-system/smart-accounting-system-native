@@ -29,10 +29,12 @@ class InvoiceAddition extends React.Component {
     type: 0,
     detail: [],
     isVisible: false,
+    isLoading: false,
   };
 
   handleAddInvoice = () => {
     const { type, detail } = this.state;
+    this.setState({ isLoading: true });
     this.props.addInvoice(
       {
         type,
@@ -45,10 +47,12 @@ class InvoiceAddition extends React.Component {
       {
         success: () => {
           this.props.navigation.navigate('Invoice');
+          this.setState({ isLoading: false });
         },
         failure: () => {
           this.setState({
             isVisible: true,
+            isLoading: false,
           });
         },
         handle401: () =>
@@ -95,8 +99,8 @@ class InvoiceAddition extends React.Component {
   };
 
   render() {
-    const { navigation, isLoading } = this.props;
-    const { detail, isVisible, type } = this.state;
+    const { navigation } = this.props;
+    const { detail, isVisible, type, isLoading } = this.state;
     const totalCost = detail.reduce(
       (total, item) => total + item.unitPrice * item.quantity,
       0
@@ -161,9 +165,7 @@ class InvoiceAddition extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  isLoading: state.invoice.isLoading,
-});
+const mapStateToProps = () => ({});
 const mapDispatchToProps = {
   logout,
   addInvoice,

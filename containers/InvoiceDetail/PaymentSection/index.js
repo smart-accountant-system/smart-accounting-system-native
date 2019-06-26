@@ -8,7 +8,7 @@ import Content from '../../Account/Content';
 const Container = styled.View`
   padding-top: 8px;
 `;
-export default ({ payments }) => (
+export default ({ payments, onRemove }) => (
   <Container>
     {payments.map(
       ({
@@ -19,7 +19,7 @@ export default ({ payments }) => (
         amountMoney,
         description,
       }) => (
-        <Item onRemove={() => {}} key={_id} type={type}>
+        <Item onRemove={() => onRemove(_id)} key={_id} type={type}>
           <Content
             name={name}
             description={description}

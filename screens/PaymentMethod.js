@@ -146,9 +146,7 @@ class PaymentMethod extends React.Component {
                         )
                       : null
                   }
-                >
-                  {JSON.stringify(category)}
-                </ItemCategory>
+                />
               ))
             )}
           </ScrollView>
@@ -169,7 +167,6 @@ class PaymentMethod extends React.Component {
 
 const mapStateToProps = state => ({
   categories: state.category.categories,
-  isLoading: state.category.isLoading,
 });
 const mapDispatchToProps = {
   logout,

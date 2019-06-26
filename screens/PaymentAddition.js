@@ -17,7 +17,7 @@ import { Header, Typography, HeaderWrapper } from '../containers/Home';
 import { TypePicker, AmazingText } from '../containers/InvoiceAddition';
 import { FewStyledContainer } from '../containers/PaymentMethodAddition';
 import { getCategories, addPayment, getPayments } from '../redux/actions';
-import { handle401 } from '../constants/strategies';
+import { handle401, toInt } from '../constants/strategies';
 import PaymentMethodItem from '../containers/PaymentMethod/Item';
 
 class InvoiceProductAddition extends React.Component {
@@ -61,37 +61,21 @@ class InvoiceProductAddition extends React.Component {
     const previous = navigation.getParam('previous', '');
     this.setState({ isLoading: true });
 
-    // call api to create payment for invoice(_id)
     if (currentPaymentMethodId !== '') {
       this.props.addPayment(
         {
           invoice: _id,
           category: currentPaymentMethodId,
-          amountMoney: parseInt(amountMoney),
+          amountMoney: toInt(amountMoney),
           description,
           type,
         },
         {
           success: () => {
             this.setState({ isLoading: false });
-            this.props.getPayments(
-              _id,
-              {},
-              {
-                success: () => {
-                  navigation.navigate(previous);
-                },
-                handle401: () =>
-                  handle401({
-                    logout: this.props.logout,
-                    navigation: this.props.navigation,
-                  }),
-              }
-            );
+            navigation.navigate(previous);
           },
-          failure: () => {
-            this.setState({ isVisible: true, isLoading: false });
-          },
+          failure: () => this.setState({ isVisible: true, isLoading: false }),
           handle401: () =>
             handle401({
               logout: this.props.logout,

@@ -25,19 +25,7 @@ class PaymentMethodAddition extends React.Component {
     this.props.addCategory(
       { name, detail },
       {
-        success: () => {
-          this.props.navigation.navigate('PaymentMethod');
-          this.props.getCategories(
-            {},
-            {
-              handle401: () =>
-                handle401({
-                  logout: this.props.logout,
-                  navigation: this.props.navigation,
-                }),
-            }
-          );
-        },
+        success: () => this.props.navigation.navigate('PaymentMethod'),
         failure: () => {
           this.setState({
             isVisible: true,

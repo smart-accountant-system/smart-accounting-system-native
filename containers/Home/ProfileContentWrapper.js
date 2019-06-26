@@ -34,8 +34,6 @@ export const AvatarTypography = styled.Text`
 export const InforWrapper = styled.View`
   display: flex;
   flex-direction: column;
-  border-width: 1px;
-  border-color: ${({ theme }) => theme.colors.grey};
   margin-top: 20px;
   width: 100%;
 `;

@@ -9,29 +9,26 @@ import { View, TouchableOpacity, ScrollView, Text } from 'react-native';
 import theme from '../constants/theme';
 import { handle401 } from '../constants/strategies';
 import { FeatherIcon, InterestTextInput } from '../components';
-import { logout, addCustomer } from '../redux/actions';
+import { logout, addAccount } from '../redux/actions';
 import { Header, Typography, HeaderWrapper } from '../containers/Home';
 import { FewStyledContainer } from '../containers/PaymentMethodAddition';
 
-class CustomerAddition extends React.Component {
+class AccountAddition extends React.Component {
   state = {
-    name: 'Celeste Slater',
-    phone: '0987654321',
-    address: `Cecilia Chapman
-711-2880 Nulla St.
-Mankato Mississippi 96522`,
+    name: '',
+    description: '',
     isVisible: false,
     isLoading: false,
   };
 
-  handleAddCustomer = () => {
-    const { name, phone, address } = this.state;
+  handleAddAccount = () => {
+    const { name, description } = this.state;
     this.setState({ isLoading: true });
-    this.props.addCustomer(
-      { name, phone, address },
+    this.props.addAccount(
+      { name, description },
       {
         success: () => {
-          this.props.navigation.navigate('CustomerManagement');
+          this.props.navigation.navigate('Account');
           this.setState({ isLoading: false });
         },
         failure: () => {
@@ -51,17 +48,15 @@ Mankato Mississippi 96522`,
 
   render() {
     const { navigation } = this.props;
-    const { name, phone, address, isVisible, isLoading } = this.state;
+    const { name, description, isVisible, isLoading } = this.state;
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
           <Header>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('CustomerManagement')}
-            >
+            <TouchableOpacity onPress={() => navigation.navigate('Account')}>
               <FeatherIcon color={theme.colors.white} name="chevron-left" />
             </TouchableOpacity>
-            <Typography>{i18n.t('customerAddition')}</Typography>
+            <Typography>{i18n.t('accountAddition')}</Typography>
             <Text />
           </Header>
         </HeaderWrapper>
@@ -73,23 +68,17 @@ Mankato Mississippi 96522`,
             onChangeText={name => this.setState({ name })}
           />
           <InterestTextInput
-            label={i18n.t('phone')}
-            value={phone}
-            onChangeText={phone => this.setState({ phone })}
-          />
-          <InterestTextInput
-            label={i18n.t('address')}
-            value={address}
-            numberOfLines={3}
+            label={i18n.t('description')}
+            value={description}
             multiline
-            onChangeText={address => this.setState({ address })}
+            onChangeText={description => this.setState({ description })}
           />
           <FewStyledContainer paddingTop>
             <Button
               mode="contained"
               style={{ width: 170 }}
               contentStyle={{ height: 50 }}
-              onPress={this.handleAddCustomer}
+              onPress={this.handleAddAccount}
               loading={isLoading}
             >
               <Text>{i18n.t('actionSave')}</Text>
@@ -109,16 +98,16 @@ Mankato Mississippi 96522`,
 }
 
 const mapStateToProps = state => ({
-  error: state.customer.error,
+  error: state.account.error,
 });
 const mapDispatchToProps = {
   logout,
-  addCustomer,
+  addAccount,
 };
 
 export default withTheme(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(CustomerAddition)
+  )(AccountAddition)
 );

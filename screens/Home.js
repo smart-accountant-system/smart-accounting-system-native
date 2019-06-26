@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { withTheme } from 'react-native-paper';
 import {
   View,
-  StatusBar,
   TouchableOpacity,
   ScrollView,
   RefreshControl,

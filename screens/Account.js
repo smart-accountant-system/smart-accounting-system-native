@@ -8,6 +8,7 @@ import {
   ScrollView,
   RefreshControl,
   LayoutAnimation,
+  TouchableOpacity,
 } from 'react-native';
 
 import theme from '../constants/theme';
@@ -105,15 +106,20 @@ class Account extends React.Component {
   };
 
   render() {
-    const { accounts } = this.props;
+    const { accounts, navigation } = this.props;
     const { searchText, refreshing, visibleSnackbar } = this.state;
+    console.log(accounts);
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
           <Header>
             <FeatherIcon color={theme.colors.primary} name="chevron-left" />
             <Typography>{i18n.t('account')}</Typography>
-            <FeatherIcon color={theme.colors.primary} name="user" />
+            <TouchableOpacity
+              onPress={() => navigation.navigate('AccountAddition')}
+            >
+              <FeatherIcon color={theme.colors.white} name="plus" />
+            </TouchableOpacity>
           </Header>
         </HeaderWrapper>
         <Searchbar value={searchText} onChangeText={this.handleSearch} />

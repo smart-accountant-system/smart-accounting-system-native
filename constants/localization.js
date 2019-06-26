@@ -29,6 +29,8 @@ export const en = {
 
   search: 'Search',
   account: 'Account',
+  accountAddition: 'Add account',
+
   balance: 'Balance',
   payment: 'Payment',
 
@@ -113,6 +115,8 @@ export const vi = {
 
   search: 'Tìm kiếm',
   account: 'Tài khoản',
+  accountAddition: 'Thêm tài khoản',
+
   balance: 'Bảng cân đối',
   payment: 'Thanh toán',
 

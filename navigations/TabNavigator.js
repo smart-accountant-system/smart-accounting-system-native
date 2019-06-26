@@ -22,6 +22,7 @@ import TransactionDetail from '../screens/TransactionDetail';
 
 import Account from '../screens/Account';
 import AccountDetail from '../screens/AccountDetail';
+import AccountAddition from '../screens/AccountAddition';
 
 import PaymentMethod from '../screens/PaymentMethod';
 import PaymentMethodAddition from '../screens/PaymentMethodAddition';
@@ -94,6 +95,7 @@ const AccountStack = createStackNavigator(
   {
     Account,
     AccountDetail,
+    AccountAddition,
   },
   {
     headerMode: 'none',

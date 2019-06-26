@@ -11,8 +11,8 @@ export { default as PaymentSection } from './PaymentSection';
 export default ({ currentInvoice }) => {
   const name =
     currentInvoice.type === 0
-      ? i18n.t('purchaseInvoice')
-      : i18n.t('saleInvoice');
+      ? i18n.t('purchasedInvoice')
+      : i18n.t('selledInvoice');
   const color = currentInvoice.status ? '#438763' : '#ad6b8d';
   const status = currentInvoice.status ? i18n.t('paid') : i18n.t('unpaid');
   const {

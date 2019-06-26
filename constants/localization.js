@@ -100,7 +100,7 @@ export const vi = {
   logout: 'Đăng xuất',
 
   invoice: 'Hoá đơn',
-  invoiceAddtion: 'Thêm hoá đơn',
+  invoiceAddition: 'Thêm hoá đơn',
   invoiceDetail: 'Chi tiết hóa đơn',
   invoiceProductAddition: 'Thêm sản phẩm',
   paymentAddition: 'Thêm khoản thanh toán',
@@ -155,10 +155,8 @@ export const vi = {
   description: 'Mô tả',
   paid: 'Đã thanh toán',
   unpaid: 'Chưa thanh toán',
-  purchase: 'Mua hàng',
+  purchase: 'Nhập hàng',
   sale: 'Bán hàng',
-  purchaseInvoice: 'Hóa đơn mua hàng',
-  saleInvoice: 'Hóa đơn bán hàng',
   addedBy: 'Đã thêm bởi',
 
   // ADVANCED FILTER GROUP

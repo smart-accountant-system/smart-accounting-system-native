@@ -14,6 +14,7 @@ export default ({ totalCost, color }) => (
         fontSize: 12,
         color: '#666',
         textAlign: 'right',
+        textTransform: 'lowercase',
       }}
     >
       {i18n.t('totalCost')}

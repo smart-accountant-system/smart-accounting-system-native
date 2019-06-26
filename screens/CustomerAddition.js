@@ -62,7 +62,7 @@ Mankato Mississippi 96522`,
               <FeatherIcon color={theme.colors.white} name="chevron-left" />
             </TouchableOpacity>
             <Typography>{i18n.t('customerAddition')}</Typography>
-            <Text />
+            <FeatherIcon color={theme.colors.primary} name="chevron-left" />
           </Header>
         </HeaderWrapper>
 

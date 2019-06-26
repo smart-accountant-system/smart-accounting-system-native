@@ -93,6 +93,8 @@ export const en = {
   messageWP: 'Your repassword is not match',
   messageForgetPassword: 'Forget your password',
   messageHaveNoAccount: `Don't have an account?`,
+  messageNoAccessCamera: 'Cannot access to Camera',
+  messageScanInvoice: 'Take a photo of your invoice',
 
   // LANGUAGE
   english: 'English',
@@ -195,6 +197,8 @@ export const vi = {
   messageWP: 'Xác nhận mật khẩu không khớp',
   messageForgetPassword: 'Quên mật khẩu',
   messageHaveNoAccount: `Chưa có tài khoản?`,
+  messageNoAccessCamera: 'Không thể kết nối với Camera',
+  messageScanInvoice: 'Chụp hình hoá đơn của bạn',
 
   // LANGUAGE
   english: 'Tiếng Anh',

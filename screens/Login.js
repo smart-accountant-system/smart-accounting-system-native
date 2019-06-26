@@ -19,7 +19,6 @@ import {
   TextInputWrapper,
   AmazingCircle,
   LoginFooter,
-  SocialButton,
 } from '../containers/Login';
 import ROLE from '../constants/role';
 import { login } from '../redux/actions';
@@ -96,7 +95,7 @@ class Login extends React.Component {
               </AmazingCircle>
             </LoginContainer>
 
-            <View style={{ backgroundColor: 'white', height: '60%' }}>
+            <View style={{ backgroundColor: 'white', height: '65%' }}>
               <View
                 style={{
                   justifyContent: 'center',
@@ -142,19 +141,6 @@ class Login extends React.Component {
                     {i18n.t('login')}
                   </Text>
                 </Button>
-                <View
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    padding: 10,
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    width: 140,
-                  }}
-                >
-                  <SocialButton name="facebook" background="#4968AD" />
-                  <SocialButton name="google" background="#C65447" />
-                </View>
               </View>
 
               <LoginFooter

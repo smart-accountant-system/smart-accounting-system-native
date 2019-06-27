@@ -32,6 +32,7 @@ export const ReceiptDetailBody = ({ customer, cost, payment, description }) => (
       style={{
         display: 'flex',
         flexDirection: 'row',
+        alignItems: 'center',
         justifyContent: 'space-between',
         padding: 8,
         marginBottom: -18,

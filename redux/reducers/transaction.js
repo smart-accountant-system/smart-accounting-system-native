@@ -5,6 +5,9 @@ import {
   GET_TRANSACTION_BY_ID_REQUEST,
   GET_TRANSACTION_BY_ID_SUCCESS,
   GET_TRANSACTION_BY_ID_FAILURE,
+  POST_TRANSACTION_REQUEST,
+  POST_TRANSACTION_SUCCESS,
+  POST_TRANSACTION_FAILURE,
   DELETE_TRANSACTION_BY_ID_REQUEST,
   DELETE_TRANSACTION_BY_ID_SUCCESS,
   DELETE_TRANSACTION_BY_ID_FAILURE,
@@ -27,6 +30,7 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case GET_TRANSACTIONS_REQUEST:
+    case POST_TRANSACTION_REQUEST:
       return {
         ...state,
         loading: true,
@@ -40,6 +44,7 @@ export default (state = INITIAL_STATE, action) => {
         error: null,
       };
     case GET_TRANSACTIONS_FAILURE:
+    case POST_TRANSACTION_FAILURE:
       return {
         ...state,
         loading: false,
@@ -101,6 +106,19 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         currentDebitAccountInTransactionAddition: action.payload,
+      };
+    case POST_TRANSACTION_SUCCESS:
+      return {
+        ...state,
+        transactions: {
+          transactions: [...state.transactions.transactions, action.payload],
+          total: state.transactions.total + 1,
+        },
+
+        currentDebitAccountInTransactionAddition: null,
+        currentCreditAccountInTransactionAddition: null,
+        currentReceiptInTransactionAddition: null,
+        error: null,
       };
     default:
       return state;

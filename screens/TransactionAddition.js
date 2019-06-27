@@ -15,10 +15,10 @@ import {
   addReceiptToTransaction,
   getAccounts,
   getReceipts,
+  addTransaction,
 } from '../redux/actions';
 import { handle401, toInt } from '../constants/strategies';
-import { PaymentInReceipt } from '../containers/Receipt';
-import { ReceiptInTransaction } from '../containers/Transaction';
+import { ReceiptShow, AccountShow } from '../containers/Transaction';
 
 class ReceiptAddition extends React.Component {
   constructor(props) {
@@ -52,7 +52,46 @@ class ReceiptAddition extends React.Component {
     );
   };
 
-  handleAdd = () => {};
+  handleAdd = () => {
+    const {
+      navigation,
+      currentReceiptInTracsaction,
+      currentCreditAccountInTransaction,
+      currentDebitAccountInTransaction,
+    } = this.props;
+    this.setState({ isLoading: true });
+    this.props.addTransaction(
+      {
+        receipt: currentReceiptInTracsaction._id,
+        amount: currentReceiptInTracsaction.payment.amountMoney,
+        fromAccount: {
+          id: currentCreditAccountInTransaction._id,
+          type: 0,
+        },
+        toAccount: {
+          id: currentDebitAccountInTransaction._id,
+          type: 1,
+        },
+      },
+      {
+        success: () => {
+          navigation.navigate('Transaction');
+          this.setState({ isLoading: false });
+        },
+        failure: () => {
+          this.setState({
+            isVisible: true,
+            isLoading: false,
+          });
+        },
+        handle401: () =>
+          handle401({
+            logout: this.props.logout,
+            navigation: this.props.navigation,
+          }),
+      }
+    );
+  };
 
   render() {
     const {
@@ -62,7 +101,6 @@ class ReceiptAddition extends React.Component {
       currentDebitAccountInTransaction,
     } = this.props;
     const { isVisible, isLoading } = this.state;
-    console.log(currentReceiptInTracsaction);
 
     return (
       <View style={{ display: 'flex', flex: 1 }}>
@@ -77,7 +115,7 @@ class ReceiptAddition extends React.Component {
         </HeaderWrapper>
         <ScrollView>
           {currentReceiptInTracsaction ? (
-            <ReceiptInTransaction
+            <ReceiptShow
               receipt={currentReceiptInTracsaction}
               onPress={() => navigation.navigate('ReceiptsInTransaction')}
             />
@@ -88,7 +126,14 @@ class ReceiptAddition extends React.Component {
             />
           )}
           {currentDebitAccountInTransaction ? (
-            <View />
+            <AccountShow
+              type="debit"
+              onPress={() =>
+                navigation.navigate('AccountsInTransaction', { type: 'debit' })
+              }
+              account={currentDebitAccountInTransaction}
+              key={currentDebitAccountInTransaction._id}
+            />
           ) : (
             <AmazingText
               onPress={() =>
@@ -98,7 +143,14 @@ class ReceiptAddition extends React.Component {
             />
           )}
           {currentCreditAccountInTransaction ? (
-            <View />
+            <AccountShow
+              type="credit"
+              onPress={() =>
+                navigation.navigate('AccountsInTransaction', { type: 'credit' })
+              }
+              account={currentCreditAccountInTransaction}
+              key={currentCreditAccountInTransaction._id}
+            />
           ) : (
             <AmazingText
               onPress={() =>
@@ -144,6 +196,7 @@ const mapDispatchToProps = {
   addReceiptToTransaction,
   getAccounts,
   getReceipts,
+  addTransaction,
 };
 
 export default connect(

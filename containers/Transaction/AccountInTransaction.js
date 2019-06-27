@@ -1,11 +1,12 @@
 import React from 'react';
 import i18n from 'i18n-js';
+import { View, Text } from 'react-native';
 
 import { AccountContent } from '../Account';
 import StyledItem from '../../components/StyledItem';
 
-export default ({ account }) => (
-  <StyledItem debit={account.debit} credit={account.credit}>
+const AccountInTransaction = ({ account, onPress, noBorder }) => (
+  <StyledItem onPress={onPress} debit={account.debit} credit={account.credit}>
     <AccountContent
       name={account.name}
       description={account.description}
@@ -18,6 +19,25 @@ export default ({ account }) => (
         day: 'numeric',
         month: 'long',
       })}
+      noBorder={noBorder}
     />
   </StyledItem>
 );
+
+export const AccountShow = ({ account, onPress }) => (
+  <View>
+    <Text
+      style={{
+        fontSize: 17,
+        color: '#85261c',
+        textAlign: 'center',
+        paddingTop: 16,
+      }}
+    >
+      {i18n.t('account')}
+    </Text>
+    <AccountInTransaction account={account} onPress={onPress} noBorder />
+  </View>
+);
+
+export default AccountInTransaction;

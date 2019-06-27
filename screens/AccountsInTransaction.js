@@ -16,6 +16,7 @@ import {
   logout,
   addDebitAccountToTransaction,
   addCreditAccountToTransaction,
+  getAccounts,
 } from '../redux/actions';
 import { handle401 } from '../constants/strategies';
 import { FeatherIcon, Loading, Searchbar, Empty } from '../components';
@@ -73,10 +74,11 @@ class AccountsInTransaction extends React.Component {
     const { navigation } = this.props;
     const type = navigation.getParam('type', '');
     if (type === 'debit') {
-      this.addDebitAccountToTransaction(account);
+      this.props.addDebitAccountToTransaction(account);
     } else {
-      this.addCreditAccountToTransaction(account);
+      this.props.addCreditAccountToTransaction(account);
     }
+    navigation.goBack();
   };
 
   render() {
@@ -114,33 +116,6 @@ class AccountsInTransaction extends React.Component {
               <Empty name={i18n.t('account')} />
             ) : (
               accounts.accounts.map(account => (
-                // <AccountItem
-                //   disabled
-                //   editable
-                //   key={account._id}
-                //   account={account}
-                // >
-                //   <AccountContent
-                //     name={account.name}
-                //     description={account.description}
-                //     color={
-                //       account.debit > account.credit ? '#438763' : '#ad6b8d'
-                //     }
-                //     balance={Math.abs(account.debit - account.credit)}
-                //     balanceType={
-                //       account.debit > account.credit
-                //         ? 'Debit balance'
-                //         : 'Credit balance'
-                //     }
-                //     time={new Date(account.createdAt).toLocaleDateString(
-                //       i18n.t('local'),
-                //       {
-                //         day: 'numeric',
-                //         month: 'long',
-                //       }
-                //     )}
-                //   />
-                // </AccountItem>
                 <AccountInTransaction
                   onPress={() => this.handleAddAccountToTransaction(account)}
                   account={account}
@@ -172,6 +147,7 @@ const mapDispatchToProps = {
   logout,
   addDebitAccountToTransaction,
   addCreditAccountToTransaction,
+  getAccounts,
 };
 
 export default withTheme(

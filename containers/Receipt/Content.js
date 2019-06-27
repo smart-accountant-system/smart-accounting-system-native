@@ -8,8 +8,12 @@ const ReceiptContentContainer = styled.View`
   background-color: #fff;
   padding: 10px;
   width: 100%;
+  ${({ noBorder }) =>
+    noBorder
+      ? null
+      : `
   border-bottom-color: #f1f1f1;
-  border-bottom-width: 2px;
+  border-bottom-width: 2px;`}
 
   display: flex;
   flex-direction: row;
@@ -54,8 +58,18 @@ const ReceiptTyporaphy = styled.View`
   align-items: center;
 `;
 
-export default ({ id, customer, payment, type, color, status, time, cost }) => (
-  <ReceiptContentContainer>
+export default ({
+  id,
+  customer,
+  payment,
+  type,
+  color,
+  status,
+  time,
+  cost,
+  noBorder,
+}) => (
+  <ReceiptContentContainer noBorder={noBorder}>
     <View>
       <ReceiptTyporaphy>
         <ReceiptCodeField>{id}</ReceiptCodeField>

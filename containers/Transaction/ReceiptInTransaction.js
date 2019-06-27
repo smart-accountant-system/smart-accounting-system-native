@@ -1,10 +1,11 @@
 import React from 'react';
 import i18n from 'i18n-js';
+import { View, Text } from 'react-native';
 
 import ReceiptItem from './ReceiptItem';
 import { ReceiptContent } from '../Receipt';
 
-export default ({ onPress, receipt }) => (
+const ReceiptInTransaction = ({ onPress, receipt, noBorder }) => (
   <ReceiptItem onPress={onPress} disabled receipt={receipt} key={receipt._id}>
     <ReceiptContent
       id={receipt._id}
@@ -26,6 +27,25 @@ export default ({ onPress, receipt }) => (
         day: 'numeric',
         month: 'long',
       })}
+      noBorder={noBorder}
     />
   </ReceiptItem>
 );
+
+export const ReceiptShow = ({ receipt, onPress }) => (
+  <View>
+    <Text
+      style={{
+        fontSize: 17,
+        color: '#85261c',
+        textAlign: 'center',
+        paddingTop: 16,
+      }}
+    >
+      {i18n.t('receipt')}
+    </Text>
+    <ReceiptInTransaction receipt={receipt} onPress={onPress} noBorder />
+  </View>
+);
+
+export default ReceiptInTransaction;

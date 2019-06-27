@@ -1,5 +1,4 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
 import styled from 'styled-components';
 import SwipeoutRemove from '../../components/SwipeoutRemove';
 

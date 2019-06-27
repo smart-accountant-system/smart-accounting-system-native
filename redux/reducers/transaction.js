@@ -10,12 +10,16 @@ import {
   DELETE_TRANSACTION_BY_ID_FAILURE,
   CHOOSE_TRANSACTION,
   ADD_RECEIPT_TO_TRANSACTION,
+  ADD_CREDIT_ACCOUNT_TO_TRANSACTION,
+  ADD_DEBIT_ACCOUNT_TO_TRANSACTION,
 } from '../actions';
 
 const INITIAL_STATE = {
   transactions: null,
   currentTransaction: null,
   currentReceiptInTransactionAddition: null,
+  currentCreditAccountInTransactionAddition: null,
+  currentDebitAccountInTransactionAddition: null,
   loading: false,
   error: null,
 };
@@ -87,6 +91,16 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         currentReceiptInTransactionAddition: action.payload,
+      };
+    case ADD_CREDIT_ACCOUNT_TO_TRANSACTION:
+      return {
+        ...state,
+        currentCreditAccountInTransactionAddition: action.payload,
+      };
+    case ADD_DEBIT_ACCOUNT_TO_TRANSACTION:
+      return {
+        ...state,
+        currentDebitAccountInTransactionAddition: action.payload,
       };
     default:
       return state;

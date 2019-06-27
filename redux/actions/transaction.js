@@ -20,6 +20,10 @@ export const DELETE_TRANSACTION_BY_ID_FAILURE =
 export const CHOOSE_TRANSACTION = 'choose-transaction';
 
 export const ADD_RECEIPT_TO_TRANSACTION = 'add-receipt-to-transaction';
+export const ADD_CREDIT_ACCOUNT_TO_TRANSACTION =
+  'add-credit-account-to-transaction';
+export const ADD_DEBIT_ACCOUNT_TO_TRANSACTION =
+  'add-debit-account-to-transaction';
 
 export function getTransactions(
   params,
@@ -150,5 +154,19 @@ export function addReceiptToTransaction(receipt) {
   return {
     type: ADD_RECEIPT_TO_TRANSACTION,
     payload: receipt,
+  };
+}
+
+export function addCreditAccountToTransaction(account) {
+  return {
+    type: ADD_CREDIT_ACCOUNT_TO_TRANSACTION,
+    payload: account,
+  };
+}
+
+export function addDebitAccountToTransaction(account) {
+  return {
+    type: ADD_DEBIT_ACCOUNT_TO_TRANSACTION,
+    payload: account,
   };
 }

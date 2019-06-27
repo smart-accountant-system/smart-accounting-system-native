@@ -7,7 +7,6 @@ import {
   View,
   ScrollView,
   RefreshControl,
-  LayoutAnimation,
   TouchableOpacity,
 } from 'react-native';
 
@@ -15,34 +14,20 @@ import ROLE from '../constants/role';
 import theme from '../constants/theme';
 import {
   logout,
-  getAccounts,
-  chooseAccount,
-  removeAccount,
+  addDebitAccountToTransaction,
+  addCreditAccountToTransaction,
 } from '../redux/actions';
 import { handle401 } from '../constants/strategies';
 import { FeatherIcon, Loading, Searchbar, Empty } from '../components';
-import { AccountItem, AccountContent } from '../containers/Account';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
+import { AccountInTransaction } from '../containers/Transaction';
 
-class Account extends React.Component {
+class AccountsInTransaction extends React.Component {
   state = {
     searchText: '',
     timer: undefined,
     refreshing: false,
     visibleSnackbar: false,
-  };
-
-  componentDidMount = () => {
-    this.props.getAccounts(
-      {},
-      {
-        handle401: () =>
-          handle401({
-            logout: this.props.logout,
-            navigation: this.props.navigation,
-          }),
-      }
-    );
   };
 
   _onRefresh = () => {
@@ -60,12 +45,6 @@ class Account extends React.Component {
           }),
       }
     );
-  };
-
-  accountDetail = account => {
-    const { navigation } = this.props;
-    this.props.chooseAccount(account);
-    navigation.navigate('AccountDetail');
   };
 
   handleSearch = query => {
@@ -90,20 +69,14 @@ class Account extends React.Component {
     });
   };
 
-  handleRemove = _id => {
-    this.props.removeAccount(_id, {
-      success: () => {
-        LayoutAnimation.spring();
-      },
-      failure: () => {
-        this.setState({ visibleSnackbar: true });
-      },
-      handle401: () =>
-        handle401({
-          logout: this.props.logout,
-          navigation: this.props.navigation,
-        }),
-    });
+  handleAddAccountToTransaction = account => {
+    const { navigation } = this.props;
+    const type = navigation.getParam('type', '');
+    if (type === 'debit') {
+      this.addDebitAccountToTransaction(account);
+    } else {
+      this.addCreditAccountToTransaction(account);
+    }
   };
 
   render() {
@@ -117,17 +90,13 @@ class Account extends React.Component {
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
           <Header>
-            <FeatherIcon color={theme.colors.primary} name="chevron-left" />
+            <TouchableOpacity
+              onPress={() => navigation.navigate('TransactionAddition')}
+            >
+              <FeatherIcon color={theme.colors.white} name="chevron-left" />
+            </TouchableOpacity>
             <Typography>{i18n.t('account')}</Typography>
-            {info.role === ROLE.ACCOUNTANT ? (
-              <TouchableOpacity
-                onPress={() => navigation.navigate('AccountAddition')}
-              >
-                <FeatherIcon color={theme.colors.white} name="plus" />
-              </TouchableOpacity>
-            ) : (
-              <FeatherIcon color={theme.colors.primary} name="plus" />
-            )}
+            <FeatherIcon color={theme.colors.primary} name="plus" />
           </Header>
         </HeaderWrapper>
         <Searchbar value={searchText} onChangeText={this.handleSearch} />
@@ -145,35 +114,38 @@ class Account extends React.Component {
               <Empty name={i18n.t('account')} />
             ) : (
               accounts.accounts.map(account => (
-                <AccountItem
-                  disabled={info.role !== ROLE.ACCOUNTANT}
-                  editable
-                  onRemove={() => this.handleRemove(account._id)}
-                  key={account._id}
+                // <AccountItem
+                //   disabled
+                //   editable
+                //   key={account._id}
+                //   account={account}
+                // >
+                //   <AccountContent
+                //     name={account.name}
+                //     description={account.description}
+                //     color={
+                //       account.debit > account.credit ? '#438763' : '#ad6b8d'
+                //     }
+                //     balance={Math.abs(account.debit - account.credit)}
+                //     balanceType={
+                //       account.debit > account.credit
+                //         ? 'Debit balance'
+                //         : 'Credit balance'
+                //     }
+                //     time={new Date(account.createdAt).toLocaleDateString(
+                //       i18n.t('local'),
+                //       {
+                //         day: 'numeric',
+                //         month: 'long',
+                //       }
+                //     )}
+                //   />
+                // </AccountItem>
+                <AccountInTransaction
+                  onPress={() => this.handleAddAccountToTransaction(account)}
                   account={account}
-                  accountDetail={this.accountDetail}
-                >
-                  <AccountContent
-                    name={account.name}
-                    description={account.description}
-                    color={
-                      account.debit > account.credit ? '#438763' : '#ad6b8d'
-                    }
-                    balance={Math.abs(account.debit - account.credit)}
-                    balanceType={
-                      account.debit > account.credit
-                        ? 'Debit balance'
-                        : 'Credit balance'
-                    }
-                    time={new Date(account.createdAt).toLocaleDateString(
-                      i18n.t('local'),
-                      {
-                        day: 'numeric',
-                        month: 'long',
-                      }
-                    )}
-                  />
-                </AccountItem>
+                  key={account._id}
+                />
               ))
             )}
           </ScrollView>
@@ -198,14 +170,13 @@ const mapStateToProps = state => ({
 });
 const mapDispatchToProps = {
   logout,
-  getAccounts,
-  chooseAccount,
-  removeAccount,
+  addDebitAccountToTransaction,
+  addCreditAccountToTransaction,
 };
 
 export default withTheme(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(Account)
+  )(AccountsInTransaction)
 );

@@ -11,10 +11,13 @@ import { FeatherIcon } from '../components';
 import { Header, Typography, HeaderWrapper } from '../containers/Home';
 import { AmazingText } from '../containers/InvoiceAddition';
 import { FewStyledContainer } from '../containers/PaymentMethodAddition';
-import { addReceiptToTransaction } from '../redux/actions';
+import {
+  addReceiptToTransaction,
+  getAccounts,
+  getReceipts,
+} from '../redux/actions';
 import { handle401, toInt } from '../constants/strategies';
 import { PaymentInReceipt } from '../containers/Receipt';
-import { ItemWithoutRemove } from '../containers/CustomerManagement';
 import { ReceiptInTransaction } from '../containers/Transaction';
 
 class ReceiptAddition extends React.Component {
@@ -26,12 +29,38 @@ class ReceiptAddition extends React.Component {
     };
   }
 
-  componentDidMount = () => {};
+  componentDidMount = () => {
+    this.props.getReceipts(
+      {},
+      {
+        handle401: () =>
+          handle401({
+            logout: this.props.logout,
+            navigation: this.props.navigation,
+          }),
+      }
+    );
+    this.props.getAccounts(
+      {},
+      {
+        handle401: () =>
+          handle401({
+            logout: this.props.logout,
+            navigation: this.props.navigation,
+          }),
+      }
+    );
+  };
 
   handleAdd = () => {};
 
   render() {
-    const { navigation, currentReceiptInTracsaction } = this.props;
+    const {
+      navigation,
+      currentReceiptInTracsaction,
+      currentCreditAccountInTransaction,
+      currentDebitAccountInTransaction,
+    } = this.props;
     const { isVisible, isLoading } = this.state;
     console.log(currentReceiptInTracsaction);
 
@@ -56,6 +85,26 @@ class ReceiptAddition extends React.Component {
             <AmazingText
               onPress={() => navigation.navigate('ReceiptsInTransaction')}
               content="Choose receipt"
+            />
+          )}
+          {currentDebitAccountInTransaction ? (
+            <View />
+          ) : (
+            <AmazingText
+              onPress={() =>
+                navigation.navigate('AccountsInTransaction', { type: 'debit' })
+              }
+              content="Choose Account to record Debit"
+            />
+          )}
+          {currentCreditAccountInTransaction ? (
+            <View />
+          ) : (
+            <AmazingText
+              onPress={() =>
+                navigation.navigate('AccountsInTransaction', { type: 'credit' })
+              }
+              content="Choose Account to record Credit"
             />
           )}
           <FewStyledContainer paddingTop>
@@ -86,9 +135,15 @@ class ReceiptAddition extends React.Component {
 const mapStateToProps = state => ({
   currentReceiptInTracsaction:
     state.transaction.currentReceiptInTransactionAddition,
+  currentCreditAccountInTransaction:
+    state.transaction.currentCreditAccountInTransactionAddition,
+  currentDebitAccountInTransaction:
+    state.transaction.currentDebitAccountInTransactionAddition,
 });
 const mapDispatchToProps = {
   addReceiptToTransaction,
+  getAccounts,
+  getReceipts,
 };
 
 export default connect(

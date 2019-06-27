@@ -188,6 +188,7 @@ class Receipt extends React.Component {
       visibleSnackbar,
       loading,
     } = this.state;
+    console.log(receipts);
 
     return (
       <View style={{ display: 'flex', flex: 1 }}>

@@ -52,6 +52,7 @@ class InvoiceProductAddition extends React.Component {
 
   handleAdd = () => {
     const { navigation, currentCustomer, currentPayment } = this.props;
+    this.setState({ isLoading: true });
     this.props.addReceipt(
       {
         payment: currentPayment._id,

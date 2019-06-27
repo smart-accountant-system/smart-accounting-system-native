@@ -13,14 +13,14 @@ const ReceiptInTransaction = ({ onPress, receipt, noBorder }) => (
       Transaction={receipt.payment.category.name}
       type={
         receipt.payment.type === 0
-          ? 'Receipt voucher' // phieu thu
-          : 'Payment voucher' // phieu chi
+          ? i18n.t('receiptVoucher')
+          : i18n.t('paymentVoucher')
       }
       color={receipt.status ? '#438763' : '#ad6b8d'}
       status={
         receipt.status
-          ? 'Recorded as a transaction'
-          : 'Not record as a transaction yet'
+          ? i18n.t('receiptRecoredAsTransaction')
+          : i18n.t('receiptNotRecoredAsTransaction')
       }
       cost={receipt.payment.amountMoney}
       time={new Date(receipt.createdAt).toLocaleDateString(i18n.t('local'), {

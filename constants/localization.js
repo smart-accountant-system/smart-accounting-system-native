@@ -107,6 +107,7 @@ export const en = {
   messageHaveNoAccount: `Don't have an account?`,
   messageNoAccessCamera: 'Cannot access to Camera',
   messageScanInvoice: 'Take a photo of your invoice',
+  messageCanNotGetInvoiceId: 'Cannot get invoice has ID:',
 
   // LANGUAGE
   english: 'English',
@@ -223,6 +224,7 @@ export const vi = {
   messageHaveNoAccount: `Chưa có tài khoản?`,
   messageNoAccessCamera: 'Không thể kết nối với Camera',
   messageScanInvoice: 'Chụp hình hoá đơn của bạn',
+  messageCanNotGetInvoiceId: 'Không thể tìm thấy hóa đơn có ID:',
 
   // LANGUAGE
   english: 'Tiếng Anh',

@@ -107,6 +107,9 @@ export default (state = INITIAL_STATE, action) => {
           receipts: [...state.receipts.receipts, action.payload],
           total: state.receipts.total + 1,
         },
+
+        currentCustomerInReceiptAddition: null,
+        currentPaymentInReceiptAddition: null,
         error: null,
       };
     default:

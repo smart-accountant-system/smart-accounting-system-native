@@ -1,15 +1,9 @@
 import React from 'react';
-import i18n from 'i18n-js';
-import styled from 'styled-components';
-import Item from './ItemWithoutRemove';
-import Content from '../Account/Content';
+import { View } from 'react-native';
 import PaymentInReceipt from './PaymentInReceipt';
 
-const Container = styled.View`
-  padding-top: 8px;
-`;
 export default ({ payments, ...props }) => (
-  <Container>
+  <View>
     {payments.map(payment => (
       <PaymentInReceipt
         key={payment._id}
@@ -20,5 +14,5 @@ export default ({ payments, ...props }) => (
         }}
       />
     ))}
-  </Container>
+  </View>
 );

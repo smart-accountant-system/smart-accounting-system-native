@@ -1,15 +1,11 @@
 import React from 'react';
 import i18n from 'i18n-js';
 import { View } from 'react-native';
-import styled from 'styled-components';
 import Item from './Item';
 import Content from '../../Account/Content';
 
-const Container = styled.View`
-  padding-top: 8px;
-`;
 export default ({ payments, onRemove }) => (
-  <Container>
+  <View>
     {payments.map(
       ({
         _id,
@@ -34,5 +30,5 @@ export default ({ payments, onRemove }) => (
         </Item>
       )
     )}
-  </Container>
+  </View>
 );

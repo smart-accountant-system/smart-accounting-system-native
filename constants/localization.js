@@ -142,7 +142,7 @@ export const vi = {
   accountAddition: 'Thêm tài khoản',
 
   balance: 'Bảng cân đối',
-  payment: 'Thanh toán',
+  payment: 'Khoản thanh toán',
 
   // ADD FIELD
   username: 'Tên đăng nhập',

@@ -19,6 +19,8 @@ export const DELETE_TRANSACTION_BY_ID_FAILURE =
 
 export const CHOOSE_TRANSACTION = 'choose-transaction';
 
+export const ADD_RECEIPT_TO_TRANSACTION = 'add-receipt-to-transaction';
+
 export function getTransactions(
   params,
   { success = () => {}, failure = () => {}, handle401 }
@@ -141,5 +143,12 @@ export function deleteTransactionById(
       });
       failure();
     }
+  };
+}
+
+export function addReceiptToTransaction(receipt) {
+  return {
+    type: ADD_RECEIPT_TO_TRANSACTION,
+    payload: receipt,
   };
 }

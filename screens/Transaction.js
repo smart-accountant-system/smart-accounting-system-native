@@ -176,6 +176,7 @@ class Transaction extends React.Component {
 
   render() {
     const {
+      navigation,
       transactions,
       user: { info },
     } = this.props;
@@ -195,7 +196,11 @@ class Transaction extends React.Component {
           <Header>
             <FeatherIcon color={theme.colors.primary} name="user" />
             <Typography>{i18n.t('transaction')}</Typography>
-            <FeatherIcon color={theme.colors.primary} name="user" />
+            <TouchableOpacity
+              onPress={() => navigation.navigate('TransactionAddition')}
+            >
+              <FeatherIcon color={theme.colors.white} name="plus" />
+            </TouchableOpacity>
           </Header>
         </HeaderWrapper>
 

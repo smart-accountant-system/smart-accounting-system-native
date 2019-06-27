@@ -83,7 +83,6 @@ class ReceiptAddition extends React.Component {
   render() {
     const { navigation, currentCustomer, currentPayment } = this.props;
     const { isVisible, isLoading } = this.state;
-    console.log(currentPayment);
 
     return (
       <View style={{ display: 'flex', flex: 1 }}>

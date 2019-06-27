@@ -11,6 +11,7 @@ export const en = {
   invoiceAddition: 'Add invoice',
   invoiceDetail: 'Invoice Detail',
   invoiceProductAddition: 'Add product',
+  invoiceProductUpdate: 'Update product',
   paymentAddition: 'Add payment',
 
   paymentMethod: 'Payment method',
@@ -114,6 +115,7 @@ export const vi = {
   invoiceAddition: 'Thêm hoá đơn',
   invoiceDetail: 'Chi tiết hóa đơn',
   invoiceProductAddition: 'Thêm sản phẩm',
+  invoiceProductUpdate: 'Cập nhật sản phẩm',
   paymentAddition: 'Thêm khoản thanh toán',
 
   paymentMethod: 'Phương thức thanh toán',

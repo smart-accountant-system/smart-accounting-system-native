@@ -280,6 +280,7 @@ class Invoice extends React.Component {
             ) : (
               invoices.invoices.map(invoice => (
                 <InvoiceItem
+                  disabled={info.role !== ROLE.STAFF}
                   key={invoice._id}
                   onRemove={() => this.handleRemoveInvoice(invoice._id)}
                   invoice={invoice}

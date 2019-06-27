@@ -64,7 +64,6 @@ class Login extends React.Component {
   render() {
     const { username, password, visible } = this.state;
     const { theme, user } = this.props;
-    console.log(user);
     return (
       <LoginBackground>
         <StatusBar barStyle="light-content" />

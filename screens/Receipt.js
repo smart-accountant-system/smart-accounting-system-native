@@ -19,6 +19,7 @@ import {
   FilterField,
   FilterTime,
 } from '../components/Filter';
+import ROLE from '../constants/role';
 import theme from '../constants/theme';
 import {
   logout,
@@ -172,7 +173,10 @@ class Receipt extends React.Component {
   };
 
   render() {
-    const { receipts } = this.props;
+    const {
+      receipts,
+      user: { info },
+    } = this.props;
     const {
       isDatePickerVisible,
       fromDate,
@@ -245,6 +249,7 @@ class Receipt extends React.Component {
             ) : (
               receipts.receipts.map(receipt => (
                 <ReceiptItem
+                  disabled={info.role !== ROLE.STAFF}
                   receipt={receipt}
                   receiptDetail={this.receiptDetail}
                   key={receipt._id}
@@ -294,6 +299,7 @@ class Receipt extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  user: state.user,
   receipts: state.receipt.receipts,
 });
 const mapDispatchToProps = {

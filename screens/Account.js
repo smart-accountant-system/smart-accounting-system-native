@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+import ROLE from '../constants/role';
 import theme from '../constants/theme';
 import {
   logout,
@@ -22,6 +23,7 @@ import { handle401 } from '../constants/strategies';
 import { FeatherIcon, Loading, Searchbar, Empty } from '../components';
 import { AccountItem, AccountContent } from '../containers/Account';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
+import role from '../constants/role';
 
 class Account extends React.Component {
   state = {
@@ -106,7 +108,11 @@ class Account extends React.Component {
   };
 
   render() {
-    const { accounts, navigation } = this.props;
+    const {
+      accounts,
+      navigation,
+      user: { info },
+    } = this.props;
     const { searchText, refreshing, visibleSnackbar } = this.state;
     return (
       <View style={{ display: 'flex', flex: 1 }}>
@@ -114,11 +120,15 @@ class Account extends React.Component {
           <Header>
             <FeatherIcon color={theme.colors.primary} name="chevron-left" />
             <Typography>{i18n.t('account')}</Typography>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('AccountAddition')}
-            >
-              <FeatherIcon color={theme.colors.white} name="plus" />
-            </TouchableOpacity>
+            {info.role === ROLE.ACCOUNTANT ? (
+              <TouchableOpacity
+                onPress={() => navigation.navigate('AccountAddition')}
+              >
+                <FeatherIcon color={theme.colors.white} name="plus" />
+              </TouchableOpacity>
+            ) : (
+              <FeatherIcon color={theme.colors.primary} name="plus" />
+            )}
           </Header>
         </HeaderWrapper>
         <Searchbar value={searchText} onChangeText={this.handleSearch} />
@@ -137,6 +147,8 @@ class Account extends React.Component {
             ) : (
               accounts.accounts.map(account => (
                 <AccountItem
+                  disabled={info.role !== ROLE.ACCOUNTANT}
+                  editable
                   onRemove={() => this.handleRemove(account._id)}
                   key={account._id}
                   account={account}
@@ -182,6 +194,7 @@ class Account extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  user: state.user,
   accounts: state.account.accounts,
 });
 const mapDispatchToProps = {

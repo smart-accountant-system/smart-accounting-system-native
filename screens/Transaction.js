@@ -20,6 +20,7 @@ import {
   FilterField,
   FilterTime,
 } from '../components/Filter';
+import ROLE from '../constants/role';
 import theme from '../constants/theme';
 import { handle401 } from '../constants/strategies';
 import { FeatherIcon, Loading, Empty } from '../components';
@@ -174,7 +175,10 @@ class Transaction extends React.Component {
   };
 
   render() {
-    const { transactions } = this.props;
+    const {
+      transactions,
+      user: { info },
+    } = this.props;
     const {
       isDatePickerVisible,
       fromDate,
@@ -250,6 +254,7 @@ class Transaction extends React.Component {
                   onPress={() => this.transactionDetail(transaction)}
                 >
                   <TransactionContent
+                    disabled={info.role !== ROLE.ACCOUNTANT}
                     id={transaction._id}
                     checkedBy={transaction.checkedBy.fullname}
                     fromColor={
@@ -292,6 +297,7 @@ class Transaction extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  user: state.user,
   transactions: state.transaction.transactions,
 });
 const mapDispatchToProps = {

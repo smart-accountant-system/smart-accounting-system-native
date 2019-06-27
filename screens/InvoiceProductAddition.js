@@ -5,10 +5,11 @@ import { Button, Snackbar } from 'react-native-paper';
 import { View, TouchableOpacity, ScrollView, Text } from 'react-native';
 
 import theme from '../constants/theme';
-import { FeatherIcon, InterestTextInput } from '../components';
+import { FeatherIcon, InterestTextInput, CurrencyInput } from '../components';
 import { InvoiceDetailContainer } from '../containers/InvoiceAddition';
 import { Header, Typography, HeaderWrapper } from '../containers/Home';
 import { FewStyledContainer } from '../containers/PaymentMethodAddition';
+import { toInt } from '../constants/strategies';
 
 export default class InvoiceProductAddition extends React.Component {
   constructor(props) {
@@ -16,6 +17,7 @@ export default class InvoiceProductAddition extends React.Component {
 
     const { navigation } = this.props;
     const { product, quantity, unitPrice } = navigation.getParam('product', '');
+    this.isUpdate = product && quantity && unitPrice;
     this.state = {
       product: product || '',
       quantity: quantity ? quantity.toString() : '',
@@ -25,17 +27,11 @@ export default class InvoiceProductAddition extends React.Component {
   }
 
   valid = () => {
-    const { product, quantity, unitPrice } = this.state;
+    const { product, quantity } = this.state;
     const numQuantity = parseInt(quantity || 0);
-    const numUnitPrice = parseInt(unitPrice || 0);
     const lengthQ = Math.trunc(Math.log(numQuantity) / Math.log(10)) + 1;
-    const lengthU = Math.trunc(Math.log(numUnitPrice) / Math.log(10)) + 1;
 
-    return (
-      product.length === 0 ||
-      lengthQ !== quantity.length ||
-      lengthU !== unitPrice.length
-    );
+    return product.length === 0 || lengthQ !== quantity.length;
   };
 
   handleAddData = () => {
@@ -45,14 +41,13 @@ export default class InvoiceProductAddition extends React.Component {
     if (!validate) {
       const { product, quantity, unitPrice } = this.state;
       const numQuantity = parseInt(quantity || 0);
-      const numUnitPrice = parseInt(unitPrice || 0);
       const { navigation } = this.props;
       const handleAdd = navigation.getParam('handleAdd', '');
       handleAdd({
         key: Math.random(),
         product,
         quantity: numQuantity,
-        unitPrice: numUnitPrice,
+        unitPrice: toInt(unitPrice),
       });
       navigation.navigate('InvoiceAddition');
     }
@@ -65,7 +60,6 @@ export default class InvoiceProductAddition extends React.Component {
     if (!validate) {
       const { product, quantity, unitPrice } = this.state;
       const numQuantity = parseInt(quantity || 0);
-      const numUnitPrice = parseInt(unitPrice || 0);
       const { navigation } = this.props;
       const handleUpdate = navigation.getParam('handleUpdate', '');
       const { key } = navigation.getParam('product', '');
@@ -73,7 +67,7 @@ export default class InvoiceProductAddition extends React.Component {
         key,
         product,
         quantity: numQuantity,
-        unitPrice: numUnitPrice,
+        unitPrice: toInt(unitPrice),
       });
       navigation.navigate('InvoiceAddition');
     }
@@ -93,7 +87,11 @@ export default class InvoiceProductAddition extends React.Component {
             >
               <FeatherIcon color={theme.colors.white} name="chevron-left" />
             </TouchableOpacity>
-            <Typography>{i18n.t('invoiceProductAddition')}</Typography>
+            <Typography>
+              {this.isUpdate
+                ? i18n.t('invoiceProductUpdate')
+                : i18n.t('invoiceProductAddition')}
+            </Typography>
             <FeatherIcon color={theme.colors.primary} name="user" />
           </Header>
         </HeaderWrapper>
@@ -122,10 +120,9 @@ export default class InvoiceProductAddition extends React.Component {
               />
             </View>
             <View style={{ width: '50%' }}>
-              <InterestTextInput
+              <CurrencyInput
                 label={i18n.t('unitPrice')}
-                value={unitPrice}
-                keyboardType="numeric"
+                amountMoney={unitPrice}
                 onChangeText={unitPrice => this.setState({ unitPrice })}
               />
             </View>

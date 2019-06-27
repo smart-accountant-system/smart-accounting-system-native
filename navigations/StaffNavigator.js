@@ -12,6 +12,7 @@ import Profile from '../screens/Profile';
 
 import Invoice from '../screens/Invoice';
 import InvoiceDetail from '../screens/InvoiceDetail';
+import InvoiceScanner from '../screens/InvoiceScanner';
 import PaymentAddition from '../screens/PaymentAddition';
 import Payment from '../screens/Payment';
 
@@ -57,6 +58,7 @@ const InvoiceStack = createStackNavigator(
     InvoiceAddition,
     PaymentAddition,
     InvoiceProductAddition,
+    InvoiceScanner,
   },
   {
     headerMode: 'none',

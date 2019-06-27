@@ -46,7 +46,7 @@ export default class SwipeoutRemove extends React.Component {
   };
 
   render() {
-    const { editable, onEdit, onRemove, children } = this.props;
+    const { editable, onEdit, onRemove, children, disabled } = this.props;
     const { isLoading } = this.state;
     const that = this;
     const listBtn = [
@@ -71,7 +71,10 @@ export default class SwipeoutRemove extends React.Component {
     }
 
     return (
-      <Swipeout style={{ backgroundColor: 'transparent' }} right={listBtn}>
+      <Swipeout
+        style={{ backgroundColor: 'transparent' }}
+        right={disabled ? [] : listBtn}
+      >
         {children}
       </Swipeout>
     );

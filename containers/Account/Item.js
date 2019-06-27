@@ -8,8 +8,15 @@ const StyledItem = styled.TouchableOpacity`
     props.debit > props.credit ? '#5dba89' : '#e0aac6'};
 `;
 
-export default ({ onRemove, children, account, accountDetail }) => (
-  <SwipeoutRemove onRemove={onRemove}>
+export default ({
+  disabled,
+  editable,
+  onRemove,
+  children,
+  account,
+  accountDetail,
+}) => (
+  <SwipeoutRemove disabled={disabled} editable={editable} onRemove={onRemove}>
     <StyledItem
       debit={account.debit}
       credit={account.credit}

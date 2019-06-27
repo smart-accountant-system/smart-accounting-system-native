@@ -65,7 +65,7 @@ class ReceiptDetail extends React.Component {
             <TouchableOpacity onPress={() => navigation.navigate('Receipt')}>
               <FeatherIcon color={theme.colors.white} name="chevron-left" />
             </TouchableOpacity>
-            <Typography>{i18n.t('receipt')}</Typography>
+            <Typography>{i18n.t('receiptDetail')}</Typography>
             <FeatherIcon color={theme.colors.primary} name="user" />
           </Header>
         </HeaderWrapper>

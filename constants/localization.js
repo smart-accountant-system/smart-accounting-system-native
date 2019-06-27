@@ -9,10 +9,13 @@ export const en = {
 
   invoice: 'Invoice',
   invoiceAddition: 'Add invoice',
-  invoiceDetail: 'Invoice Detail',
+  invoiceDetail: 'Invoice detail',
   invoiceProductAddition: 'Add product',
   invoiceProductUpdate: 'Update product',
   paymentAddition: 'Add payment',
+
+  receipt: 'Receipt',
+  receiptDetail: 'Receipt detail',
   receiptAddition: 'Add receipt',
 
   paymentMethod: 'Payment method',
@@ -26,7 +29,6 @@ export const en = {
   customerAddition: 'Add customer',
   customerManagement: 'Customer management',
   menu: 'Menu',
-  receipt: 'Receipt',
 
   transaction: 'Transaction',
   transactionDetail: 'Transaction detail',
@@ -54,8 +56,8 @@ export const en = {
   accountant: 'Accountant',
   manager: 'Manager',
   address: 'Address',
-  purchasedInvoice: 'Purchased Invoice',
-  selledInvoice: 'Selled Invoice',
+  purchasedInvoice: 'Purchased invoice',
+  selledInvoice: 'Selled invoice',
   product: 'Product',
   cost: 'Cost',
   totalCost: 'Total cost',
@@ -119,6 +121,9 @@ export const vi = {
   invoiceProductAddition: 'Thêm sản phẩm',
   invoiceProductUpdate: 'Cập nhật sản phẩm',
   paymentAddition: 'Thêm khoản thanh toán',
+
+  receipt: 'Biên lai',
+  receiptDetail: 'Chi tiết biên lai',
   receiptAddition: 'Thêm biên lai',
 
   paymentMethod: 'Phương thức thanh toán',
@@ -132,7 +137,6 @@ export const vi = {
   customerAddition: 'Thêm khách hàng',
   customerManagement: 'Quản lý khách hàng',
   menu: 'Danh mục',
-  receipt: 'Biên lai',
 
   transaction: 'Giao dịch',
   transactionDetail: 'Chi tiết giao dịch',

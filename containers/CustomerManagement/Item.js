@@ -10,8 +10,13 @@ const Container = styled.TouchableOpacity`
   padding: 12px;
   background-color: #fff;
   width: 100%;
+
+  ${({ noBorder }) =>
+    noBorder
+      ? null
+      : `
   border-bottom-color: #f1f1f1;
-  border-bottom-width: 2px;
+  border-bottom-width: 2px;`}
 `;
 
 const Header = styled.View`
@@ -28,9 +33,17 @@ const Typography = styled.Text`
 
 const Detail = styled.Text``;
 
-export default ({ onRemove, name, phone, address }) => (
-  <SwipeoutRemove onRemove={onRemove}>
-    <Container activeOpacity={0.75}>
+export default ({
+  disabled,
+  onPress,
+  noBorder,
+  onRemove,
+  name,
+  phone,
+  address,
+}) => (
+  <SwipeoutRemove disabled={disabled} onRemove={onRemove}>
+    <Container onPress={onPress} noBorder={noBorder} activeOpacity={0.75}>
       <Header>
         <Typography>{name}</Typography>
         <Detail>{phone}</Detail>

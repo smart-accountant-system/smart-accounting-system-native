@@ -2,10 +2,9 @@ import React from 'react';
 import { StatusBar } from 'react-native';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import { AppLoading, Font, Icon, Permissions, Localization } from 'expo';
+import { AppLoading, Font, Icon, Permissions } from 'expo';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { ThemeProvider } from 'styled-components';
-import i18n from 'i18n-js';
 import { MessageProvider } from './contexts';
 import store, { persistor } from './redux/store';
 

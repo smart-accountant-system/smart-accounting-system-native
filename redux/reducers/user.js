@@ -50,8 +50,9 @@ export default (state = INITIAL_STATE, action) => {
       };
     case LOGOUT:
       return {
-        localization: state.localization,
         ...INITIAL_STATE,
+        localization: state.localization,
+        isLocaleSet: true,
       };
     case CHANGE_LOCALIZATION:
       return {

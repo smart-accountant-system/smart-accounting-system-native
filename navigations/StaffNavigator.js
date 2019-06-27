@@ -4,7 +4,6 @@ import {
   createStackNavigator,
 } from 'react-navigation';
 import i18n from 'i18n-js';
-import { Localization } from 'expo';
 import FeatherIcon from '../components/FeatherIcon';
 
 import Home from '../screens/Home';
@@ -28,11 +27,6 @@ import InvoiceProductAddition from '../screens/InvoiceProductAddition';
 import CustomerManagement from '../screens/CustomerManagement';
 import CustomerAddition from '../screens/CustomerAddition';
 import theme from '../constants/theme';
-import { en, vi } from '../constants/localization';
-
-i18n.fallbacks = true;
-i18n.translations = { en, vi };
-i18n.locale = Localization.locale;
 
 export const HomeStack = createStackNavigator(
   {

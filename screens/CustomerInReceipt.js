@@ -14,7 +14,7 @@ import ROLE from '../constants/role';
 import theme from '../constants/theme';
 import { handle401 } from '../constants/strategies';
 import { logout, getCustomers, addCustomerToReceipt } from '../redux/actions';
-import { ItemWithoutRemove } from '../containers/CustomerManagement';
+import { CustomerItem } from '../containers/CustomerManagement';
 import { FeatherIcon, Loading, Empty } from '../components';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
 
@@ -75,7 +75,8 @@ class CustomerInReceipt extends React.Component {
               <Empty name={i18n.t('customer')} />
             ) : (
               customers.customers.map(customer => (
-                <ItemWithoutRemove
+                <CustomerItem
+                  disabled
                   key={customer._id}
                   onPress={() => this.handleAddCustomer(customer)}
                   name={customer.name}

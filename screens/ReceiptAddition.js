@@ -14,7 +14,7 @@ import { FewStyledContainer } from '../containers/PaymentMethodAddition';
 import { getPayments, getCustomers, addReceipt } from '../redux/actions';
 import { handle401 } from '../constants/strategies';
 import { PaymentShow } from '../containers/Receipt';
-import { ItemWithoutRemove } from '../containers/CustomerManagement';
+import { CustomerItem } from '../containers/CustomerManagement';
 
 class ReceiptAddition extends React.Component {
   constructor(props) {
@@ -109,8 +109,10 @@ class ReceiptAddition extends React.Component {
             />
           )}
           {currentCustomer ? (
-            <ItemWithoutRemove
-              onPress={() => this.handleAddCustomer(currentCustomer)}
+            <CustomerItem
+              disabled
+              noBorder
+              onPress={() => navigation.navigate('CustomerInReceipt')}
               name={currentCustomer.name}
               phone={currentCustomer.phone}
               address={currentCustomer.address}

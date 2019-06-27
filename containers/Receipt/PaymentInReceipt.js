@@ -11,9 +11,7 @@ export default ({ payment, onPress }) => (
       description={payment.description}
       color={!payment.type ? '#438763' : '#ad6b8d'}
       balance={payment.amountMoney}
-      balanceType={`${
-        !payment.type ? i18n.t('paymentIn') : i18n.t('paymentOut')
-      } payment`}
+      balanceType={!payment.type ? i18n.t('paymentIn') : i18n.t('paymentOut')}
       time={new Date(payment.createdAt).toLocaleDateString(i18n.t('local'), {
         day: 'numeric',
         month: 'long',
@@ -24,7 +22,9 @@ export default ({ payment, onPress }) => (
 
 export const PaymentShow = ({ payment, onPress }) => (
   <View>
-    <Text>Payment</Text>
+    <Text style={{ paddingLeft: 16, fontSize: 16, color: '#666' }}>
+      {i18n.t('payment')}
+    </Text>
     <Item type={payment.type} onPress={onPress}>
       <Content
         noBorder
@@ -32,9 +32,7 @@ export const PaymentShow = ({ payment, onPress }) => (
         description={payment.description}
         color={!payment.type ? '#438763' : '#ad6b8d'}
         balance={payment.amountMoney}
-        balanceType={`${
-          !payment.type ? i18n.t('paymentIn') : i18n.t('paymentOut')
-        } payment`}
+        balanceType={!payment.type ? i18n.t('paymentIn') : i18n.t('paymentOut')}
         time={new Date(payment.createdAt).toLocaleDateString(i18n.t('local'), {
           day: 'numeric',
           month: 'long',

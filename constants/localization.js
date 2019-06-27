@@ -13,6 +13,7 @@ export const en = {
   invoiceProductAddition: 'Add product',
   invoiceProductUpdate: 'Update product',
   paymentAddition: 'Add payment',
+  receiptAddition: 'Add receipt',
 
   paymentMethod: 'Payment method',
   paymentMethodAddition: 'Add payment method',
@@ -69,6 +70,7 @@ export const en = {
   paid: 'Paid',
   unpaid: 'Unpaid',
   addedBy: 'Added by',
+  choosePaymentMethod: 'Choose payment method',
 
   // ADVANCED FILTER GROUP
   advancedFilter: 'Advanced filter',
@@ -118,6 +120,7 @@ export const vi = {
   invoiceProductAddition: 'Thêm sản phẩm',
   invoiceProductUpdate: 'Cập nhật sản phẩm',
   paymentAddition: 'Thêm khoản thanh toán',
+  receiptAddition: 'Thêm biên lai',
 
   paymentMethod: 'Phương thức thanh toán',
   paymentMethodAddition: 'Thêm phương thức thanh toán',
@@ -141,7 +144,7 @@ export const vi = {
   accountAddition: 'Thêm tài khoản',
 
   balance: 'Bảng cân đối',
-  payment: 'Thanh toán',
+  payment: 'Khoản thanh toán',
 
   // ADD FIELD
   username: 'Tên đăng nhập',
@@ -174,6 +177,7 @@ export const vi = {
   purchase: 'Nhập hàng',
   sale: 'Bán hàng',
   addedBy: 'Đã thêm bởi',
+  choosePaymentMethod: 'Chọn phương thức thanh toán',
 
   // ADVANCED FILTER GROUP
   advancedFilter: 'Bộ lọc nâng cao',

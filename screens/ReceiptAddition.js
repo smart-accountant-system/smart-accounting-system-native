@@ -91,7 +91,7 @@ class ReceiptAddition extends React.Component {
             <TouchableOpacity onPress={() => navigation.goBack()}>
               <FeatherIcon color={theme.colors.white} name="chevron-left" />
             </TouchableOpacity>
-            <Typography>{i18n.t('paymentAddition')}</Typography>
+            <Typography>{i18n.t('receiptAddition')}</Typography>
             <FeatherIcon color={theme.colors.primary} name="user" />
           </Header>
         </HeaderWrapper>

@@ -145,8 +145,8 @@ class InvoiceProductAddition extends React.Component {
           <AmazingText
             content={
               currentPaymentMethod
-                ? `Payment method: ${currentPaymentMethod.name}`
-                : 'Choose payment method'
+                ? `${i18n.t('paymentMethod')}: ${currentPaymentMethod.name}`
+                : i18n.t('choosePaymentMethod')
             }
             onPress={() => this.setState({ isChoosing: true })}
           />

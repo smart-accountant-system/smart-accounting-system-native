@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 /* eslint-disable no-shadow */
 /* eslint-disable no-case-declarations */
 /* eslint-disable eqeqeq */
@@ -69,16 +70,31 @@ export default (state = INITIAL_STATE, action) => {
         error: null,
       };
     case GET_INVOICE_BY_ID_SUCCESS:
-      return {
-        ...state,
-        invoices: {
-          total: state.invoices.total,
-          invoices: state.invoices.invoices.map(invoice =>
-            invoice._id == action.payload._id ? action.payload : invoice
-          ),
-        },
-        error: null,
-      };
+      let res = false;
+      for (let i = 0; i <= state.invoices.invoices.length; i++) {
+        if (state.invoices.invoices[i]._id == action.payload._id) {
+          res = true;
+          break;
+        }
+      }
+      return res
+        ? {
+            ...state,
+            invoices: {
+              total: state.invoices.total,
+              invoices: state.invoices.invoices.map(invoice =>
+                invoice._id == action.payload._id ? action.payload : invoice
+              ),
+            },
+            error: null,
+          }
+        : {
+            ...state,
+            invoices: {
+              total: state.invoices.total + 1,
+              invoices: [...state.invoices.invoices, action.payload],
+            },
+          };
 
     case POST_PAYMENT_SUCCESS:
       return {

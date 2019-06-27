@@ -1,11 +1,15 @@
+/* eslint-disable react/destructuring-assignment */
 import React from 'react';
-import { View } from 'react-native';
-import { Camera, Permissions } from 'expo';
+import { connect } from 'react-redux';
+import { View, ActivityIndicator } from 'react-native';
+import { Permissions, BarCodeScanner } from 'expo';
 import i18n from 'i18n-js';
 import styled from 'styled-components';
-
-import { Message, NoCamera, HeaderButton } from '../containers/Invoice';
+import Layout from '../constants/Layout';
 import theme from '../constants/theme';
+import { NoCamera } from '../containers/Invoice';
+import { getInvoiceById } from '../redux/actions';
+import { handle401 } from '../constants/strategies';
 
 const ButtonWrapper = styled.View`
   background-color: #fff;
@@ -30,20 +34,7 @@ const Button = styled.TouchableOpacity`
   border-radius: 24px;
 `;
 
-const LoadingOverlay = styled.View`
-  background-color: rgba(0, 0, 0, 0.5);
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Loading = styled.Text`
-  color: #fff;
-  text-align: center;
-  font-size: 15px;
-`;
-
-export default class InvoiceScanner extends React.Component {
+class InvoiceScanner extends React.Component {
   state = {
     hasCameraPermission: null,
     detecting: false,
@@ -53,6 +44,30 @@ export default class InvoiceScanner extends React.Component {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
     this.setState({ hasCameraPermission: status === 'granted' });
   }
+
+  _handleBarCodeRead = ({ data }) => {
+    const { navigation } = this.props;
+    this.setState({ detecting: true });
+
+    this.props.getInvoiceById(data, {
+      success: () => {
+        this.setState({ detecting: false });
+
+        navigation.navigate('InvoiceDetail', {
+          _id: data,
+        });
+      },
+      failure: () => {
+        alert(`${i18n.t('messageCanNotGetInvoiceId')}\n${data}`);
+        this.setState({ detecting: false });
+      },
+      handle401: () =>
+        handle401({
+          logout: this.props.logout,
+          navigation: this.props.navigation,
+        }),
+    });
+  };
 
   takePicture = async () => {};
 
@@ -67,38 +82,41 @@ export default class InvoiceScanner extends React.Component {
             message={i18n.t('messageNoAccessCamera')}
           />
         ) : (
-          <Camera
-            style={{ flex: 1 }}
-            type={Camera.Constants.Type.back}
-            ref={cam => {
-              this.camera = cam;
+          <View
+            style={{
+              flex: 1,
+              backgroundColor: '#fff',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
           >
             {!detecting ? (
-              <View
+              <BarCodeScanner
+                onBarCodeRead={this._handleBarCodeRead}
                 style={{
-                  flex: 1,
-                  backgroundColor: 'transparent',
-                  alignItems: 'center',
+                  width: Layout.deviceWidth,
+                  height: Layout.deviceWidth,
                 }}
-              >
-                <HeaderButton
-                  iconColor="#fff"
-                  onPress={() => navigation.goBack()}
-                />
-                <Message>{i18n.t('messageScanInvoice')}</Message>
-                <ButtonWrapper>
-                  <Button onPress={this.takePicture} />
-                </ButtonWrapper>
-              </View>
+              />
             ) : (
-              <LoadingOverlay>
-                <Loading>{i18n.t('detecting')}</Loading>
-              </LoadingOverlay>
+              <ActivityIndicator size="large" color="#000" />
             )}
-          </Camera>
+          </View>
         )}
       </View>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  user: state.user,
+});
+const mapDispatchToProps = {
+  getInvoiceById,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(InvoiceScanner);

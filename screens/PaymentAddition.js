@@ -103,9 +103,11 @@ class InvoiceProductAddition extends React.Component {
       currentPaymentMethodId,
       isLoading,
     } = this.state;
-    const currentPaymentMethod = categories.categories.find(
-      category => category._id === currentPaymentMethodId
-    );
+    const currentPaymentMethod =
+      categories &&
+      categories.categories.find(
+        category => category._id === currentPaymentMethodId
+      );
     const previous = navigation.getParam('previous', '');
 
     return (

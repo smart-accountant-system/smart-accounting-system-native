@@ -29,6 +29,7 @@ export const en = {
 
   transaction: 'Transaction',
   transactionDetail: 'Transaction detail',
+  transactionAddition: 'Add transaction',
 
   search: 'Search',
   account: 'Account',
@@ -133,6 +134,7 @@ export const vi = {
 
   transaction: 'Giao dịch',
   transactionDetail: 'Chi tiết giao dịch',
+  transactionAddition: 'Thêm giao dịch',
 
   search: 'Tìm kiếm',
   account: 'Tài khoản',

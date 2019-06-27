@@ -21,6 +21,8 @@ import PaymentInReceipt from '../screens/PaymentInReceipt';
 
 import Transaction from '../screens/Transaction';
 import TransactionDetail from '../screens/TransactionDetail';
+import TransactionAddition from '../screens/TransactionAddition';
+import ReceiptsInTransaction from '../screens/ReceiptsInTransaction';
 
 import Account from '../screens/Account';
 import AccountDetail from '../screens/AccountDetail';
@@ -103,6 +105,8 @@ const TransactionStack = createStackNavigator(
   {
     Transaction,
     TransactionDetail,
+    TransactionAddition,
+    ReceiptsInTransaction,
   },
   {
     headerMode: 'none',

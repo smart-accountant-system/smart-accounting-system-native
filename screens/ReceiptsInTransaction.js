@@ -10,7 +10,6 @@ import {
   ScrollView,
   Animated,
   RefreshControl,
-  LayoutAnimation,
   TouchableOpacity,
 } from 'react-native';
 
@@ -22,18 +21,14 @@ import {
 } from '../components/Filter';
 import ROLE from '../constants/role';
 import theme from '../constants/theme';
-import {
-  logout,
-  getReceipts,
-  chooseReceipt,
-  deleteReceiptById,
-} from '../redux/actions';
+import { getReceipts, addReceiptToTransaction } from '../redux/actions';
 import { handle401 } from '../constants/strategies';
 import { FeatherIcon, Loading, Empty } from '../components';
-import { ReceiptItem, ReceiptContent } from '../containers/Receipt';
+import { ReceiptContent } from '../containers/Receipt';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
+import { ReceiptItem } from '../containers/Transaction';
 
-class Receipt extends React.Component {
+class ReceiptsInTransaction extends React.Component {
   state = {
     isDatePickerVisible: false,
     activatingDate: undefined,
@@ -151,26 +146,10 @@ class Receipt extends React.Component {
     );
   };
 
-  receiptDetail = receipt => {
+  handleAddReceiptToTransaction = receipt => {
     const { navigation } = this.props;
-    this.props.chooseReceipt(receipt);
-    navigation.navigate('ReceiptDetail');
-  };
-
-  handleRemoveReceipt = id => {
-    this.props.deleteReceiptById(id, {
-      success: () => {
-        LayoutAnimation.spring();
-      },
-      failure: () => {
-        this.setState({ visibleSnackbar: true });
-      },
-      handle401: () =>
-        handle401({
-          logout: this.props.logout,
-          navigation: this.props.navigation,
-        }),
-    });
+    this.props.addReceiptToTransaction(receipt);
+    navigation.goBack();
   };
 
   render() {
@@ -193,7 +172,9 @@ class Receipt extends React.Component {
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
           <Header>
-            <FeatherIcon color={theme.colors.primary} name="user" />
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <FeatherIcon color={theme.colors.white} name="chevron-left" />
+            </TouchableOpacity>
             <Typography>{i18n.t('receipt')}</Typography>
             {info.role === ROLE.STAFF ? (
               <TouchableOpacity
@@ -259,16 +240,15 @@ class Receipt extends React.Component {
             ) : (
               receipts.receipts.map(receipt => (
                 <ReceiptItem
-                  disabled={info.role !== ROLE.STAFF}
+                  onPress={() => this.handleAddReceiptToTransaction(receipt)}
+                  disabled
                   receipt={receipt}
-                  receiptDetail={this.receiptDetail}
                   key={receipt._id}
-                  onRemove={() => this.handleRemoveReceipt(receipt._id)}
                 >
                   <ReceiptContent
                     id={receipt._id}
                     customer={receipt.customer.name}
-                    payment={receipt.payment.category.name}
+                    Transaction={receipt.payment.category.name}
                     type={
                       receipt.payment.type === 0
                         ? 'Receipt voucher' // phieu thu
@@ -313,15 +293,13 @@ const mapStateToProps = state => ({
   receipts: state.receipt.receipts,
 });
 const mapDispatchToProps = {
-  logout,
   getReceipts,
-  chooseReceipt,
-  deleteReceiptById,
+  addReceiptToTransaction,
 };
 
 export default withTheme(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(Receipt)
+  )(ReceiptsInTransaction)
 );

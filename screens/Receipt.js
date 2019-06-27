@@ -2,10 +2,8 @@
 import React from 'react';
 import i18n from 'i18n-js';
 import { connect } from 'react-redux';
-import { Button, withTheme, Snackbar } from 'react-native-paper';
-import DateTimePicker from 'react-native-modal-datetime-picker';
+import { withTheme, Snackbar } from 'react-native-paper';
 import {
-  Text,
   View,
   ScrollView,
   Animated,
@@ -14,12 +12,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import {
-  FilterHeader,
-  FilterBody,
-  FilterField,
-  FilterTime,
-} from '../components/Filter';
+import Filter from '../components/Filter';
 import ROLE from '../constants/role';
 import theme from '../constants/theme';
 import {
@@ -207,42 +200,18 @@ class Receipt extends React.Component {
           </Header>
         </HeaderWrapper>
 
-        <FilterHeader
+        <Filter
           isExpand={this.state.isExpandingFilter}
-          onPress={this.handlePressFilter}
-        />
-
-        <FilterBody height={this.state.filterHeight}>
-          <FilterField first>
-            <FilterTime
-              title={i18n.t('from')}
-              first
-              date={fromDate.toLocaleDateString(i18n.t('local'))}
-              showDateTimePicker={this.showDateTimePicker}
-            />
-            <FilterTime
-              title={i18n.t('to')}
-              second
-              date={toDate.toLocaleDateString(i18n.t('local'))}
-              showDateTimePicker={this.showDateTimePicker}
-            />
-          </FilterField>
-
-          <FilterField height="52">
-            <FeatherIcon color="#f1f1f1" name="user" />
-            <Button mode="contained" onPress={this.doFilter}>
-              <Text style={{ color: theme.colors.white }}>
-                {i18n.t('doFilter')}
-              </Text>
-            </Button>
-          </FilterField>
-        </FilterBody>
-
-        <DateTimePicker
-          isVisible={isDatePickerVisible}
-          date={activatingDate === i18n.t('from') ? fromDate : toDate}
-          onConfirm={this.handleDatePicked}
-          onCancel={this.hideDateTimePicker}
+          filterHeight={this.state.filterHeight}
+          isDatePickerVisible={isDatePickerVisible}
+          fromDate={fromDate}
+          toDate={toDate}
+          hideDateTimePicker={this.hideDateTimePicker}
+          handleDatePicked={this.handleDatePicked}
+          handlePressFilter={this.handlePressFilter}
+          showDateTimePicker={this.showDateTimePicker}
+          activatingDate={activatingDate}
+          doFilter={this.doFilter}
         />
 
         {receipts && !loading ? (
@@ -271,14 +240,14 @@ class Receipt extends React.Component {
                     payment={receipt.payment.category.name}
                     type={
                       receipt.payment.type === 0
-                        ? 'Receipt voucher' // phieu thu
-                        : 'Payment voucher' // phieu chi
+                        ? i18n.t('receiptVoucher')
+                        : i18n.t('paymentVoucher')
                     }
                     color={receipt.status ? '#438763' : '#ad6b8d'}
                     status={
                       receipt.status
-                        ? 'Recorded as a transaction'
-                        : 'Not record as a transaction yet'
+                        ? i18n.t('receiptRecoredAsTransaction')
+                        : i18n.t('receiptNotRecoredAsTransaction')
                     }
                     cost={receipt.payment.amountMoney}
                     time={new Date(receipt.createdAt).toLocaleDateString(

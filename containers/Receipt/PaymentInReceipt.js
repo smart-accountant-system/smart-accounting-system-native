@@ -22,7 +22,14 @@ export default ({ payment, onPress }) => (
 
 export const PaymentShow = ({ payment, onPress }) => (
   <View>
-    <Text style={{ paddingLeft: 16, fontSize: 16, color: '#666' }}>
+    <Text
+      style={{
+        fontSize: 17,
+        color: '#85261c',
+        textAlign: 'center',
+        paddingTop: 16,
+      }}
+    >
       {i18n.t('payment')}
     </Text>
     <Item type={payment.type} onPress={onPress}>

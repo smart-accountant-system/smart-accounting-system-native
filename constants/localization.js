@@ -72,7 +72,10 @@ export const en = {
   paid: 'Paid',
   unpaid: 'Unpaid',
   addedBy: 'Added by',
-  choosePaymentMethod: 'Choose payment method',
+  receiptRecoredAsTransaction: 'Recorded as a transaction',
+  receiptNotRecoredAsTransaction: 'Not record as a transaction yet',
+  receiptVoucher: 'Receipt voucher',
+  paymentVoucher: 'Payment Voucher',
 
   // ADVANCED FILTER GROUP
   advancedFilter: 'Advanced filter',
@@ -89,6 +92,9 @@ export const en = {
   actionShowPayment: 'Show recorded payments',
   actionAddProduct: '+ Add more product',
   actionAddPayment: '+ Add more payment',
+  actionChoosePayment: 'Choose payment',
+  actionChooseCustomer: 'Choose customer',
+  actionChoosePaymentMethod: 'Choose payment method',
 
   // MESSAGE GROUP
   messageEmpty: 'There is no',
@@ -181,7 +187,10 @@ export const vi = {
   purchase: 'Nhập hàng',
   sale: 'Bán hàng',
   addedBy: 'Đã thêm bởi',
-  choosePaymentMethod: 'Chọn phương thức thanh toán',
+  receiptRecoredAsTransaction: 'Đã ghi nhận phiên giao dịch',
+  receiptNotRecoredAsTransaction: 'Chưa lưu thành phiên giao dịch',
+  receiptVoucher: 'Phiếu thu',
+  paymentVoucher: 'Phiếu chi',
 
   // ADVANCED FILTER GROUP
   advancedFilter: 'Bộ lọc nâng cao',
@@ -198,6 +207,9 @@ export const vi = {
   actionShowPayment: 'Hiện các khoản đã thanh toán',
   actionAddProduct: '+ Thêm sản phẩm',
   actionAddPayment: '+ Thêm khoản thanh toán',
+  actionChoosePayment: 'Chọn khoản thanh toán',
+  actionChooseCustomer: 'Chọn khách hàng',
+  actionChoosePaymentMethod: 'Chọn phương thức thanh toán',
 
   // MESSAGE GROUP
   messageEmpty: 'Hiện chưa có',

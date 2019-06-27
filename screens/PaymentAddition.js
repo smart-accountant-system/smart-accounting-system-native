@@ -146,7 +146,7 @@ class InvoiceProductAddition extends React.Component {
             content={
               currentPaymentMethod
                 ? `${i18n.t('paymentMethod')}: ${currentPaymentMethod.name}`
-                : i18n.t('choosePaymentMethod')
+                : i18n.t('actionChoosePaymentMethod')
             }
             onPress={() => this.setState({ isChoosing: true })}
           />

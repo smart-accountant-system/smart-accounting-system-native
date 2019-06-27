@@ -9,9 +9,13 @@ import {
   DELETE_RECEIPT_BY_ID_SUCCESS,
   DELETE_RECEIPT_BY_ID_FAILURE,
   CHOOSE_RECEIPT,
+  ADD_CUSTOMER_TO_RECEIPT,
+  ADD_PAYMENT_TO_RECEIPT,
 } from '../actions';
 
 const INITIAL_STATE = {
+  currentCustomerInReceiptAddition: '',
+  currentPaymentInReceiptAddition: '',
   receipts: null,
   currentReceipt: null,
   loading: false,
@@ -80,6 +84,16 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         error: action.payload,
+      };
+    case ADD_CUSTOMER_TO_RECEIPT:
+      return {
+        ...state,
+        currentCustomerInReceiptAddition: action.payload,
+      };
+    case ADD_PAYMENT_TO_RECEIPT:
+      return {
+        ...state,
+        currentPaymentInReceiptAddition: action.payload,
       };
     default:
       return state;

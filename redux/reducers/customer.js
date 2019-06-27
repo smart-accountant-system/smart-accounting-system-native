@@ -51,7 +51,6 @@ export default (state = INITIAL_STATE, action) => {
         },
         error: null,
       };
-
     case GET_CUSTOMERS_FAILURE:
     case POST_CUSTOMER_FAILURE:
     case DELETE_CUSTOMER_FAILURE:

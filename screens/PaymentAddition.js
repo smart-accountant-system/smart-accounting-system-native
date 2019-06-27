@@ -16,7 +16,11 @@ import {
 import { Header, Typography, HeaderWrapper } from '../containers/Home';
 import { TypePicker, AmazingText } from '../containers/InvoiceAddition';
 import { FewStyledContainer } from '../containers/PaymentMethodAddition';
-import { getCategories, addPayment, getPayments } from '../redux/actions';
+import {
+  getCategories,
+  addPayment,
+  getPaymentsForInvoice,
+} from '../redux/actions';
 import { handle401, toInt } from '../constants/strategies';
 import PaymentMethodItem from '../containers/PaymentMethod/Item';
 
@@ -219,7 +223,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   getCategories,
   addPayment,
-  getPayments,
+  getPaymentsForInvoice,
 };
 
 export default connect(

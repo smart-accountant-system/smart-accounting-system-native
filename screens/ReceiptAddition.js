@@ -13,8 +13,7 @@ import { AmazingText } from '../containers/InvoiceAddition';
 import { FewStyledContainer } from '../containers/PaymentMethodAddition';
 import { getPayments, getCustomers, addReceipt } from '../redux/actions';
 import { handle401 } from '../constants/strategies';
-import { PaymentShow } from '../containers/Receipt';
-import { CustomerItem } from '../containers/CustomerManagement';
+import { PaymentShow, CustomerShow } from '../containers/Receipt';
 
 class ReceiptAddition extends React.Component {
   constructor(props) {
@@ -104,22 +103,18 @@ class ReceiptAddition extends React.Component {
           ) : (
             <AmazingText
               onPress={() => navigation.navigate('PaymentInReceipt')}
-              content="Choose payment"
+              content={i18n.t('actionChoosePayment')}
             />
           )}
           {currentCustomer ? (
-            <CustomerItem
-              disabled
-              noBorder
-              onPress={() => navigation.navigate('CustomerInReceipt')}
-              name={currentCustomer.name}
-              phone={currentCustomer.phone}
-              address={currentCustomer.address}
+            <CustomerShow
+              navigation={navigation}
+              currentCustomer={currentCustomer}
             />
           ) : (
             <AmazingText
               onPress={() => navigation.navigate('CustomerInReceipt')}
-              content="Choose customer"
+              content={i18n.t('actionChooseCustomer')}
             />
           )}
 

@@ -5,7 +5,6 @@
 import React from 'react';
 import i18n from 'i18n-js';
 import {
-  Text,
   View,
   Animated,
   TouchableOpacity,
@@ -14,15 +13,9 @@ import {
   LayoutAnimation,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { Button, Snackbar } from 'react-native-paper';
-import DateTimePicker from 'react-native-modal-datetime-picker';
+import { Snackbar } from 'react-native-paper';
 
-import {
-  FilterHeader,
-  FilterBody,
-  FilterField,
-  FilterTime,
-} from '../components/Filter';
+import Filter from '../components/Filter';
 import ROLE from '../constants/role';
 import theme from '../constants/theme';
 import { FeatherIcon, Loading, Empty } from '../components';
@@ -189,7 +182,6 @@ class Payment extends React.Component {
       toDate,
       activatingDate,
       refreshing,
-      isExpandingFilter,
       loading,
       visibleSnackbar,
     } = this.state;
@@ -221,41 +213,21 @@ class Payment extends React.Component {
             )}
           </Header>
         </HeaderWrapper>
-        <FilterHeader
-          isExpand={isExpandingFilter}
-          onPress={this.handlePressFilter}
-        />
-        <FilterBody height={this.state.filterHeight}>
-          <FilterField first>
-            <FilterTime
-              title={i18n.t('from')}
-              first
-              date={fromDate.toLocaleDateString(i18n.t('local'))}
-              showDateTimePicker={this.showDateTimePicker}
-            />
-            <FilterTime
-              title={i18n.t('to')}
-              second
-              date={toDate.toLocaleDateString(i18n.t('local'))}
-              showDateTimePicker={this.showDateTimePicker}
-            />
-          </FilterField>
 
-          <FilterField height="52">
-            <FeatherIcon color="#f1f1f1" name="user" />
-            <Button mode="contained" onPress={this.doFilter}>
-              <Text style={{ color: theme.colors.white }}>
-                {i18n.t('doFilter')}
-              </Text>
-            </Button>
-          </FilterField>
-        </FilterBody>
-        <DateTimePicker
-          isVisible={isDatePickerVisible}
-          date={activatingDate === i18n.t('from') ? fromDate : toDate}
-          onConfirm={this.handleDatePicked}
-          onCancel={this.hideDateTimePicker}
+        <Filter
+          isExpand={this.state.isExpandingFilter}
+          filterHeight={this.state.filterHeight}
+          isDatePickerVisible={isDatePickerVisible}
+          fromDate={fromDate}
+          toDate={toDate}
+          hideDateTimePicker={this.hideDateTimePicker}
+          handleDatePicked={this.handleDatePicked}
+          handlePressFilter={this.handlePressFilter}
+          showDateTimePicker={this.showDateTimePicker}
+          activatingDate={activatingDate}
+          doFilter={this.doFilter}
         />
+
         {payments && !loading ? (
           <ScrollView
             refreshControl={

@@ -16,6 +16,7 @@ import theme from '../constants/theme';
 import { FeatherIcon } from '../components';
 import { getReceiptById } from '../redux/actions';
 import { handle401 } from '../constants/strategies';
+import { ReceiptHeader, ReceiptDetailBody } from '../containers/ReceiptDetail';
 
 class ReceiptDetail extends React.Component {
   state = {
@@ -42,11 +43,11 @@ class ReceiptDetail extends React.Component {
     const { refreshing } = this.state;
     const type =
       currentReceipt.payment.type === 0
-        ? 'Receipt Voucher' // phieu thu
-        : 'Payment Voucher'; // phieu chi
+        ? i18n.t('receiptVoucher')
+        : i18n.t('paymentVoucher');
     const status = currentReceipt.status
-      ? 'Recorded as a transaction'
-      : 'Not record as a transaction yet';
+      ? i18n.t('receiptRecoredAsTransaction')
+      : i18n.t('receiptNotRecoredAsTransaction');
     const color = currentReceipt.status ? '#438763' : '#ad6b8d';
     const customer = currentReceipt.customer.name;
     // const payment = receipt.payment.category.name;
@@ -77,115 +78,18 @@ class ReceiptDetail extends React.Component {
             />
           }
         >
-          <View
-            style={{
-              padding: 8,
-              borderBottomColor: '#f1f1f1',
-              borderBottomWidth: 3,
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <Text style={{ fontSize: 18 }}>{type}</Text>
-            <Text style={{ color: '#444', paddingBottom: 8 }}>
-              {new Date(createdAt).toLocaleDateString(i18n.t('local'), {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric',
-              })}
-            </Text>
-            <Text style={{ color }}>{status}</Text>
-          </View>
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              padding: 8,
-              marginBottom: -18,
-            }}
-          >
-            <Text
-              style={{
-                width: '33%',
-                fontSize: 12,
-                color: '#666',
-              }}
-            >
-              customer
-            </Text>
-            <Text
-              style={{
-                width: '33%',
-                fontSize: 12,
-                color: '#666',
-                textAlign: 'center',
-              }}
-            >
-              cost
-            </Text>
-            <Text
-              style={{
-                width: '33%',
-                fontSize: 12,
-                color: '#666',
-                textAlign: 'right',
-              }}
-            >
-              payment method
-            </Text>
-          </View>
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              padding: 8,
-            }}
-          >
-            <Text
-              style={{
-                width: '33%',
-                fontSize: 18,
-              }}
-            >
-              {customer}
-            </Text>
-            <Text
-              style={{
-                width: '33%',
-                fontSize: 18,
-                textAlign: 'center',
-              }}
-            >
-              {cost}
-            </Text>
-            <Text
-              style={{
-                width: '33%',
-                fontSize: 18,
-                textAlign: 'right',
-              }}
-            >
-              {payment}
-            </Text>
-          </View>
-          <View
-            style={{
-              padding: 8,
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 12,
-                color: '#666',
-              }}
-            >
-              description
-            </Text>
-            <Text>{description}</Text>
-          </View>
+          <ReceiptHeader
+            type={type}
+            createdAt={createdAt}
+            color={color}
+            status={status}
+          />
+          <ReceiptDetailBody
+            customer={customer}
+            cost={cost}
+            payment={payment}
+            description={description}
+          />
         </ScrollView>
       </View>
     );

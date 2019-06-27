@@ -16,6 +16,9 @@ export const DELETE_RECEIPT_BY_ID_FAILURE = 'delete-receipt-by-id-failure';
 
 export const CHOOSE_RECEIPT = 'choose-receipt';
 
+export const ADD_CUSTOMER_TO_RECEIPT = 'add-customer-to-receipt';
+export const ADD_PAYMENT_TO_RECEIPT = 'add-payment-to-receipt';
+
 export function getReceipts(
   params,
   { success = () => {}, failure = () => {}, handle401 }
@@ -138,5 +141,19 @@ export function deleteReceiptById(
       });
       failure();
     }
+  };
+}
+
+export function addCustomerToReceipt(customer) {
+  return {
+    type: ADD_CUSTOMER_TO_RECEIPT,
+    payload: customer,
+  };
+}
+
+export function addPaymentToReceipt(payment) {
+  return {
+    type: ADD_PAYMENT_TO_RECEIPT,
+    payload: payment,
   };
 }

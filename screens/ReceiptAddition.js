@@ -11,17 +11,18 @@ import { FeatherIcon } from '../components';
 import { Header, Typography, HeaderWrapper } from '../containers/Home';
 import { AmazingText } from '../containers/InvoiceAddition';
 import { FewStyledContainer } from '../containers/PaymentMethodAddition';
-import { getPayments, getCustomers } from '../redux/actions';
+import {
+  getPayments,
+  getCustomers,
+  addCustomerToReceipt,
+} from '../redux/actions';
 import { handle401, toInt } from '../constants/strategies';
 
 class InvoiceProductAddition extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       isVisible: false,
-      currentPayment: '',
-      currentCustomer: '',
     };
   }
 
@@ -55,8 +56,8 @@ class InvoiceProductAddition extends React.Component {
   handleAdd = () => {};
 
   render() {
-    const { navigation, payments, customers } = this.props;
-    const { isVisible, currentPayment, currentCustomer } = this.state;
+    const { navigation, currentCustomer, currentPayment } = this.props;
+    const { isVisible } = this.state;
 
     return (
       <View style={{ display: 'flex', flex: 1 }}>
@@ -74,11 +75,12 @@ class InvoiceProductAddition extends React.Component {
             onPress={() => navigation.navigate('PaymentInReceipt')}
             content={
               currentPayment
-                ? `Payment: ${currentPayment.name}`
+                ? `Payment: ${currentPayment.description}`
                 : 'Choose payment'
             }
           />
           <AmazingText
+            onPress={() => navigation.navigate('CustomerInReceipt')}
             content={
               currentCustomer
                 ? `Customer: ${currentCustomer.name}`
@@ -113,10 +115,13 @@ class InvoiceProductAddition extends React.Component {
 const mapStateToProps = state => ({
   payments: state.payment.payments,
   customers: state.customer.customers,
+  currentCustomer: state.receipt.currentCustomerInReceiptAddition,
+  currentPayment: state.receipt.currentPaymentInReceiptAddition,
 });
 const mapDispatchToProps = {
   getPayments,
   getCustomers,
+  addCustomerToReceipt,
 };
 
 export default connect(

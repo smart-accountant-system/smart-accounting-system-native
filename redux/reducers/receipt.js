@@ -11,6 +11,9 @@ import {
   CHOOSE_RECEIPT,
   ADD_CUSTOMER_TO_RECEIPT,
   ADD_PAYMENT_TO_RECEIPT,
+  POST_RECEIPT_REQUEST,
+  POST_RECEIPT_SUCCESS,
+  POST_RECEIPT_FAILURE,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -25,6 +28,7 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case GET_RECEIPTS_REQUEST:
+    case POST_RECEIPT_REQUEST:
       return {
         ...state,
         loading: true,
@@ -38,6 +42,7 @@ export default (state = INITIAL_STATE, action) => {
         error: null,
       };
     case GET_RECEIPTS_FAILURE:
+    case POST_RECEIPT_FAILURE:
       return {
         ...state,
         loading: false,
@@ -94,6 +99,15 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         currentPaymentInReceiptAddition: action.payload,
+      };
+    case POST_RECEIPT_SUCCESS:
+      return {
+        ...state,
+        receipts: {
+          receipts: [...state.receipts.receipts, action.payload],
+          total: state.receipts.total + 1,
+        },
+        error: null,
       };
     default:
       return state;

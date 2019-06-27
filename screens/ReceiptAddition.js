@@ -11,11 +11,7 @@ import { FeatherIcon } from '../components';
 import { Header, Typography, HeaderWrapper } from '../containers/Home';
 import { AmazingText } from '../containers/InvoiceAddition';
 import { FewStyledContainer } from '../containers/PaymentMethodAddition';
-import {
-  getPayments,
-  getCustomers,
-  addCustomerToReceipt,
-} from '../redux/actions';
+import { getPayments, getCustomers, addReceipt } from '../redux/actions';
 import { handle401, toInt } from '../constants/strategies';
 
 class InvoiceProductAddition extends React.Component {
@@ -23,6 +19,7 @@ class InvoiceProductAddition extends React.Component {
     super(props);
     this.state = {
       isVisible: false,
+      isLoading: false,
     };
   }
 
@@ -53,11 +50,36 @@ class InvoiceProductAddition extends React.Component {
     );
   };
 
-  handleAdd = () => {};
+  handleAdd = () => {
+    const { navigation, currentCustomer, currentPayment } = this.props;
+    this.props.addReceipt(
+      {
+        payment: currentPayment._id,
+        customer: currentCustomer._id,
+      },
+      {
+        success: () => {
+          navigation.navigate('Receipt');
+          this.setState({ isLoading: false });
+        },
+        failure: () => {
+          this.setState({
+            isVisible: true,
+            isLoading: false,
+          });
+        },
+        handle401: () =>
+          handle401({
+            logout: this.props.logout,
+            navigation: this.props.navigation,
+          }),
+      }
+    );
+  };
 
   render() {
     const { navigation, currentCustomer, currentPayment } = this.props;
-    const { isVisible } = this.state;
+    const { isVisible, isLoading } = this.state;
 
     return (
       <View style={{ display: 'flex', flex: 1 }}>
@@ -94,6 +116,7 @@ class InvoiceProductAddition extends React.Component {
               style={{ width: 170 }}
               contentStyle={{ height: 50 }}
               onPress={this.handleAdd}
+              loading={isLoading}
             >
               <Text>{i18n.t('actionSave')}</Text>
             </Button>
@@ -121,7 +144,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   getPayments,
   getCustomers,
-  addCustomerToReceipt,
+  addReceipt,
 };
 
 export default connect(

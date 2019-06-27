@@ -19,6 +19,10 @@ export const CHOOSE_RECEIPT = 'choose-receipt';
 export const ADD_CUSTOMER_TO_RECEIPT = 'add-customer-to-receipt';
 export const ADD_PAYMENT_TO_RECEIPT = 'add-payment-to-receipt';
 
+export const POST_RECEIPT_REQUEST = 'post-receipt-request';
+export const POST_RECEIPT_SUCCESS = 'post-receipt-success';
+export const POST_RECEIPT_FAILURE = 'post-receipt-failure';
+
 export function getReceipts(
   params,
   { success = () => {}, failure = () => {}, handle401 }
@@ -155,5 +159,45 @@ export function addPaymentToReceipt(payment) {
   return {
     type: ADD_PAYMENT_TO_RECEIPT,
     payload: payment,
+  };
+}
+
+export function addReceipt(
+  data,
+  { success = () => {}, failure = () => {}, handle401 }
+) {
+  return async dispatch => {
+    try {
+      dispatch({ type: POST_RECEIPT_REQUEST });
+      const endpoint = '/receipts';
+
+      const result = await query({
+        endpoint,
+        data,
+        method: METHODS.post,
+      });
+
+      if (result.status === 200 || result.status === 201) {
+        dispatch({
+          type: POST_RECEIPT_SUCCESS,
+          payload: result.data,
+        });
+        success();
+      } else {
+        dispatch({
+          type: POST_RECEIPT_FAILURE,
+        });
+        failure();
+      }
+    } catch (error) {
+      if (error.response.status === 401) {
+        handle401();
+      }
+      dispatch({
+        type: POST_RECEIPT_FAILURE,
+        payload: error,
+      });
+      failure();
+    }
   };
 }

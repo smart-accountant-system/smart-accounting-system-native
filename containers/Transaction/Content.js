@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
 import SwipeoutRemove from '../../components/SwipeoutRemove';
 
-const TransactionContentContainer = styled.View`
+const TransactionContentContainer = styled.TouchableOpacity`
   padding-left: 8px;
   padding-right: 8px;
   background-color: #fff;
@@ -56,12 +56,14 @@ const TransactionTyporaphy = styled.View`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   margin-top: 8px;
 `;
 
 export default ({
   disabled,
   id,
+  onPress,
   onRemove,
   checkedBy,
   fromColor,
@@ -73,7 +75,7 @@ export default ({
   responsed,
 }) => (
   <SwipeoutRemove disabled={disabled} onRemove={onRemove} responsed={responsed}>
-    <TransactionContentContainer>
+    <TransactionContentContainer onPress={onPress}>
       <TransactionTyporaphy>
         <HeaderContainer>
           <TransactionCodeField>{id}</TransactionCodeField>

@@ -249,36 +249,31 @@ class Transaction extends React.Component {
               <Empty name={i18n.t('transaction')} />
             ) : (
               transactions.transactions.map(transaction => (
-                <TouchableOpacity
+                <TransactionContent
                   key={transaction._id}
-                  onPress={() => this.transactionDetail(transaction)}
-                >
-                  <TransactionContent
-                    disabled={info.role !== ROLE.ACCOUNTANT}
-                    id={transaction._id}
-                    checkedBy={transaction.checkedBy.fullname}
-                    fromColor={
-                      transaction.fromAccount.type === 0 ? '#438763' : '#ad6b8d'
+                  // onPress={() => this.transactionDetail(transaction)}
+                  disabled={info.role !== ROLE.ACCOUNTANT}
+                  id={transaction._id}
+                  checkedBy={transaction.checkedBy.fullname}
+                  fromColor={
+                    transaction.fromAccount.type === 0 ? '#438763' : '#ad6b8d'
+                  }
+                  toColor={
+                    transaction.toAccount.type === 0 ? '#438763' : '#ad6b8d'
+                  }
+                  fromAccount={transaction.fromAccount.id.name}
+                  toAccount={transaction.toAccount.id.name}
+                  cost={transaction.amount}
+                  time={new Date(transaction.createdAt).toLocaleDateString(
+                    i18n.t('local'),
+                    {
+                      day: 'numeric',
+                      month: 'long',
                     }
-                    toColor={
-                      transaction.toAccount.type === 0 ? '#438763' : '#ad6b8d'
-                    }
-                    fromAccount={transaction.fromAccount.id.name}
-                    toAccount={transaction.toAccount.id.name}
-                    cost={transaction.amount}
-                    time={new Date(transaction.createdAt).toLocaleDateString(
-                      i18n.t('local'),
-                      {
-                        day: 'numeric',
-                        month: 'long',
-                      }
-                    )}
-                    onRemove={() =>
-                      this.handleRemoveTransaction(transaction._id)
-                    }
-                    responsed={deleteFailNotification}
-                  />
-                </TouchableOpacity>
+                  )}
+                  onRemove={() => this.handleRemoveTransaction(transaction._id)}
+                  responsed={deleteFailNotification}
+                />
               ))
             )}
           </ScrollView>

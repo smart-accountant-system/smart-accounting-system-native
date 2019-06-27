@@ -29,16 +29,18 @@ class Login extends React.Component {
     username: '',
     password: '',
     visible: false,
+    loading: false,
   };
 
   handleLogin = () => {
     const { username, password } = this.state;
     const { navigation } = this.props;
-
+    this.setState({ loading: true });
     this.props.login(
       { username, password },
       {
         success: () => {
+          this.setState({ loading: false });
           const {
             user: { info },
           } = this.props;
@@ -51,7 +53,7 @@ class Login extends React.Component {
           );
         },
         failure: () => {
-          this.setState({ visible: true });
+          this.setState({ visible: true, loading: false });
         },
       }
     );
@@ -62,7 +64,7 @@ class Login extends React.Component {
   handleSignup = () => {};
 
   render() {
-    const { username, password, visible } = this.state;
+    const { username, password, visible, loading } = this.state;
     const { theme, user } = this.props;
     return (
       <LoginBackground>
@@ -128,7 +130,7 @@ class Login extends React.Component {
                   style={{ width: Layout.deviceWidth - 50, marginTop: 10 }}
                   contentStyle={{ height: 50 }}
                   onPress={this.handleLogin}
-                  loading={user.isLogging}
+                  loading={loading}
                 >
                   <Text
                     style={{

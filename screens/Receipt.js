@@ -195,11 +195,15 @@ class Receipt extends React.Component {
           <Header>
             <FeatherIcon color={theme.colors.primary} name="user" />
             <Typography>{i18n.t('receipt')}</Typography>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('ReceiptAddition')}
-            >
-              <FeatherIcon color={theme.colors.white} name="plus" />
-            </TouchableOpacity>
+            {info.role === ROLE.STAFF ? (
+              <TouchableOpacity
+                onPress={() => navigation.navigate('ReceiptAddition')}
+              >
+                <FeatherIcon color={theme.colors.white} name="plus" />
+              </TouchableOpacity>
+            ) : (
+              <FeatherIcon color={theme.colors.primary} name="plus" />
+            )}
           </Header>
         </HeaderWrapper>
 

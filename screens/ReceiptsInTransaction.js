@@ -24,9 +24,8 @@ import theme from '../constants/theme';
 import { getReceipts, addReceiptToTransaction } from '../redux/actions';
 import { handle401 } from '../constants/strategies';
 import { FeatherIcon, Loading, Empty } from '../components';
-import { ReceiptContent } from '../containers/Receipt';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
-import { ReceiptItem } from '../containers/Transaction';
+import { ReceiptInTransaction } from '../containers/Transaction';
 
 class ReceiptsInTransaction extends React.Component {
   state = {
@@ -239,37 +238,11 @@ class ReceiptsInTransaction extends React.Component {
               <Empty name={i18n.t('receipt')} />
             ) : (
               receipts.receipts.map(receipt => (
-                <ReceiptItem
-                  onPress={() => this.handleAddReceiptToTransaction(receipt)}
-                  disabled
-                  receipt={receipt}
+                <ReceiptInTransaction
                   key={receipt._id}
-                >
-                  <ReceiptContent
-                    id={receipt._id}
-                    customer={receipt.customer.name}
-                    Transaction={receipt.payment.category.name}
-                    type={
-                      receipt.payment.type === 0
-                        ? 'Receipt voucher' // phieu thu
-                        : 'Payment voucher' // phieu chi
-                    }
-                    color={receipt.status ? '#438763' : '#ad6b8d'}
-                    status={
-                      receipt.status
-                        ? 'Recorded as a transaction'
-                        : 'Not record as a transaction yet'
-                    }
-                    cost={receipt.payment.amountMoney}
-                    time={new Date(receipt.createdAt).toLocaleDateString(
-                      i18n.t('local'),
-                      {
-                        day: 'numeric',
-                        month: 'long',
-                      }
-                    )}
-                  />
-                </ReceiptItem>
+                  receipt={receipt}
+                  onPress={() => this.handleAddReceiptToTransaction(receipt)}
+                />
               ))
             )}
           </ScrollView>

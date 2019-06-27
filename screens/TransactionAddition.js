@@ -15,6 +15,7 @@ import { addReceiptToTransaction } from '../redux/actions';
 import { handle401, toInt } from '../constants/strategies';
 import { PaymentInReceipt } from '../containers/Receipt';
 import { ItemWithoutRemove } from '../containers/CustomerManagement';
+import { ReceiptInTransaction } from '../containers/Transaction';
 
 class ReceiptAddition extends React.Component {
   constructor(props) {
@@ -47,11 +48,10 @@ class ReceiptAddition extends React.Component {
         </HeaderWrapper>
         <ScrollView>
           {currentReceiptInTracsaction ? (
-            // <PaymentShow
-            //   payment={currentReceiptInTracsaction}
-            //   onPress={() => navigation.navigate('PaymentInReceipt')}
-            // />
-            <View />
+            <ReceiptInTransaction
+              receipt={currentReceiptInTracsaction}
+              onPress={() => navigation.navigate('ReceiptsInTransaction')}
+            />
           ) : (
             <AmazingText
               onPress={() => navigation.navigate('ReceiptsInTransaction')}
@@ -84,7 +84,8 @@ class ReceiptAddition extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  currentReceiptInTracsaction: state.transaction.currentReceiptInTracsaction,
+  currentReceiptInTracsaction:
+    state.transaction.currentReceiptInTransactionAddition,
 });
 const mapDispatchToProps = {
   addReceiptToTransaction,

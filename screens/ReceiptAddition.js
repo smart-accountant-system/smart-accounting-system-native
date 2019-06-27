@@ -13,8 +13,10 @@ import { AmazingText } from '../containers/InvoiceAddition';
 import { FewStyledContainer } from '../containers/PaymentMethodAddition';
 import { getPayments, getCustomers, addReceipt } from '../redux/actions';
 import { handle401, toInt } from '../constants/strategies';
+import { PaymentInReceipt } from '../containers/Receipt';
+import { ItemWithoutRemove } from '../containers/CustomerManagement';
 
-class InvoiceProductAddition extends React.Component {
+class ReceiptAddition extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -94,21 +96,23 @@ class InvoiceProductAddition extends React.Component {
           </Header>
         </HeaderWrapper>
         <ScrollView>
-          <AmazingText
+          <PaymentInReceipt
+            payment={currentPayment}
             onPress={() => navigation.navigate('PaymentInReceipt')}
-            content={
-              currentPayment
-                ? `Payment: ${currentPayment.description}`
-                : 'Choose payment'
-            }
           />
-          <AmazingText
+          {/* <AmazingText
             onPress={() => navigation.navigate('CustomerInReceipt')}
             content={
               currentCustomer
                 ? `Customer: ${currentCustomer.name}`
                 : 'Choose customer'
             }
+          /> */}
+          <ItemWithoutRemove
+            onPress={() => this.handleAddCustomer(currentCustomer)}
+            name={currentCustomer.name}
+            phone={currentCustomer.phone}
+            address={currentCustomer.address}
           />
 
           <FewStyledContainer paddingTop>
@@ -151,4 +155,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(InvoiceProductAddition);
+)(ReceiptAddition);

@@ -25,9 +25,7 @@ export default ({ payments, onRemove }) => (
             description={description}
             color={!type ? '#438763' : '#ad6b8d'}
             balance={amountMoney}
-            balanceType={`${
-              !type ? i18n.t('paymentIn') : i18n.t('paymentOut')
-            } payment`}
+            balanceType={!type ? i18n.t('paymentIn') : i18n.t('paymentOut')}
             time={new Date(createdAt).toLocaleDateString(i18n.t('local'), {
               day: 'numeric',
               month: 'long',

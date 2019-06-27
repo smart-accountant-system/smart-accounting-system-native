@@ -103,9 +103,12 @@ class InvoiceProductAddition extends React.Component {
       currentPaymentMethodId,
       isLoading,
     } = this.state;
-    const currentPaymentMethod = categories.categories.find(
-      category => category._id === currentPaymentMethodId
-    );
+
+    const currentPaymentMethod =
+      categories &&
+      categories.categories.find(
+        category => category._id === currentPaymentMethodId
+      );
     const previous = navigation.getParam('previous', '');
 
     return (
@@ -144,7 +147,7 @@ class InvoiceProductAddition extends React.Component {
             content={
               currentPaymentMethod
                 ? `Payment method: ${currentPaymentMethod.name}`
-                : 'Choose payment method'
+                : i18n.t('choosePaymentMethod')
             }
             onPress={() => this.setState({ isChoosing: true })}
           />

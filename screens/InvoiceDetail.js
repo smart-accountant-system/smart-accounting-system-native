@@ -91,6 +91,8 @@ class InvoiceDetail extends React.Component {
             <AmazingText
               content={i18n.t('actionAddPayment')}
               onPress={() => {
+                console.log('im here');
+
                 navigation.navigate('PaymentAddition', {
                   _id: invoice._id,
                   previous: 'InvoiceDetail',

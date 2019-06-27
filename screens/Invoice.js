@@ -162,8 +162,7 @@ class Invoice extends React.Component {
     });
 
     this.props.getPaymentsForInvoice(
-      _id,
-      {},
+      { invoice: _id },
       {
         handle401: () =>
           handle401({

@@ -22,14 +22,13 @@ export const DELETE_PAYMENT_SUCCESS = 'delete-payment-success';
 export const DELETE_PAYMENT_FAILURE = 'delete-payment-failure';
 
 export function getPaymentsForInvoice(
-  invoice,
   params,
   { success = () => {}, failure = () => {}, handle401 }
 ) {
   return async dispatch => {
     try {
       dispatch({ type: GET_PAYMENTS_FOR_INVOICE_REQUEST });
-      const endpoint = `/payments/invoices/${invoice}`;
+      const endpoint = `/payments`;
 
       const result = await query({
         endpoint,

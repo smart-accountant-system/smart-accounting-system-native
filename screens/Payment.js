@@ -58,8 +58,7 @@ class Payment extends React.Component {
     this.setState({ refreshing: true });
 
     this.props.getPaymentsForInvoice(
-      this._id,
-      {},
+      { invoice: this._id },
       {
         success: () => {
           this.setState({ refreshing: false });
@@ -130,8 +129,8 @@ class Payment extends React.Component {
     });
 
     this.props.getPaymentsForInvoice(
-      this._id,
       {
+        invoice: this._id,
         startDate: new Date(fromDate.toDateString()),
         endDate: new Date(toDate.toDateString()),
       },

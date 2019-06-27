@@ -17,8 +17,8 @@ import {
 } from '../actions';
 
 const INITIAL_STATE = {
-  currentCustomerInReceiptAddition: '',
-  currentPaymentInReceiptAddition: '',
+  currentCustomerInReceiptAddition: null,
+  currentPaymentInReceiptAddition: null,
   receipts: null,
   currentReceipt: null,
   loading: false,

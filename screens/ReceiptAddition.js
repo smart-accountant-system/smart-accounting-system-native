@@ -12,8 +12,8 @@ import { Header, Typography, HeaderWrapper } from '../containers/Home';
 import { AmazingText } from '../containers/InvoiceAddition';
 import { FewStyledContainer } from '../containers/PaymentMethodAddition';
 import { getPayments, getCustomers, addReceipt } from '../redux/actions';
-import { handle401, toInt } from '../constants/strategies';
-import { PaymentInReceipt } from '../containers/Receipt';
+import { handle401 } from '../constants/strategies';
+import { PaymentShow } from '../containers/Receipt';
 import { ItemWithoutRemove } from '../containers/CustomerManagement';
 
 class ReceiptAddition extends React.Component {
@@ -83,6 +83,7 @@ class ReceiptAddition extends React.Component {
   render() {
     const { navigation, currentCustomer, currentPayment } = this.props;
     const { isVisible, isLoading } = this.state;
+    console.log(currentPayment);
 
     return (
       <View style={{ display: 'flex', flex: 1 }}>
@@ -96,24 +97,30 @@ class ReceiptAddition extends React.Component {
           </Header>
         </HeaderWrapper>
         <ScrollView>
-          <PaymentInReceipt
-            payment={currentPayment}
-            onPress={() => navigation.navigate('PaymentInReceipt')}
-          />
-          {/* <AmazingText
-            onPress={() => navigation.navigate('CustomerInReceipt')}
-            content={
-              currentCustomer
-                ? `Customer: ${currentCustomer.name}`
-                : 'Choose customer'
-            }
-          /> */}
-          <ItemWithoutRemove
-            onPress={() => this.handleAddCustomer(currentCustomer)}
-            name={currentCustomer.name}
-            phone={currentCustomer.phone}
-            address={currentCustomer.address}
-          />
+          {currentPayment ? (
+            <PaymentShow
+              payment={currentPayment}
+              onPress={() => navigation.navigate('PaymentInReceipt')}
+            />
+          ) : (
+            <AmazingText
+              onPress={() => navigation.navigate('PaymentInReceipt')}
+              content="Choose payment"
+            />
+          )}
+          {currentCustomer ? (
+            <ItemWithoutRemove
+              onPress={() => this.handleAddCustomer(currentCustomer)}
+              name={currentCustomer.name}
+              phone={currentCustomer.phone}
+              address={currentCustomer.address}
+            />
+          ) : (
+            <AmazingText
+              onPress={() => navigation.navigate('CustomerInReceipt')}
+              content="Choose customer"
+            />
+          )}
 
           <FewStyledContainer paddingTop>
             <Button

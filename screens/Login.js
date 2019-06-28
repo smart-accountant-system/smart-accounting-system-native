@@ -12,7 +12,7 @@ import {
 import { connect } from 'react-redux';
 import { withTheme, HelperText, Button } from 'react-native-paper';
 import i18n from 'i18n-js';
-import { Fingerprint } from 'expo';
+import { LocalAuthentication } from 'expo';
 
 import {
   LoginContainer,
@@ -46,17 +46,19 @@ class Login extends React.Component {
   }
 
   checkDeviceForHardware = async () => {
-    const compatible = await Fingerprint.hasHardwareAsync();
+    const compatible = await LocalAuthentication.hasHardwareAsync();
     this.setState({ compatible });
   };
 
   checkForFingerprints = async () => {
-    const fingerprints = await Fingerprint.isEnrolledAsync();
+    const fingerprints = await LocalAuthentication.isEnrolledAsync();
     this.setState({ fingerprints });
   };
 
   scanFingerprint = async () => {
-    const result = await Fingerprint.authenticateAsync('Scan your finger.');
+    const result = await LocalAuthentication.authenticateAsync(
+      'Scan your finger.'
+    );
     console.log('Scan Result:', result);
   };
 

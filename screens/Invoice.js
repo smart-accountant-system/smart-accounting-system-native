@@ -206,7 +206,7 @@ class Invoice extends React.Component {
             <TouchableOpacity
               onPress={() => navigation.navigate('InvoiceScanner')}
             >
-              <FeatherIcon color={theme.colors.white} name="eye" />
+              <FeatherIcon color={theme.colors.white} name="camera" />
             </TouchableOpacity>
             <Typography>{i18n.t('invoice')}</Typography>
             {info.role === ROLE.STAFF ? (

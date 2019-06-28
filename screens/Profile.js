@@ -81,7 +81,7 @@ class Profile extends React.Component {
               />
               <ProfileInfo
                 title={i18n.t('company')}
-                name="printer"
+                name="briefcase"
                 info={info.company.name}
               />
               <ProfileInfo

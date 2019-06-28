@@ -64,7 +64,6 @@ class ReceiptAddition extends React.Component {
     this.props.addTransaction(
       {
         receipt: currentReceiptInTracsaction._id,
-        amount: currentReceiptInTracsaction.payment.amountMoney,
         fromAccount: {
           id: currentCreditAccountInTransaction._id,
           type: 0,

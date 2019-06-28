@@ -68,8 +68,8 @@ const InvoiceStack = createStackNavigator(
   {
     Invoice,
     InvoiceDetail,
-    InvoiceScanner,
     Payment,
+    InvoiceScanner,
   },
   {
     headerMode: 'none',

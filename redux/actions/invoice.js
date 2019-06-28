@@ -46,13 +46,13 @@ export function getInvoices(
         failure();
       }
     } catch (error) {
-      if (error.response.status === 401) {
-        handle401();
-      }
       dispatch({
         type: GET_INVOICES_FAILURE,
         payload: error,
       });
+      if (error.response.status === 401) {
+        return handle401();
+      }
       failure();
     }
   };
@@ -125,13 +125,13 @@ export function addInvoice(
         failure();
       }
     } catch (error) {
-      if (error.response.status === 401) {
-        handle401();
-      }
       dispatch({
         type: POST_INVOICE_FAILURE,
         payload: error,
       });
+      if (error.response.status === 401) {
+        return handle401();
+      }
       failure();
     }
   };
@@ -164,13 +164,13 @@ export function removeInvoice(
         failure();
       }
     } catch (error) {
-      if (error.response.status === 401) {
-        handle401();
-      }
       dispatch({
         type: DELETE_INVOICE_FAILURE,
         payload: error,
       });
+      if (error.response.status === 401) {
+        return handle401();
+      }
       failure();
     }
   };

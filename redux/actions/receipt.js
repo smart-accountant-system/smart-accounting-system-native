@@ -51,13 +51,13 @@ export function getReceipts(
         failure();
       }
     } catch (error) {
-      if (error.response.status === 401) {
-        handle401();
-      }
       dispatch({
         type: GET_RECEIPTS_FAILURE,
         payload: error,
       });
+      if (error.response.status === 401) {
+        return handle401();
+      }
       failure();
     }
   };
@@ -97,13 +97,13 @@ export function getReceiptById(
         failure();
       }
     } catch (error) {
-      if (error.response.status === 401) {
-        handle401();
-      }
       dispatch({
         type: GET_RECEIPT_BY_ID_FAILURE,
         payload: error,
       });
+      if (error.response.status === 401) {
+        return handle401();
+      }
       failure();
     }
   };
@@ -136,13 +136,13 @@ export function deleteReceiptById(
         failure();
       }
     } catch (error) {
-      if (error.response.status === 401) {
-        handle401();
-      }
       dispatch({
         type: DELETE_RECEIPT_BY_ID_FAILURE,
         payload: error,
       });
+      if (error.response.status === 401) {
+        return handle401();
+      }
       failure();
     }
   };
@@ -190,13 +190,13 @@ export function addReceipt(
         failure();
       }
     } catch (error) {
-      if (error.response.status === 401) {
-        handle401();
-      }
       dispatch({
         type: POST_RECEIPT_FAILURE,
         payload: error,
       });
+      if (error.response.status === 401) {
+        return handle401();
+      }
       failure();
     }
   };

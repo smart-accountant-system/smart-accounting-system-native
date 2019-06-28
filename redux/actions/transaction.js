@@ -64,13 +64,13 @@ export function getTransactions(
         failure();
       }
     } catch (error) {
-      if (error.response.status === 401) {
-        handle401();
-      }
       dispatch({
         type: GET_TRANSACTIONS_FAILURE,
         payload: error,
       });
+      if (error.response.status === 401) {
+        return handle401();
+      }
       failure();
     }
   };
@@ -108,13 +108,13 @@ export function addTransaction(
         failure();
       }
     } catch (error) {
-      if (error.response.status === 401) {
-        handle401();
-      }
       dispatch({
         type: POST_TRANSACTION_FAILURE,
         payload: error,
       });
+      if (error.response.status === 401) {
+        return handle401();
+      }
       failure();
     }
   };
@@ -154,13 +154,13 @@ export function getTransactionById(
         failure();
       }
     } catch (error) {
-      if (error.response.status === 401) {
-        handle401();
-      }
       dispatch({
         type: GET_TRANSACTION_BY_ID_FAILURE,
         payload: error,
       });
+      if (error.response.status === 401) {
+        return handle401();
+      }
       failure();
     }
   };
@@ -193,13 +193,13 @@ export function deleteTransactionById(
         failure();
       }
     } catch (error) {
-      if (error.response.status === 401) {
-        handle401();
-      }
       dispatch({
         type: DELETE_TRANSACTION_BY_ID_FAILURE,
         payload: error,
       });
+      if (error.response.status === 401) {
+        return handle401();
+      }
       failure();
     }
   };

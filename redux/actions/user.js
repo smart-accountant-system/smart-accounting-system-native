@@ -39,7 +39,6 @@ export function login(data, callback) {
         callback.failure();
       }
     } catch (error) {
-      alert(JSON.stringify(error.message));
       dispatch({
         type: LOGIN_FAILURE,
         payload: error,

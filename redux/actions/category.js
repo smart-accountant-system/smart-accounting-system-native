@@ -42,13 +42,13 @@ export function getCategories(
         failure();
       }
     } catch (error) {
-      if (error.response.status === 401) {
-        handle401();
-      }
       dispatch({
         type: GET_CATEGORIES_FAILURE,
         payload: error,
       });
+      if (error.response.status === 401) {
+        return handle401();
+      }
       failure();
     }
   };
@@ -82,13 +82,13 @@ export function addCategory(
         failure();
       }
     } catch (error) {
-      if (error.response.status === 401) {
-        handle401();
-      }
       dispatch({
         type: POST_CATEGORY_FAILURE,
         payload: error,
       });
+      if (error.response.status === 401) {
+        return handle401();
+      }
       failure();
     }
   };
@@ -121,13 +121,13 @@ export function removeCategory(
         failure();
       }
     } catch (error) {
-      if (error.response.status === 401) {
-        handle401();
-      }
       dispatch({
         type: DELETE_CATEGORY_FAILURE,
         payload: error,
       });
+      if (error.response.status === 401) {
+        return handle401();
+      }
       failure();
     }
   };

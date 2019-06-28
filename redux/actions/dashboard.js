@@ -34,14 +34,14 @@ export function getDashboard({
         });
       }
     } catch (error) {
-      if (error.response.status === 401) {
-        handle401();
-      }
-      failure();
       dispatch({
         type: GET_DASHBOARD_FAILURE,
         payload: error,
       });
+      if (error.response.status === 401) {
+        return handle401();
+      }
+      failure();
     }
   };
 }

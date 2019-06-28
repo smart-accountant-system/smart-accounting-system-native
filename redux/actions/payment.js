@@ -53,12 +53,10 @@ export function getPaymentsForInvoice(
         type: GET_PAYMENTS_FOR_INVOICE_FAILURE,
         payload: error,
       });
-      // edit
       if (error.response.status === 401) {
-        handle401();
-      } else {
-        failure();
+        return handle401();
       }
+      failure();
     }
   };
 }
@@ -91,13 +89,13 @@ export function getPayments(
         failure();
       }
     } catch (error) {
-      if (error.response.status === 401) {
-        handle401();
-      }
       dispatch({
         type: GET_PAYMENTS_FAILURE,
         payload: error,
       });
+      if (error.response.status === 401) {
+        return handle401();
+      }
       failure();
     }
   };
@@ -135,13 +133,13 @@ export function addPayment(
         failure();
       }
     } catch (error) {
-      if (error.response.status === 401) {
-        handle401();
-      }
       dispatch({
         type: POST_PAYMENT_FAILURE,
         payload: error,
       });
+      if (error.response.status === 401) {
+        return handle401();
+      }
       failure();
     }
   };
@@ -174,13 +172,13 @@ export function removePayment(
         failure();
       }
     } catch (error) {
-      if (error.response.status === 401) {
-        handle401();
-      }
       dispatch({
         type: DELETE_PAYMENT_FAILURE,
         payload: error,
       });
+      if (error.response.status === 401) {
+        return handle401();
+      }
       failure();
     }
   };

@@ -15,7 +15,7 @@ import {
   logout,
   addReceiptToTransaction,
   getAccounts,
-  getReceipts,
+  getReceiptsForTraction,
   addTransaction,
 } from '../redux/actions';
 import { handle401 } from '../constants/strategies';
@@ -31,8 +31,10 @@ class ReceiptAddition extends React.Component {
   }
 
   componentDidMount = () => {
-    this.props.getReceipts(
-      {},
+    this.props.getReceiptsForTraction(
+      {
+        status: '0',
+      },
       {
         handle401: () =>
           handle401({
@@ -196,7 +198,7 @@ const mapDispatchToProps = {
   logout,
   addReceiptToTransaction,
   getAccounts,
-  getReceipts,
+  getReceiptsForTraction,
   addTransaction,
 };
 

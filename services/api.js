@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { SecureStore } from 'expo';
 
 import { API_URL } from '../constants/api';
 // eslint-disable-next-line import/no-cycle
@@ -18,6 +19,6 @@ export const query = async ({
     data,
     params,
     headers: store.getState().user.isLogged
-      ? { ...headers, token: store.getState().user.info.token }
+      ? { ...headers, token: await SecureStore.getItemAsync('token') }
       : headers,
   });

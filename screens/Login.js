@@ -102,8 +102,7 @@ class Login extends React.Component {
       fingerprints,
       compatible,
     } = this.state;
-    const { theme, user } = this.props;
-    console.log(user);
+    const { theme } = this.props;
 
     return (
       <LoginBackground>

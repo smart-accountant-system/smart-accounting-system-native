@@ -29,6 +29,13 @@ export const ADD_CREDIT_ACCOUNT_TO_TRANSACTION =
 export const ADD_DEBIT_ACCOUNT_TO_TRANSACTION =
   'add-debit-account-to-transaction';
 
+export const GET_RECEIPTS_FOR_TRANSACTION_REQUEST =
+  'get-receipts-for-transaction-request';
+export const GET_RECEIPTS_FOR_TRANSACTION_SUCCESS =
+  'get-receipts-for-transaction-success';
+export const GET_RECEIPTS_FOR_TRANSACTION_FAILURE =
+  'get-receipts-for-transaction-failure';
+
 export function getTransactions(
   params,
   { success = () => {}, failure = () => {}, handle401 }
@@ -216,5 +223,45 @@ export function addDebitAccountToTransaction(account) {
   return {
     type: ADD_DEBIT_ACCOUNT_TO_TRANSACTION,
     payload: account,
+  };
+}
+
+export function getReceiptsForTraction(
+  params,
+  { success = () => {}, failure = () => {}, handle401 }
+) {
+  return async dispatch => {
+    try {
+      dispatch({ type: GET_RECEIPTS_FOR_TRANSACTION_REQUEST });
+      const endpoint = ENDPOINTS.getReceipts;
+
+      const result = await query({
+        endpoint,
+        params,
+        method: METHODS.get,
+      });
+
+      if (result.status === 200 || result.status === 304) {
+        dispatch({
+          type: GET_RECEIPTS_FOR_TRANSACTION_SUCCESS,
+          payload: result.data,
+        });
+        success();
+      } else {
+        dispatch({
+          type: GET_RECEIPTS_FOR_TRANSACTION_FAILURE,
+        });
+        failure();
+      }
+    } catch (error) {
+      dispatch({
+        type: GET_RECEIPTS_FOR_TRANSACTION_FAILURE,
+        payload: error,
+      });
+      if (error.response.status === 401) {
+        return handle401();
+      }
+      failure();
+    }
   };
 }

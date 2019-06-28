@@ -15,10 +15,14 @@ import {
   ADD_RECEIPT_TO_TRANSACTION,
   ADD_CREDIT_ACCOUNT_TO_TRANSACTION,
   ADD_DEBIT_ACCOUNT_TO_TRANSACTION,
+  GET_RECEIPTS_FOR_TRANSACTION_REQUEST,
+  GET_RECEIPTS_FOR_TRANSACTION_SUCCESS,
+  GET_RECEIPTS_FOR_TRANSACTION_FAILURE,
 } from '../actions';
 
 const INITIAL_STATE = {
   transactions: null,
+  receiptsInTransaction: null,
   currentTransaction: null,
   currentReceiptInTransactionAddition: null,
   currentCreditAccountInTransactionAddition: null,
@@ -31,6 +35,7 @@ export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case GET_TRANSACTIONS_REQUEST:
     case POST_TRANSACTION_REQUEST:
+    case GET_RECEIPTS_FOR_TRANSACTION_REQUEST:
       return {
         ...state,
         loading: true,
@@ -45,6 +50,7 @@ export default (state = INITIAL_STATE, action) => {
       };
     case GET_TRANSACTIONS_FAILURE:
     case POST_TRANSACTION_FAILURE:
+    case GET_RECEIPTS_FOR_TRANSACTION_FAILURE:
       return {
         ...state,
         loading: false,
@@ -119,6 +125,11 @@ export default (state = INITIAL_STATE, action) => {
         currentCreditAccountInTransactionAddition: null,
         currentReceiptInTransactionAddition: null,
         error: null,
+      };
+    case GET_RECEIPTS_FOR_TRANSACTION_SUCCESS:
+      return {
+        ...state,
+        receiptsInTransaction: action.payload,
       };
     default:
       return state;

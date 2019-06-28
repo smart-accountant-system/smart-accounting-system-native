@@ -40,7 +40,7 @@ export default (state = INITIAL_STATE, action) => {
         isLogged: true,
         isLogging: false,
         error: null,
-        info: { ...action.payload, color: getRandomColor() },
+        info: { ...action.payload, color: getRandomColor(), token: undefined },
       };
     case LOGIN_FAILURE:
       return {

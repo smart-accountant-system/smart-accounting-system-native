@@ -1,6 +1,5 @@
 /* eslint-disable import/no-cycle */
 import i18n from 'i18n-js';
-import moment from 'moment';
 import { query } from '../../services/api';
 import { ENDPOINTS, METHODS } from '../../constants/api';
 
@@ -52,7 +51,6 @@ export function logout(callback) {
 
 export function changeLocalization(localization) {
   i18n.locale = localization;
-  moment.locale(localization);
   return {
     type: CHANGE_LOCALIZATION,
     payload: localization,

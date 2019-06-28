@@ -30,8 +30,8 @@ import theme from '../constants/theme';
 
 export const HomeStack = createStackNavigator(
   {
-    Profile,
     Home,
+    Profile,
   },
   {
     headerMode: 'none',

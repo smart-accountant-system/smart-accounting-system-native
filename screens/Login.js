@@ -73,7 +73,7 @@ class Login extends React.Component {
     const { userInfo } = this.state;
     const { username, password } = userInfo;
     const result = await LocalAuthentication.authenticateAsync(
-      'Scan your finger.'
+      i18n.t('actionScanFingerprint')
     );
     if (result.success) {
       this.setState({ loading: true });
@@ -213,7 +213,7 @@ class Login extends React.Component {
 
                 {visible && (
                   <HelperText type="error" visible>
-                    Tên đăng nhập hoặc mật khẩu không hợp lệ
+                    {i18n.t('messageLoginFailed')}
                   </HelperText>
                 )}
 
@@ -239,7 +239,9 @@ class Login extends React.Component {
                     <FingerprintWrapper>
                       <MaterialCommunityIcon color="#555" name="fingerprint" />
                       <FingerprintTextWrapper>
-                        <FingerprintText>Mở khoá bằng vân tay</FingerprintText>
+                        <FingerprintText>
+                          {i18n.t('actionUnlockWithFingerprint')}
+                        </FingerprintText>
                       </FingerprintTextWrapper>
                     </FingerprintWrapper>
                   </TouchableOpacity>

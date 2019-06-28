@@ -96,6 +96,9 @@ export default {
   actionChoosePayment: 'Choose payment',
   actionChooseCustomer: 'Choose customer',
   actionChoosePaymentMethod: 'Choose payment method',
+  actionUnlockWithFingerprint: 'Unlock with fingerprint',
+  actionScanFingerprint: 'Please scan your fingerprint',
+  actionLogout: 'Logout',
 
   // MESSAGE GROUP
   messageEmpty: 'There is no',
@@ -114,6 +117,7 @@ export default {
     'Place the camera where the barcode is on the invoice and adjust the phone so that the barcode is right in the camera on the screen',
   messageWelcome: 'Welcome back!',
   messageLoginWithAnotherAccount: 'Login another account',
+  messageLoginFailed: 'Username or password is invalid',
 
   // LANGUAGE
   english: 'English',

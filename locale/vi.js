@@ -96,6 +96,9 @@ export default {
   actionChoosePayment: 'Chọn khoản thanh toán',
   actionChooseCustomer: 'Chọn khách hàng',
   actionChoosePaymentMethod: 'Chọn phương thức thanh toán',
+  actionUnlockWithFingerPrint: 'Mở khoá bằng vân tay',
+  actionScanFingerprint: 'Hãy quét vân tay của bạn',
+  actionLogout: 'Đăng xuất',
 
   // MESSAGE GROUP
   messageEmpty: 'Hiện chưa có',
@@ -115,7 +118,7 @@ export default {
     'Đưa camera lại nơi có mã vạch trên hóa đơn và điều chỉnh điện thoại sao cho mã vạch nằm đúng trong camera trên màn hình',
   messageWelcome: 'Xin chào!',
   messageLoginWithAnotherAccount: 'Thoát tài khoản',
-
+  messageLoginFailed: 'Tên đăng nhập hoặc mật khẩu không hợp lệ',
   // LANGUAGE
   english: 'Tiếng Anh',
   vietnamese: 'Tiếng Việt',

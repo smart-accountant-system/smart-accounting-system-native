@@ -15,6 +15,8 @@ import {
   InforWrapper,
   AvatarPicture,
 } from '../containers/Home';
+
+import { AmazingText } from '../containers/InvoiceAddition';
 import theme from '../constants/theme';
 import { logout, changeLocalization } from '../redux/actions';
 import { FeatherIcon, ProfileInfo } from '../components';
@@ -59,7 +61,7 @@ class Profile extends React.Component {
                 </AvatarTypography>
               )}
             </Avatar>
-            <AvatarTypography size="24" color={info.color}>
+            <AvatarTypography text={1} size="26">
               {info.fullname}
             </AvatarTypography>
             <InforWrapper>
@@ -79,15 +81,21 @@ class Profile extends React.Component {
                 info={info.phone}
               />
               <ProfileInfo
+                last={1}
                 title={i18n.t('company')}
                 name="briefcase"
                 info={info.company.name}
               />
+            </InforWrapper>
+
+            <InforWrapper noPaddingLeft={1}>
               <Localization />
-              <ProfileInfo
+            </InforWrapper>
+
+            <InforWrapper>
+              <AmazingText
+                content={i18n.t('actionLogout')}
                 onPress={this.handleLogout}
-                name="log-out"
-                info="Logout"
               />
             </InforWrapper>
           </ContentWrapper>

@@ -5,46 +5,50 @@ import styled from 'styled-components';
 import FeatherIcon from './FeatherIcon';
 import theme from '../constants/theme';
 
-const InfoWrapper = styled.View`
+const Field = styled.View`
   display: flex;
-  flex-direction: column;
-  padding-left: 10px;
+  flex-direction: row;
+  align-items: center;
   justify-content: space-between;
-  /* height: 30px; */
+  border-bottom-color: #aaa;
+  border-bottom-width: ${({ last }) => (last ? 0 : 0.5)};
+  width: 100%;
+
+  padding-right: 16px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+`;
+
+const TitleSection = styled.View`
+  width: 40%;
+  flex-direction: row;
+  align-items: center;
+`;
+
+const Title = styled.Text`
+  font-size: 15;
+  padding-left: 8;
+`;
+
+const Content = styled.Text`
+  font-size: 15;
+  flex: 1;
+  text-align: right;
+  color: ${theme.colors.grey};
 `;
 
 export default class ProfileInfo extends React.Component {
   render() {
-    const { name, info, onPress, title } = this.props;
+    const { name, info, onPress, title, last } = this.props;
     return (
       <TouchableOpacity onPress={onPress}>
-        <View
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            borderBottomColor: 'grey',
-            borderBottomWidth: 0.5,
-            width: '100%',
-            padding: 10,
-          }}
-        >
-          <FeatherIcon color={theme.colors.grey} name={name} size={26} />
-          <InfoWrapper>
-            {title && (
-              <Text
-                style={{
-                  color: theme.colors.grey,
-                  fontSize: 12,
-                  marginBottom: 5,
-                }}
-              >
-                {title}
-              </Text>
-            )}
-            <Text style={{ fontSize: 15 }}>{info}</Text>
-          </InfoWrapper>
-        </View>
+        <Field last={last}>
+          <TitleSection>
+            <FeatherIcon marginBottom={2} name={name} size={26} />
+            <Title>{title}</Title>
+          </TitleSection>
+          <Content>{info}</Content>
+        </Field>
       </TouchableOpacity>
     );
   }

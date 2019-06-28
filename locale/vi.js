@@ -77,6 +77,7 @@ export default {
   receiptNotRecoredAsTransaction: 'Chưa lưu thành phiên giao dịch',
   receiptVoucher: 'Phiếu thu',
   paymentVoucher: 'Phiếu chi',
+  inTotal: 'tổng cộng',
 
   // ADVANCED FILTER GROUP
   advancedFilter: 'Bộ lọc nâng cao',

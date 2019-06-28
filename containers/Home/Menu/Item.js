@@ -1,4 +1,5 @@
 import React from 'react';
+import i18n from 'i18n-js';
 import { TouchableOpacity, Text, View } from 'react-native';
 import styled from 'styled-components';
 import FeatherIcon from '../../../components/FeatherIcon';
@@ -40,6 +41,8 @@ const Typogaphy = styled.Text`
 
 const DescriptionContainer = styled.View`
   flex: 1;
+  display: flex;
+  flex-direction: ${({ isVN }) => (isVN ? 'column-reverse' : 'column')};
 `;
 
 const Description = styled.Text`
@@ -54,20 +57,24 @@ const ConceptualContainer = styled.View`
   align-items: center;
 `;
 
-export default ({ onPress, color, icon, number, name, mini }) => (
-  <StyledItem mini={mini} onPress={onPress}>
-    <ConceptualContainer>
-      <IconContainer color={color}>
-        <FeatherIcon size={30} color="#fff" name={icon} />
-      </IconContainer>
-      <Typogaphy>{number}</Typogaphy>
-    </ConceptualContainer>
+export default ({ isVN, onPress, color, icon, number, name, mini }) => {
+  console.log(isVN);
 
-    <DescriptionContainer>
-      <Description marginTop={mini ? 16 : 0}>{name}</Description>
-      <Description marginTop={4} size={15} color="#222">
-        in total
-      </Description>
-    </DescriptionContainer>
-  </StyledItem>
-);
+  return (
+    <StyledItem mini={mini} onPress={onPress}>
+      <ConceptualContainer>
+        <IconContainer color={color}>
+          <FeatherIcon size={30} color="#fff" name={icon} />
+        </IconContainer>
+        <Typogaphy>{number}</Typogaphy>
+      </ConceptualContainer>
+
+      <DescriptionContainer>
+        <Description marginTop={mini ? 16 : 0}>{name}</Description>
+        <Description marginTop={4} size={15} color="#222">
+          {i18n.t('inTotal')}
+        </Description>
+      </DescriptionContainer>
+    </StyledItem>
+  );
+};

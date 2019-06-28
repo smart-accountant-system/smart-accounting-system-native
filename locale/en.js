@@ -77,6 +77,7 @@ export default {
   receiptNotRecoredAsTransaction: 'Not record as a transaction yet',
   receiptVoucher: 'Receipt voucher',
   paymentVoucher: 'Payment Voucher',
+  inTotal: 'in total',
 
   // ADVANCED FILTER GROUP
   advancedFilter: 'Advanced filter',

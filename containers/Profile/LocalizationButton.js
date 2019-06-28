@@ -58,12 +58,12 @@ class Localization extends React.Component {
         <FormWrapper>
           <LanguageWrapper
             text={i18n.t('vietnamese')}
-            isChoose={localization === 'vi'}
+            isChoose={localization === 'vi' || localization === 'vi-VN'}
             onPress={() => this.props.changeLocalization('vi')}
           />
           <LanguageWrapper
             text={i18n.t('english')}
-            isChoose={localization === 'en'}
+            isChoose={localization === 'en' || localization === 'en-EN'}
             onPress={() => this.props.changeLocalization('en')}
           />
         </FormWrapper>

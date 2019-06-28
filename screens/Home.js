@@ -55,8 +55,14 @@ class Home extends React.Component {
   };
 
   render() {
-    const { navigation, dashboard, info } = this.props;
+    const {
+      navigation,
+      dashboard,
+      user: { info, localization },
+    } = this.props;
     const { refreshing } = this.state;
+    console.log(localization);
+
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
@@ -85,29 +91,42 @@ class Home extends React.Component {
                   number={dashboard.totalCategory}
                   name={i18n.t('paymentMethod')}
                 />
-
-                <FieldContainer>
-                  <StyledField left={1}>
-                    <MenuItem
-                      mini
-                      onPress={() => navigation.navigate('EmployeeManagement')}
-                      color="#f87d4d"
-                      icon="briefcase"
-                      number={dashboard.totalEmployee}
-                      name={i18n.t('employeeManagement')}
-                    />
-                  </StyledField>
-                  <StyledField right={1}>
-                    <MenuItem
-                      mini
-                      onPress={() => navigation.navigate('CustomerManagement')}
-                      color="#e05246"
-                      icon="users"
-                      number={dashboard.totalCustomer}
-                      name={i18n.t('customerManagement')}
-                    />
-                  </StyledField>
-                </FieldContainer>
+                {info.role !== ROLE.ACCOUNTANT ? (
+                  <FieldContainer>
+                    <StyledField left={1}>
+                      <MenuItem
+                        mini
+                        onPress={() =>
+                          navigation.navigate('EmployeeManagement')
+                        }
+                        color="#f87d4d"
+                        icon="briefcase"
+                        number={dashboard.totalEmployee}
+                        name={i18n.t('employee')}
+                      />
+                    </StyledField>
+                    <StyledField right={1}>
+                      <MenuItem
+                        mini
+                        onPress={() =>
+                          navigation.navigate('CustomerManagement')
+                        }
+                        color="#e05246"
+                        icon="users"
+                        number={dashboard.totalCustomer}
+                        name={i18n.t('customer')}
+                      />
+                    </StyledField>
+                  </FieldContainer>
+                ) : (
+                  <MenuItem
+                    onPress={() => navigation.navigate('CustomerManagement')}
+                    color="#e05246"
+                    icon="users"
+                    number={dashboard.totalCustomer}
+                    name={i18n.t('customer')}
+                  />
+                )}
               </MenuContainer>
             )}
           </ScrollView>
@@ -120,7 +139,7 @@ class Home extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  info: state.user.info,
+  user: state.user,
   dashboard: state.dashboard.dashboard,
 });
 const mapDispatchToProps = {

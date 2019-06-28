@@ -112,11 +112,15 @@ class CustomerManagement extends React.Component {
             )}
 
             <Typography>{i18n.t('customerManagement')}</Typography>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('CustomerAddition')}
-            >
-              <FeatherIcon color={theme.colors.white} name="plus" />
-            </TouchableOpacity>
+            {info.role === ROLE.ACCOUNTANT ? (
+              <FeatherIcon color={theme.colors.primary} name="chevron-left" />
+            ) : (
+              <TouchableOpacity
+                onPress={() => navigation.navigate('CustomerAddition')}
+              >
+                <FeatherIcon color={theme.colors.white} name="plus" />
+              </TouchableOpacity>
+            )}
           </Header>
         </HeaderWrapper>
         <Searchbar value={searchText} onChangeText={this.handleSearch} />
@@ -135,6 +139,7 @@ class CustomerManagement extends React.Component {
             ) : (
               customers.customers.map(customer => (
                 <CustomerItem
+                  disabled={info.role === ROLE.ACCOUNTANT}
                   onRemove={() => this.handleRemove(customer._id)}
                   key={customer._id}
                   name={customer.name}

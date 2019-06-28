@@ -33,7 +33,7 @@ class ReceiptAddition extends React.Component {
   componentDidMount = () => {
     this.props.getReceiptsForTraction(
       {
-        status: '0',
+        status: 1,
       },
       {
         handle401: () =>

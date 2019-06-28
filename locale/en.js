@@ -112,6 +112,8 @@ export default {
   messageCanNotGetInvoiceId: 'Cannot get invoice has ID:',
   messageGuildToScan:
     'Place the camera where the barcode is on the invoice and adjust the phone so that the barcode is right in the camera on the screen',
+  messageWelcome: 'Welcome back!',
+  messageLoginWithAnotherAccount: 'Login another account',
 
   // LANGUAGE
   english: 'English',

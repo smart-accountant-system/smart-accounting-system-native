@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/destructuring-assignment */
-import React from 'react';
+import React, { Fragment } from 'react';
 import {
   Text,
   View,
@@ -8,11 +8,12 @@ import {
   StatusBar,
   KeyboardAvoidingView,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme, HelperText, Button } from 'react-native-paper';
 import i18n from 'i18n-js';
-import { LocalAuthentication } from 'expo';
+import { LocalAuthentication, SecureStore } from 'expo';
 
 import {
   LoginContainer,
@@ -24,11 +25,14 @@ import {
   FingerprintWrapper,
   FingerprintTextWrapper,
   FingerprintText,
+  HelloText,
+  LoginAnotherAccountWrapper,
 } from '../containers/Login';
 import ROLE from '../constants/role';
 import { login } from '../redux/actions';
 import Layout from '../constants/Layout';
 import MaterialCommunityIcon from '../components/MaterialCommunityIcon';
+import { AmazingText } from '../containers/InvoiceAddition';
 
 class Login extends React.Component {
   state = {
@@ -38,12 +42,21 @@ class Login extends React.Component {
     loading: false,
     compatible: false,
     fingerprints: false,
+    userInfo: null,
   };
 
-  componentDidMount() {
+  componentDidMount = async () => {
     this.checkDeviceForHardware();
     this.checkForFingerprints();
-  }
+    const userInfo = await SecureStore.getItemAsync('userInfo');
+    const userInfoObject = userInfo && JSON.parse(userInfo);
+    if (userInfoObject) {
+      this.setState({
+        username: userInfoObject.username,
+        userInfo: userInfoObject,
+      });
+    }
+  };
 
   checkDeviceForHardware = async () => {
     const compatible = await LocalAuthentication.hasHardwareAsync();
@@ -56,10 +69,36 @@ class Login extends React.Component {
   };
 
   scanFingerprint = async () => {
+    const { navigation } = this.props;
+    const { userInfo } = this.state;
+    const { username, password } = userInfo;
     const result = await LocalAuthentication.authenticateAsync(
       'Scan your finger.'
     );
-    console.log('Scan Result:', result);
+    if (result.success) {
+      this.setState({ loading: true });
+      this.props.login(
+        { username, password },
+        {
+          success: () => {
+            this.setState({ loading: false });
+            const {
+              user: { info },
+            } = this.props;
+            navigation.navigate(
+              !info
+                ? 'Login'
+                : info.role === ROLE.MANAGER || info.role === ROLE.ACCOUNTANT
+                ? 'TabNavigator'
+                : 'StaffNavigator'
+            );
+          },
+          failure: () => {
+            this.setState({ visible: true, loading: false });
+          },
+        }
+      );
+    }
   };
 
   handleLogin = () => {
@@ -93,6 +132,11 @@ class Login extends React.Component {
 
   handleSignup = () => {};
 
+  handleLoginAnotherAccount = async () => {
+    this.setState({ userInfo: null, username: '' });
+    await SecureStore.setItemAsync('userInfo', '');
+  };
+
   render() {
     const {
       username,
@@ -101,6 +145,7 @@ class Login extends React.Component {
       loading,
       fingerprints,
       compatible,
+      userInfo,
     } = this.state;
     const { theme } = this.props;
 
@@ -142,14 +187,21 @@ class Login extends React.Component {
                   paddingTop: 40,
                 }}
               >
-                <TextInputWrapper
-                  label={i18n.t('username')}
-                  autoCompleteType="username"
-                  autoCapitalize="none"
-                  value={username}
-                  style={{ width: '100%' }}
-                  onChangeText={text => this.setState({ username: text })}
-                />
+                {userInfo ? (
+                  <Fragment>
+                    <HelloText content={i18n.t('messageWelcome')} />
+                    <HelloText content={userInfo.fullname.toUpperCase()} />
+                  </Fragment>
+                ) : (
+                  <TextInputWrapper
+                    label={i18n.t('username')}
+                    autoCompleteType="username"
+                    autoCapitalize="none"
+                    value={username}
+                    style={{ width: '100%' }}
+                    onChangeText={text => this.setState({ username: text })}
+                  />
+                )}
                 <TextInputWrapper
                   label={i18n.t('password')}
                   autoCompleteType="password"
@@ -159,9 +211,11 @@ class Login extends React.Component {
                   onChangeText={text => this.setState({ password: text })}
                 />
 
-                <HelperText type="error" visible={visible}>
-                  Tên đăng nhập hoặc mật khẩu không hợp lệ
-                </HelperText>
+                {visible && (
+                  <HelperText type="error" visible>
+                    Tên đăng nhập hoặc mật khẩu không hợp lệ
+                  </HelperText>
+                )}
 
                 <Button
                   mode="contained"
@@ -180,7 +234,7 @@ class Login extends React.Component {
                     {i18n.t('login')}
                   </Text>
                 </Button>
-                {compatible && fingerprints ? (
+                {compatible && fingerprints && userInfo && (
                   <TouchableOpacity onPress={this.scanFingerprint}>
                     <FingerprintWrapper>
                       <MaterialCommunityIcon color="#555" name="fingerprint" />
@@ -189,7 +243,16 @@ class Login extends React.Component {
                       </FingerprintTextWrapper>
                     </FingerprintWrapper>
                   </TouchableOpacity>
-                ) : null}
+                )}
+                {userInfo && (
+                  <LoginAnotherAccountWrapper>
+                    <AmazingText
+                      fontSize={14}
+                      onPress={this.handleLoginAnotherAccount}
+                      content={i18n.t('messageLoginWithAnotherAccount')}
+                    />
+                  </LoginAnotherAccountWrapper>
+                )}
               </View>
 
               <LoginFooter

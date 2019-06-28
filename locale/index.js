@@ -1,7 +1,8 @@
 import { Localization } from 'expo';
 import i18n from 'i18n-js';
 
-import { en, vi } from '../constants/localization';
+import en from './en';
+import vi from './vi';
 import store from '../redux/store';
 import { changeLocalization } from '../redux/actions';
 

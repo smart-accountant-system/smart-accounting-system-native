@@ -7,6 +7,6 @@ export const FieldContainer = styled.View`
 `;
 export const StyledField = styled.View`
   width: 50%;
-  ${props => (props.left ? 'padding-right: 8px;' : '')}
-  ${props => (props.right ? 'padding-left: 8px;' : '')}
+  padding-left: ${props => (props.right ? '8px' : '0px')};
+  padding-right: ${props => (props.left ? '8px' : '0px')};
 `;

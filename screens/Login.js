@@ -7,10 +7,12 @@ import {
   ScrollView,
   StatusBar,
   KeyboardAvoidingView,
+  TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme, HelperText, Button } from 'react-native-paper';
 import i18n from 'i18n-js';
+import { Fingerprint } from 'expo';
 
 import {
   LoginContainer,
@@ -19,10 +21,14 @@ import {
   TextInputWrapper,
   AmazingCircle,
   LoginFooter,
+  FingerprintWrapper,
+  FingerprintTextWrapper,
+  FingerprintText,
 } from '../containers/Login';
 import ROLE from '../constants/role';
 import { login } from '../redux/actions';
 import Layout from '../constants/Layout';
+import MaterialCommunityIcon from '../components/MaterialCommunityIcon';
 
 class Login extends React.Component {
   state = {
@@ -30,6 +36,28 @@ class Login extends React.Component {
     password: '',
     visible: false,
     loading: false,
+    compatible: false,
+    fingerprints: false,
+  };
+
+  componentDidMount() {
+    this.checkDeviceForHardware();
+    this.checkForFingerprints();
+  }
+
+  checkDeviceForHardware = async () => {
+    const compatible = await Fingerprint.hasHardwareAsync();
+    this.setState({ compatible });
+  };
+
+  checkForFingerprints = async () => {
+    const fingerprints = await Fingerprint.isEnrolledAsync();
+    this.setState({ fingerprints });
+  };
+
+  scanFingerprint = async () => {
+    const result = await Fingerprint.authenticateAsync('Scan your finger.');
+    console.log('Scan Result:', result);
   };
 
   handleLogin = () => {
@@ -64,8 +92,17 @@ class Login extends React.Component {
   handleSignup = () => {};
 
   render() {
-    const { username, password, visible, loading } = this.state;
+    const {
+      username,
+      password,
+      visible,
+      loading,
+      fingerprints,
+      compatible,
+    } = this.state;
     const { theme, user } = this.props;
+    console.log(fingerprints, compatible);
+
     return (
       <LoginBackground>
         <StatusBar barStyle="light-content" />
@@ -142,6 +179,14 @@ class Login extends React.Component {
                     {i18n.t('login')}
                   </Text>
                 </Button>
+                <TouchableOpacity onPress={this.scanFingerprint}>
+                  <FingerprintWrapper>
+                    <MaterialCommunityIcon color="#555" name="fingerprint" />
+                    <FingerprintTextWrapper>
+                      <FingerprintText>Mở khoá bằng vân tay</FingerprintText>
+                    </FingerprintTextWrapper>
+                  </FingerprintWrapper>
+                </TouchableOpacity>
               </View>
 
               <LoginFooter

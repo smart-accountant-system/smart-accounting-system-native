@@ -6,21 +6,9 @@ import vi from './vi';
 import store from '../redux/store';
 import { changeLocalization } from '../redux/actions';
 
-export const getLocaleString = locale => {
-  switch (locale) {
-    case 'en':
-      return i18n.t('english');
-    case 'vi':
-      return i18n.t('vietnamese');
-    default:
-      return i18n.t('undefined');
-  }
-};
-
 export const initLocale = () => {
   i18n.fallbacks = true;
   i18n.translations = { en, vi };
-  // i18n.locale = 'en';
 };
 
 export const setLocale = () => {

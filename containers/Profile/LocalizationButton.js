@@ -3,10 +3,9 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 import { connect } from 'react-redux';
-
+import i18n from 'i18n-js';
 import theme from '../../constants/theme';
 import { changeLocalization } from '../../redux/actions';
-import { getLocaleString } from '../../locale';
 import Layout from '../../constants/Layout';
 
 const { deviceWidth } = Layout;
@@ -58,12 +57,12 @@ class Localization extends React.Component {
       <LocalizationWrapper>
         <FormWrapper>
           <LanguageWrapper
-            text={getLocaleString('vi')}
+            text={i18n.t('vietnamese')}
             isChoose={localization === 'vi'}
             onPress={() => this.props.changeLocalization('vi')}
           />
           <LanguageWrapper
-            text={getLocaleString('en')}
+            text={i18n.t('english')}
             isChoose={localization === 'en'}
             onPress={() => this.props.changeLocalization('en')}
           />

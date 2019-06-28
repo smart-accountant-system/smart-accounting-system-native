@@ -103,7 +103,7 @@ class Login extends React.Component {
       compatible,
     } = this.state;
     const { theme, user } = this.props;
-    console.log(fingerprints, compatible);
+    console.log(user);
 
     return (
       <LoginBackground>
@@ -181,14 +181,16 @@ class Login extends React.Component {
                     {i18n.t('login')}
                   </Text>
                 </Button>
-                <TouchableOpacity onPress={this.scanFingerprint}>
-                  <FingerprintWrapper>
-                    <MaterialCommunityIcon color="#555" name="fingerprint" />
-                    <FingerprintTextWrapper>
-                      <FingerprintText>Mở khoá bằng vân tay</FingerprintText>
-                    </FingerprintTextWrapper>
-                  </FingerprintWrapper>
-                </TouchableOpacity>
+                {compatible && fingerprints ? (
+                  <TouchableOpacity onPress={this.scanFingerprint}>
+                    <FingerprintWrapper>
+                      <MaterialCommunityIcon color="#555" name="fingerprint" />
+                      <FingerprintTextWrapper>
+                        <FingerprintText>Mở khoá bằng vân tay</FingerprintText>
+                      </FingerprintTextWrapper>
+                    </FingerprintWrapper>
+                  </TouchableOpacity>
+                ) : null}
               </View>
 
               <LoginFooter

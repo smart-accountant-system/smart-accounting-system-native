@@ -12,7 +12,7 @@ export const CHANGE_LOCALIZATION = 'change-localization';
 export function login(data, callback) {
   return async dispatch => {
     try {
-      dispatch({ type: LOGIN_REQUEST });
+      dispatch({ type: LOGIN_REQUEST, payload: data });
       const endpoint = ENDPOINTS.login;
       const result = await query({
         data,

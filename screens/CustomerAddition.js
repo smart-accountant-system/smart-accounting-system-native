@@ -31,8 +31,8 @@ Mankato Mississippi 96522`,
       { name, phone, address },
       {
         success: () => {
+          // this.setState({ isLoading: false });
           this.props.navigation.navigate('CustomerManagement');
-          this.setState({ isLoading: false });
         },
         failure: () => {
           this.setState({

@@ -11,7 +11,11 @@ import {
 } from '../actions';
 
 const INITIAL_STATE = {
-  dashboard: null,
+  dashboard: {
+    totalCategory: 0,
+    totalEmployee: 0,
+    totalCustomer: 0,
+  },
   error: null,
 };
 

@@ -11,7 +11,12 @@ import { FeatherIcon } from '../components';
 import { Header, Typography, HeaderWrapper } from '../containers/Home';
 import { AmazingText } from '../containers/InvoiceAddition';
 import { FewStyledContainer } from '../containers/PaymentMethodAddition';
-import { getPayments, getCustomers, addReceipt } from '../redux/actions';
+import {
+  logout,
+  getPayments,
+  getCustomers,
+  addReceipt,
+} from '../redux/actions';
 import { handle401 } from '../constants/strategies';
 import { PaymentShow, CustomerShow } from '../containers/Receipt';
 
@@ -150,6 +155,7 @@ const mapStateToProps = state => ({
   currentPayment: state.receipt.currentPaymentInReceiptAddition,
 });
 const mapDispatchToProps = {
+  logout,
   getPayments,
   getCustomers,
   addReceipt,

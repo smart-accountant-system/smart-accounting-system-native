@@ -12,7 +12,7 @@ import {
 
 import theme from '../constants/theme';
 import { FeatherIcon } from '../components';
-import { getAccountById } from '../redux/actions';
+import { logout, getAccountById } from '../redux/actions';
 import { handle401 } from '../constants/strategies';
 import { AccountContent } from '../containers/Account';
 import { TAccount } from '../containers/AccountDetail';
@@ -96,6 +96,7 @@ const mapStateToProps = state => ({
   currentAccount: state.account.currentAccount,
 });
 const mapDispatchToProps = {
+  logout,
   getAccountById,
 };
 

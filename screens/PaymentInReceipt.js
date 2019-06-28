@@ -20,7 +20,7 @@ import theme from '../constants/theme';
 import { FeatherIcon, Loading, Empty } from '../components';
 import { handle401 } from '../constants/strategies';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
-import { getPayments, addPaymentToReceipt } from '../redux/actions';
+import { logout, getPayments, addPaymentToReceipt } from '../redux/actions';
 import { PaymentSectionInReceipt } from '../containers/Receipt';
 
 class PaymentInReceipt extends React.Component {
@@ -54,12 +54,7 @@ class PaymentInReceipt extends React.Component {
   };
 
   render() {
-    const {
-      navigation,
-      user: { info },
-      payments,
-    } = this.props;
-
+    const { navigation, payments } = this.props;
     const { refreshing, loading } = this.state;
 
     return (
@@ -103,10 +98,10 @@ class PaymentInReceipt extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.user,
   payments: state.payment.payments,
 });
 const mapDispatchToProps = {
+  logout,
   getPayments,
   addPaymentToReceipt,
 };

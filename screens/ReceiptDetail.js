@@ -5,7 +5,6 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
-  Text,
   RefreshControl,
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -14,7 +13,7 @@ import { withTheme } from 'react-native-paper';
 import { Header, Typography, HeaderWrapper } from '../containers/Home';
 import theme from '../constants/theme';
 import { FeatherIcon } from '../components';
-import { getReceiptById } from '../redux/actions';
+import { logout, getReceiptById } from '../redux/actions';
 import { handle401 } from '../constants/strategies';
 import { ReceiptHeader, ReceiptDetailBody } from '../containers/ReceiptDetail';
 
@@ -100,6 +99,7 @@ const mapStateToProps = state => ({
   currentReceipt: state.receipt.currentReceipt,
 });
 const mapDispatchToProps = {
+  logout,
   getReceiptById,
 };
 

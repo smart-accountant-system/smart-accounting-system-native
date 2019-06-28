@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import Layout from '../constants/Layout';
 import theme from '../constants/theme';
 import { NoCamera } from '../containers/Invoice';
-import { getInvoiceById } from '../redux/actions';
+import { getInvoiceById, logout } from '../redux/actions';
 import { handle401 } from '../constants/strategies';
 
 const ButtonWrapper = styled.View`
@@ -114,6 +114,7 @@ const mapStateToProps = state => ({
 });
 const mapDispatchToProps = {
   getInvoiceById,
+  logout,
 };
 
 export default connect(

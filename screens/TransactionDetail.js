@@ -14,7 +14,7 @@ import { withTheme } from 'react-native-paper';
 import { Header, Typography, HeaderWrapper } from '../containers/Home';
 import theme from '../constants/theme';
 import { FeatherIcon } from '../components';
-import { getTransactionById } from '../redux/actions';
+import { logout, getTransactionById } from '../redux/actions';
 import { handle401 } from '../constants/strategies';
 
 class TransactionDetail extends React.Component {
@@ -74,6 +74,7 @@ const mapStateToProps = state => ({
   currentTransaction: state.transaction.currentTransaction,
 });
 const mapDispatchToProps = {
+  logout,
   getTransactionById,
 };
 

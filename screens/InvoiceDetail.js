@@ -18,7 +18,7 @@ import { FeatherIcon } from '../components';
 import { handle401 } from '../constants/strategies';
 import { AmazingText } from '../containers/InvoiceAddition';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
-import { getInvoiceById } from '../redux/actions';
+import { logout, getInvoiceById } from '../redux/actions';
 import InvoiceDetailSection from '../containers/InvoiceDetail';
 
 class InvoiceDetail extends React.Component {
@@ -121,6 +121,7 @@ const mapStateToProps = state => ({
   invoices: state.invoice.invoices,
 });
 const mapDispatchToProps = {
+  logout,
   getInvoiceById,
 };
 

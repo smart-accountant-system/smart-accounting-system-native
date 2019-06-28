@@ -22,6 +22,7 @@ import { FeatherIcon, Loading, Empty } from '../components';
 import { handle401 } from '../constants/strategies';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
 import {
+  logout,
   getInvoiceById,
   getPaymentsForInvoice,
   removePayment,
@@ -266,6 +267,7 @@ const mapStateToProps = state => ({
   invoices: state.invoice.invoices,
 });
 const mapDispatchToProps = {
+  logout,
   getInvoiceById,
   getPaymentsForInvoice,
   removePayment,

@@ -49,14 +49,16 @@ export function getPaymentsForInvoice(
         failure();
       }
     } catch (error) {
-      if (error.response.status === 401) {
-        handle401();
-      }
       dispatch({
         type: GET_PAYMENTS_FOR_INVOICE_FAILURE,
         payload: error,
       });
-      failure();
+      // edit
+      if (error.response.status === 401) {
+        handle401();
+      } else {
+        failure();
+      }
     }
   };
 }

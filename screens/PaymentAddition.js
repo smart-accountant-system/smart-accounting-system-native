@@ -17,6 +17,7 @@ import { Header, Typography, HeaderWrapper } from '../containers/Home';
 import { TypePicker, AmazingText } from '../containers/InvoiceAddition';
 import { FewStyledContainer } from '../containers/PaymentMethodAddition';
 import {
+  logout,
   getCategories,
   addPayment,
   getPaymentsForInvoice,
@@ -223,6 +224,7 @@ const mapStateToProps = state => ({
   categories: state.category.categories,
 });
 const mapDispatchToProps = {
+  logout,
   getCategories,
   addPayment,
   getPaymentsForInvoice,

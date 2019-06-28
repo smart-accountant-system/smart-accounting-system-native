@@ -12,12 +12,13 @@ import { Header, Typography, HeaderWrapper } from '../containers/Home';
 import { AmazingText } from '../containers/InvoiceAddition';
 import { FewStyledContainer } from '../containers/PaymentMethodAddition';
 import {
+  logout,
   addReceiptToTransaction,
   getAccounts,
   getReceipts,
   addTransaction,
 } from '../redux/actions';
-import { handle401, toInt } from '../constants/strategies';
+import { handle401 } from '../constants/strategies';
 import { ReceiptShow, AccountShow } from '../containers/Transaction';
 
 class ReceiptAddition extends React.Component {
@@ -193,6 +194,7 @@ const mapStateToProps = state => ({
     state.transaction.currentDebitAccountInTransactionAddition,
 });
 const mapDispatchToProps = {
+  logout,
   addReceiptToTransaction,
   getAccounts,
   getReceipts,

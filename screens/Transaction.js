@@ -189,11 +189,15 @@ class Transaction extends React.Component {
           <Header>
             <FeatherIcon color={theme.colors.primary} name="user" />
             <Typography>{i18n.t('transaction')}</Typography>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('TransactionAddition')}
-            >
-              <FeatherIcon color={theme.colors.white} name="plus" />
-            </TouchableOpacity>
+            {info.role === ROLE.ACCOUNTANT ? (
+              <TouchableOpacity
+                onPress={() => navigation.navigate('TransactionAddition')}
+              >
+                <FeatherIcon color={theme.colors.white} name="plus" />
+              </TouchableOpacity>
+            ) : (
+              <FeatherIcon color={theme.colors.primary} name="plus" />
+            )}
           </Header>
         </HeaderWrapper>
 

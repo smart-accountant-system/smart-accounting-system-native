@@ -95,7 +95,6 @@ class InvoiceDetail extends React.Component {
 
                 navigation.navigate('PaymentAddition', {
                   _id: invoice._id,
-                  previous: 'InvoiceDetail',
                 });
               }}
             />

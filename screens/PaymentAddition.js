@@ -63,7 +63,6 @@ class InvoiceProductAddition extends React.Component {
       currentPaymentMethodId,
     } = this.state;
     const _id = navigation.getParam('_id', '');
-    const previous = navigation.getParam('previous', '');
     this.setState({ isLoading: true });
 
     if (currentPaymentMethodId !== '') {
@@ -78,7 +77,7 @@ class InvoiceProductAddition extends React.Component {
         {
           success: () => {
             this.setState({ isLoading: false });
-            navigation.navigate(previous);
+            navigation.goBack();
           },
           failure: () => this.setState({ isVisible: true, isLoading: false }),
           handle401: () =>
@@ -109,13 +108,12 @@ class InvoiceProductAddition extends React.Component {
       categories.categories.find(
         category => category._id === currentPaymentMethodId
       );
-    const previous = navigation.getParam('previous', '');
 
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
           <Header>
-            <TouchableOpacity onPress={() => navigation.navigate(previous)}>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
               <FeatherIcon color={theme.colors.white} name="chevron-left" />
             </TouchableOpacity>
             <Typography>{i18n.t('paymentAddition')}</Typography>

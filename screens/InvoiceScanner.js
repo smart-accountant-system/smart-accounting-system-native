@@ -1,4 +1,4 @@
-/* eslint-disable react/destructuring-assignment */
+/* eslint-disable no-shadow */
 import React from 'react';
 import { connect } from 'react-redux';
 import { View, ActivityIndicator } from 'react-native';
@@ -46,27 +46,32 @@ class InvoiceScanner extends React.Component {
   }
 
   _handleBarCodeRead = ({ data }) => {
-    const { navigation } = this.props;
+    const { navigation, logout, getInvoiceById, invoices } = this.props;
     this.setState({ detecting: true });
 
-    this.props.getInvoiceById(data, {
-      success: () => {
-        this.setState({ detecting: false });
-
-        navigation.navigate('InvoiceDetail', {
-          _id: data,
-        });
-      },
-      failure: () => {
-        alert(`${i18n.t('messageCanNotGetInvoiceId')}\n${data}`);
-        this.setState({ detecting: false });
-      },
-      handle401: () =>
-        handle401({
-          logout: this.props.logout,
-          navigation: this.props.navigation,
-        }),
-    });
+    if (invoices.invoices.some(invoice => invoice._id === data)) {
+      navigation.replace('InvoiceDetail', {
+        _id: data,
+      });
+    } else {
+      getInvoiceById(data, {
+        success: () => {
+          // this.setState({ detecting: false });
+          navigation.replace('InvoiceDetail', {
+            _id: data,
+          });
+        },
+        failure: () => {
+          alert(`${i18n.t('messageCanNotGetInvoiceId')}\n${data}`);
+          this.setState({ detecting: false });
+        },
+        handle401: () =>
+          handle401({
+            logout,
+            navigation,
+          }),
+      });
+    }
   };
 
   takePicture = async () => {};
@@ -111,6 +116,7 @@ class InvoiceScanner extends React.Component {
 
 const mapStateToProps = state => ({
   user: state.user,
+  invoices: state.invoice.invoices,
 });
 const mapDispatchToProps = {
   getInvoiceById,

@@ -203,7 +203,6 @@ class Payment extends React.Component {
                 onPress={() => {
                   navigation.navigate('PaymentAddition', {
                     _id: this._id,
-                    previous: 'Payment',
                   });
                 }}
               >

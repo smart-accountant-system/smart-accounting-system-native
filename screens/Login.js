@@ -40,7 +40,7 @@ class Login extends React.Component {
       { username, password },
       {
         success: () => {
-          this.setState({ loading: false });
+          // this.setState({ loading: false });
           const {
             user: { info },
           } = this.props;

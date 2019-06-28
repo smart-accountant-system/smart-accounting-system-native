@@ -22,7 +22,10 @@ export function login(data, callback) {
       });
 
       if (result.status === 200 || result.status === 304) {
-        await SecureStore.setItemAsync('userInfo', JSON.stringify(data));
+        await SecureStore.setItemAsync(
+          'userInfo',
+          JSON.stringify({ ...data, fullname: result.data.fullname })
+        );
         await SecureStore.setItemAsync('token', result.data.token);
         dispatch({
           type: LOGIN_SUCCESS,

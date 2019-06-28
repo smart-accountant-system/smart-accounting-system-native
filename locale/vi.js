@@ -113,6 +113,8 @@ export default {
   messageCanNotGetInvoiceId: 'Không thể tìm thấy hóa đơn có ID:',
   messageGuildToScan:
     'Đưa camera lại nơi có mã vạch trên hóa đơn và điều chỉnh điện thoại sao cho mã vạch nằm đúng trong camera trên màn hình',
+  messageWelcome: 'Xin chào!',
+  messageLoginWithAnotherAccount: 'Thoát tài khoản',
 
   // LANGUAGE
   english: 'Tiếng Anh',

@@ -11,18 +11,18 @@ export const InvoiceDetailContainer = styled.View`
   flex-wrap: wrap;
 `;
 
-export const AmazingText = ({ onPress, content }) => (
+export const AmazingText = ({ hackPaddingTop, fontSize, onPress, content }) => (
   <TouchableOpacity
     onPress={onPress}
     style={{
-      paddingTop: 16,
+      paddingTop: hackPaddingTop || 16,
       display: 'flex',
       alignItems: 'center',
     }}
   >
     <Text
       style={{
-        fontSize: 17,
+        fontSize: fontSize || 17,
         color: theme.colors.primary,
         textAlign: 'center',
       }}

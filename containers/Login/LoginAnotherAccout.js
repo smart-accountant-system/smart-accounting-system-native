@@ -5,13 +5,7 @@ export default styled.View`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-top: 16px;
-`;
-
-export const FingerprintTextWrapper = styled.View`
-  padding-left: 10px;
-`;
-
-export const FingerprintText = styled.Text`
-  color: #555;
+  width: 100%;
+  padding-left: 25px;
+  padding-right: 25px;
 `;

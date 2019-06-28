@@ -10,3 +10,5 @@ export {
   FingerprintTextWrapper,
   FingerprintText,
 } from './Fingerprint';
+export { default as HelloText } from './HelloText';
+export { default as LoginAnotherAccountWrapper } from './LoginAnotherAccout';

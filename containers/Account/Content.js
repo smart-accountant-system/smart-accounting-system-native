@@ -55,7 +55,7 @@ export default ({
       <AccountDetail>{time}</AccountDetail>
     </ItemRow>
     <AccountDetail first>{description}</AccountDetail>
-    <ItemRow end>
+    <ItemRow end={1}>
       <AccountDetail color={color}>{balanceType}</AccountDetail>
       <NumberFormat
         value={balance}

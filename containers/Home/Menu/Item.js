@@ -13,7 +13,7 @@ const StyledItem = styled.TouchableOpacity`
   background-color: #fff;
   border-radius: 8px;
 
-  border-color: #aaa;
+  border-color: #ddd;
   border-width: 1;
 
   shadow-color: #aaa;

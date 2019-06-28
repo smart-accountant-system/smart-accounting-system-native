@@ -48,6 +48,7 @@ const Detail = styled.Text`
 `;
 
 export default ({
+  disabled,
   editable,
   id,
   name,
@@ -57,7 +58,7 @@ export default ({
   onPress,
   currentPaymentMethodId,
 }) => (
-  <SwipeoutRemove editable={editable} onRemove={onRemove}>
+  <SwipeoutRemove disabled={disabled} editable={editable} onRemove={onRemove}>
     <StyledContainer
       activeOpacity={0.5}
       onPress={onPress}

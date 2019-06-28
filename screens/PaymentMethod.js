@@ -11,6 +11,7 @@ import {
 import { connect } from 'react-redux';
 import { withTheme, Snackbar } from 'react-native-paper';
 
+import ROLE from '../constants/role';
 import theme from '../constants/theme';
 import { handle401 } from '../constants/strategies';
 import { ItemCategory } from '../containers/PaymentMethod';
@@ -95,7 +96,11 @@ class PaymentMethod extends React.Component {
   };
 
   render() {
-    const { navigation, categories } = this.props;
+    const {
+      navigation,
+      categories,
+      user: { info },
+    } = this.props;
     const { searchText, refreshing, visibleSnackbar } = this.state;
     return (
       <View style={{ display: 'flex', flex: 1 }}>
@@ -105,11 +110,15 @@ class PaymentMethod extends React.Component {
               <FeatherIcon color={theme.colors.white} name="chevron-left" />
             </TouchableOpacity>
             <Typography>{i18n.t('paymentMethod')}</Typography>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('PaymentMethodAddition')}
-            >
-              <FeatherIcon color={theme.colors.white} name="plus" />
-            </TouchableOpacity>
+            {info.role === ROLE.MANAGER ? (
+              <TouchableOpacity
+                onPress={() => navigation.navigate('PaymentMethodAddition')}
+              >
+                <FeatherIcon color={theme.colors.white} name="plus" />
+              </TouchableOpacity>
+            ) : (
+              <FeatherIcon color={theme.colors.primary} name="plus" />
+            )}
           </Header>
         </HeaderWrapper>
         <Searchbar value={searchText} onChangeText={this.handleSearch} />
@@ -129,6 +138,7 @@ class PaymentMethod extends React.Component {
               categories.categories.map(category => (
                 <ItemCategory
                   editable
+                  disabled={info.role !== ROLE.MANAGER}
                   onEdit={() => {}}
                   onRemove={() => this.handleRemove(category._id)}
                   key={category._id}
@@ -166,6 +176,7 @@ class PaymentMethod extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  user: state.user,
   categories: state.category.categories,
 });
 const mapDispatchToProps = {

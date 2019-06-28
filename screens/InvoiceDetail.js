@@ -90,13 +90,11 @@ class InvoiceDetail extends React.Component {
           {info.role === ROLE.STAFF ? (
             <AmazingText
               content={i18n.t('actionAddPayment')}
-              onPress={() => {
-                console.log('im here');
-
+              onPress={() =>
                 navigation.navigate('PaymentAddition', {
                   _id: invoice._id,
-                });
-              }}
+                })
+              }
             />
           ) : null}
           {payments && (

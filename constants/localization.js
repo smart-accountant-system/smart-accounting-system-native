@@ -12,6 +12,7 @@ export const en = {
   invoiceDetail: 'Invoice detail',
   invoiceProductAddition: 'Add product',
   invoiceProductUpdate: 'Update product',
+  invoiceScanner: 'Invoice barcode scanner',
   paymentAddition: 'Add payment',
 
   receipt: 'Receipt',
@@ -98,6 +99,7 @@ export const en = {
 
   // MESSAGE GROUP
   messageEmpty: 'There is no',
+  messageUnsuccess: 'Unsuccessful',
   messageAddFail: 'Add failed, please check again.',
   messageUpdateFail: 'Update failed, please check again.',
   messageDeleteFail: 'Delete failed, please try again later.',
@@ -108,6 +110,8 @@ export const en = {
   messageNoAccessCamera: 'Cannot access to Camera',
   messageScanInvoice: 'Take a photo of your invoice',
   messageCanNotGetInvoiceId: 'Cannot get invoice has ID:',
+  messageGuildToScan:
+    'Place the camera where the barcode is on the invoice and adjust the phone so that the barcode is right in the camera on the screen',
 
   // LANGUAGE
   english: 'English',
@@ -128,6 +132,7 @@ export const vi = {
   invoiceDetail: 'Chi tiết hóa đơn',
   invoiceProductAddition: 'Thêm sản phẩm',
   invoiceProductUpdate: 'Cập nhật sản phẩm',
+  invoiceScanner: 'Quét mã vạch hóa đơn',
   paymentAddition: 'Thêm khoản thanh toán',
 
   receipt: 'Biên lai',
@@ -214,6 +219,7 @@ export const vi = {
 
   // MESSAGE GROUP
   messageEmpty: 'Hiện chưa có',
+  messageUnsuccess: 'Không thành công',
   messageNotAllowEmpty: 'Không nhận dữ liệu rỗng',
   messageAddFail: 'Thêm không thành công, vui lòng kiểm tra lại.',
   messageUpdateFail: 'Cập nhật không thành công, vui lòng kiểm tra lại.',
@@ -225,6 +231,8 @@ export const vi = {
   messageNoAccessCamera: 'Không thể kết nối với Camera',
   messageScanInvoice: 'Chụp hình hoá đơn của bạn',
   messageCanNotGetInvoiceId: 'Không thể tìm thấy hóa đơn có ID:',
+  messageGuildToScan:
+    'Đưa camera lại nơi có mã vạch trên hóa đơn và điều chỉnh điện thoại sao cho mã vạch nằm đúng trong camera trên màn hình',
 
   // LANGUAGE
   english: 'Tiếng Anh',

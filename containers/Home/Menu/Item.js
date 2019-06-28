@@ -13,6 +13,9 @@ const StyledItem = styled.TouchableOpacity`
   background-color: #fff;
   border-radius: 8px;
 
+  border-color: #aaa;
+  border-width: 1;
+
   shadow-color: #aaa;
   shadow-offset: 0;
   shadow-opacity: 1;

@@ -147,7 +147,7 @@ class Account extends React.Component {
               accounts.accounts.map(account => (
                 <AccountItem
                   disabled={info.role !== ROLE.ACCOUNTANT}
-                  editable
+                  editable={1}
                   onRemove={() => this.handleRemove(account._id)}
                   key={account._id}
                   account={account}

@@ -87,7 +87,7 @@ class Home extends React.Component {
                 />
 
                 <FieldContainer>
-                  <StyledField left>
+                  <StyledField left={1}>
                     <MenuItem
                       mini
                       onPress={() => navigation.navigate('EmployeeManagement')}
@@ -97,7 +97,7 @@ class Home extends React.Component {
                       name={i18n.t('employeeManagement')}
                     />
                   </StyledField>
-                  <StyledField right>
+                  <StyledField right={1}>
                     <MenuItem
                       mini
                       onPress={() => navigation.navigate('CustomerManagement')}

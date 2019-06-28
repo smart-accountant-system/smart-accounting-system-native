@@ -63,7 +63,6 @@ class Profile extends React.Component {
               {info.fullname}
             </AvatarTypography>
             <InforWrapper>
-              <Localization />
               <ProfileInfo
                 title={i18n.t('username')}
                 name="user"
@@ -84,6 +83,7 @@ class Profile extends React.Component {
                 name="briefcase"
                 info={info.company.name}
               />
+              <Localization />
               <ProfileInfo
                 onPress={this.handleLogout}
                 name="log-out"

@@ -36,4 +36,7 @@ export const InforWrapper = styled.View`
   flex-direction: column;
   margin-top: 20px;
   width: 100%;
+
+  border-top-width: 12px;
+  border-top-color: #f1f1f1;
 `;

@@ -21,6 +21,7 @@ export default {
 
   paymentMethod: 'Phương thức thanh toán',
   paymentMethodAddition: 'Thêm phương thức thanh toán',
+  paymentMethodUpdate: 'Cập nhật phương thức thanh toán',
 
   employee: 'Nhân viên',
   employeeAddition: 'Thêm nhân viên',

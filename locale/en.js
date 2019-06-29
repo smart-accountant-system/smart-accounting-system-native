@@ -21,6 +21,7 @@ export default {
 
   paymentMethod: 'Payment method',
   paymentMethodAddition: 'Add payment method',
+  paymentMethodUpdate: 'Update payment method',
 
   employee: 'Employee',
   employeeAddition: 'Add employee',

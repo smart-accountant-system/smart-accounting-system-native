@@ -9,16 +9,22 @@ import { View, TouchableOpacity, ScrollView, Text } from 'react-native';
 import theme from '../constants/theme';
 import { FeatherIcon, InterestTextInput } from '../components';
 import { handle401 } from '../constants/strategies';
-import { logout, addCategory, getCategories } from '../redux/actions';
+import { logout, addCategory, updateCategory } from '../redux/actions';
 import { Header, Typography, HeaderWrapper } from '../containers/Home';
 import { FewStyledContainer } from '../containers/PaymentMethodAddition';
 
 class PaymentMethodAddition extends React.Component {
-  state = {
-    name: '',
-    detail: '',
-    isVisible: false,
-  };
+  constructor(props) {
+    super(props);
+    const { navigation } = props;
+    const { _id, name, detail } = navigation.getParam('category', '');
+    this._id = _id;
+    this.state = {
+      name: name || '',
+      detail: detail || '',
+      isVisible: false,
+    };
+  }
 
   handleAddPaymentMethod = () => {
     const { name, detail } = this.state;
@@ -40,6 +46,26 @@ class PaymentMethodAddition extends React.Component {
     );
   };
 
+  handleUpdate = () => {
+    const { name, detail } = this.state;
+    this.props.updateCategory(
+      this._id,
+      { name, detail },
+      {
+        success: () => this.props.navigation.goBack(),
+        failure: () =>
+          this.setState({
+            isVisible: true,
+          }),
+        handle401: () =>
+          handle401({
+            logout: this.props.logout,
+            navigation: this.props.navigation,
+          }),
+      }
+    );
+  };
+
   render() {
     const { navigation, isLoading } = this.props;
     const { name, detail, isVisible } = this.state;
@@ -52,7 +78,11 @@ class PaymentMethodAddition extends React.Component {
             >
               <FeatherIcon color={theme.colors.white} name="chevron-left" />
             </TouchableOpacity>
-            <Typography>{i18n.t('paymentMethodAddition')}</Typography>
+            <Typography>
+              {this._id
+                ? i18n.t('paymentMethodUpdate')
+                : i18n.t('paymentMethodAddition')}
+            </Typography>
             <FeatherIcon color={theme.colors.primary} name="user" />
           </Header>
         </HeaderWrapper>
@@ -71,7 +101,9 @@ class PaymentMethodAddition extends React.Component {
           />
           <FewStyledContainer>
             <HelperText type="error" visible={isVisible}>
-              {i18n.t('messageAddFail')}
+              {this._id
+                ? i18n.t('messageUpdateFail')
+                : i18n.t('messageAddFail')}
             </HelperText>
           </FewStyledContainer>
           <FewStyledContainer paddingTop>
@@ -79,10 +111,14 @@ class PaymentMethodAddition extends React.Component {
               mode="contained"
               style={{ width: 170 }}
               contentStyle={{ height: 50 }}
-              onPress={this.handleAddPaymentMethod}
+              onPress={
+                this._id ? this.handleUpdate : this.handleAddPaymentMethod
+              }
               loading={isLoading}
             >
-              <Text>{i18n.t('actionSave')}</Text>
+              <Text>
+                {this._id ? i18n.t('actionUpdate') : i18n.t('actionSave')}
+              </Text>
             </Button>
           </FewStyledContainer>
         </ScrollView>
@@ -97,7 +133,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   logout,
   addCategory,
-  getCategories,
+  updateCategory,
 };
 
 export default withTheme(

@@ -6,6 +6,9 @@ import {
   POST_CATEGORY_REQUEST,
   POST_CATEGORY_SUCCESS,
   POST_CATEGORY_FAILURE,
+  PATCH_CATEGORY_REQUEST,
+  PATCH_CATEGORY_SUCCESS,
+  PATCH_CATEGORY_FAILURE,
   DELETE_CATEGORY_REQUEST,
   DELETE_CATEGORY_SUCCESS,
   DELETE_CATEGORY_FAILURE
@@ -19,6 +22,7 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case PATCH_CATEGORY_REQUEST:
     case GET_CATEGORIES_REQUEST:
     case POST_CATEGORY_REQUEST:
     case DELETE_CATEGORY_REQUEST:
@@ -46,6 +50,16 @@ export default (state = INITIAL_STATE, action) => {
           },
           error: null,
         };
+        case PATCH_CATEGORY_SUCCESS:
+        return {
+          ...state,
+          isLoading: false,
+          categories: {
+            categories: state.categories.categories.map(cat => cat._id === action.payload._id ? action.payload : cat),
+            total: state.categories.total,
+          },
+          error: null,
+        };
     case DELETE_CATEGORY_SUCCESS:
         return {
           ...state,
@@ -59,6 +73,7 @@ export default (state = INITIAL_STATE, action) => {
           error: null,
         };
 
+    case PATCH_CATEGORY_FAILURE:
     case GET_CATEGORIES_FAILURE:
     case POST_CATEGORY_FAILURE:
     case DELETE_CATEGORY_FAILURE:

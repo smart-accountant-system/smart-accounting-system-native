@@ -139,7 +139,9 @@ class PaymentMethod extends React.Component {
                 <ItemCategory
                   editable
                   disabled={info.role !== ROLE.MANAGER}
-                  onEdit={() => {}}
+                  onEdit={() =>
+                    navigation.navigate('PaymentMethodAddition', { category })
+                  }
                   onRemove={() => this.handleRemove(category._id)}
                   key={category._id}
                   id={category._id}

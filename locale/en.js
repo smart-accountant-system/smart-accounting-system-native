@@ -29,6 +29,7 @@ export default {
   customer: 'Customer',
   customerAddition: 'Add customer',
   customerManagement: 'Customer management',
+  customerUpdate: 'Update customer',
   menu: 'Menu',
 
   transaction: 'Transaction',

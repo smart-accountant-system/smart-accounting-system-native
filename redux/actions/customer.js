@@ -10,6 +10,10 @@ export const POST_CUSTOMER_REQUEST = 'post-customer-request';
 export const POST_CUSTOMER_SUCCESS = 'post-customer-success';
 export const POST_CUSTOMER_FAILURE = 'post-customer-failure';
 
+export const PATCH_CUSTOMER_REQUEST = 'patch-customer-request';
+export const PATCH_CUSTOMER_SUCCESS = 'patch-customer-success';
+export const PATCH_CUSTOMER_FAILURE = 'patch-customer-failure';
+
 export const DELETE_CUSTOMER_REQUEST = 'delete-customer-request';
 export const DELETE_CUSTOMER_SUCCESS = 'delete-customer-success';
 export const DELETE_CUSTOMER_FAILURE = 'delete-customer-failure';
@@ -84,6 +88,47 @@ export function addCustomer(
     } catch (error) {
       dispatch({
         type: POST_CUSTOMER_FAILURE,
+        payload: error,
+      });
+      if (error.response.status === 401) {
+        return handle401();
+      }
+      failure();
+    }
+  };
+}
+
+export function updateCustomer(
+  _id,
+  data,
+  { success = () => {}, failure = () => {}, handle401 }
+) {
+  return async dispatch => {
+    try {
+      dispatch({ type: PATCH_CUSTOMER_REQUEST });
+      const endpoint = `/customers/${_id}`;
+
+      const result = await query({
+        data,
+        endpoint,
+        method: METHODS.patch,
+      });
+
+      if (result.status === 200 || result.status === 201) {
+        dispatch({
+          type: PATCH_CUSTOMER_SUCCESS,
+          payload: result.data,
+        });
+        success();
+      } else {
+        dispatch({
+          type: PATCH_CUSTOMER_FAILURE,
+        });
+        failure();
+      }
+    } catch (error) {
+      dispatch({
+        type: PATCH_CUSTOMER_FAILURE,
         payload: error,
       });
       if (error.response.status === 401) {

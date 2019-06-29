@@ -34,6 +34,8 @@ const Typography = styled.Text`
 const Detail = styled.Text``;
 
 export default ({
+  editable,
+  onEdit,
   disabled,
   onPress,
   noBorder,
@@ -42,7 +44,12 @@ export default ({
   phone,
   address,
 }) => (
-  <SwipeoutRemove disabled={disabled} onRemove={onRemove}>
+  <SwipeoutRemove
+    disabled={disabled}
+    editable={editable}
+    onEdit={onEdit}
+    onRemove={onRemove}
+  >
     <Container onPress={onPress} noBorder={noBorder} activeOpacity={0.75}>
       <Header>
         <Typography>{name}</Typography>

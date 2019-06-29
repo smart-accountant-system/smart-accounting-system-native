@@ -58,11 +58,9 @@ class Home extends React.Component {
     const {
       navigation,
       dashboard,
-      user: { info, localization },
+      user: { info },
     } = this.props;
     const { refreshing } = this.state;
-    console.log(localization);
-
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>

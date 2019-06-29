@@ -29,6 +29,7 @@ export default {
   customer: 'Khách hàng',
   customerAddition: 'Thêm khách hàng',
   customerManagement: 'Quản lý khách hàng',
+  customerUpdate: 'Cập nhật khách hàng',
   menu: 'Danh mục',
 
   transaction: 'Giao dịch',

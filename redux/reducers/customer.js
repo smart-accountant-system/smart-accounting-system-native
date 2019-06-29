@@ -5,6 +5,9 @@ import {
   POST_CUSTOMER_REQUEST,
   POST_CUSTOMER_SUCCESS,
   POST_CUSTOMER_FAILURE,
+  PATCH_CUSTOMER_REQUEST,
+  PATCH_CUSTOMER_SUCCESS,
+  PATCH_CUSTOMER_FAILURE,
   DELETE_CUSTOMER_REQUEST,
   DELETE_CUSTOMER_SUCCESS,
   DELETE_CUSTOMER_FAILURE,
@@ -17,6 +20,7 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case PATCH_CUSTOMER_REQUEST:
     case DELETE_CUSTOMER_REQUEST:
     case POST_CUSTOMER_REQUEST:
     case GET_CUSTOMERS_REQUEST:
@@ -40,6 +44,19 @@ export default (state = INITIAL_STATE, action) => {
         },
         error: null,
       };
+
+    case PATCH_CUSTOMER_SUCCESS:
+      return {
+        ...state,
+        customers: {
+          total: state.customers.total,
+          customers: state.customers.customers.map(customer =>
+            customer._id === action.payload._id ? action.payload : customer
+          ),
+        },
+        error: null,
+      };
+
     case DELETE_CUSTOMER_SUCCESS:
       return {
         ...state,
@@ -51,6 +68,7 @@ export default (state = INITIAL_STATE, action) => {
         },
         error: null,
       };
+    case PATCH_CUSTOMER_FAILURE:
     case GET_CUSTOMERS_FAILURE:
     case POST_CUSTOMER_FAILURE:
     case DELETE_CUSTOMER_FAILURE:

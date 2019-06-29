@@ -139,6 +139,10 @@ class CustomerManagement extends React.Component {
             ) : (
               customers.customers.map(customer => (
                 <CustomerItem
+                  editable
+                  onEdit={() =>
+                    navigation.navigate('CustomerAddition', { customer })
+                  }
                   disabled={info.role === ROLE.ACCOUNTANT}
                   onRemove={() => this.handleRemove(customer._id)}
                   key={customer._id}

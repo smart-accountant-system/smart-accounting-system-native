@@ -9,20 +9,24 @@ import { View, TouchableOpacity, ScrollView, Text } from 'react-native';
 import theme from '../constants/theme';
 import { handle401 } from '../constants/strategies';
 import { FeatherIcon, InterestTextInput } from '../components';
-import { logout, addCustomer } from '../redux/actions';
+import { logout, addCustomer, updateCustomer } from '../redux/actions';
 import { Header, Typography, HeaderWrapper } from '../containers/Home';
 import { FewStyledContainer } from '../containers/PaymentMethodAddition';
 
 class CustomerAddition extends React.Component {
-  state = {
-    name: 'Celeste Slater',
-    phone: '0987654321',
-    address: `Cecilia Chapman
-711-2880 Nulla St.
-Mankato Mississippi 96522`,
-    isVisible: false,
-    isLoading: false,
-  };
+  constructor(props) {
+    super(props);
+    const { navigation } = props;
+    const { _id, name, phone, address } = navigation.getParam('customer', '');
+    this._id = _id;
+    this.state = {
+      name: name || '',
+      phone: phone || '',
+      address: address || '',
+      isVisible: false,
+      isLoading: false,
+    };
+  }
 
   handleAddCustomer = () => {
     const { name, phone, address } = this.state;
@@ -34,12 +38,33 @@ Mankato Mississippi 96522`,
           // this.setState({ isLoading: false });
           this.props.navigation.navigate('CustomerManagement');
         },
-        failure: () => {
+        failure: () =>
           this.setState({
             isVisible: true,
             isLoading: false,
-          });
-        },
+          }),
+        handle401: () =>
+          handle401({
+            logout: this.props.logout,
+            navigation: this.props.navigation,
+          }),
+      }
+    );
+  };
+
+  handleUpdate = () => {
+    const { name, phone, address } = this.state;
+    this.setState({ isLoading: true });
+    this.props.updateCustomer(
+      this._id,
+      { name, phone, address },
+      {
+        success: () => this.props.navigation.goBack(),
+        failure: () =>
+          this.setState({
+            isVisible: true,
+            isLoading: false,
+          }),
         handle401: () =>
           handle401({
             logout: this.props.logout,
@@ -61,7 +86,9 @@ Mankato Mississippi 96522`,
             >
               <FeatherIcon color={theme.colors.white} name="chevron-left" />
             </TouchableOpacity>
-            <Typography>{i18n.t('customerAddition')}</Typography>
+            <Typography>
+              {this._id ? i18n.t('customerUpdate') : i18n.t('customerAddition')}
+            </Typography>
             <FeatherIcon color={theme.colors.primary} name="chevron-left" />
           </Header>
         </HeaderWrapper>
@@ -89,10 +116,12 @@ Mankato Mississippi 96522`,
               mode="contained"
               style={{ width: 170 }}
               contentStyle={{ height: 50 }}
-              onPress={this.handleAddCustomer}
+              onPress={this._id ? this.handleUpdate : this.handleAddCustomer}
               loading={isLoading}
             >
-              <Text>{i18n.t('actionSave')}</Text>
+              <Text>
+                {this._id ? i18n.t('actionUpdate') : i18n.t('actionSave')}
+              </Text>
             </Button>
           </FewStyledContainer>
         </ScrollView>
@@ -101,7 +130,7 @@ Mankato Mississippi 96522`,
           onDismiss={() => this.setState({ isVisible: false })}
           action={{ label: 'OK', onPress: () => {} }}
         >
-          {i18n.t('messageAddFail')}
+          {this._id ? i18n.t('messageUpdateFail') : i18n.t('messageAddFail')}
         </Snackbar>
       </View>
     );
@@ -114,6 +143,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   logout,
   addCustomer,
+  updateCustomer,
 };
 
 export default withTheme(

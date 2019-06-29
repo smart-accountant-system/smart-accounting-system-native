@@ -26,6 +26,7 @@ export default {
   employee: 'Nhân viên',
   employeeAddition: 'Thêm nhân viên',
   employeeManagement: 'Quản lý nhân viên',
+  employeeUpdate: 'Cập nhật nhân viên',
 
   customer: 'Khách hàng',
   customerAddition: 'Thêm khách hàng',

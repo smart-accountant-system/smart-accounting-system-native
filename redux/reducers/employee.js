@@ -5,6 +5,9 @@ import {
   POST_EMPLOYEE_REQUEST,
   POST_EMPLOYEE_SUCCESS,
   POST_EMPLOYEE_FAILURE,
+  PATCH_EMPLOYEE_REQUEST,
+  PATCH_EMPLOYEE_SUCCESS,
+  PATCH_EMPLOYEE_FAILURE,
   DELETE_EMPLOYEE_REQUEST,
   DELETE_EMPLOYEE_SUCCESS,
   DELETE_EMPLOYEE_FAILURE,
@@ -12,18 +15,17 @@ import {
 
 const INITIAL_STATE = {
   employees: null,
-  isLoading: false,
   error: null,
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case PATCH_EMPLOYEE_REQUEST:
     case GET_EMPLOYEES_REQUEST:
     case POST_EMPLOYEE_REQUEST:
     case DELETE_EMPLOYEE_REQUEST:
       return {
         ...state,
-        isLoading: true,
         error: null,
       };
 
@@ -31,23 +33,33 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         employees: action.payload,
-        isLoading: false,
         error: null,
       };
     case POST_EMPLOYEE_SUCCESS:
       return {
         ...state,
-        isLoading: false,
         employees: {
           employees: [...state.employees.employees, action.payload],
           total: state.employees.total + 1,
         },
         error: null,
       };
+
+    case PATCH_EMPLOYEE_SUCCESS:
+      return {
+        ...state,
+        employees: {
+          employees: state.employees.employees.map(employee =>
+            employee._id === action.payload._id ? action.payload : employee
+          ),
+          total: state.employees.total,
+        },
+        error: null,
+      };
+
     case DELETE_EMPLOYEE_SUCCESS:
       return {
         ...state,
-        isLoading: false,
         employees: {
           total: state.employees.total - 1,
           employees: state.employees.employees.filter(
@@ -57,12 +69,12 @@ export default (state = INITIAL_STATE, action) => {
         error: null,
       };
 
+    case PATCH_EMPLOYEE_FAILURE:
     case GET_EMPLOYEES_FAILURE:
     case POST_EMPLOYEE_FAILURE:
     case DELETE_EMPLOYEE_FAILURE:
       return {
         ...state,
-        isLoading: false,
         error: action.payload,
       };
     default:

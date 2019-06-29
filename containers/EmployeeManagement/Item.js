@@ -53,6 +53,8 @@ const AmazingStatus = styled.View`
 `;
 
 export default ({
+  editable,
+  onEdit,
   onPress,
   onRemove,
   color,
@@ -62,7 +64,7 @@ export default ({
   phone,
   email,
 }) => (
-  <SwipeoutRemove onRemove={onRemove}>
+  <SwipeoutRemove editable={editable} onEdit={onEdit} onRemove={onRemove}>
     <EmployeeContainer onPress={onPress}>
       <View>
         <Card>

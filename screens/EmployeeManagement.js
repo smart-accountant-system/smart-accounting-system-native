@@ -129,6 +129,10 @@ class EmployeeManagement extends React.Component {
             ) : (
               employees.employees.map(employee => (
                 <EmployeeItem
+                  editable
+                  onEdit={() =>
+                    navigation.navigate('EmployeeAddition', { employee })
+                  }
                   onRemove={() => this.handleRemove(employee._id)}
                   key={employee._id}
                   onPress={() =>
@@ -138,10 +142,10 @@ class EmployeeManagement extends React.Component {
                   username={employee.username}
                   role={
                     employee.role === 1
-                      ? 'Staff'
+                      ? i18n.t('staff')
                       : employee.role === 2
-                      ? 'Accountant'
-                      : 'Manager'
+                      ? i18n.t('accountant')
+                      : i18n.t('manager')
                   }
                   color={
                     employee.role === 1

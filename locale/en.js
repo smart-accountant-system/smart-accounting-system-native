@@ -26,6 +26,7 @@ export default {
   employee: 'Employee',
   employeeAddition: 'Add employee',
   employeeManagement: 'Employee management',
+  employeeUpdate: 'Update employee',
 
   customer: 'Customer',
   customerAddition: 'Add customer',

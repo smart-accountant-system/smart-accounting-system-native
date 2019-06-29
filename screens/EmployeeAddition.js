@@ -1,6 +1,7 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable no-shadow */
 /* eslint-disable react/destructuring-assignment */
-import React from 'react';
+import React, { Fragment } from 'react';
 import i18n from 'i18n-js';
 import { connect } from 'react-redux';
 import { withTheme, Button, Snackbar } from 'react-native-paper';
@@ -10,22 +11,32 @@ import theme from '../constants/theme';
 import { handle401 } from '../constants/strategies';
 import { Radio, RadioGroup } from '../containers/EmployeeAddition';
 import { FeatherIcon, InterestTextInput } from '../components';
-import { logout, addEmployee, getEmployees } from '../redux/actions';
+import { logout, addEmployee, updateEmployee } from '../redux/actions';
 import { Header, Typography, HeaderWrapper } from '../containers/Home';
 import { FewStyledContainer } from '../containers/PaymentMethodAddition';
 
 class EmployeeAddition extends React.Component {
-  state = {
-    username: 'staff_sample',
-    password: '123456',
-    repassword: '123456',
-    fullname: 'staff',
-    role: 1,
-    email: 'staff_sample@gmail.com',
-    phone: '0123456789',
-    isVisible: false,
-    isTypo: false,
-  };
+  constructor(props) {
+    super(props);
+    const { navigation } = props;
+    const { _id, username, fullname, role, email, phone } = navigation.getParam(
+      'employee',
+      ''
+    );
+    this._id = _id;
+    this.state = {
+      username: username || '',
+      password: '',
+      repassword: '',
+      fullname: fullname || '',
+      role: role || 1,
+      email: email || '',
+      phone: phone || '',
+      isVisible: false,
+      isTypo: false,
+      isLoading: false,
+    };
+  }
 
   handleAddEmployee = () => {
     const {
@@ -43,17 +54,39 @@ class EmployeeAddition extends React.Component {
       return;
     }
 
+    this.setState({ isLoading: true });
     this.props.addEmployee(
       { username, password, fullname, role, email, phone },
       {
-        success: () => {
-          this.props.navigation.navigate('EmployeeManagement');
-        },
-        failure: () => {
+        success: () => this.props.navigation.goBack(),
+        failure: () =>
           this.setState({
             isVisible: true,
-          });
-        },
+            isLoading: false,
+          }),
+        handle401: () =>
+          handle401({
+            logout: this.props.logout,
+            navigation: this.props.navigation,
+          }),
+      }
+    );
+  };
+
+  handleUpdate = () => {
+    const { username, fullname, role, email, phone } = this.state;
+
+    this.setState({ isLoading: true });
+    this.props.updateEmployee(
+      this._id,
+      { username, fullname, role, email, phone },
+      {
+        success: () => this.props.navigation.goBack(),
+        failure: () =>
+          this.setState({
+            isVisible: true,
+            isLoading: false,
+          }),
         handle401: () =>
           handle401({
             logout: this.props.logout,
@@ -64,7 +97,7 @@ class EmployeeAddition extends React.Component {
   };
 
   render() {
-    const { navigation, isLoading } = this.props;
+    const { navigation } = this.props;
     const {
       username,
       password,
@@ -75,6 +108,7 @@ class EmployeeAddition extends React.Component {
       phone,
       isVisible,
       isTypo,
+      isLoading,
     } = this.state;
 
     return (
@@ -86,7 +120,9 @@ class EmployeeAddition extends React.Component {
             >
               <FeatherIcon color={theme.colors.white} name="chevron-left" />
             </TouchableOpacity>
-            <Typography>{i18n.t('employeeAddition')}</Typography>
+            <Typography>
+              {this._id ? i18n.t('employeeUpdate') : i18n.t('employeeAddition')}
+            </Typography>
             <FeatherIcon color={theme.colors.primary} name="chevron-left" />
           </Header>
         </HeaderWrapper>
@@ -97,18 +133,22 @@ class EmployeeAddition extends React.Component {
             value={username}
             onChangeText={username => this.setState({ username })}
           />
-          <InterestTextInput
-            label={i18n.t('password')}
-            value={password}
-            secureTextEntry
-            onChangeText={password => this.setState({ password })}
-          />
-          <InterestTextInput
-            label={i18n.t('repassword')}
-            value={repassword}
-            secureTextEntry
-            onChangeText={repassword => this.setState({ repassword })}
-          />
+          {!this._id && (
+            <Fragment>
+              <InterestTextInput
+                label={i18n.t('password')}
+                value={password}
+                secureTextEntry
+                onChangeText={password => this.setState({ password })}
+              />
+              <InterestTextInput
+                label={i18n.t('repassword')}
+                value={repassword}
+                secureTextEntry
+                onChangeText={repassword => this.setState({ repassword })}
+              />
+            </Fragment>
+          )}
           <InterestTextInput
             label={i18n.t('fullname')}
             value={fullname}
@@ -147,10 +187,12 @@ class EmployeeAddition extends React.Component {
               mode="contained"
               style={{ width: 170 }}
               contentStyle={{ height: 50 }}
-              onPress={this.handleAddEmployee}
+              onPress={this._id ? this.handleUpdate : this.handleAddEmployee}
               loading={isLoading}
             >
-              <Text>{i18n.t('actionSave')}</Text>
+              <Text>
+                {this._id ? i18n.t('actionUpdate') : i18n.t('actionSave')}
+              </Text>
             </Button>
           </FewStyledContainer>
         </ScrollView>
@@ -159,7 +201,11 @@ class EmployeeAddition extends React.Component {
           onDismiss={() => this.setState({ isVisible: false, isTypo: false })}
           action={{ label: 'OK', onPress: () => {} }}
         >
-          {isTypo ? i18n.t('messageWP') : i18n.t('messageAddFail')}
+          {this._id
+            ? i18n.t('messageUpdateFail')
+            : isTypo
+            ? i18n.t('messageWP')
+            : i18n.t('messageAddFail')}
         </Snackbar>
       </View>
     );
@@ -167,13 +213,12 @@ class EmployeeAddition extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  isLoading: state.employee.isLoading,
   error: state.employee.error,
 });
 const mapDispatchToProps = {
   logout,
+  updateEmployee,
   addEmployee,
-  getEmployees,
 };
 
 export default withTheme(

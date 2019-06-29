@@ -1,4 +1,5 @@
 /* eslint-disable import/no-cycle */
+import { SecureStore } from 'expo';
 import { query } from '../../services/api';
 import { METHODS } from '../../constants/api';
 
@@ -115,6 +116,11 @@ export function updateEmployee(
       });
 
       if (result.status === 200 || result.status === 201) {
+        const { username, password, fullname } = data;
+        await SecureStore.setItemAsync(
+          'userInfo',
+          JSON.stringify({ username, password, fullname })
+        );
         dispatch({
           type: PATCH_EMPLOYEE_SUCCESS,
           payload: result.data,

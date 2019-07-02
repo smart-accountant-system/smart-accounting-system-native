@@ -103,6 +103,7 @@ export default {
   actionUnlockWithFingerprint: 'Unlock with fingerprint',
   actionScanFingerprint: 'Please scan your fingerprint',
   actionLogout: 'Logout',
+  actionGetPasswordBack: 'Get new password',
 
   // MESSAGE GROUP
   messageEmpty: 'There is no',
@@ -122,6 +123,7 @@ export default {
   messageWelcome: 'Welcome back!',
   messageLoginWithAnotherAccount: 'Login another account',
   messageLoginFailed: 'Username or password is invalid',
+  messageGetPasswordBack: 'Please enter your email to get password back',
 
   // LANGUAGE
   english: 'English',

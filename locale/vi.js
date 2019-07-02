@@ -103,6 +103,7 @@ export default {
   actionUnlockWithFingerPrint: 'Mở khoá bằng vân tay',
   actionScanFingerprint: 'Hãy quét vân tay của bạn',
   actionLogout: 'Đăng xuất',
+  actionGetPasswordBack: 'Lấy lại mật khẩu',
 
   // MESSAGE GROUP
   messageEmpty: 'Hiện chưa có',
@@ -123,6 +124,8 @@ export default {
   messageWelcome: 'Xin chào!',
   messageLoginWithAnotherAccount: 'Thoát tài khoản',
   messageLoginFailed: 'Tên đăng nhập hoặc mật khẩu không hợp lệ',
+  messageGetPasswordBack: 'Vui lòng cung cấp email để lấy lại mật khẩu',
+
   // LANGUAGE
   english: 'Tiếng Anh',
   vietnamese: 'Tiếng Việt',

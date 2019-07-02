@@ -2,7 +2,7 @@ import React from 'react';
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import { connect } from 'react-redux';
 
-import Login from '../screens/Login';
+import LoginNavigator from './LoginNavigator';
 import AuthLoadingScreen from '../screens/AuthLoadingScreen';
 
 import TabNavigator from './TabNavigator';
@@ -11,7 +11,7 @@ import StaffNavigator from './StaffNavigator';
 const StackNavigator = createSwitchNavigator(
   {
     AuthLoading: AuthLoadingScreen,
-    Login,
+    LoginNavigator,
     TabNavigator,
     StaffNavigator,
   },

@@ -4,6 +4,7 @@ import i18n from 'i18n-js';
 import { View, TouchableOpacity, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-paper';
+import { ImagePicker, Permissions, Constants } from 'expo';
 
 import {
   HeaderWrapper,
@@ -23,6 +24,10 @@ import { FeatherIcon, ProfileInfo } from '../components';
 import { Localization } from '../containers/Profile';
 
 class Profile extends React.Component {
+  state = {
+    image: null,
+  };
+
   handleLogout = () => {
     const { navigation } = this.props;
     this.props.logout({
@@ -32,8 +37,33 @@ class Profile extends React.Component {
     });
   };
 
+  getPermissionAsync = async () => {
+    if (Constants.platform.ios) {
+      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      if (status !== 'granted') {
+        alert('Sorry, we need camera roll permissions to make this work!');
+      }
+    }
+  };
+
+  _pickImage = async () => {
+    await this.getPermissionAsync();
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [1, 1],
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      this.setState({ image: result.uri });
+    }
+  };
+
   render() {
     const { navigation, info } = this.props;
+    const { image } = this.state;
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
@@ -56,9 +86,11 @@ class Profile extends React.Component {
                   }}
                 />
               ) : (
-                <AvatarTypography color={info.color}>
-                  {info.fullname.substring(0, 1).toUpperCase()}
-                </AvatarTypography>
+                <TouchableOpacity onPress={this._pickImage}>
+                  <AvatarTypography color={info.color}>
+                    {info.fullname.substring(0, 1).toUpperCase()}
+                  </AvatarTypography>
+                </TouchableOpacity>
               )}
             </Avatar>
             <AvatarTypography text={1} size="26">

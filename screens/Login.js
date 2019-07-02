@@ -128,9 +128,15 @@ class Login extends React.Component {
     );
   };
 
-  handleForgetPassword = () => {};
+  handleForgetPassword = () => {
+    const { navigation } = this.props;
+    navigation.navigate('ForgetPassword');
+  };
 
-  handleSignup = () => {};
+  handleSignup = () => {
+    const { navigation } = this.props;
+    navigation.navigate('Register');
+  };
 
   handleLoginAnotherAccount = async () => {
     this.setState({ userInfo: null, username: '' });

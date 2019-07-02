@@ -115,7 +115,7 @@ class Login extends React.Component {
           } = this.props;
           navigation.navigate(
             !info
-              ? 'Login'
+              ? 'LoginNavigator'
               : info.role === ROLE.MANAGER || info.role === ROLE.ACCOUNTANT
               ? 'TabNavigator'
               : 'StaffNavigator'

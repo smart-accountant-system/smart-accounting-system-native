@@ -112,7 +112,6 @@ class Account extends React.Component {
       navigation,
       user: { info },
     } = this.props;
-    console.log(accounts);
     const { searchText, refreshing, visibleSnackbar } = this.state;
     return (
       <View style={{ display: 'flex', flex: 1 }}>

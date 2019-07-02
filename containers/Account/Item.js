@@ -11,11 +11,17 @@ export default ({
   disabled,
   editable,
   onRemove,
+  onEdit,
   children,
   account,
   accountDetail,
 }) => (
-  <SwipeoutRemove disabled={disabled} editable={editable} onRemove={onRemove}>
+  <SwipeoutRemove
+    onEdit={onEdit}
+    disabled={disabled}
+    editable={editable}
+    onRemove={onRemove}
+  >
     <StyledItem
       debit={account.debit}
       credit={account.credit}

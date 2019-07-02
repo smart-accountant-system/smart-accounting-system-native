@@ -9,17 +9,23 @@ import { View, TouchableOpacity, ScrollView, Text } from 'react-native';
 import theme from '../constants/theme';
 import { handle401 } from '../constants/strategies';
 import { FeatherIcon, InterestTextInput } from '../components';
-import { logout, addAccount } from '../redux/actions';
+import { logout, addAccount, updateAccount } from '../redux/actions';
 import { Header, Typography, HeaderWrapper } from '../containers/Home';
 import { FewStyledContainer } from '../containers/PaymentMethodAddition';
 
 class AccountAddition extends React.Component {
-  state = {
-    name: '',
-    description: '',
-    isVisible: false,
-    isLoading: false,
-  };
+  constructor(props) {
+    super(props);
+    const { navigation } = props;
+    const { _id, name, description } = navigation.getParam('account', '');
+    this._id = _id;
+    this.state = {
+      name: name || '',
+      description: description || '',
+      isVisible: false,
+      isLoading: false,
+    };
+  }
 
   handleAddAccount = () => {
     const { name, description } = this.state;
@@ -46,6 +52,29 @@ class AccountAddition extends React.Component {
     );
   };
 
+  handleUpdate = () => {
+    const { name, description } = this.state;
+
+    this.setState({ isLoading: true });
+    this.props.updateAccount(
+      this._id,
+      { name, description },
+      {
+        success: () => this.props.navigation.goBack(),
+        failure: () =>
+          this.setState({
+            isVisible: true,
+            isLoading: false,
+          }),
+        handle401: () =>
+          handle401({
+            logout: this.props.logout,
+            navigation: this.props.navigation,
+          }),
+      }
+    );
+  };
+
   render() {
     const { navigation } = this.props;
     const { name, description, isVisible, isLoading } = this.state;
@@ -56,7 +85,9 @@ class AccountAddition extends React.Component {
             <TouchableOpacity onPress={() => navigation.navigate('Account')}>
               <FeatherIcon color={theme.colors.white} name="chevron-left" />
             </TouchableOpacity>
-            <Typography>{i18n.t('accountAddition')}</Typography>
+            <Typography>
+              {this._id ? i18n.t('accountUpdate') : i18n.t('accountAddition')}
+            </Typography>
             <Text />
           </Header>
         </HeaderWrapper>
@@ -78,10 +109,12 @@ class AccountAddition extends React.Component {
               mode="contained"
               style={{ width: 170 }}
               contentStyle={{ height: 50 }}
-              onPress={this.handleAddAccount}
+              onPress={this._id ? this.handleUpdate : this.handleAddAccount}
               loading={isLoading}
             >
-              <Text>{i18n.t('actionSave')}</Text>
+              <Text>
+                {this._id ? i18n.t('actionUpdate') : i18n.t('actionSave')}
+              </Text>
             </Button>
           </FewStyledContainer>
         </ScrollView>
@@ -90,7 +123,7 @@ class AccountAddition extends React.Component {
           onDismiss={() => this.setState({ isVisible: false })}
           action={{ label: 'OK', onPress: () => {} }}
         >
-          {i18n.t('messageAddFail')}
+          {this._id ? i18n.t('messageUpdateFail') : i18n.t('messageAddFail')}
         </Snackbar>
       </View>
     );
@@ -103,6 +136,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   logout,
   addAccount,
+  updateAccount,
 };
 
 export default withTheme(

@@ -41,6 +41,7 @@ export default {
   search: 'Search',
   account: 'Account',
   accountAddition: 'Add account',
+  accountUpdate: 'Update account',
 
   balance: 'Balance',
   payment: 'Payment',

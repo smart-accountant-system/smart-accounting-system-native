@@ -41,6 +41,7 @@ export default {
   search: 'Tìm kiếm',
   account: 'Tài khoản',
   accountAddition: 'Thêm tài khoản',
+  accountUpdate: 'Cập nhật tài khoản',
 
   balance: 'Bảng cân đối',
   payment: 'Khoản thanh toán',

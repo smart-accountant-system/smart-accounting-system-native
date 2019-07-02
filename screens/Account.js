@@ -112,6 +112,7 @@ class Account extends React.Component {
       navigation,
       user: { info },
     } = this.props;
+    console.log(accounts);
     const { searchText, refreshing, visibleSnackbar } = this.state;
     return (
       <View style={{ display: 'flex', flex: 1 }}>
@@ -149,6 +150,9 @@ class Account extends React.Component {
                   disabled={info.role !== ROLE.ACCOUNTANT}
                   editable
                   onRemove={() => this.handleRemove(account._id)}
+                  onEdit={() =>
+                    navigation.navigate('AccountAddition', { account })
+                  }
                   key={account._id}
                   account={account}
                   accountDetail={this.accountDetail}

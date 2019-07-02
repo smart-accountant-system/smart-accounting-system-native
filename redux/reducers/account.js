@@ -9,6 +9,9 @@ import {
   POST_ACCOUNT_REQUEST,
   POST_ACCOUNT_SUCCESS,
   POST_ACCOUNT_FAILURE,
+  UPDATE_ACCOUNT_REQUEST,
+  UPDATE_ACCOUNT_SUCCESS,
+  UPDATE_ACCOUNT_FAILURE,
   DELETE_ACCOUNT_REQUEST,
   DELETE_ACCOUNT_SUCCESS,
   DELETE_ACCOUNT_FAILURE,
@@ -27,6 +30,7 @@ export default (state = INITIAL_STATE, action) => {
     case GET_ACCOUNT_BY_ID_REQUEST:
     case POST_ACCOUNT_REQUEST:
     case DELETE_ACCOUNT_REQUEST:
+    case UPDATE_ACCOUNT_REQUEST:
       return {
         ...state,
         isLoading: true,
@@ -71,10 +75,24 @@ export default (state = INITIAL_STATE, action) => {
         error: null,
       };
 
+    case UPDATE_ACCOUNT_SUCCESS:
+      return {
+        ...state,
+        accounts: {
+          accounts: state.accounts.accounts.map(account =>
+            account._id === action.payload._id ? action.payload : account
+          ),
+          total: state.accounts.total,
+        },
+        isLoading: false,
+        error: null,
+      };
+
     case GET_ACCOUNTS_FAILURE:
     case GET_ACCOUNT_BY_ID_FAILURE:
     case POST_ACCOUNT_FAILURE:
     case DELETE_ACCOUNT_FAILURE:
+    case UPDATE_ACCOUNT_FAILURE:
       return {
         ...state,
         isLoading: false,

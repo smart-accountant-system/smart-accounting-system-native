@@ -10,7 +10,7 @@ import { View, TouchableOpacity, ScrollView, Text } from 'react-native';
 import theme from '../constants/theme';
 import { handle401 } from '../constants/strategies';
 import { FeatherIcon, InterestTextInput } from '../components';
-import { logout } from '../redux/actions';
+import { logout, updateProfile } from '../redux/actions';
 import { Header, Typography, HeaderWrapper } from '../containers/Home';
 import { FewStyledContainer } from '../containers/PaymentMethodAddition';
 
@@ -20,6 +20,8 @@ class EditProfile extends React.Component {
     const { navigation } = this.props;
     const info = navigation.getParam('info', '');
     this.state = {
+      _id: info._id || '',
+      username: info.username || '',
       fullname: info.fullname || '',
       email: info.email || '',
       phone: info.phone || '',
@@ -28,7 +30,32 @@ class EditProfile extends React.Component {
     };
   }
 
-  handleUpdate = () => {};
+  handleUpdate = () => {
+    const { navigation } = this.props;
+    const { _id, username, fullname, email, phone } = this.state;
+    this.setState({ isLoading: true });
+    this.props.updateProfile(
+      _id,
+      {
+        username,
+        fullname,
+        email,
+        phone,
+      },
+      {
+        success: () => {
+          this.setState({ isLoading: false });
+          navigation.goBack();
+        },
+        failure: () => {},
+        handle401: () =>
+          handle401({
+            logout: this.props.logout,
+            navigation: this.props.navigation,
+          }),
+      }
+    );
+  };
 
   render() {
     const { navigation } = this.props;
@@ -91,6 +118,7 @@ const mapStateToProps = state => ({
 });
 const mapDispatchToProps = {
   logout,
+  updateProfile,
 };
 
 export default withTheme(

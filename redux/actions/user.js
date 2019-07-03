@@ -122,10 +122,10 @@ export function updateProfile(
       });
 
       if (result.status === 200 || result.status === 201) {
-        const { username, password, fullname } = data;
+        const { username, fullname } = data;
         await SecureStore.setItemAsync(
           'userInfo',
-          JSON.stringify({ username, password, fullname })
+          JSON.stringify({ username, fullname })
         );
         dispatch({
           type: PATCH_PROFILE_SUCCESS,

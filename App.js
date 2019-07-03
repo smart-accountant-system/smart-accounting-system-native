@@ -2,7 +2,7 @@ import React from 'react';
 import { StatusBar } from 'react-native';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import { AppLoading, Font, Icon, Permissions } from 'expo';
+import { AppLoading, Font, Icon, Permissions, Linking } from 'expo';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { ThemeProvider } from 'styled-components';
 import { MessageProvider } from './contexts';
@@ -68,6 +68,9 @@ export default class App extends React.Component {
   render() {
     const { isLoadingComplete } = this.state;
     const { skipLoadingScreen } = this.props;
+
+    const prefix = Linking.makeUrl('/');
+
     if (!isLoadingComplete && !skipLoadingScreen) {
       return (
         <AppLoading
@@ -85,7 +88,7 @@ export default class App extends React.Component {
               <MessageProvider>
                 <PaperProvider theme={theme}>
                   <StatusBar barStyle="light-content" />
-                  <AppNavigator />
+                  <AppNavigator uriPrefix={prefix} />
                   <MiniOfflineSign />
                 </PaperProvider>
               </MessageProvider>

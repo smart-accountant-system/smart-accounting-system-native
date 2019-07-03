@@ -11,7 +11,9 @@ import StaffNavigator from './StaffNavigator';
 const StackNavigator = createSwitchNavigator(
   {
     AuthLoading: AuthLoadingScreen,
-    LoginNavigator,
+    LoginNavigator: {
+      screen: LoginNavigator,
+    },
     TabNavigator,
     StaffNavigator,
   },

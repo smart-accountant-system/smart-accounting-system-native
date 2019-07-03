@@ -8,12 +8,11 @@ import {
   StatusBar,
   KeyboardAvoidingView,
   TouchableOpacity,
-  ActivityIndicator,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme, HelperText, Button } from 'react-native-paper';
 import i18n from 'i18n-js';
-import { LocalAuthentication, SecureStore } from 'expo';
+import { LocalAuthentication, SecureStore, Linking } from 'expo';
 
 import {
   LoginContainer,
@@ -46,6 +45,7 @@ class Login extends React.Component {
   };
 
   componentDidMount = async () => {
+    const { navigation } = this.props;
     this.checkDeviceForHardware();
     this.checkForFingerprints();
     const userInfo = await SecureStore.getItemAsync('userInfo');
@@ -56,6 +56,17 @@ class Login extends React.Component {
         userInfo: userInfoObject,
       });
     }
+    Linking.getInitialURL()
+      .then(url => {
+        if (url) {
+          console.log(`Initial url is: ${url}`);
+          navigation.navigate('PasswordChange', { url });
+        }
+      })
+      .catch(err => console.error('An error occurred', err));
+    Linking.addEventListener('url', url => {
+      navigation.navigate('PasswordChange', { url });
+    });
   };
 
   checkDeviceForHardware = async () => {
@@ -130,6 +141,7 @@ class Login extends React.Component {
 
   handleForgetPassword = () => {
     const { navigation } = this.props;
+    // dev
     navigation.navigate('ForgetPassword');
   };
 

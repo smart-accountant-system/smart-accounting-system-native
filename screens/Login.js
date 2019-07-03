@@ -56,14 +56,6 @@ class Login extends React.Component {
         userInfo: userInfoObject,
       });
     }
-    Linking.getInitialURL()
-      .then(url => {
-        if (url) {
-          console.log(`Initial url is: ${url}`);
-          navigation.navigate('PasswordChange', { url });
-        }
-      })
-      .catch(err => console.error('An error occurred', err));
     Linking.addEventListener('url', url => {
       navigation.navigate('PasswordChange', { url });
     });

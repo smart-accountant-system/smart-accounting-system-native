@@ -6,6 +6,7 @@ export default {
   login: 'Đăng nhập',
   signup: 'Đăng ký',
   logout: 'Đăng xuất',
+  editProfile: 'Chỉnh sửa thông tin',
 
   invoice: 'Hoá đơn',
   invoiceAddition: 'Thêm hoá đơn',
@@ -105,6 +106,9 @@ export default {
   actionScanFingerprint: 'Hãy quét vân tay của bạn',
   actionLogout: 'Đăng xuất',
   actionGetPasswordBack: 'Lấy lại mật khẩu',
+  actionChooseTransaction: 'Chọn giao dịch',
+  actionChooseAccountToRecordDebit: 'Choose Account to record Debit',
+  actionChooseAccountToRecordCredit: 'Choose Account to record Credit',
 
   // MESSAGE GROUP
   messageEmpty: 'Hiện chưa có',

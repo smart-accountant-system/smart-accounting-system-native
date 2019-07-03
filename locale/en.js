@@ -6,6 +6,7 @@ export default {
   login: 'Login',
   signup: 'Sign up',
   logout: 'Logout',
+  editProfile: 'Edit Profile',
 
   invoice: 'Invoice',
   invoiceAddition: 'Add invoice',
@@ -105,6 +106,9 @@ export default {
   actionScanFingerprint: 'Please scan your fingerprint',
   actionLogout: 'Logout',
   actionGetPasswordBack: 'Get new password',
+  actionChooseTransaction: 'Choose transaction',
+  actionChooseAccountToRecordDebit: 'Choose Account to record Debit',
+  actionChooseAccountToRecordCredit: 'Choose Account to record Credit',
 
   // MESSAGE GROUP
   messageEmpty: 'There is no',

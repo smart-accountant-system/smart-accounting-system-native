@@ -4,7 +4,7 @@
 import React, { Fragment } from 'react';
 import i18n from 'i18n-js';
 import { connect } from 'react-redux';
-import { withTheme, Button } from 'react-native-paper';
+import { withTheme, Button, Snackbar } from 'react-native-paper';
 import { View, TouchableOpacity, ScrollView, Text } from 'react-native';
 
 import theme from '../constants/theme';
@@ -14,62 +14,73 @@ import { logout } from '../redux/actions';
 import { Header, Typography, HeaderWrapper } from '../containers/Home';
 import { FewStyledContainer } from '../containers/PaymentMethodAddition';
 
-class PasswordChange extends React.Component {
+class EditProfile extends React.Component {
   constructor(props) {
     super(props);
     const { navigation } = this.props;
-    const url = navigation.getParam('url', '');
-    const a = url.url.split('/');
+    const info = navigation.getParam('info', '');
     this.state = {
-      password: '',
-      repassword: '',
+      fullname: info.fullname || '',
+      email: info.email || '',
+      phone: info.phone || '',
       isLoading: false,
-      url: a[a.length - 1],
+      isVisible: false,
     };
   }
 
-  handleGetPasswordBack = () => {};
+  handleUpdate = () => {};
 
   render() {
     const { navigation } = this.props;
-    const { password, repassword, isLoading, url } = this.state;
-    console.log(url);
+    const { fullname, email, phone, isLoading, isVisible } = this.state;
 
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
           <Header>
-            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
               <FeatherIcon color={theme.colors.white} name="chevron-left" />
             </TouchableOpacity>
-            <Typography>{i18n.t('messageForgetPassword')}</Typography>
+            <Typography>{i18n.t('editProfile')}</Typography>
             <FeatherIcon color={theme.colors.primary} name="chevron-left" />
           </Header>
         </HeaderWrapper>
 
         <ScrollView>
           <InterestTextInput
-            label={i18n.t('password')}
-            value={password}
-            onChangeText={password => this.setState({ password })}
+            label={i18n.t('fullname')}
+            value={fullname}
+            onChangeText={fullname => this.setState({ fullname })}
           />
           <InterestTextInput
-            label={i18n.t('repassword')}
-            value={repassword}
-            onChangeText={repassword => this.setState({ repassword })}
+            label={i18n.t('email')}
+            value={email}
+            onChangeText={email => this.setState({ email })}
+          />
+          <InterestTextInput
+            label={i18n.t('phone')}
+            value={phone}
+            onChangeText={phone => this.setState({ phone })}
           />
           <FewStyledContainer paddingTop>
             <Button
               mode="contained"
               style={{ width: 170 }}
               contentStyle={{ height: 50 }}
-              onPress={this.handleGetPasswordBack}
+              onPress={this.handleUpdate}
               loading={isLoading}
             >
-              <Text>{i18n.t('actionGetPasswordBack')}</Text>
+              <Text>{i18n.t('actionUpdate')}</Text>
             </Button>
           </FewStyledContainer>
         </ScrollView>
+        <Snackbar
+          visible={isVisible}
+          onDismiss={() => this.setState({ isVisible: false })}
+          action={{ label: 'OK', onPress: () => {} }}
+        >
+          {i18n.t('messageUpdateFail')}
+        </Snackbar>
       </View>
     );
   }
@@ -86,5 +97,5 @@ export default withTheme(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(PasswordChange)
+  )(EditProfile)
 );

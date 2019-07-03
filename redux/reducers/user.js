@@ -6,6 +6,9 @@ import {
   LOGIN_FAILURE,
   LOGOUT,
   CHANGE_LOCALIZATION,
+  UPLOAD_IMAGE_REQUEST,
+  UPLOAD_IMAGE_SUCCESS,
+  UPLOAD_IMAGE_FAILURE,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -15,6 +18,7 @@ const INITIAL_STATE = {
   info: null,
   localization: Localization.locale,
   isLocaleSet: false,
+  photo: null,
 };
 
 function getRandomColor() {
@@ -29,6 +33,7 @@ function getRandomColor() {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case LOGIN_REQUEST:
+    case UPLOAD_IMAGE_REQUEST:
       return {
         ...state,
         isLogging: true,
@@ -43,6 +48,7 @@ export default (state = INITIAL_STATE, action) => {
         info: { ...action.payload, color: getRandomColor(), token: undefined },
       };
     case LOGIN_FAILURE:
+    case UPLOAD_IMAGE_FAILURE:
       return {
         ...state,
         isLogging: false,
@@ -59,6 +65,11 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         localization: action.payload,
         isLocaleSet: true,
+      };
+    case UPLOAD_IMAGE_SUCCESS:
+      return {
+        ...state,
+        photo: action.payload,
       };
     default:
       return state;

@@ -1,7 +1,7 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import i18n from 'i18n-js';
-import { View, TouchableOpacity, ScrollView } from 'react-native';
+import { View, TouchableOpacity, ScrollView, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-paper';
 import { ImagePicker, Permissions, Constants } from 'expo';
@@ -19,14 +19,19 @@ import {
 
 import { AmazingText } from '../containers/InvoiceAddition';
 import theme from '../constants/theme';
-import { logout, changeLocalization } from '../redux/actions';
+import { logout, changeLocalization, uploadImage } from '../redux/actions';
 import { FeatherIcon, ProfileInfo } from '../components';
 import { Localization } from '../containers/Profile';
+import { handle401 } from '../constants/strategies';
 
 class Profile extends React.Component {
-  state = {
-    image: null,
-  };
+  constructor(props) {
+    super(props);
+    const { info } = this.props;
+    this.state = {
+      image: info.avatar,
+    };
+  }
 
   handleLogout = () => {
     const { navigation } = this.props;
@@ -47,6 +52,7 @@ class Profile extends React.Component {
   };
 
   _pickImage = async () => {
+    const { info, photo, error } = this.props;
     await this.getPermissionAsync();
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -54,11 +60,47 @@ class Profile extends React.Component {
       aspect: [1, 1],
     });
 
-    console.log(result);
-
     if (!result.cancelled) {
+      this.props.uploadImage(
+        { file: this.createFormData(result, { _id: info._id }) },
+        {
+          success: () => {
+            console.log('1', photo);
+          },
+          failure: () => {
+            // console.log(error);
+          },
+          handle401: () =>
+            handle401({
+              logout: this.props.logout,
+              navigation: this.props.navigation,
+            }),
+        }
+      );
       this.setState({ image: result.uri });
     }
+  };
+
+  createFormData = photo => {
+    const data = new FormData();
+
+    const localUri =
+      Platform.OS === 'android' ? photo.uri : photo.uri.replace('file://', '');
+
+    const filename = localUri.split('/').pop();
+
+    const match = /\.(\w+)$/.exec(filename);
+    const type = match ? `image/${match[1]}` : `image`;
+
+    data.append('file', {
+      name: filename,
+      type,
+      uri: localUri,
+    });
+
+    console.log(data);
+
+    return data;
   };
 
   render() {
@@ -72,27 +114,31 @@ class Profile extends React.Component {
               <FeatherIcon color={theme.colors.white} name="x" />
             </TouchableOpacity>
             <Typography>{i18n.t('profile')}</Typography>
-            <FeatherIcon color={theme.colors.primary} name="user" />
+            <TouchableOpacity
+              onPress={() => navigation.navigate('EditProfile', { info })}
+            >
+              <FeatherIcon color={theme.colors.white} name="edit" />
+            </TouchableOpacity>
           </Header>
         </HeaderWrapper>
         <ScrollView>
           <ContentWrapper>
-            <Avatar color={info.color}>
-              {info.avatar ? (
-                <AvatarPicture
-                  borderRadius={100}
-                  source={{
-                    uri: info.avatar,
-                  }}
-                />
-              ) : (
-                <TouchableOpacity onPress={this._pickImage}>
+            <TouchableOpacity onPress={this._pickImage}>
+              <Avatar color={info.color}>
+                {image ? (
+                  <AvatarPicture
+                    borderRadius={100}
+                    source={{
+                      uri: image,
+                    }}
+                  />
+                ) : (
                   <AvatarTypography color={info.color}>
                     {info.fullname.substring(0, 1).toUpperCase()}
                   </AvatarTypography>
-                </TouchableOpacity>
-              )}
-            </Avatar>
+                )}
+              </Avatar>
+            </TouchableOpacity>
             <AvatarTypography text={1} size="26">
               {info.fullname}
             </AvatarTypography>
@@ -139,10 +185,13 @@ class Profile extends React.Component {
 
 const mapStateToProps = state => ({
   info: state.user.info,
+  photo: state.user.photo,
+  error: state.user.error,
 });
 const mapDispatchToProps = {
   logout,
   changeLocalization,
+  uploadImage,
 };
 
 export default withTheme(

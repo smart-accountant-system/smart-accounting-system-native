@@ -8,6 +8,7 @@ import FeatherIcon from '../components/FeatherIcon';
 
 import Home from '../screens/Home';
 import Profile from '../screens/Profile';
+import EditProfile from '../screens/EditProfile';
 
 import Invoice from '../screens/Invoice';
 import InvoiceDetail from '../screens/InvoiceDetail';
@@ -43,6 +44,7 @@ export const HomeStack = createStackNavigator(
   {
     Home,
     Profile,
+    EditProfile,
 
     PaymentMethod,
     PaymentMethodAddition,

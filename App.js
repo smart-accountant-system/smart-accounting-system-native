@@ -22,6 +22,7 @@ import AvenirNextBold from './assets/fonts/AvenirNextLTPro-Bold.otf';
 import NotoSans from './assets/fonts/NotoSans-Regular.ttf';
 import theme from './constants/theme';
 import MiniOfflineSign from './components/MiniOfflineSign';
+import NavigationService from './components/NavigationService';
 
 import LocaleWrapper from './components/LocaleWrapper';
 import { initLocale } from './locale';
@@ -37,6 +38,14 @@ export default class App extends React.Component {
 
   componentDidMount = async () => {
     await Permissions.askAsync(Permissions.NOTIFICATIONS);
+    Linking.getInitialURL()
+      .then(url => {
+        if (url) {
+          console.log(`Initial url is: ${url}`);
+          // NavigationService.navigate('PasswordChange', { url });
+        }
+      })
+      .catch(err => console.error('An error occurred', err));
   };
 
   _loadResourcesAsync = async () =>
@@ -88,7 +97,12 @@ export default class App extends React.Component {
               <MessageProvider>
                 <PaperProvider theme={theme}>
                   <StatusBar barStyle="light-content" />
-                  <AppNavigator uriPrefix={prefix} />
+                  <AppNavigator
+                    ref={navigatorRef => {
+                      NavigationService.setTopLevelNavigator(navigatorRef);
+                    }}
+                    uriPrefix={prefix}
+                  />
                   <MiniOfflineSign />
                 </PaperProvider>
               </MessageProvider>

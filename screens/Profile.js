@@ -61,22 +61,15 @@ class Profile extends React.Component {
     });
 
     if (!result.cancelled) {
-      this.props.uploadImage(
-        { file: this.createFormData(result, { _id: info._id }) },
-        {
-          success: () => {
-            console.log('1', photo);
-          },
-          failure: () => {
-            // console.log(error);
-          },
-          handle401: () =>
-            handle401({
-              logout: this.props.logout,
-              navigation: this.props.navigation,
-            }),
-        }
-      );
+      this.props.uploadImage(this.createFormData(result), {
+        success: () => {},
+        failure: () => {},
+        handle401: () =>
+          handle401({
+            logout: this.props.logout,
+            navigation: this.props.navigation,
+          }),
+      });
       this.setState({ image: result.uri });
     }
   };
@@ -98,14 +91,13 @@ class Profile extends React.Component {
       uri: localUri,
     });
 
-    console.log(data);
-
     return data;
   };
 
   render() {
     const { navigation, info } = this.props;
     const { image } = this.state;
+    console.log(info);
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>

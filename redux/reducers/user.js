@@ -9,6 +9,9 @@ import {
   UPLOAD_IMAGE_REQUEST,
   UPLOAD_IMAGE_SUCCESS,
   UPLOAD_IMAGE_FAILURE,
+  PATCH_PROFILE_REQUEST,
+  PATCH_PROFILE_SUCCESS,
+  PATCH_PROFILE_FAILURE,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -34,6 +37,7 @@ export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case LOGIN_REQUEST:
     case UPLOAD_IMAGE_REQUEST:
+    case PATCH_PROFILE_REQUEST:
       return {
         ...state,
         isLogging: true,
@@ -49,6 +53,7 @@ export default (state = INITIAL_STATE, action) => {
       };
     case LOGIN_FAILURE:
     case UPLOAD_IMAGE_FAILURE:
+    case PATCH_PROFILE_FAILURE:
       return {
         ...state,
         isLogging: false,
@@ -70,6 +75,11 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         photo: action.payload,
+      };
+    case PATCH_PROFILE_SUCCESS:
+      return {
+        ...state,
+        info: action.payload,
       };
     default:
       return state;

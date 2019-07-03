@@ -5,6 +5,7 @@ import { View, TouchableOpacity, ScrollView, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-paper';
 import { ImagePicker, Permissions, Constants } from 'expo';
+import { API_URL } from '../constants/api';
 
 import {
   HeaderWrapper,
@@ -19,7 +20,12 @@ import {
 
 import { AmazingText } from '../containers/InvoiceAddition';
 import theme from '../constants/theme';
-import { logout, changeLocalization, uploadImage } from '../redux/actions';
+import {
+  logout,
+  changeLocalization,
+  uploadImage,
+  updateProfile,
+} from '../redux/actions';
 import { FeatherIcon, ProfileInfo } from '../components';
 import { Localization } from '../containers/Profile';
 import { handle401 } from '../constants/strategies';
@@ -52,7 +58,7 @@ class Profile extends React.Component {
   };
 
   _pickImage = async () => {
-    const { info, photo, error } = this.props;
+    const { info } = this.props;
     await this.getPermissionAsync();
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -60,9 +66,31 @@ class Profile extends React.Component {
       aspect: [1, 1],
     });
 
+    const { username, fullname, role, email, phone } = info;
     if (!result.cancelled) {
       this.props.uploadImage(this.createFormData(result), {
-        success: () => {},
+        success: data => {
+          this.props.updateProfile(
+            data.user,
+            {
+              username,
+              fullname,
+              role,
+              email,
+              phone,
+              avatar: `${API_URL}/upload/${data.thumbName}`,
+            },
+            {
+              success: () => {},
+              failure: () => {},
+              handle401: () =>
+                handle401({
+                  logout: this.props.logout,
+                  navigation: this.props.navigation,
+                }),
+            }
+          );
+        },
         failure: () => {},
         handle401: () =>
           handle401({
@@ -97,7 +125,6 @@ class Profile extends React.Component {
   render() {
     const { navigation, info } = this.props;
     const { image } = this.state;
-    console.log(info);
     return (
       <View style={{ display: 'flex', flex: 1 }}>
         <HeaderWrapper>
@@ -184,6 +211,7 @@ const mapDispatchToProps = {
   logout,
   changeLocalization,
   uploadImage,
+  updateProfile,
 };
 
 export default withTheme(

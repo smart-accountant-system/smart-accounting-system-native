@@ -19,6 +19,7 @@ class EmployeeAddition extends React.Component {
     username: '',
     isLoading: false,
     isVisible: false,
+    isSendSuccess: false,
   };
 
   handleGetPasswordBack = () => {
@@ -26,7 +27,11 @@ class EmployeeAddition extends React.Component {
     this.setState({ isLoading: true });
     this.props.sendResetPassword(username, {
       success: () => {
-        this.setState({ isLoading: false });
+        this.setState({
+          isLoading: false,
+          isSendSuccess: true,
+          isVisible: true,
+        });
       },
       failure: () => {
         this.setState({ isVisible: true, isLoading: false });
@@ -36,7 +41,7 @@ class EmployeeAddition extends React.Component {
 
   render() {
     const { navigation } = this.props;
-    const { username, isLoading, isVisible } = this.state;
+    const { username, isLoading, isVisible, isSendSuccess } = this.state;
 
     return (
       <View style={{ display: 'flex', flex: 1 }}>
@@ -74,7 +79,9 @@ class EmployeeAddition extends React.Component {
           onDismiss={() => this.setState({ isVisible: false })}
           action={{ label: 'OK', onPress: () => {} }}
         >
-          {i18n.t('messageSendRSPWFailure')}
+          {isSendSuccess
+            ? i18n.t('messageSendRSPWSuccess')
+            : i18n.t('messageSendRSPWFailure')}
         </Snackbar>
       </View>
     );

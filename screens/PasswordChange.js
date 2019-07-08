@@ -18,6 +18,7 @@ class PasswordChange extends React.Component {
     password: '',
     repassword: '',
     isLoading: false,
+    isTypo: false,
     isVisible: false,
   };
 
@@ -37,13 +38,14 @@ class PasswordChange extends React.Component {
         },
       });
     } else {
-      this.setState({ isVisible: true });
+      this.setState({ isVisible: true, isTypo: true });
     }
   };
 
   render() {
     const { navigation } = this.props;
-    const { password, repassword, isLoading, isVisible } = this.state;
+    const { password, repassword, isLoading, isVisible, isTypo } = this.state;
+    const url = navigation.getParam('url', '');
 
     return (
       <View style={{ display: 'flex', flex: 1 }}>
@@ -61,12 +63,22 @@ class PasswordChange extends React.Component {
           <InterestTextInput
             label={i18n.t('password')}
             value={password}
-            onChangeText={password => this.setState({ password })}
+            autoCompleteType="password"
+            autoCapitalize="none"
+            secureTextEntry
+            onChangeText={password =>
+              this.setState({ password, isTypo: false })
+            }
           />
           <InterestTextInput
             label={i18n.t('repassword')}
+            autoCompleteType="password"
+            autoCapitalize="none"
+            secureTextEntry
             value={repassword}
-            onChangeText={repassword => this.setState({ repassword })}
+            onChangeText={repassword =>
+              this.setState({ repassword, isTypo: false })
+            }
           />
           <FewStyledContainer paddingTop>
             <Button
@@ -82,10 +94,10 @@ class PasswordChange extends React.Component {
         </ScrollView>
         <Snackbar
           visible={isVisible}
-          onDismiss={() => this.setState({ isVisible: false })}
+          onDismiss={() => this.setState({ isVisible: false, isTypo: false })}
           action={{ label: 'OK', onPress: () => {} }}
         >
-          {i18n.t('messageRSPWFailure')}
+          {isTypo ? i18n.t('messageWP') : i18n.t('messageRSPWFailure')}
         </Snackbar>
       </View>
     );

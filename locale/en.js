@@ -132,7 +132,9 @@ export default {
   messageNoConnection: 'No internet connection',
   messageRSPWFailure: 'Reset password failure',
   messageChoosePaymentMethod: 'Payment method',
-
+  messageSendRSPWSuccess:
+    'Your query had been recored, please check your email',
+  messageSendRSPWFailure: 'Query reset password failed, please try again!',
   // LANGUAGE
   english: 'English',
   vietnamese: 'Vietnamese',

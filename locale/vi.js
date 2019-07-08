@@ -134,6 +134,10 @@ export default {
   messageNoConnection: 'Không có kết nối mạng',
   messageRSPWFailure: 'Đổi mật khẩu không thành công',
   messageChoosePaymentMethod: 'Phương thức thanh toán',
+  messageSendRSPWSuccess:
+    'Yêu cầu đã được ghi nhận, hãy kiểm tra thư điện tử của bạn',
+  messageSendRSPWFailure:
+    'Yêu cầu lấy lại mật khẩu thất bại, vui lòng thử lại sau!',
 
   // LANGUAGE
   english: 'Tiếng Anh',

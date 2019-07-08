@@ -131,6 +131,7 @@ export default {
   messageGetPasswordBack: 'Please enter your username to get password back',
   messageNoConnection: 'No internet connection',
   messageRSPWFailure: 'Reset password failure',
+  messageChoosePaymentMethod: 'Payment method',
 
   // LANGUAGE
   english: 'English',

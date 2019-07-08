@@ -133,6 +133,7 @@ export default {
     'Vui lòng cung cấp tên đăng nhập\nđể lấy lại mật khẩu',
   messageNoConnection: 'Không có kết nối mạng',
   messageRSPWFailure: 'Đổi mật khẩu không thành công',
+  messageChoosePaymentMethod: 'Phương thức thanh toán',
 
   // LANGUAGE
   english: 'Tiếng Anh',

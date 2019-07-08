@@ -36,6 +36,8 @@ class PasswordChange extends React.Component {
           this.setState({ isLoading: false, isVisible: true });
         },
       });
+    } else {
+      this.setState({ isVisible: true });
     }
   };
 

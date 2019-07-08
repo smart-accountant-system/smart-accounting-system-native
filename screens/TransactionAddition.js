@@ -63,36 +63,44 @@ class ReceiptAddition extends React.Component {
       currentDebitAccountInTransaction,
     } = this.props;
     this.setState({ isLoading: true });
-    this.props.addTransaction(
-      {
-        receipt: currentReceiptInTracsaction._id,
-        fromAccount: {
-          id: currentCreditAccountInTransaction._id,
-          type: 0,
+    if (
+      currentReceiptInTracsaction &&
+      currentDebitAccountInTransaction &&
+      currentCreditAccountInTransaction
+    ) {
+      this.props.addTransaction(
+        {
+          receipt: currentReceiptInTracsaction._id,
+          fromAccount: {
+            id: currentCreditAccountInTransaction._id,
+            type: 0,
+          },
+          toAccount: {
+            id: currentDebitAccountInTransaction._id,
+            type: 1,
+          },
         },
-        toAccount: {
-          id: currentDebitAccountInTransaction._id,
-          type: 1,
-        },
-      },
-      {
-        success: () => {
-          navigation.navigate('Transaction');
-          this.setState({ isLoading: false });
-        },
-        failure: () => {
-          this.setState({
-            isVisible: true,
-            isLoading: false,
-          });
-        },
-        handle401: () =>
-          handle401({
-            logout: this.props.logout,
-            navigation: this.props.navigation,
-          }),
-      }
-    );
+        {
+          success: () => {
+            navigation.navigate('Transaction');
+            this.setState({ isLoading: false });
+          },
+          failure: () => {
+            this.setState({
+              isVisible: true,
+              isLoading: false,
+            });
+          },
+          handle401: () =>
+            handle401({
+              logout: this.props.logout,
+              navigation: this.props.navigation,
+            }),
+        }
+      );
+    } else {
+      this.setState({ isLoading: false, isVisible: true });
+    }
   };
 
   render() {

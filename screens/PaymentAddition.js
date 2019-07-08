@@ -174,7 +174,7 @@ class InvoiceProductAddition extends React.Component {
         </Snackbar>
         <Portal>
           <Dialog dismissable={false} visible={isChoosing}>
-            <Dialog.Title>Choose payment method</Dialog.Title>
+            <Dialog.Title>{i18n.t('messageChoosePaymentMethod')}</Dialog.Title>
             <Dialog.Content>
               <View style={{ height: 300 }}>
                 <ScrollView>

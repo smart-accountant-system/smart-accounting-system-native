@@ -59,29 +59,33 @@ class ReceiptAddition extends React.Component {
   handleAdd = () => {
     const { navigation, currentCustomer, currentPayment } = this.props;
     this.setState({ isLoading: true });
-    this.props.addReceipt(
-      {
-        payment: currentPayment._id,
-        customer: currentCustomer._id,
-      },
-      {
-        success: () => {
-          navigation.navigate('Receipt');
-          this.setState({ isLoading: false });
+    if (currentCustomer && currentPayment) {
+      this.props.addReceipt(
+        {
+          payment: currentPayment._id,
+          customer: currentCustomer._id,
         },
-        failure: () => {
-          this.setState({
-            isVisible: true,
-            isLoading: false,
-          });
-        },
-        handle401: () =>
-          handle401({
-            logout: this.props.logout,
-            navigation: this.props.navigation,
-          }),
-      }
-    );
+        {
+          success: () => {
+            navigation.navigate('Receipt');
+            this.setState({ isLoading: false });
+          },
+          failure: () => {
+            this.setState({
+              isVisible: true,
+              isLoading: false,
+            });
+          },
+          handle401: () =>
+            handle401({
+              logout: this.props.logout,
+              navigation: this.props.navigation,
+            }),
+        }
+      );
+    } else {
+      this.setState({ isVisible: true, isLoading: false });
+    }
   };
 
   render() {

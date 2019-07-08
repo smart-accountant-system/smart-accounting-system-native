@@ -23,6 +23,14 @@ export const REGISTER_REQUEST = 'register-request';
 export const REGISTER_SUCCESS = 'register-success';
 export const REGISTER_FAILURE = 'register-failure';
 
+export const SEND_RESET_PASSWORD_REQUEST = 'send-reset-password-request';
+export const SEND_RESET_PASSWORD_SUCCESS = 'send-reset-password-success';
+export const SEND_RESET_PASSWORD_FAILURE = 'send-reset-password-failure';
+
+export const RESET_PASSWORD_REQUEST = 'reset-password-request';
+export const RESET_PASSWORD_SUCCESS = 'reset-password-success';
+export const RESET_PASSWORD_FAILURE = 'reset-password-failure';
+
 export function login(data, callback) {
   return async dispatch => {
     try {
@@ -185,6 +193,79 @@ export function register(data, callback) {
     } catch (error) {
       dispatch({
         type: REGISTER_FAILURE,
+        payload: error,
+      });
+      callback.failure();
+    }
+  };
+}
+
+export function sendResetPassword(username, callback) {
+  return async dispatch => {
+    try {
+      dispatch({ type: SEND_RESET_PASSWORD_REQUEST });
+      const endpoint = `/employees/rspw/send-email/${username}`;
+      const result = await query({
+        endpoint,
+        method: METHODS.get,
+      });
+
+      if (
+        result.status === 200 ||
+        result.status === 304 ||
+        result.status === 201
+      ) {
+        dispatch({
+          type: SEND_RESET_PASSWORD_SUCCESS,
+          payload: result.data,
+        });
+        callback.success();
+      } else {
+        dispatch({
+          type: SEND_RESET_PASSWORD_FAILURE,
+        });
+        callback.failure();
+      }
+    } catch (error) {
+      dispatch({
+        type: SEND_RESET_PASSWORD_FAILURE,
+        payload: error,
+      });
+      callback.failure();
+    }
+  };
+}
+
+export function resetPassword(data, token, callback) {
+  return async dispatch => {
+    try {
+      dispatch({ type: RESET_PASSWORD_REQUEST });
+      const endpoint = `/employees/rspw/${token}`;
+      const result = await query({
+        data,
+        endpoint,
+        method: METHODS.post,
+      });
+
+      if (
+        result.status === 200 ||
+        result.status === 304 ||
+        result.status === 201
+      ) {
+        dispatch({
+          type: RESET_PASSWORD_SUCCESS,
+          payload: result.data,
+        });
+        callback.success();
+      } else {
+        dispatch({
+          type: RESET_PASSWORD_FAILURE,
+        });
+        callback.failure();
+      }
+    } catch (error) {
+      dispatch({
+        type: RESET_PASSWORD_FAILURE,
         payload: error,
       });
       callback.failure();

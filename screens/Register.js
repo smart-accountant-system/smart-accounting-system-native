@@ -26,7 +26,7 @@ class EmployeeAddition extends React.Component {
     password: '123456',
     repassword: '123456',
     fullname: 'Duke Thor',
-    role: 3,
+    // role: 3,
     email: 'tholxag123vn2010@gmail.com',
     phone: '0947857301',
     company: 'ABC',
@@ -54,7 +54,6 @@ class EmployeeAddition extends React.Component {
 
     this.setState({ isLoading: true });
     // call api sign up
-    const { registerUsername, registerPassword } = this.props;
     this.props.register(
       {
         company: {
@@ -70,7 +69,10 @@ class EmployeeAddition extends React.Component {
         },
       },
       {
-        success: () => {},
+        success: () => {
+          this.setState({ isLoading: false });
+          navigation.navigate('Login');
+        },
         failure: () => {
           this.setState({ isVisible: true, isLoading: false });
         },

@@ -1,39 +1,47 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-shadow */
 /* eslint-disable react/destructuring-assignment */
-import React, { Fragment } from 'react';
+import React from 'react';
 import i18n from 'i18n-js';
 import { connect } from 'react-redux';
-import { withTheme, Button } from 'react-native-paper';
+import { withTheme, Button, Snackbar } from 'react-native-paper';
 import { View, TouchableOpacity, ScrollView, Text } from 'react-native';
 
 import theme from '../constants/theme';
-import { handle401 } from '../constants/strategies';
 import { FeatherIcon, InterestTextInput } from '../components';
-import { logout } from '../redux/actions';
+import { resetPassword } from '../redux/actions';
 import { Header, Typography, HeaderWrapper } from '../containers/Home';
 import { FewStyledContainer } from '../containers/PaymentMethodAddition';
 
 class PasswordChange extends React.Component {
-  constructor(props) {
-    super(props);
-    const { navigation } = this.props;
-    const url = navigation.getParam('url', '');
-    const a = url.url.split('/');
-    this.state = {
-      password: '',
-      repassword: '',
-      isLoading: false,
-      url: a[a.length - 1],
-    };
-  }
+  state = {
+    password: '',
+    repassword: '',
+    isLoading: false,
+    isVisible: false,
+  };
 
-  handleGetPasswordBack = () => {};
+  handleGetPasswordBack = () => {
+    const { navigation } = this.props;
+    const token = navigation.getParam('token', '');
+    const { password, repassword } = this.state;
+    if (password === repassword) {
+      this.setState({ isLoading: true });
+      this.props.resetPassword({ password }, token, {
+        success: () => {
+          this.setState({ isLoading: false });
+          navigation.navigate('Login');
+        },
+        failure: () => {
+          this.setState({ isLoading: false, isVisible: true });
+        },
+      });
+    }
+  };
 
   render() {
     const { navigation } = this.props;
-    const { password, repassword, isLoading, url } = this.state;
-    console.log(url);
+    const { password, repassword, isLoading, isVisible } = this.state;
 
     return (
       <View style={{ display: 'flex', flex: 1 }}>
@@ -70,6 +78,13 @@ class PasswordChange extends React.Component {
             </Button>
           </FewStyledContainer>
         </ScrollView>
+        <Snackbar
+          visible={isVisible}
+          onDismiss={() => this.setState({ isVisible: false })}
+          action={{ label: 'OK', onPress: () => {} }}
+        >
+          {i18n.t('messageRSPWFailure')}
+        </Snackbar>
       </View>
     );
   }
@@ -79,7 +94,7 @@ const mapStateToProps = state => ({
   error: state.employee.error,
 });
 const mapDispatchToProps = {
-  logout,
+  resetPassword,
 };
 
 export default withTheme(

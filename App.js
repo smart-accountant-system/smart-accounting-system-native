@@ -38,14 +38,13 @@ export default class App extends React.Component {
 
   componentDidMount = async () => {
     await Permissions.askAsync(Permissions.NOTIFICATIONS);
-    Linking.getInitialURL()
-      .then(url => {
-        if (url) {
-          console.log(`Initial url is: ${url}`);
-          // NavigationService.navigate('PasswordChange', { url });
-        }
-      })
-      .catch(err => console.error('An error occurred', err));
+    // Linking.getInitialURL()
+    //   .then(url => {
+    //     if (url) {
+    //       console.log(`Initial url is: ${url}`);
+    //     }
+    //   })
+    //   .catch(err => console.error('An error occurred', err));
   };
 
   _loadResourcesAsync = async () =>

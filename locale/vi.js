@@ -132,6 +132,7 @@ export default {
   messageGetPasswordBack:
     'Vui lòng cung cấp tên đăng nhập\nđể lấy lại mật khẩu',
   messageNoConnection: 'Không có kết nối mạng',
+  messageRSPWFailure: 'Đổi mật khẩu không thành công',
 
   // LANGUAGE
   english: 'Tiếng Anh',

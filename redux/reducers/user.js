@@ -15,6 +15,12 @@ import {
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
+  SEND_RESET_PASSWORD_REQUEST,
+  SEND_RESET_PASSWORD_FAILURE,
+  SEND_RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_REQUEST,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_FAILURE,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -43,6 +49,8 @@ export default (state = INITIAL_STATE, action) => {
     case LOGIN_REQUEST:
     case UPLOAD_IMAGE_REQUEST:
     case PATCH_PROFILE_REQUEST:
+    case SEND_RESET_PASSWORD_REQUEST:
+    case RESET_PASSWORD_REQUEST:
       return {
         ...state,
         isLogging: true,
@@ -66,6 +74,8 @@ export default (state = INITIAL_STATE, action) => {
     case LOGIN_FAILURE:
     case UPLOAD_IMAGE_FAILURE:
     case PATCH_PROFILE_FAILURE:
+    case SEND_RESET_PASSWORD_FAILURE:
+    case RESET_PASSWORD_FAILURE:
       return {
         ...state,
         isLogging: false,
@@ -105,6 +115,11 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         registerUsername: action.payload.employee.username,
         registerPassword: action.payload.employee.password,
+      };
+    case SEND_RESET_PASSWORD_SUCCESS:
+    case RESET_PASSWORD_SUCCESS:
+      return {
+        ...state,
       };
     default:
       return state;

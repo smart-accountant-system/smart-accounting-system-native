@@ -2,6 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { ActivityIndicator, StatusBar, View } from 'react-native';
+import { Linking } from 'expo';
 import ROLE from '../constants/role';
 
 class AuthLoadingScreen extends React.Component {
@@ -15,6 +16,19 @@ class AuthLoadingScreen extends React.Component {
     const {
       user: { info },
     } = this.props;
+
+    Linking.getInitialURL()
+      .then(url => {
+        if (url) {
+          console.log(`Initial url is: ${url}`);
+          const a = url.split('/');
+          const token = a[4];
+          if (token) {
+            navigation.navigate('PasswordChange', { token });
+          }
+        }
+      })
+      .catch(err => console.error('An error occurred', err));
 
     navigation.navigate(
       !info

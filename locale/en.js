@@ -130,6 +130,7 @@ export default {
   messageLoginFailed: 'Username or password is invalid',
   messageGetPasswordBack: 'Please enter your username to get password back',
   messageNoConnection: 'No internet connection',
+  messageRSPWFailure: 'Reset password failure',
 
   // LANGUAGE
   english: 'English',

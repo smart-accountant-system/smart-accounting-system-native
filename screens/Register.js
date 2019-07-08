@@ -108,7 +108,7 @@ class EmployeeAddition extends React.Component {
         </HeaderWrapper>
 
         <KeyboardAvoidingView
-          behavior="height"
+          behavior="padding"
           style={{
             flex: 1,
             width: Layout.deviceWidth,

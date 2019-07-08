@@ -5,7 +5,13 @@ import React, { Fragment } from 'react';
 import i18n from 'i18n-js';
 import { connect } from 'react-redux';
 import { withTheme, Button, Snackbar } from 'react-native-paper';
-import { View, TouchableOpacity, ScrollView, Text } from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  ScrollView,
+  Text,
+  KeyboardAvoidingView,
+} from 'react-native';
 
 import theme from '../constants/theme';
 import { handle401 } from '../constants/strategies';
@@ -14,6 +20,7 @@ import { FeatherIcon, InterestTextInput } from '../components';
 import { logout, addEmployee, updateEmployee } from '../redux/actions';
 import { Header, Typography, HeaderWrapper } from '../containers/Home';
 import { FewStyledContainer } from '../containers/PaymentMethodAddition';
+import Layout from '../constants/Layout';
 
 class EmployeeAddition extends React.Component {
   constructor(props) {
@@ -127,75 +134,85 @@ class EmployeeAddition extends React.Component {
           </Header>
         </HeaderWrapper>
 
-        <ScrollView>
-          <InterestTextInput
-            label={i18n.t('username')}
-            value={username}
-            onChangeText={username => this.setState({ username })}
-          />
-          {!this._id && (
-            <Fragment>
-              <InterestTextInput
-                label={i18n.t('password')}
-                value={password}
-                secureTextEntry
-                onChangeText={password => this.setState({ password })}
-              />
-              <InterestTextInput
-                label={i18n.t('repassword')}
-                value={repassword}
-                secureTextEntry
-                onChangeText={repassword => this.setState({ repassword })}
-              />
-            </Fragment>
-          )}
-          <InterestTextInput
-            label={i18n.t('fullname')}
-            value={fullname}
-            onChangeText={fullname => this.setState({ fullname })}
-          />
-          <InterestTextInput
-            label={i18n.t('email')}
-            value={email}
-            onChangeText={email => this.setState({ email })}
-          />
-          <InterestTextInput
-            label={i18n.t('phone')}
-            value={phone}
-            onChangeText={phone => this.setState({ phone })}
-          />
+        <KeyboardAvoidingView
+          behavior="padding"
+          style={{
+            flex: 1,
+            width: Layout.deviceWidth,
+            height: Layout.deviceHeight,
+          }}
+        >
+          <ScrollView>
+            <InterestTextInput
+              label={i18n.t('username')}
+              value={username}
+              onChangeText={username => this.setState({ username })}
+            />
+            {!this._id && (
+              <Fragment>
+                <InterestTextInput
+                  label={i18n.t('password')}
+                  value={password}
+                  secureTextEntry
+                  onChangeText={password => this.setState({ password })}
+                />
+                <InterestTextInput
+                  label={i18n.t('repassword')}
+                  value={repassword}
+                  secureTextEntry
+                  onChangeText={repassword => this.setState({ repassword })}
+                />
+              </Fragment>
+            )}
+            <InterestTextInput
+              label={i18n.t('fullname')}
+              value={fullname}
+              onChangeText={fullname => this.setState({ fullname })}
+            />
+            <InterestTextInput
+              label={i18n.t('email')}
+              value={email}
+              onChangeText={email => this.setState({ email })}
+            />
+            <InterestTextInput
+              label={i18n.t('phone')}
+              value={phone}
+              onChangeText={phone => this.setState({ phone })}
+            />
 
-          <RadioGroup>
-            <Radio
-              label={i18n.t('staff')}
-              selected={role === 1}
-              onPress={() => this.setState({ role: 1 })}
-            />
-            <Radio
-              label={i18n.t('accountant')}
-              selected={role === 2}
-              onPress={() => this.setState({ role: 2 })}
-            />
-            <Radio
-              label={i18n.t('manager')}
-              selected={role === 3}
-              onPress={() => this.setState({ role: 3 })}
-            />
-          </RadioGroup>
-          <FewStyledContainer paddingTop>
-            <Button
-              mode="contained"
-              style={{ width: 170 }}
-              contentStyle={{ height: 50 }}
-              onPress={this._id ? this.handleUpdate : this.handleAddEmployee}
-              loading={isLoading}
-            >
-              <Text>
-                {this._id ? i18n.t('actionUpdate') : i18n.t('actionSave')}
-              </Text>
-            </Button>
-          </FewStyledContainer>
-        </ScrollView>
+            <RadioGroup>
+              <Radio
+                label={i18n.t('staff')}
+                selected={role === 1}
+                onPress={() => this.setState({ role: 1 })}
+              />
+              <Radio
+                label={i18n.t('accountant')}
+                selected={role === 2}
+                onPress={() => this.setState({ role: 2 })}
+              />
+              <Radio
+                label={i18n.t('manager')}
+                selected={role === 3}
+                onPress={() => this.setState({ role: 3 })}
+              />
+            </RadioGroup>
+            <FewStyledContainer paddingTop>
+              <Button
+                mode="contained"
+                style={{ width: 170 }}
+                contentStyle={{ height: 50 }}
+                onPress={this._id ? this.handleUpdate : this.handleAddEmployee}
+                loading={isLoading}
+              >
+                <Text>
+                  {this._id ? i18n.t('actionUpdate') : i18n.t('actionSave')}
+                </Text>
+              </Button>
+            </FewStyledContainer>
+          </ScrollView>
+        </KeyboardAvoidingView>
+
         <Snackbar
           visible={isVisible}
           onDismiss={() => this.setState({ isVisible: false, isTypo: false })}

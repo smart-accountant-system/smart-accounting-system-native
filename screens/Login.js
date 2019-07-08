@@ -167,7 +167,7 @@ class Login extends React.Component {
           <KeyboardAvoidingView
             enabled
             behavior="padding"
-            keyboardVerticalOffset={0}
+            keyboardVerticalOffset={-50}
             style={{
               flex: 1,
               width: Layout.deviceWidth,

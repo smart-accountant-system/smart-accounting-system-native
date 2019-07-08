@@ -7,13 +7,9 @@ import { View, TouchableOpacity, ScrollView, Text } from 'react-native';
 import { connect } from 'react-redux';
 
 import theme from '../constants/theme';
-import {
-  FeatherIcon,
-  InterestTextInput,
-  CurrencyInput,
-  Empty,
-} from '../components';
+import { FeatherIcon, InterestTextInput, CurrencyInput } from '../components';
 import { Header, Typography, HeaderWrapper } from '../containers/Home';
+import { EmptyTransaction } from '../containers/Invoice';
 import { TypePicker, AmazingText } from '../containers/InvoiceAddition';
 import { FewStyledContainer } from '../containers/PaymentMethodAddition';
 import {
@@ -178,7 +174,7 @@ class InvoiceProductAddition extends React.Component {
             <Dialog.Content>
               <View style={{ height: 300 }}>
                 <ScrollView>
-                  {categories ? (
+                  {categories && categories.categories.length > 0 ? (
                     categories.categories.map(category => (
                       <PaymentMethodItem
                         key={category._id}
@@ -206,11 +202,16 @@ class InvoiceProductAddition extends React.Component {
                       />
                     ))
                   ) : (
-                    <Empty name={i18n.t('paymentMethod')} />
+                    <EmptyTransaction name={i18n.t('paymentMethod')} />
                   )}
                 </ScrollView>
               </View>
             </Dialog.Content>
+            <Dialog.Actions>
+              <Button onPress={() => this.setState({ isChoosing: false })}>
+                OK
+              </Button>
+            </Dialog.Actions>
           </Dialog>
         </Portal>
       </View>

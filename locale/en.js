@@ -128,7 +128,8 @@ export default {
   messageWelcome: 'Welcome back!',
   messageLoginWithAnotherAccount: 'Login another account',
   messageLoginFailed: 'Username or password is invalid',
-  messageGetPasswordBack: 'Please enter your email to get password back',
+  messageGetPasswordBack: 'Please enter your username to get password back',
+  messageNoConnection: 'No internet connection',
 
   // LANGUAGE
   english: 'English',

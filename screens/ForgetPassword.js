@@ -17,7 +17,7 @@ import { AmazingText } from '../containers/InvoiceAddition';
 
 class EmployeeAddition extends React.Component {
   state = {
-    email: '',
+    username: '',
     isLoading: false,
   };
 
@@ -25,7 +25,7 @@ class EmployeeAddition extends React.Component {
 
   render() {
     const { navigation } = this.props;
-    const { email, isLoading } = this.state;
+    const { username, isLoading } = this.state;
 
     return (
       <View style={{ display: 'flex', flex: 1 }}>
@@ -42,9 +42,9 @@ class EmployeeAddition extends React.Component {
         <ScrollView>
           <AmazingText content={i18n.t('messageGetPasswordBack')} />
           <InterestTextInput
-            label={i18n.t('email')}
-            value={email}
-            onChangeText={email => this.setState({ email })}
+            label={i18n.t('username')}
+            value={username}
+            onChangeText={username => this.setState({ username })}
           />
           <FewStyledContainer paddingTop>
             <Button

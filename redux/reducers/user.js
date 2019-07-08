@@ -12,6 +12,9 @@ import {
   PATCH_PROFILE_REQUEST,
   PATCH_PROFILE_SUCCESS,
   PATCH_PROFILE_FAILURE,
+  REGISTER_REQUEST,
+  REGISTER_SUCCESS,
+  REGISTER_FAILURE,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -22,6 +25,8 @@ const INITIAL_STATE = {
   localization: Localization.locale,
   isLocaleSet: false,
   photo: null,
+  registerUsername: '',
+  registerPassword: '',
 };
 
 function getRandomColor() {
@@ -43,6 +48,13 @@ export default (state = INITIAL_STATE, action) => {
         isLogging: true,
         error: null,
       };
+    case REGISTER_REQUEST:
+      return {
+        ...state,
+        isLogging: true,
+        error: null,
+        registerPassword: action.payload.employee.password,
+      };
     case LOGIN_SUCCESS:
       return {
         ...state,
@@ -58,6 +70,13 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         isLogging: false,
         error: action.payload,
+      };
+    case REGISTER_FAILURE:
+      return {
+        ...state,
+        isLogging: false,
+        error: action.payload,
+        registerPassword: '',
       };
     case LOGOUT:
       return {
@@ -80,6 +99,12 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         info: action.payload,
+      };
+    case REGISTER_SUCCESS:
+      return {
+        ...state,
+        registerUsername: action.payload.employee.username,
+        registerPassword: action.payload.employee.password,
       };
     default:
       return state;

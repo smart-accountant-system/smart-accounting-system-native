@@ -15,21 +15,21 @@ import {
 
 import theme from '../constants/theme';
 import { FeatherIcon, InterestTextInput } from '../components';
-import { logout, addEmployee } from '../redux/actions';
+import { logout, register } from '../redux/actions';
 import { Header, Typography, HeaderWrapper } from '../containers/Home';
 import { FewStyledContainer } from '../containers/PaymentMethodAddition';
 import Layout from '../constants/Layout';
 
 class EmployeeAddition extends React.Component {
   state = {
-    username: '',
-    password: '',
-    repassword: '',
-    fullname: '',
+    username: 'tholxag123vn2010',
+    password: '123456',
+    repassword: '123456',
+    fullname: 'Duke Thor',
     role: 3,
-    email: '',
-    phone: '',
-    company: '',
+    email: 'tholxag123vn2010@gmail.com',
+    phone: '0947857301',
+    company: 'ABC',
     isLoading: false,
     isVisible: false,
     isTypo: false,
@@ -42,7 +42,6 @@ class EmployeeAddition extends React.Component {
       password,
       repassword,
       fullname,
-      role,
       email,
       phone,
       company,
@@ -54,28 +53,27 @@ class EmployeeAddition extends React.Component {
     }
 
     this.setState({ isLoading: true });
-    this.props.addEmployee(
-      { username, password, fullname, role, email, phone, company },
+    // call api sign up
+    const { registerUsername, registerPassword } = this.props;
+    this.props.register(
       {
-        success: () => {
-          this.props.login(
-            { username, password },
-            {
-              success: () => {
-                this.setState({ isLoading: false });
-                navigation.navigate('TabNavigator');
-              },
-              failure: () => {
-                this.setState({ isVisible: true, isLoading: false });
-              },
-            }
-          );
+        company: {
+          name: company,
+          email,
         },
-        failure: () =>
-          this.setState({
-            isVisible: true,
-            isLoading: false,
-          }),
+        employee: {
+          username,
+          password,
+          fullname,
+          email,
+          phone,
+        },
+      },
+      {
+        success: () => {},
+        failure: () => {
+          this.setState({ isVisible: true, isLoading: false });
+        },
       }
     );
   };
@@ -176,7 +174,7 @@ class EmployeeAddition extends React.Component {
           onDismiss={() => this.setState({ isVisible: false, isTypo: false })}
           action={{ label: 'OK', onPress: () => {} }}
         >
-          {i18n.t('messageWP')}
+          {isTypo ? i18n.t('messageWP') : 'Đăng ký không thành công'}
         </Snackbar>
       </View>
     );
@@ -184,11 +182,13 @@ class EmployeeAddition extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  error: state.employee.error,
+  error: state.user.error,
+  registerUsername: state.user.registerUsername,
+  registerPassword: state.user.registerPassword,
 });
 const mapDispatchToProps = {
   logout,
-  addEmployee,
+  register,
 };
 
 export default withTheme(

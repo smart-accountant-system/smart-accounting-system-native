@@ -129,7 +129,9 @@ export default {
   messageWelcome: 'Xin chào!',
   messageLoginWithAnotherAccount: 'Thoát tài khoản',
   messageLoginFailed: 'Tên đăng nhập hoặc mật khẩu không hợp lệ',
-  messageGetPasswordBack: 'Vui lòng cung cấp email để lấy lại mật khẩu',
+  messageGetPasswordBack:
+    'Vui lòng cung cấp tên đăng nhập\nđể lấy lại mật khẩu',
+  messageNoConnection: 'Không có kết nối mạng',
 
   // LANGUAGE
   english: 'Tiếng Anh',

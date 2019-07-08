@@ -1,5 +1,5 @@
 import { DefaultTheme } from 'react-native-paper';
-import { Platform } from 'react-native';
+// import { Platform } from 'react-native';
 
 // const fonts = Platform.select({
 //   web: {

@@ -19,6 +19,10 @@ export const PATCH_PROFILE_REQUEST = 'patch-profile-request';
 export const PATCH_PROFILE_SUCCESS = 'patch-profile-success';
 export const PATCH_PROFILE_FAILURE = 'patch-profile-failure';
 
+export const REGISTER_REQUEST = 'register-request';
+export const REGISTER_SUCCESS = 'register-success';
+export const REGISTER_FAILURE = 'register-failure';
+
 export function login(data, callback) {
   return async dispatch => {
     try {
@@ -147,6 +151,43 @@ export function updateProfile(
         return handle401();
       }
       failure();
+    }
+  };
+}
+
+export function register(data, callback) {
+  return async dispatch => {
+    try {
+      dispatch({ type: REGISTER_REQUEST, payload: data });
+      const endpoint = '/register';
+      const result = await query({
+        data,
+        endpoint,
+        method: METHODS.post,
+      });
+
+      if (
+        result.status === 200 ||
+        result.status === 304 ||
+        result.status === 201
+      ) {
+        dispatch({
+          type: REGISTER_SUCCESS,
+          payload: result.data,
+        });
+        callback.success();
+      } else {
+        dispatch({
+          type: REGISTER_FAILURE,
+        });
+        callback.failure();
+      }
+    } catch (error) {
+      dispatch({
+        type: REGISTER_FAILURE,
+        payload: error,
+      });
+      callback.failure();
     }
   };
 }

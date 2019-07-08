@@ -1,5 +1,6 @@
 /* eslint-disable no-use-before-define */
 import React, { PureComponent } from 'react';
+import i18n from 'i18n-js';
 import { View, Text, NetInfo, Dimensions, StyleSheet } from 'react-native';
 
 import Layout from '../constants/Layout';
@@ -9,7 +10,8 @@ const width = Layout.deviceWidth;
 function MiniOfflineSign() {
   return (
     <View style={styles.offlineContainer}>
-      <Text style={styles.offlineText}>No Internet Connection</Text>
+      <Text style={styles.offlineText}>{i18n.t('messageNoConnection')}</Text>
+      {/* <Text style={styles.offlineText}>No Internet Connection</Text> */}
     </View>
   );
 }

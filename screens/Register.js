@@ -22,14 +22,14 @@ import Layout from '../constants/Layout';
 
 class EmployeeAddition extends React.Component {
   state = {
-    username: 'tholxag123vn2010',
-    password: '123456',
-    repassword: '123456',
-    fullname: 'Duke Thor',
+    username: '',
+    password: '',
+    repassword: '',
+    fullname: '',
     // role: 3,
-    email: 'tholxag123vn2010@gmail.com',
-    phone: '0947857301',
-    company: 'ABC',
+    email: '',
+    phone: '',
+    company: '',
     isLoading: false,
     isVisible: false,
     isTypo: false,

@@ -117,7 +117,7 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         transactions: {
-          transactions: [...state.transactions.transactions, action.payload],
+          transactions: [action.payload, ...state.transactions.transactions],
           total: state.transactions.total + 1,
         },
 

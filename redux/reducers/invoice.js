@@ -108,8 +108,8 @@ export default (state = INITIAL_STATE, action) => {
                   payments: {
                     total: invoice.payments.total + 1,
                     payments: [
-                      ...invoice.payments.payments,
                       action.payload.payment,
+                      ...invoice.payments.payments,
                     ],
                   },
                 }
@@ -144,7 +144,7 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         invoices: {
-          invoices: [...state.invoices.invoices, action.payload],
+          invoices: [action.payload, ...state.invoices.invoices],
           total: state.invoices.total + 1,
         },
         error: null,

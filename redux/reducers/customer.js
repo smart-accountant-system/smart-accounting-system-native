@@ -40,7 +40,7 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         customers: {
           total: state.customers.total + 1,
-          customers: [...state.customers.customers, action.payload],
+          customers: [action.payload, ...state.customers.customers],
         },
         error: null,
       };

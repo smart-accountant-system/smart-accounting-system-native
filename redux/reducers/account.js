@@ -58,7 +58,7 @@ export default (state = INITIAL_STATE, action) => {
         isLoading: false,
         accounts: {
           total: state.accounts.total + 1,
-          accounts: [...state.accounts.accounts, action.payload],
+          accounts: [action.payload, ...state.accounts.accounts],
         },
         error: null,
       };

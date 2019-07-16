@@ -45,7 +45,7 @@ export default (state = INITIAL_STATE, action) => {
           ...state,
           isLoading: false,
           categories: {
-            categories: [...state.categories.categories, action.payload],
+            categories: [action.payload, ...state.categories.categories],
             total: state.categories.total + 1,
           },
           error: null,

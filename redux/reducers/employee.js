@@ -39,7 +39,7 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         employees: {
-          employees: [...state.employees.employees, action.payload],
+          employees: [action.payload, ...state.employees.employees],
           total: state.employees.total + 1,
         },
         error: null,

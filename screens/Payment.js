@@ -159,6 +159,16 @@ class Payment extends React.Component {
     this.props.removePayment(_id, {
       success: () => {
         LayoutAnimation.spring();
+        this.props.getInvoiceById(this._id, {
+          success: () => {
+            this.setState({ refreshing: false });
+          },
+          handle401: () =>
+            handle401({
+              logout: this.props.logout,
+              navigation: this.props.navigation,
+            }),
+        });
       },
       failure: () => {
         this.setState({ visibleSnackbar: true });

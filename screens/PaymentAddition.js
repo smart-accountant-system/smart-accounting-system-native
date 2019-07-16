@@ -17,6 +17,7 @@ import {
   getCategories,
   addPayment,
   getPaymentsForInvoice,
+  getInvoiceById,
 } from '../redux/actions';
 import { handle401, toInt } from '../constants/strategies';
 import PaymentMethodItem from '../containers/PaymentMethod/Item';
@@ -73,6 +74,13 @@ class InvoiceProductAddition extends React.Component {
         {
           success: () => {
             this.setState({ isLoading: false });
+            this.props.getInvoiceById(_id, {
+              handle401: () =>
+                handle401({
+                  logout: this.props.logout,
+                  navigation: this.props.navigation,
+                }),
+            });
             navigation.goBack();
           },
           failure: () => this.setState({ isVisible: true, isLoading: false }),
@@ -227,6 +235,7 @@ const mapDispatchToProps = {
   getCategories,
   addPayment,
   getPaymentsForInvoice,
+  getInvoiceById,
 };
 
 export default connect(

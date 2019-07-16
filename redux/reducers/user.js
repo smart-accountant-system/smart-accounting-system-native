@@ -108,7 +108,7 @@ export default (state = INITIAL_STATE, action) => {
     case PATCH_PROFILE_SUCCESS:
       return {
         ...state,
-        info: action.payload,
+        info: { ...action.payload, company: state.info.company },
       };
     case REGISTER_SUCCESS:
       return {

@@ -134,10 +134,14 @@ export function updateProfile(
       });
 
       if (result.status === 200 || result.status === 201) {
-        const { username, fullname } = data;
+        const userInfo = await SecureStore.getItemAsync('userInfo');
+
         await SecureStore.setItemAsync(
           'userInfo',
-          JSON.stringify({ username, fullname })
+          JSON.stringify({
+            ...JSON.parse(userInfo),
+            ...result.data,
+          })
         );
         dispatch({
           type: PATCH_PROFILE_SUCCESS,

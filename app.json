@@ -25,6 +25,9 @@
     "ios": {
       "supportsTablet": true
     },
+    "android": {
+      "package": "com.hakunamatata.sas"
+    },
     "description": "",
     "scheme": "sas"
   }

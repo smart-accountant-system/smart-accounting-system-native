@@ -6,6 +6,7 @@ import i18n from 'i18n-js';
 import { connect } from 'react-redux';
 import { withTheme, Button, Snackbar } from 'react-native-paper';
 import { View, TouchableOpacity, ScrollView, Text } from 'react-native';
+import { Linking } from 'expo';
 
 import theme from '../constants/theme';
 import { FeatherIcon, InterestTextInput } from '../components';
@@ -21,6 +22,24 @@ class EmployeeAddition extends React.Component {
     isVisible: false,
     isSendSuccess: false,
   };
+
+  componentDidMount = async () => {
+    const { navigation } = this.props;
+    Linking.addEventListener('url', url => {
+      if (url) {
+        console.log(`Initial url is: ${url}`);
+        const a = url.split('/');
+        const token = a[a.length - 1];
+        if (token.length > 35) {
+          navigation.navigate('PasswordChange', { url });
+        }
+      }
+    });
+  };
+
+  componentWillUnmount() {
+    Linking.removeEventListener('url', () => {});
+  }
 
   handleGetPasswordBack = () => {
     const { username } = this.state;

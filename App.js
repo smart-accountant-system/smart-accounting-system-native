@@ -38,6 +38,17 @@ export default class App extends React.Component {
 
   componentDidMount = async () => {
     await Permissions.askAsync(Permissions.NOTIFICATIONS);
+
+    Linking.addEventListener('url', url => {
+      if (url) {
+        console.log(`Initial url is: ${url}`);
+        const a = url.split('/');
+        const token = a[a.length - 1];
+        if (token.length > 35) {
+          NavigationService.navigate('PasswordChange', { url });
+        }
+      }
+    });
     // Linking.getInitialURL()
     //   .then(url => {
     //     if (url) {

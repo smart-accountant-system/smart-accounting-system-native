@@ -56,9 +56,6 @@ class Login extends React.Component {
         userInfo: userInfoObject,
       });
     }
-    Linking.addEventListener('url', url => {
-      navigation.navigate('PasswordChange', { url });
-    });
   };
 
   checkDeviceForHardware = async () => {

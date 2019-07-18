@@ -46,6 +46,7 @@ class PasswordChange extends React.Component {
     const { navigation } = this.props;
     const { password, repassword, isLoading, isVisible, isTypo } = this.state;
     const url = navigation.getParam('url', '');
+    const token = navigation.getParam('token', '');
 
     return (
       <View style={{ display: 'flex', flex: 1 }}>
@@ -70,6 +71,7 @@ class PasswordChange extends React.Component {
               this.setState({ password, isTypo: false })
             }
           />
+          <Text>[{token}]</Text>
           <InterestTextInput
             label={i18n.t('repassword')}
             autoCompleteType="password"

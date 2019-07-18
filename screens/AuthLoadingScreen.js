@@ -22,8 +22,8 @@ class AuthLoadingScreen extends React.Component {
         if (url) {
           console.log(`Initial url is: ${url}`);
           const a = url.split('/');
-          const token = a[6];
-          if (token) {
+          const token = a[a.length - 1];
+          if (token.length > 35) {
             navigation.navigate('PasswordChange', { token, url });
           }
         }

@@ -57,21 +57,17 @@ class Login extends React.Component {
       });
     }
 
-    Linking.addEventListener('url', url => {
+    Linking.addEventListener('url', ({ url }) => {
       if (url) {
         console.log(`Initial url is: ${url}`);
         const a = url.split('/');
         const token = a[a.length - 1];
         if (token.length > 35) {
-          navigation.navigate('PasswordChange', { url });
+          navigation.navigate('PasswordChange', { token, url });
         }
       }
     });
   };
-
-  componentWillUnmount() {
-    Linking.removeEventListener('url', () => {});
-  }
 
   checkDeviceForHardware = async () => {
     const compatible = await LocalAuthentication.hasHardwareAsync();

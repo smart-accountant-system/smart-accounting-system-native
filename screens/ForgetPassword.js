@@ -23,24 +23,6 @@ class EmployeeAddition extends React.Component {
     isSendSuccess: false,
   };
 
-  componentDidMount = async () => {
-    const { navigation } = this.props;
-    Linking.addEventListener('url', url => {
-      if (url) {
-        console.log(`Initial url is: ${url}`);
-        const a = url.split('/');
-        const token = a[a.length - 1];
-        if (token.length > 35) {
-          navigation.navigate('PasswordChange', { url });
-        }
-      }
-    });
-  };
-
-  componentWillUnmount() {
-    Linking.removeEventListener('url', () => {});
-  }
-
   handleGetPasswordBack = () => {
     const { username } = this.state;
     this.setState({ isLoading: true });

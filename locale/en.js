@@ -107,6 +107,7 @@ export default {
   actionLogout: 'Logout',
   actionGetPasswordBack: 'Get new password',
   actionChooseTransaction: 'Choose transaction',
+  actionChooseReceipt: 'Choose receipt',
   actionChooseAccountToRecordDebit: 'Choose Account to record Debit',
   actionChooseAccountToRecordCredit: 'Choose Account to record Credit',
 

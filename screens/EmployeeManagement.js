@@ -96,7 +96,7 @@ class EmployeeManagement extends React.Component {
   };
 
   render() {
-    const { navigation, employees } = this.props;
+    const { navigation, employees, info } = this.props;
     const { searchText, refreshing, visibleSnackbar } = this.state;
     return (
       <View style={{ display: 'flex', flex: 1 }}>
@@ -127,37 +127,39 @@ class EmployeeManagement extends React.Component {
             {!employees.employees.length ? (
               <Empty name={i18n.t('employee')} />
             ) : (
-              employees.employees.map(employee => (
-                <EmployeeItem
-                  editable
-                  onEdit={() =>
-                    navigation.navigate('EmployeeAddition', { employee })
-                  }
-                  onRemove={() => this.handleRemove(employee._id)}
-                  key={employee._id}
-                  onPress={() =>
-                    navigation.navigate('EmployeeDetail', { employee })
-                  }
-                  fullname={employee.fullname}
-                  username={employee.username}
-                  role={
-                    employee.role === 1
-                      ? i18n.t('staff')
-                      : employee.role === 2
-                      ? i18n.t('accountant')
-                      : i18n.t('manager')
-                  }
-                  color={
-                    employee.role === 1
-                      ? '#8ec448'
-                      : employee.role === 2
-                      ? '#f87d4d'
-                      : '#e05246'
-                  }
-                  phone={employee.phone}
-                  email={employee.email}
-                />
-              ))
+              employees.employees
+                .filter(employee => employee._id !== info._id)
+                .map(employee => (
+                  <EmployeeItem
+                    editable
+                    onEdit={() =>
+                      navigation.navigate('EmployeeAddition', { employee })
+                    }
+                    onRemove={() => this.handleRemove(employee._id)}
+                    key={employee._id}
+                    onPress={() =>
+                      navigation.navigate('EmployeeDetail', { employee })
+                    }
+                    fullname={employee.fullname}
+                    username={employee.username}
+                    role={
+                      employee.role === 1
+                        ? i18n.t('staff')
+                        : employee.role === 2
+                        ? i18n.t('accountant')
+                        : i18n.t('manager')
+                    }
+                    color={
+                      employee.role === 1
+                        ? '#8ec448'
+                        : employee.role === 2
+                        ? '#f87d4d'
+                        : '#e05246'
+                    }
+                    phone={employee.phone}
+                    email={employee.email}
+                  />
+                ))
             )}
           </ScrollView>
         ) : (
@@ -177,6 +179,7 @@ class EmployeeManagement extends React.Component {
 
 const mapStateToProps = state => ({
   employees: state.employee.employees,
+  info: state.user.info,
 });
 const mapDispatchToProps = {
   logout,

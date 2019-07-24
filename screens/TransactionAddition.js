@@ -132,7 +132,7 @@ class ReceiptAddition extends React.Component {
           ) : (
             <AmazingText
               onPress={() => navigation.navigate('ReceiptsInTransaction')}
-              content={i18n.t('actionChooseTransaction')}
+              content={i18n.t('actionChooseReceipt')}
             />
           )}
           {currentDebitAccountInTransaction ? (

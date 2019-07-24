@@ -107,8 +107,9 @@ export default {
   actionLogout: 'Đăng xuất',
   actionGetPasswordBack: 'Lấy lại mật khẩu',
   actionChooseTransaction: 'Chọn giao dịch',
-  actionChooseAccountToRecordDebit: 'Choose Account to record Debit',
-  actionChooseAccountToRecordCredit: 'Choose Account to record Credit',
+  actionChooseReceipt: 'Chọn biên lai',
+  actionChooseAccountToRecordDebit: 'Chọn tài khoản để ghi nợ',
+  actionChooseAccountToRecordCredit: 'Chọn tài khoản để ghi có',
 
   // MESSAGE GROUP
   messageEmpty: 'Hiện chưa có',

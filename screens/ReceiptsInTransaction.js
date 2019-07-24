@@ -16,7 +16,11 @@ import {
 import Filter from '../components/Filter';
 import ROLE from '../constants/role';
 import theme from '../constants/theme';
-import { logout, getReceipts, addReceiptToTransaction } from '../redux/actions';
+import {
+  logout,
+  getReceiptsForTraction,
+  addReceiptToTransaction,
+} from '../redux/actions';
 import { handle401 } from '../constants/strategies';
 import { FeatherIcon, Loading, Empty } from '../components';
 import { HeaderWrapper, Header, Typography } from '../containers/Home';
@@ -39,8 +43,8 @@ class ReceiptsInTransaction extends React.Component {
 
   _onRefresh = () => {
     this.setState({ refreshing: true });
-    this.props.getReceipts(
-      {},
+    this.props.getReceiptsForTraction(
+      { status: 1 },
       {
         success: () => {
           this.setState({ refreshing: false });
@@ -106,8 +110,9 @@ class ReceiptsInTransaction extends React.Component {
       isExpandingFilter: false,
     });
 
-    this.props.getReceipts(
+    this.props.getReceiptsForTraction(
       {
+        status: 1,
         startDate: new Date(fromDate.toDateString()),
         endDate: new Date(toDate.toDateString()),
       },
@@ -221,11 +226,11 @@ class ReceiptsInTransaction extends React.Component {
 
 const mapStateToProps = state => ({
   user: state.user,
-  receipts: state.receipt.receipts,
+  receipts: state.transaction.receiptsInTransaction,
 });
 const mapDispatchToProps = {
   logout,
-  getReceipts,
+  getReceiptsForTraction,
   addReceiptToTransaction,
 };
 
